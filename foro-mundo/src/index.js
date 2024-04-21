@@ -8,6 +8,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import SearchPage from "./Pages/SearchPage";
 import PostPage from "./Pages/PostPage";
 import PostCreationPage from "./Pages/PostCreationPage";
+import ErrorPage from "./Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <PostCreationPage />,
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

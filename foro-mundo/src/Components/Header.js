@@ -55,7 +55,11 @@ const Header = forwardRef((props, ref) => {
                   className="me-2"
                   aria-label="Search"
                 />
-                <Button variant="outline-secondary" type="submit" href="/search">
+                <Button
+                  variant="outline-secondary"
+                  type="submit"
+                  href="/search"
+                >
                   <i className="bi bi-search"></i>
                 </Button>
               </Form>
