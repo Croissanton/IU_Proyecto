@@ -4,9 +4,9 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 
-const Header = () => {
+const Header = forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
   const [isCollapsing, setIsCollapsing] = useState(false); // New state to track collapsing delay
 
@@ -21,13 +21,11 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar
-        expand="lg"
-        className="bg-primary border-bottom border-dark-subtle border-1"
-        expanded={expanded}
-        onToggle={toggleNavbar}
-      >
+    <div
+      ref={ref}
+      className="bg-primary border-bottom border-dark-subtle border-1 fixed-top"
+    >
+      <Navbar expand="lg" expanded={expanded} onToggle={toggleNavbar}>
         <Container>
           <Navbar.Brand
             href="/"
@@ -94,8 +92,8 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </header>
+    </div>
   );
-};
+});
 
 export default Header;
