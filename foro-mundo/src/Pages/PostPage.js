@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
+import IndexSelector from "../Components/IndexSelector.js";
 
 function PostPage() {
   const [newComment, setNewComment] = useState(""); // Estado para almacenar el nuevo comentario
@@ -34,28 +35,6 @@ function PostPage() {
         />
       </div>
 
-      {/* Formulario para añadir un nuevo comentario */}
-      <div className="container-xxl my-3">
-        <h3>Añadir un nuevo comentario</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="commentInput" className="form-label">
-              Nuevo comentario:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="commentInput"
-              value={newComment}
-              onChange={handleInputChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Enviar comentario
-          </button>
-        </form>
-      </div>
-
       {/* Comentarios existentes */}
       <div className="container-xxl my-3">
         <h3>Comentarios</h3>
@@ -72,6 +51,30 @@ function PostPage() {
           date={new Date()}
         />
       </div>
+
+      <IndexSelector />
+
+      {/* Formulario para añadir un nuevo comentario */}
+      <div className="container-xxl my-3">
+        <h3>Añadir un nuevo comentario</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="commentInput" className="form-label">
+            </label>
+            <textarea required
+              type="text"
+              className="form-control"
+              id="commentInput"
+              value={newComment}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Publicar
+          </button>
+        </form>
+      </div>
+
     </MainLayout>
   );
 }
