@@ -8,7 +8,8 @@ function SearchPage() {
     <MainLayout>
         <div className="container-xxl my-3">
             <PostCard
-                topic={"buen foro :D"}
+                titulo={"buen foro :D"}
+                text={"Este es un foro muy bueno"}
                 author={"Juan Jaun"}
                 date={"18.10.1992"}
                 lm_author={"Jose Jose"}
@@ -17,7 +18,8 @@ function SearchPage() {
                 view_num={1000}
             />
             <PostCard
-                topic={"Por que me ha explotado el radiador??"}
+                titulo={"Por que me ha explotado el radiador??"}
+                text={"El radiador de mi casa ha explotado y no se que hacer"}
                 author={"Ignacio19291"}
                 date={"05.02.2023"}
                 res_num={69}
@@ -26,7 +28,8 @@ function SearchPage() {
                 lm_date={"15.04.2024"}
             />
             <PostCard
-                topic={"Mi gato se ha comido a mi abuela :( que hago"}
+                titulo={"Mi gato se ha comido a mi abuela :( que hago"}
+                text={"Mi gato se ha comido a mi abuela y no se que hacer :("}
                 author={"Ignacio19291"}
                 date={"10.04.2024"}
                 res_num={32}
@@ -35,7 +38,8 @@ function SearchPage() {
                 lm_date={"11.04.2024"}
             />
             <PostCard
-                topic={"Mi abuela se ha comido a mi gato.........!!"}
+                titulo={"Mi abuela se ha comido a mi gato.........!!"}
+                text={"Mi abuela se ha comido a mi gato y no se que hacer :'("}
                 author={"percebe43"}
                 date={"01.04.2024"}
                 res_num={63}
@@ -44,7 +48,8 @@ function SearchPage() {
                 lm_date={"03.04.2024"}
             />
             <PostCard
-                topic={"La gasolina casi a 2€"}
+                titulo={"La gasolina casi a 2€"}
+                text={"La gasolina esta a punto de llegar a los 2€, que opinan?"}
                 author={"Ignacio19291"}
                 date={"12.03.2024"}
                 res_num={52}
@@ -53,7 +58,8 @@ function SearchPage() {
                 lm_date={"02.04.2024"}
             />
             <PostCard
-                topic={"no se que poner aqui"}
+                titulo={"no se que poner aqui"}
+                text={"no se que poner aqui"}
                 author={"percebe43"}
                 date={"01.04.2024"}
                 res_num={63}

@@ -1,18 +1,10 @@
 import MainLayout from "../layout/MainLayout.js";
 import React from 'react';
-/*
-function ProfilePage() {
-  return (
-    <MainLayout>
-      <h1>Profile Page</h1>
-    </MainLayout>
-  );
-} */
 
 function ProfilePage() {
   return (
     <MainLayout>
-      <h1>Profile Page</h1>
+      <h1>Mi Perfil</h1>
       <div style={{ display: "flex"}}>
         <div className="m-auto">
           <img src="https://via.placeholder.com/150" alt="profile" width="250" height="350" justifyContent="center"/>
@@ -23,7 +15,7 @@ function ProfilePage() {
               style={{ display: "none" }}
               onChange={(e) => handleImageSelection(e.target.files)}
             />
-            <button type="secondary" class="btn btn-primary" onClick={() => document.getElementById('imageInput').click()}>Change picture</button>
+            <button type="secondary" class="btn btn-primary" onClick={() => document.getElementById('imageInput').click()}>Cambiar foto</button>
           </div>
         </div>
         <div className="m-auto" style={{ width: "60%", display:"flex", justifyContent:"flex-end"}}>
@@ -53,7 +45,7 @@ function ProfilePage() {
             <textarea class="form-control" id="inputRedes"></textarea>
           </div>
           <div class="col-12">
-            <label for="inputDescripcion" class="form-label">Descripcion</label>
+            <label for="inputDescripcion" class="form-label">Descripción</label>
             <textarea class="form-control" id="inputDescripcion" rows="3"></textarea>
           </div>
           <div class="col-12" >
