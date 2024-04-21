@@ -4,7 +4,6 @@ import React from 'react';
 function ProfilePublic() {
   return (
     <MainLayout>
-      <h1>Profile Public</h1>
       <div style={{ display: "flex"}}>
         <div className="m-auto">
           <img src="https://via.placeholder.com/150" alt="profile" width="250" height="350" justifyContent="center"/>
