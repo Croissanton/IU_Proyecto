@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Pagination from 'react-bootstrap/Pagination';
+import React, { useState } from "react";
+import Pagination from "react-bootstrap/Pagination";
 import { Container } from "react-bootstrap";
 
 function IndexSelector() {
@@ -10,9 +10,12 @@ function IndexSelector() {
   };
 
   return (
-    <Container className='d-flex align-content-lg-center'>
-      <Pagination className='m-auto'>
-        <Pagination.Item active={activePage === 1} onClick={() => handlePageClick(1)}>
+    <Container className="d-flex align-content-lg-center">
+      <Pagination className="m-auto custom-pagination">
+        <Pagination.Item
+          active={activePage === 1}
+          onClick={() => handlePageClick(1)}
+        >
           {1}
         </Pagination.Item>
 
@@ -30,7 +33,10 @@ function IndexSelector() {
         })}
 
         <Pagination.Ellipsis />
-        <Pagination.Item active={activePage === 20} onClick={() => handlePageClick(20)}>
+        <Pagination.Item
+          active={activePage === 20}
+          onClick={() => handlePageClick(20)}
+        >
           {20}
         </Pagination.Item>
       </Pagination>

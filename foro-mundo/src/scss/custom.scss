@@ -9,10 +9,28 @@ $dark: #262626;
 $white: #f5f5f5;
 
 
+.custom-pagination .page-link {
+    color: $secondary; 
+    background-color: $primary; 
+    border-color: $secondary; 
+}
+
+.custom-pagination .page-link:hover {
+    color: $secondary; 
+    background-color: $light; 
+    border-color: $secondary; 
+}
+
+.custom-pagination .page-item.active .page-link {
+    color: $primary; 
+    background-color: $secondary; 
+    border-color: $secondary; 
+}
+
 .custom-link{
-    text-decoration: none; /* Ensures no underline on the link */
-    color: inherit; /* Maintains the default text color */
-    background-color: transparent; /* Default background color */
+    text-decoration: none; 
+    color: inherit; 
+    background-color: transparent; 
 }
 
 .custom-link-container:hover{

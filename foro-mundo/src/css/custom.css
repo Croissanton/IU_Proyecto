@@ -1,8 +1,26 @@
 @charset "UTF-8";
+.custom-pagination .page-link {
+  color: #002561;
+  background-color: #B4DBFC;
+  border-color: #002561;
+}
+
+.custom-pagination .page-link:hover {
+  color: #002561;
+  background-color: #e0dede;
+  border-color: #002561;
+}
+
+.custom-pagination .page-item.active .page-link {
+  color: #B4DBFC;
+  background-color: #002561;
+  border-color: #002561;
+}
+
 .custom-link {
-  text-decoration: none; /* Ensures no underline on the link */
-  color: inherit; /* Maintains the default text color */
-  background-color: transparent; /* Default background color */
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
 }
 
 .custom-link-container:hover {
