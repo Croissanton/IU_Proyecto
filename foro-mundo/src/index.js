@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage";
 import SearchPage from "./Pages/SearchPage";
+import PostPage from "./Pages/PostPage";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <SearchPage />,
+  },
+  {
+    path: "/post",
+    element: <PostPage />,
   },
 ]);
 
