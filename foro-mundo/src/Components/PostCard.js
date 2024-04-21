@@ -37,12 +37,12 @@ const PostCard = ({
                   <p>{res_num}</p>
                 </Col>
                 <Col className="m-auto">
-                  <h5>Number of Views</h5>
+                  <h5>Número de visualizaciones</h5>
                   <p>{view_num}</p>
                 </Col>
                 <Col className="m-auto">
                   <Row>
-                    <p>Ultimo mensaje:</p>
+                    <p>Último mensaje por:</p>
                   </Row>
                   <Row>
                     <p>{lm_author}</p>
