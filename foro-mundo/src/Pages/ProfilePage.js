@@ -12,12 +12,17 @@ function ProfilePage() {
 function ProfilePage() {
   return (
     <MainLayout>
-      <h1>Profile Page</h1>
       <div style={{ display: "flex"}}>
         <div className="m-auto">
-          <img src="https://via.placeholder.com/150" alt="profile" width="250" height="350" justifyContent="center"/>
+          <img src="https://via.placeholder.com/150" alt="profilePic" width="250" height="350" justifyContent="center"/>
           <div className="m-auto">
-            <button type="secondary" class="btn btn-primary">Change picture</button>
+            <input
+              type="file"
+              id="imageInput"
+              style={{ display: "none" }}
+              onChange={(e) => handleImageSelection(e.target.files)}
+            />
+            <button type="secondary" class="btn btn-primary" onClick={() => document.getElementById('imageInput').click()}>Change picture</button>
           </div>
         </div>
         <div className="m-auto" style={{ width: "60%", display:"flex", justifyContent:"flex-end"}}>
@@ -38,13 +43,13 @@ function ProfilePage() {
             <label for="inputPais" class="form-label">Pais</label>
             <input type="text" class="form-control" id="inputPais"></input>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <label for="inputCiduad" class="form-label">Ciudad</label>
             <input type="text" class="form-control" id="inputCiudad"></input>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-12">
             <label for="inputRedes" class="form-label">Redes</label>
-            <input type="text" class="form-control" id="inputRedes"></input>
+            <textarea class="form-control" id="inputRedes"></textarea>
           </div>
           <div class="col-12">
             <label for="inputDescripcion" class="form-label">Descripcion</label>
@@ -61,4 +66,12 @@ function ProfilePage() {
   );
 }
 
+function handleImageSelection(files) {
+  const image = files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.querySelector('img').src = e.target.result;
+  };
+  reader.readAsDataURL(image);
+}
 export default ProfilePage;
