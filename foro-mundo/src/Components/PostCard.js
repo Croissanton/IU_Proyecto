@@ -3,7 +3,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const PostCard = ({
-  topic,
+  titulo,
+  text,
   author,
   date,
   res_num,
@@ -12,7 +13,7 @@ const PostCard = ({
   lm_date,
 }) => {
   return (
-    <Link to={`/post/`} className="custom-link">
+    <Link to={`/post`} className="custom-link">
       <Row className="gy-3">
         <Col className="p-3 m-auto ">
           <Container className="border border-dark-subtle bg-light">
@@ -21,7 +22,11 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <h4>{topic}</h4>
+                      <h4>Título: {titulo}</h4>
+                    </Row>
+                    <Row>
+                      <h5>Texto</h5>
+                      <p>{text}</p>
                     </Row>
                     <Row>
                       <p>{author}</p>

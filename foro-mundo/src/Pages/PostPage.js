@@ -9,7 +9,8 @@ function PostPage() {
         {/* PostCard principal */}
       <div className="container-xxl my-3">
         <PostCard
-            topic={"buen foro :D"}
+            titulo={"buen foro :D"}
+            text={"Este es un foro muy bueno"}
             author={"Juan Jaun"}
             date={"18.10.1992"}
             lm_author={"Jose Jose"}

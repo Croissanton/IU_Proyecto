@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-const PostComment = ({ title, upvotes, downvotes, date }) => {
+const PostComment = ({ title, text, upvotes, downvotes, date }) => {
   return (
     <Row className="gy-3">
       <Col className="p-3 m-auto">
