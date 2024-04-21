@@ -1,14 +1,11 @@
- @import "node_modules/bootstrap/scss/functions";
- @import "node_modules/bootstrap/scss/variables";
- @import "node_modules/bootstrap/scss/mixins";
+$primary: #B4DBFC; 
+$secondary: #002561;
+$success: #00ad5c;
+$info: #df5a5b;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #e0dede;
+$dark: #262626;
+$white: #f5f5f5;
 
- $primary: #007bff; 
- $secondary: #6c757d;
- $success: #28a745;
- $info: #17a2b8;
- $warning: #ffc107;
- $danger: #dc3545;
- $light: #f8f9fa;
- $dark: #343a40;
-
- @import "node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
