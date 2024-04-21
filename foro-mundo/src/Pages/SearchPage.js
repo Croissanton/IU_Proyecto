@@ -1,17 +1,17 @@
 import React from "react";
 import MainLayout from "../layout/MainLayout.js";
-import Post from "../Components/Post.js";
+import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 
 function SearchPage() {
   return (
     <MainLayout>
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard />
       <IndexSelector />
     </MainLayout>
   );
