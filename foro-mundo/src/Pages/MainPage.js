@@ -7,31 +7,31 @@ function MainPage() {
   return (
     <MainLayout>
         <div className="container-xxl my-3">
-            <ForumCard>
+            <ForumCard onclick={() => {console.log("click")}}
                 topic={"General"}
                 post_num={124}
                 view_num={154367}
-            </ForumCard>
-            <ForumCard>
+            />
+            <ForumCard
                 topic={"Off-topic"}
                 post_num={64}
                 view_num={15436}
-            </ForumCard>
-            <ForumCard>
+            />
+            <ForumCard
                 topic={"Tecnología"}
                 post_num={59}
                 view_num={18567}
-            </ForumCard>
-            <ForumCard>
+            />
+            <ForumCard
                 topic={"Deportes"}
                 post_num={32}
                 view_num={24357}
-            </ForumCard>
-            <ForumCard>
+            />
+            <ForumCard
                 topic={"Cine"}
                 post_num={41}
                 view_num={23580}
-            </ForumCard>
+            />
             </div>
             <IndexSelector />
     </MainLayout>
