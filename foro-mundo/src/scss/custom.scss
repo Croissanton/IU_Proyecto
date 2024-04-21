@@ -8,4 +8,18 @@ $light: #e0dede;
 $dark: #262626;
 $white: #f5f5f5;
 
+
+.custom-link{
+    text-decoration: none; /* Ensures no underline on the link */
+    color: inherit; /* Maintains the default text color */
+    background-color: transparent; /* Default background color */
+}
+
+.custom-link-container:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+// $link-color: $secondary;
+// $link-hover-color: $primary;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
