@@ -95,15 +95,6 @@ const Header = forwardRef((props, ref) => {
                     className="bi bi-plus-circle"
                   ></i>
                 </Nav.Link>
-                <Nav.Link href="#">
-                  <i
-                    style={{
-                      fontSize: "1.5rem",
-                      color: "#002561",
-                    }}
-                    className="bi bi-bell"
-                  ></i>
-                </Nav.Link>
                 <Nav.Link href="/profile">
                   <i
                     style={{
