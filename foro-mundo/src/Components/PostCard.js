@@ -22,10 +22,9 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <h4>Título: {titulo}</h4>
+                      <h4>{titulo}</h4>
                     </Row>
                     <Row>
-                      <h5>Texto</h5>
                       <p>{text}</p>
                     </Row>
                     <Row>
