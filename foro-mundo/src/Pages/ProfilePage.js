@@ -39,7 +39,7 @@ function ProfilePage() {
               <label htmlFor="inputNombre4" className="form-label">
                 Nombre
               </label>
-              <input
+              <input required
                 type="text"
                 className="form-control"
                 id="inputNombre4"
@@ -49,7 +49,7 @@ function ProfilePage() {
               <label htmlFor="inputApellidos4" className="form-label">
                 Apellidos
               </label>
-              <input
+              <input required
                 type="text"
                 className="form-control"
                 id="inputApellidos4"
@@ -59,7 +59,7 @@ function ProfilePage() {
               <label htmlFor="inputFechaNacimiento" className="form-label">
                 Fecha de nacimiento
               </label>
-              <input
+              <input required
                 type="date"
                 className="form-control"
                 id="inputFechaNacimiento"
@@ -69,7 +69,7 @@ function ProfilePage() {
               <label htmlFor="inputPais" className="form-label">
                 Pais
               </label>
-              <input
+              <input required
                 type="text"
                 className="form-control"
                 id="inputPais"
@@ -79,7 +79,7 @@ function ProfilePage() {
               <label htmlFor="inputCiduad" className="form-label">
                 Ciudad
               </label>
-              <input
+              <input required
                 type="text"
                 className="form-control"
                 id="inputCiudad"
@@ -89,13 +89,13 @@ function ProfilePage() {
               <label htmlFor="inputRedes" className="form-label">
                 Redes
               </label>
-              <textarea className="form-control" id="inputRedes"></textarea>
+              <textarea required className="form-control" id="inputRedes"></textarea>
             </div>
             <div className="col-12">
               <label htmlFor="inputDescripcion" className="form-label">
                 Descripción
               </label>
-              <textarea
+              <textarea required
                 className="form-control"
                 id="inputDescripcion"
                 rows="3"
