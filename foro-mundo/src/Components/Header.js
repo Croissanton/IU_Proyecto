@@ -21,7 +21,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky-top">
+    <header>
       <Navbar
         expand="lg"
         className="bg-primary border-bottom border-dark-subtle border-1"
