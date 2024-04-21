@@ -80,7 +80,7 @@ const Header = () => {
                     className="bi bi-bell"
                   ></i>
                 </Nav.Link>
-                <Nav.Link href="#">
+                <Nav.Link href="/profile">
                   <i
                     style={{
                       fontSize: "1.5rem",
