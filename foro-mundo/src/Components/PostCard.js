@@ -12,7 +12,7 @@ const PostCard = ({
   lm_date,
 }) => {
   return (
-    <Link to={`/post/${topic}`} className="custom-link">
+    <Link to={`/post/`} className="custom-link">
       <Row className="gy-3">
         <Col className="p-3 m-auto ">
           <Container className="border border-dark-subtle bg-light">
