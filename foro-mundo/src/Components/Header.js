@@ -64,7 +64,7 @@ const Header = forwardRef((props, ref) => {
                 </Button>
               </Form>
               <Nav>
-                <Nav.Link href="create">
+                <Nav.Link href="/create">
                   <i
                     style={{
                       fontSize: "1.5rem",
