@@ -50,7 +50,15 @@ function PostPage() {
           downvotes={3}
           date={new Date()}
         />
+        <PostComment
+          title={"a mi no me gusta tanto la verdad"}
+          upvotes={2}
+          downvotes={5}
+          date={new Date()}
+        />
       </div>
+
+  
 
       <IndexSelector />
 
@@ -62,6 +70,7 @@ function PostPage() {
             <label htmlFor="commentInput" className="form-label">
             </label>
             <textarea required
+              rows={4}
               type="text"
               className="form-control"
               id="commentInput"

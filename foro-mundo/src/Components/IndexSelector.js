@@ -15,7 +15,6 @@ function IndexSelector() {
         <Pagination.Item active={activePage === 1} onClick={() => handlePageClick(1)}>
           {1}
         </Pagination.Item>
-        <Pagination.Ellipsis />
 
         {[...Array(5)].map((_, index) => {
           const pageNumber = index + 2;
