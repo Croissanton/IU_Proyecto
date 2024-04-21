@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ProfilePage from './Pages/ProfilePage';
+import SearchPage from './Pages/SearchPage';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
     path: "/profile",
     element: <ProfilePage />,
   },
+  {
+    path: "/search",
+    element: <SearchPage />,
+  },
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
