@@ -20,6 +20,24 @@ const Header = forwardRef((props, ref) => {
     }
   };
 
+  const [inputValue, setInputValue] = useState(""); // Step 1
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value); // Step 2
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!inputValue.trim()) {
+      alert("Please enter a search query."); // Optionally alert the user
+      return;
+    }
+    // Handle your search redirection here or call an API
+    console.log("Searching for:", inputValue);
+    // For redirect you might use useHistory from 'react-router-dom' or window.location
+    window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
+  };
+
   return (
     <div
       ref={ref}
@@ -45,6 +63,7 @@ const Header = forwardRef((props, ref) => {
             <Nav className="w-100 justify-content-between">
               <div></div> {/* Placeholder for left alignment */}
               <Form
+                onSubmit={handleSubmit}
                 className={`d-flex my-2 ${
                   expanded || isCollapsing ? "" : "w-50"
                 }`}
@@ -54,11 +73,14 @@ const Header = forwardRef((props, ref) => {
                   placeholder="Buscar..."
                   className="me-2"
                   aria-label="Search"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  required
                 />
                 <Button
                   variant="outline-secondary"
                   type="submit"
-                  href="/search"
+                  disabled={!inputValue.trim()}
                 >
                   <i className="bi bi-search"></i>
                 </Button>
