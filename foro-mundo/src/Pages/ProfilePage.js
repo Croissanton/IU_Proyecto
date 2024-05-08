@@ -43,6 +43,7 @@ function ProfilePage() {
                 type="text"
                 className="form-control"
                 id="inputNombre4"
+                placeholder="Tu nombre"
               ></input>
             </div>
             <div className="col-md-6">
@@ -53,6 +54,7 @@ function ProfilePage() {
                 type="text"
                 className="form-control"
                 id="inputApellidos4"
+                placeholder="Tus apellidos"
               ></input>
             </div>
             <div className="col-12">
@@ -63,6 +65,7 @@ function ProfilePage() {
                 type="date"
                 className="form-control"
                 id="inputFechaNacimiento"
+                placeholder="Tu fecha de nacimiento en formato dd/mm/aaaa"
               ></input>
             </div>
             <div className="col-md-6">
@@ -73,6 +76,7 @@ function ProfilePage() {
                 type="text"
                 className="form-control"
                 id="inputPais"
+                placeholder="El nombre de tu pais"
               ></input>
             </div>
             <div className="col-md-6">
@@ -83,13 +87,14 @@ function ProfilePage() {
                 type="text"
                 className="form-control"
                 id="inputCiudad"
+                placeholder="El nombre de tu ciudad"
               ></input>
             </div>
             <div className="col-md-12">
               <label htmlFor="inputRedes" className="form-label">
                 Redes
               </label>
-              <textarea required className="form-control" id="inputRedes"></textarea>
+              <textarea required className="form-control" id="inputRedes" placeholder="Describe cómo encontrarte en las redes sociales"></textarea>
             </div>
             <div className="col-12">
               <label htmlFor="inputDescripcion" className="form-label">
@@ -99,6 +104,7 @@ function ProfilePage() {
                 className="form-control"
                 id="inputDescripcion"
                 rows="3"
+                placeholder="Tu descripción de perfil"
               ></textarea>
             </div>
             <div className="col-12">
