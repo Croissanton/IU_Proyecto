@@ -8,9 +8,6 @@ function ProfilePublic() {
       <div style={{ display: "flex"}}>
         <div className="m-auto">
           <img src="https://via.placeholder.com/150" alt="profile" width="250" height="350" justifyContent="center"/>
-          <div className="m-auto">
-            <button type="secondary" class="btn btn-primary">Change picture</button>
-          </div>
         </div>
         <div className="m-auto" style={{ width: "60%", display:"flex", justifyContent:"flex-end"}}>
         <form class="row col-12 g-3">
@@ -41,9 +38,6 @@ function ProfilePublic() {
           <div class="col-12">
             <label for="inputDescripcion" class="form-label">Descripcion</label>
             <textarea class="form-control" id="inputDescripcion" rows="3" disabled placeholder="Enter your description"></textarea>
-          </div>
-          <div class="col-12" >
-            <button type="submit" class="btn btn-primary">Guardar</button>
           </div>
         </form>
           

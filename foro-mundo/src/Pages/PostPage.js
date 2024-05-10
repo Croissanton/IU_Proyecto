@@ -64,18 +64,21 @@ function PostPage() {
         <h3>Comentarios</h3>
         <PostComment
           title={"Que buen foro"}
+          author={"Juanito Golondrina"}
           upvotes={10}
           downvotes={5}
           date={new Date()}
         />
         <PostComment
           title={"Que mal foro"}
+          author={"Pepito Grillo"}
           upvotes={15}
           downvotes={3}
           date={new Date()}
         />
         <PostComment
           title={"a mi no me gusta tanto la verdad"}
+          author={"Paquito Palotes"}
           upvotes={2}
           downvotes={5}
           date={new Date()}
