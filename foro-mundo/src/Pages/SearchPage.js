@@ -3,10 +3,15 @@ import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
+import { useEffect } from "react";
 import BackButton from "../Components/BackButton.js";
 
 
 function SearchPage() {
+  useEffect(() => {
+    document.title = "Posts";
+  }, []);
+
   return (
     <MainLayout>
         <div className="container-xxl my-3">

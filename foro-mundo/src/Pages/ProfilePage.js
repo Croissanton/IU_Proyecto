@@ -1,9 +1,14 @@
 import BackButton from "../Components/BackButton.js";
 import MainLayout from "../layout/MainLayout.js";
 import React, {useState} from "react";
+import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 
 function ProfilePage() {
+  useEffect(() => {
+    document.title = "Perfil";
+  }, []);
+
   const [isEditing, setIsEditing] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 

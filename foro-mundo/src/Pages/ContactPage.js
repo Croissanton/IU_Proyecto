@@ -1,8 +1,13 @@
 import React from "react";
 import MainLayout from "../layout/MainLayout.js";
+import { useEffect } from "react";
 import BackButton from "../Components/BackButton.js";
 
 function ContactPage() {
+  useEffect(() => {
+    document.title = "Contacto";
+  }, []);
+
   return (
     <MainLayout>
       <BackButton />

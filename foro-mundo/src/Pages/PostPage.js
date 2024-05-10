@@ -4,9 +4,14 @@ import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
+import { useEffect } from "react";
 import BackButton from "../Components/BackButton.js";
 
 function PostPage() {
+  useEffect(() => {
+    document.title = "Post";
+  }, []);
+
   const [newComment, setNewComment] = useState(""); // Estado para almacenar el nuevo comentario
   const [characterCount, setCharacterCount] = useState(0); // Estado para almacenar el contador de caracteres
   const MAX_CHARACTERS = 500; // Número máximo de caracteres permitidos

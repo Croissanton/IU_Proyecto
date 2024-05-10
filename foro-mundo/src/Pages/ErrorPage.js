@@ -2,9 +2,14 @@ import React from "react";
 import MainLayout from "../layout/MainLayout.js";
 import NotFound from "../Components/NotFound.js";
 import { Container, Row, Col } from "react-bootstrap";
+import { useEffect } from "react";
 import BackButton from "../Components/BackButton.js";
 
 function ErrorPage() {
+  useEffect(() => {
+    document.title = "Error";
+  }, []);
+
   return (
     <MainLayout>
       <BackButton />

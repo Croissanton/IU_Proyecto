@@ -1,9 +1,14 @@
 import BackButton from "../Components/BackButton.js";
 import MainLayout from "../layout/MainLayout.js";
 import React from 'react';
+import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 
 function PostCreationPage() {
+  useEffect(() => {
+    document.title = "Crear Post";
+  }, []);
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">
