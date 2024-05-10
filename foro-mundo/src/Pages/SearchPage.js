@@ -3,16 +3,20 @@ import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
+import BackButton from "../Components/BackButton.js";
+
 
 function SearchPage() {
   return (
     <MainLayout>
         <div className="container-xxl my-3">
+        
           <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Foro</Breadcrumb.Item> {/* Aquí debería ir el nombre del topico */}
           </Breadcrumb>
         </div>
+        <BackButton />
         <div className="container-xxl my-3">
             <PostCard
                 titulo={"buen foro :D"}
