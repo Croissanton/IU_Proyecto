@@ -3,8 +3,13 @@ import MainLayout from "../layout/MainLayout.js";
 import ForumCard from "../Components/ForumCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
+import { useEffect } from "react";
 
 function MainPage() {
+  useEffect(() => {
+    document.title = "Foro Mundo";
+  }, []);
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">

@@ -1,7 +1,12 @@
 import MainLayout from "../layout/MainLayout.js";
 import React from 'react';
+import { useEffect } from "react";
 
 function ProfilePublic() {
+  useEffect(() => {
+    document.title = "Perfil";
+  }, []);
+
   return (
     <MainLayout>
       <h1>Profile Public</h1>

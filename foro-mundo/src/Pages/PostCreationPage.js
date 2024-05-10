@@ -1,7 +1,12 @@
 import MainLayout from "../layout/MainLayout.js";
 import React from 'react';
+import { useEffect } from "react";
 
 function PostCreationPage() {
+  useEffect(() => {
+    document.title = "Crear Post";
+  }, []);
+
   return (
     <MainLayout>
       <h1>Crear Post</h1>

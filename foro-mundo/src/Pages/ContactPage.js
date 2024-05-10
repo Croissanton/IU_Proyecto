@@ -1,7 +1,12 @@
 import React from "react";
 import MainLayout from "../layout/MainLayout.js";
+import { useEffect } from "react";
 
 function ContactPage() {
+  useEffect(() => {
+    document.title = "Contacto";
+  }, []);
+
   return (
     <MainLayout>
       <h1>Contacto</h1>
