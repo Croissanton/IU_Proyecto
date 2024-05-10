@@ -1,9 +1,18 @@
+import BackButton from "../Components/BackButton.js";
 import MainLayout from "../layout/MainLayout.js";
 import React from 'react';
+import { Breadcrumb } from "react-bootstrap";
 
 function PostCreationPage() {
   return (
     <MainLayout>
+      <div className="container-xxl my-3">
+        <Breadcrumb>
+        <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item active>Crear Post</Breadcrumb.Item> {/**/}
+        </Breadcrumb>
+      </div>
+      <BackButton />
       <h1>Crear Post</h1>
       <div style={{ display: "flex"}}>
       <div className="m-auto" style={{ width: "60%", display:"flex", justifyContent:"flex-end"}}>

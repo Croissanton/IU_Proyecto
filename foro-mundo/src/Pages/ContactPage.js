@@ -1,9 +1,11 @@
 import React from "react";
 import MainLayout from "../layout/MainLayout.js";
+import BackButton from "../Components/BackButton.js";
 
 function ContactPage() {
   return (
     <MainLayout>
+      <BackButton />
       <h1>Contacto</h1>
       <p>
           Si tienes alguna duda o sugerencia, no dudes en ponerte en contacto con

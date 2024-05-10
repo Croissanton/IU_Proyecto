@@ -2,6 +2,8 @@ import React from "react";
 import Cookies from "universal-cookie";
 import { useState } from "react";
 import Nav from "react-bootstrap/Nav";
+import BackButton from "../Components/BackButton";
+import { Breadcrumb } from "react-bootstrap";
 
 
 function LoginPage() {
@@ -43,6 +45,13 @@ function LoginPage() {
 
     return (
         <div>
+     <BackButton />
+      <div className="container-xxl my-3">
+        <Breadcrumb>
+        <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item active>Login</Breadcrumb.Item> {/* */}
+        </Breadcrumb>
+      </div>
             <h1>Login</h1>
             {
             cookies.get("user") !== undefined ?  (

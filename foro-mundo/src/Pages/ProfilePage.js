@@ -1,5 +1,7 @@
+import BackButton from "../Components/BackButton.js";
 import MainLayout from "../layout/MainLayout.js";
 import React, {useState} from "react";
+import { Breadcrumb } from "react-bootstrap";
 
 function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
@@ -36,6 +38,13 @@ function ProfilePage() {
 
   return (
     <MainLayout>
+      <BackButton />
+      <div className="container-xxl my-3">
+        <Breadcrumb>
+        <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item> {/* */}
+        </Breadcrumb>
+      </div>
       <h1>Mi Perfil</h1>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
