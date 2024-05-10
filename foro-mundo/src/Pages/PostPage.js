@@ -5,6 +5,7 @@ import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { useEffect } from "react";
+import BackButton from "../Components/BackButton.js";
 
 function PostPage() {
   useEffect(() => {
@@ -40,13 +41,15 @@ function PostPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
+      
+
           <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item href="./search">Foro</Breadcrumb.Item> {/* Aquí debería ir el nombre del topico */}
           <Breadcrumb.Item active>Post</Breadcrumb.Item> {/* Aquí debería ir el nombre del post */}
           </Breadcrumb>
       </div>
-      
+      <BackButton />
       {/* PostCard principal */}
       <div className="container-xxl my-3">
         <PostCard

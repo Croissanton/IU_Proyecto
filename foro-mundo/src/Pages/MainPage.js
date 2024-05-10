@@ -4,6 +4,7 @@ import ForumCard from "../Components/ForumCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
 import { useEffect } from "react";
+import BackButton from "../Components/BackButton.js";
 
 function MainPage() {
   useEffect(() => {
@@ -12,11 +13,13 @@ function MainPage() {
 
   return (
     <MainLayout>
-      <div className="container-xxl my-3">
-          <Breadcrumb>
-          <Breadcrumb.Item href="./">Inicio</Breadcrumb.Item>
-          </Breadcrumb>
+      
+      <div className="container-xxl my-2 mx-3">
+        <Breadcrumb>
+          <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
+        </Breadcrumb>
       </div>
+      <BackButton />
 
         <div className="container-xxl my-3">
         <ForumCard topic={"General"} post_num={124} view_num={154367} />
