@@ -4,9 +4,13 @@ import { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import BackButton from "../Components/BackButton";
 import { Breadcrumb } from "react-bootstrap";
+import { useEffect } from "react";
 
 
 function LoginPage() {
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
     
   //Creamos una instancia de la clase Cookies
   const cookies = new Cookies();
