@@ -22,9 +22,11 @@ function MainLayout({ children }) {
   }, [controlRef]); // Dependency array includes `controlRef` to react on updates
 
   return (
-    <div className="m-5" style={{ padding: `${padding}px` }}>
-      <Header ref={controlRef} />
-      {children}
+    <div>
+      <div className="m-5" style={{ padding: `${padding}px`}}>
+        <Header ref={controlRef} />
+        {children}
+      </div>
       <Footer />
     </div>
   );

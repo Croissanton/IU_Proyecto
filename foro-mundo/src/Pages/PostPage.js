@@ -6,10 +6,20 @@ import IndexSelector from "../Components/IndexSelector.js";
 
 function PostPage() {
   const [newComment, setNewComment] = useState(""); // Estado para almacenar el nuevo comentario
+  const [characterCount, setCharacterCount] = useState(0); // Estado para almacenar el contador de caracteres
+  const MAX_CHARACTERS = 500; // Número máximo de caracteres permitidos
 
   const handleInputChange = (event) => {
     setNewComment(event.target.value); // Actualizar el estado del nuevo comentario al escribir en la caja de texto
+    setCharacterCount(event.target.value.length); // Actualizar el contador de caracteres (opcional)
+    handleDisableButton();
   };
+
+  const handleDisableButton = () => {
+    var button = document.getElementById("publicar_button")
+    button.disabled = characterCount === 0 || characterCount > MAX_CHARACTERS;
+  }
+
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Evitar que el formulario se envíe y la página se recargue
@@ -17,6 +27,8 @@ function PostPage() {
     console.log("Nuevo comentario:", newComment);
     // Limpia el estado del nuevo comentario después de enviar el formulario
     setNewComment("");
+    setCharacterCount(0);
+    handleDisableButton();
   };
 
   return (
@@ -77,8 +89,9 @@ function PostPage() {
               value={newComment}
               onChange={handleInputChange}
             />
+            <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary" id="publicar_button" disabled>
             Publicar
           </button>
         </form>
