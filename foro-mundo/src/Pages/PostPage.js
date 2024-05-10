@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Breadcrumb } from "react-bootstrap"; 
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
@@ -33,6 +34,14 @@ function PostPage() {
 
   return (
     <MainLayout>
+      <div className="container-xxl my-3">
+          <Breadcrumb>
+          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="./search">Foro</Breadcrumb.Item> {/* Aquí debería ir el nombre del topico */}
+          <Breadcrumb.Item active>Post</Breadcrumb.Item> {/* Aquí debería ir el nombre del post */}
+          </Breadcrumb>
+      </div>
+      
       {/* PostCard principal */}
       <div className="container-xxl my-3">
         <PostCard
