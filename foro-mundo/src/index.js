@@ -10,6 +10,7 @@ import PostPage from "./Pages/PostPage";
 import PostCreationPage from "./Pages/PostCreationPage";
 import ErrorPage from "./Pages/ErrorPage";
 import ContactPage from "./Pages/ContactPage";
+import ProfilePublic from "./Pages/ProfilePublic";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <ProfilePage />,
+  },
+  {
+    path: "/profile/id",
+    element: <ProfilePublic />,
   },
   {
     path: "/search",
