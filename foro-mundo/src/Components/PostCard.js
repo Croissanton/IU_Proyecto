@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const PostCard = ({
   titulo,
@@ -27,8 +28,10 @@ const PostCard = ({
                     <Row>
                       <p>{text}</p>
                     </Row>
-                    <Row>
-                      <p>{author}</p>
+                    <Row onClick={(e) => e.stopPropagation()}>
+                      <NavLink to={`/profile/id`} style={{ color: "inherit" }}>
+                        <p>{author}</p>
+                      </NavLink>
                     </Row>
                     <Row>
                       <p>{date}</p>

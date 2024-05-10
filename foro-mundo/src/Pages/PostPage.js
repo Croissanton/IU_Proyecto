@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Breadcrumb } from "react-bootstrap"; 
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
+import BackButton from "../Components/BackButton.js";
 
 function PostPage() {
   const [newComment, setNewComment] = useState(""); // Estado para almacenar el nuevo comentario
@@ -33,6 +35,16 @@ function PostPage() {
 
   return (
     <MainLayout>
+      <div className="container-xxl my-3">
+      
+
+          <Breadcrumb>
+          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item href="./search">Foro</Breadcrumb.Item> {/* Aquí debería ir el nombre del topico */}
+          <Breadcrumb.Item active>Post</Breadcrumb.Item> {/* Aquí debería ir el nombre del post */}
+          </Breadcrumb>
+      </div>
+      <BackButton />
       {/* PostCard principal */}
       <div className="container-xxl my-3">
         <PostCard
@@ -52,18 +64,21 @@ function PostPage() {
         <h3>Comentarios</h3>
         <PostComment
           title={"Que buen foro"}
+          author={"Juanito Golondrina"}
           upvotes={10}
           downvotes={5}
           date={new Date()}
         />
         <PostComment
           title={"Que mal foro"}
+          author={"Pepito Grillo"}
           upvotes={15}
           downvotes={3}
           date={new Date()}
         />
         <PostComment
           title={"a mi no me gusta tanto la verdad"}
+          author={"Paquito Palotes"}
           upvotes={2}
           downvotes={5}
           date={new Date()}
