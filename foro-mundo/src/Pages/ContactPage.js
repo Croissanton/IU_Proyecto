@@ -11,6 +11,12 @@ function ContactPage() {
   return (
     <MainLayout>
       <BackButton />
+      <div className="container-xxl my-3">
+        <Breadcrumb>
+        <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item active>Contacto</Breadcrumb.Item> {/* */}
+        </Breadcrumb>
+      </div>
       <h1>Contacto</h1>
       <p>
           Si tienes alguna duda o sugerencia, no dudes en ponerte en contacto con
