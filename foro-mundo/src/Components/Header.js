@@ -5,8 +5,10 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { useState, forwardRef } from "react";
+import Cookies from "universal-cookie";
 
 const Header = forwardRef((props, ref) => {
+  const cookies = new Cookies();
   const [expanded, setExpanded] = useState(false);
   const [isCollapsing, setIsCollapsing] = useState(false); // New state to track collapsing delay
 
@@ -37,6 +39,10 @@ const Header = forwardRef((props, ref) => {
     // For redirect you might use useHistory from 'react-router-dom' or window.location
     window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
   };
+
+  const handleLogout = () => {
+    cookies.remove("user");
+  }
 
   return (
     <div
@@ -104,6 +110,33 @@ const Header = forwardRef((props, ref) => {
                     className="bi bi-person-circle"
                   ></i>
                 </Nav.Link>
+                {
+                  cookies.get("user") === undefined ? (
+                <Navbar.Brand
+                  href="/login"
+                  className="text-secondary m-auto"
+                  style={{
+                    fontSize: "1.3rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Iniciar Sesión
+                </Navbar.Brand>
+                
+                  ) : (
+                //cookies.remove("user"),
+                <Navbar.Brand onClick={handleLogout}
+                  href="/"
+                  className="text-secondary m-auto"
+                  style={{
+                    fontSize: "1.3rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cerrar Sesión
+                </Navbar.Brand>
+                  )
+                }
               </Nav>
             </Nav>
           </Navbar.Collapse>

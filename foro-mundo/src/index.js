@@ -9,6 +9,7 @@ import SearchPage from "./Pages/SearchPage";
 import PostPage from "./Pages/PostPage";
 import PostCreationPage from "./Pages/PostCreationPage";
 import ErrorPage from "./Pages/ErrorPage";
+import LoginPage from "./Pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <PostCreationPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     path: "*",
