@@ -13,15 +13,15 @@ function MainPage() {
 
   return (
     <MainLayout>
-      
-      <div className="container-xxl my-2 mx-3">
+      <BackButton />
+
+      <div className="container-xxl my-2">
         <Breadcrumb>
           <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <BackButton />
 
-        <div className="container-xxl my-3">
+      <div className="container-xxl my-3">
         <ForumCard topic={"General"} post_num={124} view_num={154367} />
         <ForumCard topic={"Off-topic"} post_num={64} view_num={15436} />
         <ForumCard topic={"Tecnología"} post_num={59} view_num={18567} />
