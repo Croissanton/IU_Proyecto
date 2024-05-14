@@ -162,7 +162,7 @@ const Messenger = () => {
             </div>
           ))}
         </div>
-        <Form className="p-3 border-top border-secondary-subtle">
+        <Form className="p-3 border-top border-secondary-subtle" >
           <InputGroup>
             <FormControl
               className="border-secondary-subtle"

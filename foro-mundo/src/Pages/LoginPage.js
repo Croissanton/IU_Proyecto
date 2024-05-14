@@ -25,9 +25,10 @@ function LoginPage() {
     if (username === "usuario" && password === "contraseña") {
       const userData = {
         username: "usuario",
+        password: "contraseña",
         name: "Juan",
         lastName: "Perez",
-        birthDate: "01/01/1990",
+        birthDate: "1990-01-01",
         country: "Mexico",
         city: "CDMX",
         socialMedia: "https://www.facebook.com/juanperez",

@@ -213,7 +213,6 @@ const Header = forwardRef((props, ref) => {
                   Iniciar Sesión
                 </Nav.Link>
               ) : (
-                //cookies.remove("user"),
                 <Nav.Link
                   onClick={handleLogout}
                   href="/"
@@ -225,6 +224,20 @@ const Header = forwardRef((props, ref) => {
                 >
                   Cerrar Sesión
                 </Nav.Link>
+              )}
+              {cookies.get("user") === undefined ? (
+                <Nav.Link
+                  href="/register"
+                  className="text-secondary m-auto custom-link"
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Registrarse
+                </Nav.Link>
+              ) : (
+                <div></div>
               )}
             </Nav>
           </Nav>
