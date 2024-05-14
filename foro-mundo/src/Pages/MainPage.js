@@ -4,7 +4,6 @@ import ForumCard from "../Components/ForumCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
 import { useEffect } from "react";
-import BackButton from "../Components/BackButton.js";
 
 function MainPage() {
   useEffect(() => {

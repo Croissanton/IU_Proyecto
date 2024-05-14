@@ -5,7 +5,6 @@ import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { useEffect } from "react";
-import BackButton from "../Components/BackButton.js";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import ToastMessage from "../Components/ToastMessage";
 
