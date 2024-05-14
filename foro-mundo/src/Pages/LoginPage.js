@@ -19,6 +19,8 @@ function LoginPage() {
     // Validar credenciales, por ejemplo:
     if (username === "usuario" && password === "contraseña") {
       const user = {
+        username: "usuario",
+        password: "contraseña",
         name: "Juan",
         lastName: "Perez",
         birthDate: "01/01/1990",
@@ -50,8 +52,8 @@ function LoginPage() {
             <label htmlFor="password" className="form-label">Contraseña</label>
             <input type="password" className="form-control form-control-sm" required value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
           </div>
-          <button onClick={login} className="btn btn-primary btn-sm">Iniciar Sesión</button> {" "}
-          <button onClick={() => window.location.href = "/register" } className="btn btn-primary btn-sm">Registrarse</button>
+          <button onClick={login} className="btn btn-primary text-secondary border border-secondary-subtle m-3">Iniciar Sesión</button> {" "}
+          <button onClick={() => window.location.href = "/register" } className="btn btn-primary text-secondary border border-secondary-subtle m-3">Registrarse</button>
           <BackButton />
         </div>
       </div>
