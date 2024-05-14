@@ -22,7 +22,7 @@ function SearchPage() {
       </div>
       <div className="row justify-content-end">
         <div className="col-auto">
-          <Link to="/profile" className="btn btn-primary">
+          <Link to="/create" className="btn btn-primary">
             Crear Nuevo Post
           </Link>
         </div>
