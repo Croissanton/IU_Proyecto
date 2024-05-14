@@ -7,21 +7,23 @@ import Cookies from "universal-cookie";
 function ProfilePage() {
   useEffect(() => {
     document.title = "Perfil";
-    fetchData(); // Fetch data when the component mounts
   }, []);
+
+  const cookies = new Cookies();
+  const cookieUser = cookies.get("user"); 
 
   const [toastMessage, setToastMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    nombre: "",
-    apellidos: "",
-    fechaNacimiento: "",
-    pais: "",
-    ciudad: "",
-    redes: "",
-    descripcion: "",
+    nombre: cookieUser ? cookieUser.name : "",
+    apellidos: cookieUser ? cookieUser.lastName : "",
+    fechaNacimiento: cookieUser ? cookieUser.birthDate : "",
+    pais: cookieUser ? cookieUser.country : "",
+    ciudad: cookieUser ? cookieUser.city : "",
+    redes: cookieUser ? cookieUser.socialMedia : "",
+    descripcion: cookieUser ? cookieUser.description : "",
   });
 
   const handleInputChange = (e) => {
@@ -60,13 +62,6 @@ function ProfilePage() {
     }
   };
 
-  const fetchData = () => {
-    const cookies = new Cookies();
-    const profile = cookies.get("user",{path:"/"});
-    if (profile) {
-      setProfileData(profile);
-    }
-  };
 
   return (
     <MainLayout>
