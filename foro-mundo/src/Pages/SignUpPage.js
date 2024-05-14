@@ -45,35 +45,35 @@ function SignUpPage() {
           <p>Por favor, completa el siguiente formulario para registrarte.</p>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Nombre de usuario</label>
-            <input type="text" className="form-control form-control-sm" required name="username" value={user.username} onChange={handleInputChange} required />
+            <input type="text" className="form-control form-control-sm" name="username" value={user.username} onChange={handleInputChange} required />
             <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control form-control-sm" required name="password" value={user.password} onChange={handleInputChange} required />
+            <input type="password" className="form-control form-control-sm" name="password" value={user.password} onChange={handleInputChange} required />
             <label htmlFor="name" className="form-label">Nombre</label>
-            <input type="text" className="form-control form-control-sm" required name="name" value={user.name} onChange={handleInputChange} required />
+            <input type="text" className="form-control form-control-sm" name="name" value={user.name} onChange={handleInputChange} required />
           </div>
           <div className="mb-3">
-            <label htmlFor="lastName" className="form-label">Apellidos</label>
-            <input type="text" className="form-control form-control-sm" required name="lastName" value={user.lastName} onChange={handleInputChange} required />
+            <label htmlFor="lastName" className="form-label">Apellido</label>
+            <input type="text" className="form-control form-control-sm" name="lastName" value={user.lastName} onChange={handleInputChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="birthDate" className="form-label">Fecha de Nacimiento</label>
-            <input type="date" className="form-control form-control-sm" required name="birthDate" value={user.birthDate} onChange={handleInputChange} required />
+            <input type="date" className="form-control form-control-sm" name="birthDate" value={user.birthDate} onChange={handleInputChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="country" className="form-label">País</label>
-            <input type="text" className="form-control form-control-sm" required name="country" value={user.country} onChange={handleInputChange} required />
+            <input type="text" className="form-control form-control-sm" name="country" value={user.country} onChange={handleInputChange}/>
           </div>
           <div className="mb-3">
-            <label htmlFor="city" className="form-label">Ciudad (Opcional)</label>
-            <input type="text" className="form-control form-control-sm" name="city" value={user.city} onChange={handleInputChange} required />
+            <label htmlFor="city" className="form-label">Ciudad</label>
+            <input type="text" className="form-control form-control-sm" name="city" value={user.city} onChange={handleInputChange}/>
           </div>
           <div className="mb-3">
             <label htmlFor="socialMedia" className="form-label">Redes Sociales (Opcional)</label>
-            <input type="text" className="form-control form-control-sm" name="socialMedia" value={user.socialMedia} onChange={handleInputChange} required />
+            <input type="text" className="form-control form-control-sm" name="socialMedia" value={user.socialMedia} onChange={handleInputChange}/>
           </div>
           <div className="mb-3">
             <label htmlFor="description" className="form-label">Descripción (Opcional)</label>
-            <textarea className="form-control form-control-sm" name="description" value={user.description} onChange={handleInputChange} required />
+            <textarea className="form-control form-control-sm" name="description" value={user.description} onChange={handleInputChange}/>
           </div>
           <button onClick={register} className="btn btn-primary text-secondary border border-secondary-subtle m-3">Registrarse</button>
           <BackButton />
