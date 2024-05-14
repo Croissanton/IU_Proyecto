@@ -1,12 +1,15 @@
 $primary: #B4DBFC; 
 $secondary: #002561;
 $success: #00ad5c;
-$info: #df5a5b;
+$info: #7eb5be;
 $warning: #ffc107;
 $danger: #dc3545;
 $light: #e0dede;
 $dark: #262626;
 $white: #f5f5f5;
+$secondary-subtle: var(--bs-secondary-border-subtle);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 
 body, html {
@@ -14,7 +17,7 @@ body, html {
   margin: 0;
 }
 
-#root { /* assuming your root div that React attaches to has id 'root' */
+#root {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -23,19 +26,19 @@ body, html {
 .custom-pagination .page-link {
     color: $secondary; 
     background-color: $primary; 
-    border-color: $secondary; 
+    border-color: $secondary-subtle; 
 }
 
 .custom-pagination .page-link:hover {
     color: $secondary; 
     background-color: $light; 
-    border-color: $secondary; 
+    border-color: $secondary-subtle; 
 }
 
 .custom-pagination .page-item.active .page-link {
     color: $primary; 
     background-color: $secondary; 
-    border-color: $secondary; 
+    border-color: $secondary-subtle; 
 }
 
 .custom-link{
@@ -48,7 +51,29 @@ body, html {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.custom-icon {
+    font-size: 1.5rem;
+    color: $secondary;
+    transition: color 0.3s;
+    &:hover {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+.custom-button {
+    background-color: $light; 
+    text-decoration: none;
+
+    &.active {
+      background-color: $info;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+
 // $link-color: $secondary;
 // $link-hover-color: $primary;
 
-@import "../../node_modules/bootstrap/scss/bootstrap";

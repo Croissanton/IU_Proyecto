@@ -13,11 +13,10 @@ function ErrorPage() {
 
   return (
     <MainLayout>
-      <BackButton />
       <div className="container-xxl my-3">
         <Breadcrumb>
-        <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
+          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
         </Breadcrumb>
       </div>
       <Container>

@@ -43,8 +43,7 @@ function LoginPage() {
 
         <div className="login-container text-center">
           <h1>Bienvenido</h1>
-          <p>Por favor, inicia sesión para continuar. O en cambio, <a href="/signup">regístrese</a>.</p>
-        
+          <p>Por favor, inicia sesión para continuar.</p>
           <div className="mb-3">
             <input type="text" className="form-control form-control-sm small-input" placeholder="Nombre de usuario" value={username} onChange={(e) => setUsername(e.target.value)} style={{ marginBottom: "0.5rem" }} />
           </div>

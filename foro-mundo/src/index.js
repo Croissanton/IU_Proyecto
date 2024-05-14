@@ -12,6 +12,7 @@ import ErrorPage from "./Pages/ErrorPage";
 import LoginPage from "./Pages/LoginPage";
 import ContactPage from "./Pages/ContactPage";
 import ProfilePublic from "./Pages/ProfilePublic";
+import MessengerPage from "./Pages/MessengerPage";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <ContactPage />,
+  },
+  {
+    path: "/messenger",
+    element: <MessengerPage />,
   },
   {
     path: "*",
