@@ -29,6 +29,7 @@ function LoginPage() {
       };
       cookies.set("user", user, { path: "/" });
       setUser(user);
+      window.location.href = "/";
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
     }
