@@ -17,13 +17,17 @@ function ProfilePage() {
   const [showToast, setShowToast] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    nombre: cookieUser ? cookieUser.name : "",
-    apellidos: cookieUser ? cookieUser.lastName : "",
-    fechaNacimiento: cookieUser ? cookieUser.birthDate : "",
-    pais: cookieUser ? cookieUser.country : "",
-    ciudad: cookieUser ? cookieUser.city : "",
-    redes: cookieUser ? cookieUser.socialMedia : "",
-    descripcion: cookieUser ? cookieUser.description : "",
+    username: cookieUser ? cookieUser.username : "",
+    password: cookieUser ? cookieUser.password : "",
+    name: cookieUser ? cookieUser.name : "",
+    lastName: cookieUser ? cookieUser.lastName : "",
+    birthDate: cookieUser ? cookieUser.birthDate : "",
+    country: cookieUser ? cookieUser.country : "",
+    city: cookieUser ? cookieUser.city : "",
+    socialMedia: cookieUser ? cookieUser.socialMedia : "",
+    description: cookieUser ? cookieUser.description : "",
+    imageInput: cookieUser ? cookieUser.image : "",
+
   });
 
   const handleInputChange = (e) => {
@@ -36,15 +40,12 @@ function ProfilePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(profileData).every((value) => value.trim() !== "")) {
-      console.log("Submitting Data:", profileData);
-      setIsEditing(false); // Disable editing mode on successful validation and submission
-      setToastColor("bg-success");
-      setToastMessage("Se han guardado los cambios!");
-      setShowToast(true);
-    } else {
-      alert("Completa todos los campos.");
-    }
+    console.log("Submitting Data:", profileData);
+    cookies.set("user", profileData, { path: "/" });
+    setIsEditing(false); // Disable editing mode on successful validation and submission
+    setToastColor("bg-success");
+    setToastMessage("Se han guardado los cambios!");
+    setShowToast(true);
   };
 
   const handleCancel = () => {
@@ -59,6 +60,7 @@ function ProfilePage() {
         document.querySelector("img").src = e.target.result;
       };
       reader.readAsDataURL(file);
+      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
     }
   };
 
@@ -85,6 +87,7 @@ function ProfilePage() {
             <input
               type="file"
               id="imageInput"
+              value={profileData.imageInput}
               style={{ display: "none" }}
               onChange={handleImageSelection}
             />
@@ -105,56 +108,63 @@ function ProfilePage() {
         >
           <form className="row col-12 g-3" onSubmit={handleSubmit}>
             <InputComponent
-              id="nombre"
+              id="name"
               label="Nombre"
-              value={profileData.nombre}
+              value={profileData.name}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={true}
             />
             <InputComponent
-              id="apellidos"
+              id="lastName"
               label="Apellidos"
-              value={profileData.apellidos}
+              value={profileData.lastName}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={true}
             />
             <InputComponent
-              id="fechaNacimiento"
+              id="birthDate"
               type="date"
               label="Fecha de Nacimiento"
-              value={profileData.fechaNacimiento}
+              value={profileData.birthDate}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={true}
             />
             <InputComponent
-              id="pais"
+              id="country"
               label="País"
-              value={profileData.pais}
+              value={profileData.country}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={true}
             />
             <InputComponent
-              id="ciudad"
+              id="city"
               label="Ciudad"
-              value={profileData.ciudad}
+              value={profileData.city}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={false}
             />
             <InputComponent
-              id="redes"
+              id="socialMedia"
               label="Redes"
               type="textarea"
-              value={profileData.redes}
+              value={profileData.socialMedia}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={false}
             />
             <InputComponent
-              id="descripcion"
+              id="description"
               label="Descripción"
               type="textarea"
-              value={profileData.descripcion}
+              value={profileData.description}
               onChange={handleInputChange}
               readOnly={!isEditing}
+              required={false}
             />
 
             <div className="col-12">
@@ -166,21 +176,21 @@ function ProfilePage() {
                   Editar
                 </button>
               ) : (
-                <>
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary">
-                    Guardar
-                  </button>
-                  {"   "}
-                  <button
-                    type="button"
-                    className="btn btn-light"
-                    onClick={handleCancel}
-                  >
-                    Cancelar
-                  </button>
-                </>
+              <div className="col-12">
+                <button 
+                  type="submit" 
+                  className="btn btn-primary"
+                  style={{ marginRight: "10px" }}>
+                  Guardar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-light"
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </button>
+              </div>
               )}
             </div>
 
@@ -204,6 +214,7 @@ function InputComponent({
   value,
   onChange,
   readOnly,
+  required,
 }) {
   return (
     <div className="col-md-6">
@@ -214,22 +225,20 @@ function InputComponent({
         <textarea
           className="form-control"
           id={id}
-          placeholder={`Tu ${label.toLowerCase()}`}
           value={value}
           onChange={onChange}
           readOnly={readOnly}
-          required
+          required={required}
         ></textarea>
       ) : (
         <input
           type={type}
           className="form-control"
           id={id}
-          placeholder={`Tu ${label.toLowerCase()}`}
           value={value}
           onChange={onChange}
           readOnly={readOnly}
-          required
+          required={required}
         />
       )}
     </div>
