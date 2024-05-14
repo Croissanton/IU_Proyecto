@@ -1,7 +1,6 @@
 import React from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { useEffect } from "react";
-import BackButton from "../Components/BackButton.js";
 import { Breadcrumb } from "react-bootstrap";
 
 function ContactPage() {
