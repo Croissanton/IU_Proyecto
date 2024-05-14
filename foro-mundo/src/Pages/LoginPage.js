@@ -1,8 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import Cookies from "universal-cookie";
-import { useState } from "react";
-import Nav from "react-bootstrap/Nav";
-import BackButton from "../Components/BackButton";
 import { Breadcrumb } from "react-bootstrap";
 import { useEffect } from "react";
 
@@ -11,69 +8,54 @@ function LoginPage() {
   useEffect(() => {
     document.title = "Login";
   }, []);
-    
-  //Creamos una instancia de la clase Cookies
+
   const cookies = new Cookies();
+  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  //Inicializamos el estado del usuario
-  const[user , setUser] = useState(null);
-
-  //Función para manejar el evento del botón de login
   const login = () => {
-    //Creamos un objeto con los datos del usuario
-    const user = {
-      name: "Juan",
-      lastName: "Perez",
-      birthDate: "01/01/1990",
-      country: "Mexico",
-      city: "CDMX",
-      socialMedia: "https://www.facebook.com/juanperez",
-      description: "Soy un desarrollador web"
-    };
-
-    //Guardamos el objeto en una cookie
-    cookies.set("user", user, {path: "/"});
-
-    //Actualizamos el estado del usuario
-    setUser(user);
+    // Validar credenciales, por ejemplo:
+    if (username === "usuario" && password === "contraseña") {
+      const user = {
+        name: "Juan",
+        lastName: "Perez",
+        birthDate: "01/01/1990",
+        country: "Mexico",
+        city: "CDMX",
+        socialMedia: "https://www.facebook.com/juanperez",
+        description: "Soy un desarrollador web"
+      };
+      cookies.set("user", user, { path: "/" });
+      setUser(user);
+    } else {
+      alert("Nombre de usuario o contraseña incorrectos.");
+    }
   }
 
-    //Función para manejar el evento del botón de logout
-    const logout = () => {
-      //Eliminamos la cookie
-      cookies.remove("user");
-  
-      //Actualizamos el estado del usuario
-      setUser(null);
-    }
-
-    return (
-        <div>
-     <BackButton />
-      <div className="container-xxl my-3">
+  return (
+    <div className="container-fluid d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+      <div className="container-sm">
         <Breadcrumb>
-        <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item active>Login</Breadcrumb.Item> {/* */}
+          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item active>Login</Breadcrumb.Item>
         </Breadcrumb>
-      </div>
-            <h1>Login</h1>
-            {
-            cookies.get("user") !== undefined ?  (
-                // El botón debe llevar al usuario a MainPage con href = "/"
-                <div>
-                <p>Bienvenido {user.name} {user.lastName}</p>
-                <Nav.Link href="/">
-                    <button onClick={logout}>Logout</button>
-                </Nav.Link>
-                </div>
-            ) : (
-                <Nav.Link href="/">
-                    <button onClick={login}>Login</button>
-                </Nav.Link>
-            )
-            }
-        </div>
 
-        );
+        <div className="login-container text-center">
+          <h1>Bienvenido</h1>
+          <p>Por favor, inicia sesión para continuar. O en cambio, <a href="/signup">regístrese</a>.</p>
+        
+          <div className="mb-3">
+            <input type="text" className="form-control form-control-sm small-input" placeholder="Nombre de usuario" value={username} onChange={(e) => setUsername(e.target.value)} style={{ marginBottom: "0.5rem" }} />
+          </div>
+          <div className="mb-3">
+            <input type="password" className="form-control form-control-sm small-input" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: "0.5rem" }} />
+          </div>
+          <button onClick={login} className="btn btn-primary btn-sm">Iniciar Sesión</button>
+        </div>
+      </div>
+    </div>
+  );
 }
-    export default LoginPage;
+
+export default LoginPage;
