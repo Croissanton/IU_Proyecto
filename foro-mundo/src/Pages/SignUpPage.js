@@ -39,45 +39,47 @@ function SignUpPage() {
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Registro</Breadcrumb.Item>
         </Breadcrumb>
+        <form className="row col-12 g-3" onSubmit={register} action="/">
+            <div className="login-container text-center">
 
-        <div className="login-container text-center">
-          <h1>Registro</h1>
-          <p>Por favor, completa el siguiente formulario para registrarte.</p>
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">Nombre de usuario</label>
-            <input type="text" className="form-control form-control-sm" name="username" value={user.username} onChange={handleInputChange} required />
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control form-control-sm" name="password" value={user.password} onChange={handleInputChange} required />
-            <label htmlFor="name" className="form-label">Nombre</label>
-            <input type="text" className="form-control form-control-sm" name="name" value={user.name} onChange={handleInputChange} required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="lastName" className="form-label">Apellido</label>
-            <input type="text" className="form-control form-control-sm" name="lastName" value={user.lastName} onChange={handleInputChange} required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="birthDate" className="form-label">Fecha de Nacimiento</label>
-            <input type="date" className="form-control form-control-sm" name="birthDate" value={user.birthDate} onChange={handleInputChange} required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="country" className="form-label">País</label>
-            <input type="text" className="form-control form-control-sm" name="country" value={user.country} onChange={handleInputChange}/>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="city" className="form-label">Ciudad</label>
-            <input type="text" className="form-control form-control-sm" name="city" value={user.city} onChange={handleInputChange}/>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="socialMedia" className="form-label">Redes Sociales (Opcional)</label>
-            <input type="text" className="form-control form-control-sm" name="socialMedia" value={user.socialMedia} onChange={handleInputChange}/>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">Descripción (Opcional)</label>
-            <textarea className="form-control form-control-sm" name="description" value={user.description} onChange={handleInputChange}/>
-          </div>
-          <button onClick={register} className="btn btn-primary text-secondary border border-secondary-subtle m-3">Registrarse</button>
-          <BackButton />
-        </div>
+            <h1>Registro</h1>
+            <p>Por favor, completa el siguiente formulario para registrarte.</p>
+            <div className="mb-3">
+                <label htmlFor="username" className="form-label">Nombre de usuario</label>
+                <input type="text" className="form-control form-control-sm" name="username" value={user.username} onChange={handleInputChange} required />
+                <label htmlFor="password" className="form-label">Contraseña</label>
+                <input type="password" className="form-control form-control-sm" name="password" value={user.password} onChange={handleInputChange} required />
+                <label htmlFor="name" className="form-label">Nombre</label>
+                <input type="text" className="form-control form-control-sm" name="name" value={user.name} onChange={handleInputChange} required />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="lastName" className="form-label">Apellido</label>
+                <input type="text" className="form-control form-control-sm" name="lastName" value={user.lastName} onChange={handleInputChange} required />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="birthDate" className="form-label">Fecha de Nacimiento</label>
+                <input type="date" className="form-control form-control-sm" name="birthDate" value={user.birthDate} onChange={handleInputChange} required />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="country" className="form-label">País</label>
+                <input type="text" className="form-control form-control-sm" name="country" value={user.country} onChange={handleInputChange} required/>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="city" className="form-label">Ciudad (Opcional)</label>
+                <input type="text" className="form-control form-control-sm" name="city" value={user.city} onChange={handleInputChange}/>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="socialMedia" className="form-label">Redes Sociales (Opcional)</label>
+                <input type="text" className="form-control form-control-sm" name="socialMedia" value={user.socialMedia} onChange={handleInputChange}/>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="description" className="form-label">Descripción (Opcional)</label>
+                <textarea className="form-control form-control-sm" name="description" value={user.description} onChange={handleInputChange}/>
+            </div>
+            <button type="submit" className="btn btn-primary text-secondary border border-secondary-subtle m-3">Registrarse</button>
+            <BackButton />
+            </div>
+        </form>
       </div>
     </div>
   );
