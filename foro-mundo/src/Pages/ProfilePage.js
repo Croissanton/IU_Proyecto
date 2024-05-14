@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import ToastMessage from "../Components/ToastMessage";
+import Cookies from "universal-cookie";
 
 function ProfilePage() {
   useEffect(() => {
     document.title = "Perfil";
+    fetchData(); // Fetch data when the component mounts
   }, []);
 
   const [toastMessage, setToastMessage] = useState("");
@@ -55,6 +57,14 @@ function ProfilePage() {
         document.querySelector("img").src = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const fetchData = () => {
+    const cookies = new Cookies();
+    const profile = cookies.get("user",{path:"/"});
+    if (profile) {
+      setProfileData(profile);
     }
   };
 
