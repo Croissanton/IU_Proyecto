@@ -44,11 +44,11 @@ function LoginPage() {
           <p>Por favor, inicia sesión para continuar.</p>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Nombre de usuario</label>
-            <input type="text" className="form-control form-control-sm" value={username} onChange={(e) => setUsername(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
+            <input type="text" className="form-control form-control-sm" required value={username} onChange={(e) => setUsername(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control form-control-sm" value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
+            <input type="password" className="form-control form-control-sm" required value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
           </div>
           <button onClick={login} className="btn btn-primary btn-sm">Iniciar Sesión</button> {" "}
           <button onClick={() => window.location.href = "/register" } className="btn btn-primary btn-sm">Registrarse</button>
