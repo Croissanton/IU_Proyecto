@@ -32,6 +32,13 @@ function PostCreationPage() {
     setShowToast(true);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent traditional form submission
     const form = e.target;
@@ -56,7 +63,11 @@ function PostCreationPage() {
           className="m-auto"
           style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
         >
-          <form onSubmit={handleSubmit} className="row col-12 g-3">
+          <form
+            onSubmit={handleSubmit}
+            onKeyDown={handleKeyDown}
+            className="row col-12 g-3"
+          >
             <div className="col-md-6">
               <label htmlFor="inputTitulo" className="form-label">
                 Título
@@ -104,21 +115,21 @@ function PostCreationPage() {
             <Button type="submit" className="btn btn-primary">
               Crear
             </Button>
-            <ConfirmationModal
-              message="¿Estás seguro de que quieres crear este post?"
-              show={showModal}
-              handleClose={handleClose}
-              handleConfirm={handleConfirm}
-            ></ConfirmationModal>
-            <ToastMessage
-              show={showToast}
-              onClose={() => setShowToast(false)}
-              message={toastMessage}
-              color={toastColor}
-            />
           </form>
         </div>
       </div>
+      <ConfirmationModal
+        message="¿Estás seguro de que quieres crear este post?"
+        show={showModal}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+      ></ConfirmationModal>
+      <ToastMessage
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        color={toastColor}
+      />
     </MainLayout>
   );
 }

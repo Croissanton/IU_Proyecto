@@ -99,8 +99,15 @@ const Messenger = () => {
     }
   }, [messages, activeChat]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage(e);
+    }
+  };
+
   return (
-    <Row className="g-0">
+    <Row className="g-0 py-5">
       <Col md={3}>
         <ListGroup>
           {chatContacts.map((name) => (
@@ -163,6 +170,7 @@ const Messenger = () => {
               placeholder="Type a message..."
               value={inputValue}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
             <Button
               className="border-secondary-subtle"

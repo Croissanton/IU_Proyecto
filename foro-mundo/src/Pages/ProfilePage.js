@@ -10,7 +10,7 @@ function ProfilePage() {
   }, []);
 
   const cookies = new Cookies();
-  const cookieUser = cookies.get("user"); 
+  const cookieUser = cookies.get("user");
 
   const [toastMessage, setToastMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
@@ -62,7 +62,6 @@ function ProfilePage() {
     }
   };
 
-
   return (
     <MainLayout>
       <div className="container-xxl my-3">
@@ -93,7 +92,8 @@ function ProfilePage() {
                 type="button"
                 className="btn btn-primary"
                 style={{ marginTop: "10px" }}
-                onClick={() => document.getElementById("imageInput").click()}>
+                onClick={() => document.getElementById("imageInput").click()}
+              >
                 Cambiar foto
               </button>
             )}
@@ -162,14 +162,13 @@ function ProfilePage() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => setIsEditing(true)}>
+                  onClick={() => setIsEditing(true)}
+                >
                   Editar
                 </button>
               ) : (
                 <>
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary">
                     Guardar
                   </button>
                   {"   "}
@@ -183,16 +182,21 @@ function ProfilePage() {
                 </>
               )}
             </div>
-
-            <ToastMessage
-              show={showToast}
-              onClose={() => setShowToast(false)}
-              message={toastMessage}
-              color={toastColor}
-            />
           </form>
         </div>
       </div>
+      <ToastMessage
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        color={toastColor}
+      />{" "}
+      <ToastMessage
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        color={toastColor}
+      />
     </MainLayout>
   );
 }

@@ -9,8 +9,6 @@ $dark: #262626;
 $white: #f5f5f5;
 $secondary-subtle: var(--bs-secondary-border-subtle);
 
-@import "../../node_modules/bootstrap/scss/bootstrap";
-
 
 body, html {
   height: 100%;
@@ -72,6 +70,8 @@ body, html {
       background-color: rgba(0, 0, 0, 0.2);
     }
   }
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 
 // $link-color: $secondary;

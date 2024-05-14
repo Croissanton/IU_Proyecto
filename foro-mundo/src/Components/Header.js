@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { useState, forwardRef, useRef, useEffect } from "react";
 import Cookies from "universal-cookie";
+import ToastMessage from "./ToastMessage";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
@@ -43,6 +44,7 @@ const Header = forwardRef((props, ref) => {
   const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"]; // Example suggestions
 
   const [inputValue, setInputValue] = useState("");
+
   const handleInputChange = (event) => {
     const userInput = event.target.value;
     setInputValue(userInput);
@@ -70,8 +72,16 @@ const Header = forwardRef((props, ref) => {
     window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
   };
 
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastColor, setToastColor] = useState("");
+
   const handleLogout = () => {
     cookies.remove("user");
+    setShowToast(true);
+    setToastMessage("Cierre de sesión exitoso!");
+    setToastColor("bg-success");
+    window.location.href = "/";
   };
 
   return (
@@ -220,6 +230,12 @@ const Header = forwardRef((props, ref) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <ToastMessage
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        color={toastColor}
+      />
     </Navbar>
   );
 });
