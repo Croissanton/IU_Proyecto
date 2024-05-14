@@ -40,7 +40,6 @@ function ProfilePublic() {
                 className="form-control"
                 id="inputNombre4"
                 disabled
-                placeholder="Enter your name"
               ></input>
             </div>
             <div className="col-md-6">
@@ -52,7 +51,6 @@ function ProfilePublic() {
                 className="form-control"
                 id="inputApellidos4"
                 disabled
-                placeholder="Enter your last name"
               ></input>
             </div>
             <div className="col-12">
@@ -75,7 +73,6 @@ function ProfilePublic() {
                 className="form-control"
                 id="inputPais"
                 disabled
-                placeholder="Enter your country"
               ></input>
             </div>
             <div className="col-md-4">
@@ -87,19 +84,17 @@ function ProfilePublic() {
                 className="form-control"
                 id="inputCiudad"
                 disabled
-                placeholder="Enter your city"
               ></input>
             </div>
             <div className="col-md-4">
               <label htmlFor="inputRedes" className="form-label">
-                Redes
+                Redes Sociales
               </label>
               <input
                 type="text"
                 className="form-control"
                 id="inputRedes"
                 disabled
-                placeholder="Enter your social media links"
               ></input>
             </div>
             <div className="col-12">
@@ -111,7 +106,6 @@ function ProfilePublic() {
                 id="inputDescripcion"
                 rows="3"
                 disabled
-                placeholder="Enter your description"
               ></textarea>
             </div>
           </form>

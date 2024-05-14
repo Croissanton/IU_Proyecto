@@ -87,8 +87,8 @@ function ProfilePage() {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => document.getElementById("imageInput").click()}
-              >
+                style={{ marginTop: "10px" }}
+                onClick={() => document.getElementById("imageInput").click()}>
                 Cambiar foto
               </button>
             )}
@@ -157,18 +157,20 @@ function ProfilePage() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => setIsEditing(true)}
-                >
+                  onClick={() => setIsEditing(true)}>
                   Editar
                 </button>
               ) : (
                 <>
-                  <button type="submit" className="btn btn-primary">
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary">
                     Guardar
                   </button>
+                  {"   "}
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-ligth"
                     onClick={handleCancel}
                   >
                     Cancelar

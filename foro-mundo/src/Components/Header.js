@@ -173,8 +173,14 @@ const Header = forwardRef((props, ref) => {
               {cookies.get("user") === undefined ? (
                 <div></div>
               ) : (
-                <Nav.Link href="/create">
-                  <i className="bi bi-plus-circle custom-icon"></i>
+                <Nav.Link href="/create"
+                className="text-secondary m-auto custom-link"
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Crear Post
                 </Nav.Link>
               )}
               {cookies.get("user") === undefined ? (
