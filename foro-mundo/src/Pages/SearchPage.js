@@ -20,7 +20,7 @@ function SearchPage() {
           {/* Aquí debería ir el nombre del topico */}
         </Breadcrumb>
       </div>
-      <div className="row justify-content-end">
+      <div className="row justify-content-center">
         <div className="col-auto">
           <Link to="/create" className="btn btn-primary">
             Crear Nuevo Post
