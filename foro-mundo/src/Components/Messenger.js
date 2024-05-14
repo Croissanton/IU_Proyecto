@@ -32,18 +32,48 @@ const Messenger = () => {
       {
         id: 2,
         text: "Muy bien, ¿has visto el último post en el foro de autos?",
+        sender: "You",
+      },
+      {
+        id: 3,
+        text: "Sí, fue bastante interesante. ¡Me encantó el nuevo modelo!",
         sender: "Pepe",
+      },
+      {
+        id: 4,
+        text: "A mí también, parece tener muy buenas características.",
+        sender: "You",
       },
     ],
     Jose: [
       { id: 1, text: "¡Hola amigo!", sender: "Jose" },
       { id: 2, text: "¿Quieres jugar fútbol esta tarde?", sender: "Jose" },
+      { id: 3, text: "Claro, ¿a qué hora nos encontramos?", sender: "You" },
+      { id: 4, text: "A las 5 pm en el parque de siempre.", sender: "Jose" },
     ],
     percebe43: [
       { id: 1, text: "¿Has terminado el proyecto?", sender: "percebe43" },
+      {
+        id: 2,
+        text: "Estoy casi listo, solo me falta revisar algunos detalles.",
+        sender: "You",
+      },
+      {
+        id: 3,
+        text: "Perfecto, avísame cuando esté terminado.",
+        sender: "percebe43",
+      },
+      { id: 4, text: "Seguro, te mantendré al tanto.", sender: "You" },
     ],
     "Juanito Golondrina": [
       { id: 1, text: "Buenas tardes", sender: "Juanito Golondrina" },
+      { id: 2, text: "Buenas tardes, ¿cómo estás?", sender: "You" },
+      {
+        id: 3,
+        text: "Muy bien, gracias. ¿Y tú?",
+        sender: "Juanito Golondrina",
+      },
+      { id: 4, text: "Todo bien, gracias por preguntar.", sender: "You" },
     ],
   };
 
@@ -162,7 +192,7 @@ const Messenger = () => {
             </div>
           ))}
         </div>
-        <Form className="p-3 border-top border-secondary-subtle" >
+        <Form className="p-3 border-top border-secondary-subtle">
           <InputGroup>
             <FormControl
               className="border-secondary-subtle"
