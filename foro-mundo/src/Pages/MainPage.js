@@ -2,10 +2,22 @@ import React from "react";
 import MainLayout from "../layout/MainLayout.js";
 import ForumCard from "../Components/ForumCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
+import { Breadcrumb } from "react-bootstrap";
+import { useEffect } from "react";
 
 function MainPage() {
+  useEffect(() => {
+    document.title = "Foro Mundo";
+  }, []);
+
   return (
     <MainLayout>
+      <div className="container-xxl my-2">
+        <Breadcrumb>
+          <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+
       <div className="container-xxl my-3">
         <ForumCard topic={"General"} post_num={124} view_num={154367} />
         <ForumCard topic={"Off-topic"} post_num={64} view_num={15436} />

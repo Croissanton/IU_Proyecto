@@ -9,6 +9,11 @@ import SearchPage from "./Pages/SearchPage";
 import PostPage from "./Pages/PostPage";
 import PostCreationPage from "./Pages/PostCreationPage";
 import ErrorPage from "./Pages/ErrorPage";
+import LoginPage from "./Pages/LoginPage";
+import ContactPage from "./Pages/ContactPage";
+import ProfilePublic from "./Pages/ProfilePublic";
+import MessengerPage from "./Pages/MessengerPage";
+import SignUpPage from "./Pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <ProfilePage />,
+  },
+  {
+    path: "/profile/id",
+    element: <ProfilePublic />,
   },
   {
     path: "/search",
@@ -30,6 +39,22 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <PostCreationPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <SignUpPage />,
+  },
+  {
+    path: "/contact",
+    element: <ContactPage />,
+  },
+  {
+    path: "/messenger",
+    element: <MessengerPage />,
   },
   {
     path: "*",

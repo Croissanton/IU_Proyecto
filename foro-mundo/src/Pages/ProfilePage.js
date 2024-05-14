@@ -1,9 +1,76 @@
+import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import React from "react";
+import { Breadcrumb } from "react-bootstrap";
+import ToastMessage from "../Components/ToastMessage";
+import Cookies from "universal-cookie";
 
 function ProfilePage() {
+  useEffect(() => {
+    document.title = "Perfil";
+  }, []);
+
+  const cookies = new Cookies();
+  const cookieUser = cookies.get("user");
+
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastColor, setToastColor] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [profileData, setProfileData] = useState({
+    username: cookieUser ? cookieUser.username : "",
+    password: cookieUser ? cookieUser.password : "",
+    name: cookieUser ? cookieUser.name : "",
+    lastName: cookieUser ? cookieUser.lastName : "",
+    birthDate: cookieUser ? cookieUser.birthDate : "",
+    country: cookieUser ? cookieUser.country : "",
+    city: cookieUser ? cookieUser.city : "",
+    socialMedia: cookieUser ? cookieUser.socialMedia : "",
+    description: cookieUser ? cookieUser.description : "",
+    imageInput: cookieUser ? cookieUser.image : "",
+  });
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setProfileData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitting Data:", profileData);
+    cookies.set("user", profileData, { path: "/" });
+    setIsEditing(false); // Disable editing mode on successful validation and submission
+    setToastColor("bg-success");
+    setToastMessage("Se han guardado los cambios!");
+    setShowToast(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleImageSelection = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.querySelector("img").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
+    }
+  };
+
   return (
     <MainLayout>
+      <div className="container-xxl my-3">
+        <Breadcrumb>
+          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
       <h1>Mi Perfil</h1>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
@@ -12,113 +79,170 @@ function ProfilePage() {
             alt="profile"
             width="250"
             height="350"
-            justifyContent="center"
+            style={{ justifyContent: "center" }}
           />
           <div className="m-auto">
             <input
               type="file"
               id="imageInput"
+              value={profileData.imageInput}
               style={{ display: "none" }}
-              onChange={(e) => handleImageSelection(e.target.files)}
+              onChange={handleImageSelection}
             />
-            <button
-              type="secondary"
-              className="btn btn-primary"
-              onClick={() => document.getElementById("imageInput").click()}
-            >
-              Cambiar foto
-            </button>
+            {isEditing && (
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ marginTop: "10px" }}
+                onClick={() => document.getElementById("imageInput").click()}
+              >
+                Cambiar foto
+              </button>
+            )}
           </div>
         </div>
         <div
           className="m-auto"
           style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
         >
-          <form className="row col-12 g-3">
-            <div className="col-md-6">
-              <label htmlFor="inputNombre4" className="form-label">
-                Nombre
-              </label>
-              <input required
-                type="text"
-                className="form-control"
-                id="inputNombre4"
-              ></input>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="inputApellidos4" className="form-label">
-                Apellidos
-              </label>
-              <input required
-                type="text"
-                className="form-control"
-                id="inputApellidos4"
-              ></input>
-            </div>
+          <form className="row col-12 g-3" onSubmit={handleSubmit}>
+            <InputComponent
+              id="name"
+              label="Nombre"
+              value={profileData.name}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={true}
+            />
+            <InputComponent
+              id="lastName"
+              label="Apellidos"
+              value={profileData.lastName}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={true}
+            />
+            <InputComponent
+              id="birthDate"
+              type="date"
+              label="Fecha de Nacimiento"
+              value={profileData.birthDate}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={true}
+            />
+            <InputComponent
+              id="country"
+              label="País"
+              value={profileData.country}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={true}
+            />
+            <InputComponent
+              id="city"
+              label="Ciudad"
+              value={profileData.city}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={false}
+            />
+            <InputComponent
+              id="socialMedia"
+              label="Redes"
+              type="textarea"
+              value={profileData.socialMedia}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={false}
+            />
+            <InputComponent
+              id="description"
+              label="Descripción"
+              type="textarea"
+              value={profileData.description}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              required={false}
+            />
+
             <div className="col-12">
-              <label htmlFor="inputFechaNacimiento" className="form-label">
-                Fecha de nacimiento
-              </label>
-              <input required
-                type="date"
-                className="form-control"
-                id="inputFechaNacimiento"
-              ></input>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="inputPais" className="form-label">
-                Pais
-              </label>
-              <input required
-                type="text"
-                className="form-control"
-                id="inputPais"
-              ></input>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="inputCiduad" className="form-label">
-                Ciudad
-              </label>
-              <input required
-                type="text"
-                className="form-control"
-                id="inputCiudad"
-              ></input>
-            </div>
-            <div className="col-md-12">
-              <label htmlFor="inputRedes" className="form-label">
-                Redes
-              </label>
-              <textarea required className="form-control" id="inputRedes"></textarea>
-            </div>
-            <div className="col-12">
-              <label htmlFor="inputDescripcion" className="form-label">
-                Descripción
-              </label>
-              <textarea required
-                className="form-control"
-                id="inputDescripcion"
-                rows="3"
-              ></textarea>
-            </div>
-            <div className="col-12">
-              <button type="submit" className="btn btn-primary">
-                Guardar
-              </button>
+              {!isEditing ? (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setIsEditing(true)}
+                >
+                  Editar
+                </button>
+              ) : (
+                <div className="col-12">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ marginRight: "10px" }}
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-light"
+                    onClick={handleCancel}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              )}
             </div>
           </form>
         </div>
       </div>
+      <ToastMessage
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        color={toastColor}
+      />
     </MainLayout>
   );
 }
 
-function handleImageSelection(files) {
-  const image = files[0];
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.querySelector("img").src = e.target.result;
-  };
-  reader.readAsDataURL(image);
+function InputComponent({
+  id,
+  type = "text",
+  label,
+  value,
+  onChange,
+  readOnly,
+  required,
+}) {
+  return (
+    <div className="col-md-6">
+      <label htmlFor={id} className="form-label">
+        {label}
+      </label>
+      {type === "textarea" ? (
+        <textarea
+          className="form-control"
+          id={id}
+          value={value}
+          onChange={onChange}
+          readOnly={readOnly}
+          required={required}
+        ></textarea>
+      ) : (
+        <input
+          type={type}
+          className="form-control"
+          id={id}
+          value={value}
+          onChange={onChange}
+          readOnly={readOnly}
+          required={required}
+        />
+      )}
+    </div>
+  );
 }
+
 export default ProfilePage;
