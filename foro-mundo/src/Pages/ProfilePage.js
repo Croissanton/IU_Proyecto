@@ -170,7 +170,7 @@ function ProfilePage() {
                   {"   "}
                   <button
                     type="button"
-                    className="btn btn-ligth"
+                    className="btn btn-light"
                     onClick={handleCancel}
                   >
                     Cancelar

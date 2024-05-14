@@ -11,11 +11,11 @@ function ConfirmationModal({ show, handleClose, handleConfirm, message }) {
         {message || "¿Estás seguro de que quieres hacer esto?"}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancelar
-        </Button>
         <Button variant="primary" onClick={handleConfirm}>
           Confirmar
+        </Button>
+        <Button variant="light" onClick={handleClose}>
+          Cancelar
         </Button>
       </Modal.Footer>
     </Modal>

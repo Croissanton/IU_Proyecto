@@ -4,6 +4,7 @@ import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function SearchPage() {
   useEffect(() => {
@@ -18,6 +19,13 @@ function SearchPage() {
           <Breadcrumb.Item active>Foro</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del topico */}
         </Breadcrumb>
+      </div>
+      <div className="row justify-content-end">
+        <div className="col-auto">
+          <Link to="/profile" className="btn btn-primary">
+            Crear Nuevo Post
+          </Link>
+        </div>
       </div>
       <div className="container-xxl my-3">
         <PostCard
