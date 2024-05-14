@@ -172,47 +172,42 @@ const Header = forwardRef((props, ref) => {
               </Form>
               <Nav>
                 <Nav.Link href="/create">
-                  <i
-                    style={{
-                      fontSize: "1.5rem",
-                      color: "#002561",
-                    }}
-                    className="bi bi-plus-circle"
-                  ></i>
+                  <i className="bi bi-plus-circle custom-icon"></i>
                 </Nav.Link>
                 <Nav.Link href="/profile">
-                  <i
-                    style={{
-                      fontSize: "1.5rem",
-                      color: "#002561",
-                    }}
-                    className="bi bi-person-circle"
-                  ></i>
+                  <i className="bi bi-person-circle custom-icon"></i>
                 </Nav.Link>
                 {cookies.get("user") === undefined ? (
-                  <Navbar.Brand
+                  <div></div>
+                ) : (
+                  <Nav.Link href="/messenger">
+                    <i className="bi bi-chat custom-icon"></i>
+                  </Nav.Link>
+                )}
+                {cookies.get("user") === undefined ? (
+                  <Nav.Link
                     href="/login"
-                    className="text-secondary m-auto"
+                    className="text-secondary m-auto custom-link"
                     style={{
-                      fontSize: "1.3rem",
+                      fontSize: "1rem",
                       fontWeight: "bold",
                     }}
                   >
                     Iniciar Sesión
-                  </Navbar.Brand>
+                  </Nav.Link>
                 ) : (
                   //cookies.remove("user"),
-                  <Navbar.Brand
+                  <Nav.Link
                     onClick={handleLogout}
                     href="/"
-                    className="text-secondary m-auto"
+                    className="text-secondary m-auto custom-link"
                     style={{
-                      fontSize: "1.3rem",
+                      fontSize: "1rem",
                       fontWeight: "bold",
                     }}
                   >
                     Cerrar Sesión
-                  </Navbar.Brand>
+                  </Nav.Link>
                 )}
               </Nav>
             </Nav>

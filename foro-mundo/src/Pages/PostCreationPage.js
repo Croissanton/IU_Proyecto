@@ -59,29 +59,30 @@ function PostCreationPage() {
           className="m-auto"
           style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
         >
-          <form onSubmit={handleSubmit} class="row col-12 g-3">
-            <div class="col-md-6">
-              <label for="inputTitulo" class="form-label">
+          <form onSubmit={handleSubmit} className="row col-12 g-3">
+            <div className="col-md-6">
+              <label htmlFor="inputTitulo" className="form-label">
                 Título
               </label>
               <input
                 type="text"
                 required
-                class="form-control"
+                className="form-control"
                 id="inputTitulo"
               ></input>
             </div>
-            <div class="col-md-6">
-              <label for="inputCategoria" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="inputCategoria" className="form-label">
                 Categoría
               </label>
               <select
                 name="categoria"
                 id="categoria"
                 required
-                class="form-control"
+                className="form-control"
+                defaultValue={"default"}
               >
-                <option value="" disabled selected>
+                <option value="default" disabled>
                   Selecciona una categoría...
                 </option>
                 <option value="general">General</option>
@@ -90,20 +91,20 @@ function PostCreationPage() {
                 <option value="plantas">Plantas</option>
               </select>
             </div>
-            <div class="col-12">
-              <label for="inputTexto" class="form-label">
+            <div className="col-12">
+              <label htmlFor="inputTexto" className="form-label">
                 Texto
               </label>
               <textarea
                 type="text"
-                class="form-control input-group-lg"
+                className="form-control input-group-lg"
                 required
                 placeholder="Escriba acerca del tema..."
                 rows={7}
                 id="inputTexto"
               ></textarea>
             </div>
-            <Button type="submit" class="btn btn-primary">
+            <Button type="submit" className="btn btn-primary">
               Crear
             </Button>
             <ConfirmationModal

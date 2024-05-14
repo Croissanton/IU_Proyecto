@@ -48,6 +48,15 @@ body, html {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.custom-icon {
+    font-size: 1.5rem;
+    color: $secondary;
+    transition: color 0.3s;
+  }
+
+  .custom-icon:hover {
+    color: rgba(0, 0, 0, 0.5);  /* Adjust the alpha value (0.7) to control the dimming effect */
+  }
 // $link-color: $secondary;
 // $link-hover-color: $primary;
 

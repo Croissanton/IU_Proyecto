@@ -22,9 +22,12 @@ function MainLayout({ children }) {
   }, [controlRef]); // Dependency array includes `controlRef` to react on updates
 
   return (
-    <div>
-      <div className="m-5" style={{ padding: `${padding}px`}}>
-        <Header ref={controlRef} />
+    <div className="d-flex flex-column" style={{ height: "100vh" }}>
+      <Header ref={controlRef} />
+      <div
+        className="flex-grow-1 px-5 mx-5"
+        style={{ overflow: "auto", paddingTop: `${padding}px` }}
+      >
         {children}
       </div>
       <Footer />
