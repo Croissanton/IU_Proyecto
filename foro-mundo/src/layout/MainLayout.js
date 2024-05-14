@@ -29,7 +29,6 @@ function MainLayout({ children }) {
         className="flex-grow-1 px-5 pb-5 mx-5"
         style={{ paddingTop: `${padding}px` }}
       >
-        <BackButton />
         {children}
       </div>
       <Footer />
