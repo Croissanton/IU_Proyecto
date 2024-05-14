@@ -5,11 +5,14 @@ import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 function SearchPage() {
   useEffect(() => {
     document.title = "Posts";
   }, []);
+
+  const cookies = new Cookies();
 
   return (
     <MainLayout>
@@ -20,13 +23,18 @@ function SearchPage() {
           {/* Aquí debería ir el nombre del topico */}
         </Breadcrumb>
       </div>
-      <div className="row justify-content-center">
-        <div className="col-auto">
-          <Link to="/create" className="btn btn-primary">
-            Crear Nuevo Post
-          </Link>
+      {cookies.get("user") === undefined ? (
+        <div></div>
+      ) : (
+        <div className="row justify-content-center">
+          <div className="col-auto">
+            <Link to="/create" className="btn btn-primary">
+              Crear Nuevo Post
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="container-xxl my-3">
         <PostCard
           titulo={"buen foro :D"}

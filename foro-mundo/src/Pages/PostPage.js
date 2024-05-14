@@ -7,6 +7,7 @@ import IndexSelector from "../Components/IndexSelector.js";
 import { useEffect } from "react";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import ToastMessage from "../Components/ToastMessage";
+import Cookies from "universal-cookie";
 
 function PostPage() {
   useEffect(() => {
@@ -21,6 +22,29 @@ function PostPage() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
+  const [comments, setComments] = useState([
+    {
+      title: "Que buen foro",
+      author: "Juanito Golondrina",
+      upvotes: 10,
+      downvotes: 5,
+      date: new Date(),
+    },
+    {
+      title: "Que mal foro",
+      author: "Pepito Grillo",
+      upvotes: 15,
+      downvotes: 3,
+      date: new Date(),
+    },
+    {
+      title: "a mi no me gusta tanto la verdad",
+      author: "Paquito Palotes",
+      upvotes: 2,
+      downvotes: 5,
+      date: new Date(),
+    },
+  ]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -28,17 +52,32 @@ function PostPage() {
     setToastMessage("El comentario no se ha creado.");
     setShowToast(true);
   };
-  const handleConfirm = () => {
-    //submit form data to backend
 
+  const cookies = new Cookies();
+  const cookieUser = cookies.get("user");
+
+  const handleConfirm = () => {
     setShowModal(false);
+    const newCommentObject = {
+      title: newComment,
+      author: cookieUser.username,
+      upvotes: 0,
+      downvotes: 0,
+      date: new Date(),
+    };
+
+    setComments((prevComments) => [newCommentObject, ...prevComments]);
     setToastColor("bg-success");
     setToastMessage("El comentario se ha creado correctamente!");
     setShowToast(true);
+    setNewComment("");
   };
 
   useEffect(() => {
     // This will correctly enable/disable the button based on current conditions
+    if (cookies.get("user") === undefined) {
+      return;
+    }
     const button = document.getElementById("publicar_button");
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
@@ -52,9 +91,7 @@ function PostPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Nuevo comentario:", newComment);
     setShowModal(true);
-    setNewComment("");
     setCharacterCount(0);
   };
 
@@ -86,70 +123,63 @@ function PostPage() {
       {/* Comentarios existentes */}
       <div className="container-xxl my-3">
         <h3>Comentarios</h3>
-        <PostComment
-          title={"Que buen foro"}
-          author={"Juanito Golondrina"}
-          upvotes={10}
-          downvotes={5}
-          date={new Date()}
-        />
-        <PostComment
-          title={"Que mal foro"}
-          author={"Pepito Grillo"}
-          upvotes={15}
-          downvotes={3}
-          date={new Date()}
-        />
-        <PostComment
-          title={"a mi no me gusta tanto la verdad"}
-          author={"Paquito Palotes"}
-          upvotes={2}
-          downvotes={5}
-          date={new Date()}
-        />
+        {comments.map((comment, index) => (
+          <PostComment
+            key={index}
+            title={comment.title}
+            author={comment.author}
+            upvotes={comment.upvotes}
+            downvotes={comment.downvotes}
+            date={comment.date}
+          />
+        ))}
       </div>
 
       <IndexSelector />
 
       {/* Formulario para añadir un nuevo comentario */}
-      <div className="container-xxl my-3">
-        <h3>Añadir un nuevo comentario</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="commentInput" className="form-label"></label>
-            <textarea
-              required
-              rows={4}
-              type="text"
-              className="form-control"
-              id="commentInput"
-              value={newComment}
-              onChange={handleInputChange}
+      {cookies.get("user") === undefined ? (
+        <div></div>
+      ) : (
+        <div className="container-xxl my-3">
+          <h3>Añadir un nuevo comentario</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="commentInput" className="form-label"></label>
+              <textarea
+                required
+                rows={4}
+                type="text"
+                className="form-control"
+                id="commentInput"
+                value={newComment}
+                onChange={handleInputChange}
+              />
+              <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              id="publicar_button"
+              disabled
+            >
+              Publicar
+            </button>
+            <ToastMessage
+              show={showToast}
+              onClose={() => setShowToast(false)}
+              message={toastMessage}
+              color={toastColor}
             />
-            <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            id="publicar_button"
-            disabled
-          >
-            Publicar
-          </button>
-          <ToastMessage
-            show={showToast}
-            onClose={() => setShowToast(false)}
-            message={toastMessage}
-            color={toastColor}
-          />
-          <ConfirmationModal
-            message="¿Estás seguro de que quieres crear este post?"
-            show={showModal}
-            handleClose={handleClose}
-            handleConfirm={handleConfirm}
-          ></ConfirmationModal>
-        </form>
-      </div>
+            <ConfirmationModal
+              message="¿Estás seguro de que quieres crear este post?"
+              show={showModal}
+              handleClose={handleClose}
+              handleConfirm={handleConfirm}
+            ></ConfirmationModal>
+          </form>
+        </div>
+      )}
     </MainLayout>
   );
 }

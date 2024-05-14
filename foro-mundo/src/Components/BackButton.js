@@ -10,7 +10,7 @@ const BackButton = () => {
       className="btn btn-primary text-secondary border border-secondary-subtle m-3"
       onClick={() => navigate(-1)}
     >
-      <i class="bi bi-arrow-left-circle pe-2"></i>
+      <i className="bi bi-arrow-left-circle pe-2"></i>
       Volver Atrás
     </button>
   );

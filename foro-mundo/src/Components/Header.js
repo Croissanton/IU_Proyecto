@@ -78,10 +78,9 @@ const Header = forwardRef((props, ref) => {
 
   const handleLogout = () => {
     cookies.remove("user");
-    setShowToast(true);
-    setToastMessage("Cierre de sesión exitoso!");
     setToastColor("bg-success");
-    window.location.href = "/";
+    setToastMessage("Se ha cerrado la sesión!");
+    setShowToast(true);
   };
 
   return (
@@ -215,7 +214,6 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <Nav.Link
                   onClick={handleLogout}
-                  href="/"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
