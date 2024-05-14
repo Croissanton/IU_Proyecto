@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
-  Container,
   Row,
   Col,
   ListGroup,
@@ -12,49 +11,106 @@ import {
 import { NavLink } from "react-router-dom";
 
 const Messenger = () => {
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hello!", sender: "You" },
-    { id: 2, text: "Hello!", sender: "You" },
-    { id: 3, text: "Hello!", sender: "You" },
-    { id: 4, text: "Hello!", sender: "You" },
-    { id: 5, text: "Hello!", sender: "You" },
-    { id: 6, text: "Hello!", sender: "You" },
-    { id: 7, text: "Hello!", sender: "You" },
-    { id: 8, text: "Hello!", sender: "You" },
-    { id: 9, text: "Hi, how are you?", sender: "Doe" },
-    { id: 10, text: "I am fine, thanks!", sender: "You" },
-  ]);
+  // const [messages, setMessages] = useState([
+  //   { id: 1, text: "¡Hola!", sender: "You" },
+  //   { id: 2, text: "¡Hola!", sender: "You" },
+  //   { id: 3, text: "Hola, ¿cómo estás?", sender: "Pepe" },
+  //   { id: 4, text: "Estoy bien, ¡gracias!", sender: "You" },
+  //   { id: 5, text: "¿Cómo estuvo tu día?", sender: "Pepe" },
+  //   { id: 6, text: "Estuvo bien, ¿y el tuyo?", sender: "You" },
+  //   {
+  //     id: 7,
+  //     text: "Muy bien, ¿has visto el último post en el foro de autos?",
+  //     sender: "Pepe",
+  //   },
+  //   { id: 8, text: "Sí, es una locura.", sender: "You" },
+  // ]);
+
+  const initialMessages = {
+    Pepe: [
+      { id: 1, text: "Hola, ¿cómo estás?", sender: "Pepe" },
+      {
+        id: 2,
+        text: "Muy bien, ¿has visto el último post en el foro de autos?",
+        sender: "Pepe",
+      },
+    ],
+    Jose: [
+      { id: 1, text: "¡Hola amigo!", sender: "Jose" },
+      { id: 2, text: "¿Quieres jugar fútbol esta tarde?", sender: "Jose" },
+    ],
+    percebe43: [
+      { id: 1, text: "¿Has terminado el proyecto?", sender: "percebe43" },
+    ],
+    "Juanito Golondrina": [
+      { id: 1, text: "Buenas tardes", sender: "Juanito Golondrina" },
+    ],
+  };
+
+  const chatContacts = ["Pepe", "Jose", "percebe43", "Juanito Golondrina"];
+
+  const [activeChat, setActiveChat] = useState("Pepe");
+  const [messages, setMessages] = useState(initialMessages);
   const [inputValue, setInputValue] = useState("");
+  const chatboxRef = useRef(null);
+
+  // const handleSendMessage = () => {
+  //   if (!inputValue.trim()) return; // prevent sending empty messages
+  //   const newMessage = {
+  //     id: messages.length + 1, // simple id increment, consider uuid for real apps
+  //     text: inputValue,
+  //     sender: "You", // static sender, can be dynamic based on actual user context
+  //   };
+  //   setMessages([...messages, newMessage]); // append new message
+  //   setInputValue(""); // clear input field
+  // };
 
   const handleSendMessage = () => {
-    if (!inputValue.trim()) return; // prevent sending empty messages
+    if (!inputValue.trim()) return;
     const newMessage = {
-      id: messages.length + 1, // simple id increment, consider uuid for real apps
+      id: messages[activeChat].length + 1,
       text: inputValue,
-      sender: "You", // static sender, can be dynamic based on actual user context
+      sender: "You",
     };
-    setMessages([...messages, newMessage]); // append new message
-    setInputValue(""); // clear input field
+    setMessages({
+      ...messages,
+      [activeChat]: [...messages[activeChat], newMessage],
+    });
+    setInputValue("");
   };
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const handleListItemClick = (name) => {
-    console.log(`clicked on ${name}`);
+  const handleChatChange = (name) => {
+    setActiveChat(name);
   };
 
+  useEffect(() => {
+    if (chatboxRef.current) {
+      const { scrollHeight, clientHeight } = chatboxRef.current;
+      if (scrollHeight > clientHeight) {
+        chatboxRef.current.scrollTo({
+          top: scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [messages, activeChat]);
+
   return (
-    <Row className="g-0 py-5">
+    <Row className="g-0">
       <Col md={3}>
         <ListGroup>
-          {["Jane Doe", "John Smith", "Student A", "Student B"].map((name) => (
+          {chatContacts.map((name) => (
             <ListGroup.Item className="border-0" key={name}>
               <button
-                className="btn btn-link d-flex align-items-center w-100 bg-light text-dark border border-secondary-subtle custom-link-container"
-                onClick={() => handleListItemClick(name)}
-                style={{ textDecoration: "none" }}
+                className={`d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button ${
+                  name === activeChat ? "active" : ""
+                }`}
+                onClick={() => handleChatChange(name)}
+                style={{ cursor: "pointer" }}
               >
                 <i className="bi bi-person-circle me-2"></i> {name}
               </button>
@@ -68,18 +124,19 @@ const Messenger = () => {
       >
         <div className="h2 p-3 border-bottom border-secondary-subtle">
           <NavLink
-            className="bi bi-person-circle"
-            to={`/profile/id`}
+            className="bi bi-person-circle d-inline-flex align-items-center"
+            to={`/profile/${activeChat}`}
             style={{ color: "inherit", textDecoration: "none" }}
           >
-            Dose
+            <p className="m-0 ps-2">{activeChat}</p>
           </NavLink>
         </div>
         <div
           className="flex-grow-1 overflow-auto p-3"
           style={{ height: "60vh" }}
+          ref={chatboxRef}
         >
-          {messages.map((message) => (
+          {messages[activeChat].map((message) => (
             <div
               key={message.id}
               className={`my-2 p-2 rounded border border-secondary-subtle ${

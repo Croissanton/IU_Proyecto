@@ -1,19 +1,19 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const BackButton = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container-xxl my-2 mx-3">
-      <button
-        type="button"
-        className="btn btn-primary btn-block"
-        onClick={() => navigate(-1)}
-      >
-        Volver Atrás
-      </button>
-    </div>
+    <button
+      type="button"
+      className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+      onClick={() => navigate(-1)}
+    >
+      <i class="bi bi-arrow-left-circle pe-2"></i>
+      Volver Atrás
+    </button>
   );
 };
 

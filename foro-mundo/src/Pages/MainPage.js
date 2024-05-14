@@ -13,8 +13,6 @@ function MainPage() {
 
   return (
     <MainLayout>
-      <BackButton />
-
       <div className="container-xxl my-2">
         <Breadcrumb>
           <Breadcrumb.Item active>Inicio</Breadcrumb.Item>

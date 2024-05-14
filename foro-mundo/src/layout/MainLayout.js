@@ -1,6 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import BackButton from "../Components/BackButton";
 
 function MainLayout({ children }) {
   const controlRef = useRef(null);
@@ -25,9 +26,10 @@ function MainLayout({ children }) {
     <div className="d-flex flex-column" style={{ height: "100vh" }}>
       <Header ref={controlRef} />
       <div
-        className="flex-grow-1 px-5 mx-5"
-        style={{ overflow: "auto", paddingTop: `${padding}px` }}
+        className="flex-grow-1 px-5 pb-5 mx-5"
+        style={{ paddingTop: `${padding}px` }}
       >
+        <BackButton />
         {children}
       </div>
       <Footer />
