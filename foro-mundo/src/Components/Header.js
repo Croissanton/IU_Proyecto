@@ -81,6 +81,7 @@ const Header = forwardRef((props, ref) => {
     setToastColor("bg-success");
     setToastMessage("Se ha cerrado la sesión!");
     setShowToast(true);
+    window.location.href = "/";
   };
 
   return (
