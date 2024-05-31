@@ -120,22 +120,6 @@ function PostPage() {
         />
       </div>
 
-      {/* Comentarios existentes */}
-      <div className="container-xxl my-3">
-        <h3>Comentarios</h3>
-        {comments.map((comment, index) => (
-          <PostComment
-            key={index}
-            title={comment.title}
-            author={comment.author}
-            upvotes={comment.upvotes}
-            downvotes={comment.downvotes}
-            date={comment.date}
-          />
-        ))}
-      </div>
-
-      <IndexSelector />
 
       {/* Formulario para añadir un nuevo comentario */}
       {cookies.get("user") === undefined ? (
@@ -180,6 +164,24 @@ function PostPage() {
           </form>
         </div>
       )}
+
+      {/* Comentarios existentes */}
+      <div className="container-xxl my-3">
+        <h3>Comentarios</h3>
+        {comments.map((comment, index) => (
+          <PostComment
+            key={index}
+            title={comment.title}
+            author={comment.author}
+            upvotes={comment.upvotes}
+            downvotes={comment.downvotes}
+            date={comment.date}
+          />
+        ))}
+      </div>
+
+      <IndexSelector />
+
     </MainLayout>
   );
 }
