@@ -216,6 +216,8 @@ function InputComponent({
   readOnly,
   required,
 }) {
+  const inputClassNames = `form-control ${readOnly ? "no-background no-border" : ""}`;
+
   return (
     <div className="col-md-6">
       <label htmlFor={id} className="form-label">
@@ -223,7 +225,7 @@ function InputComponent({
       </label>
       {type === "textarea" ? (
         <textarea
-          className="form-control"
+          className={inputClassNames}
           id={id}
           value={value}
           onChange={onChange}
@@ -233,7 +235,7 @@ function InputComponent({
       ) : (
         <input
           type={type}
-          className="form-control"
+          className={inputClassNames}
           id={id}
           value={value}
           onChange={onChange}
