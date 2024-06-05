@@ -7,14 +7,16 @@ import Nav from "react-bootstrap/Nav";
 import { useState, forwardRef, useRef, useEffect } from "react";
 import Cookies from "universal-cookie";
 import ToastMessage from "./ToastMessage";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
   const [expanded, setExpanded] = useState(false);
-  const [isCollapsing, setIsCollapsing] = useState(false); // New state to track collapsing delay
+  const [isCollapsing, setIsCollapsing] = useState(false);
 
   const containerRef = useRef(null);
-  const combinedRef = ref || containerRef; // Use forwarded ref if available, otherwise use internal ref
+  const combinedRef = ref || containerRef;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,16 +34,16 @@ const Header = forwardRef((props, ref) => {
   const toggleNavbar = () => {
     setExpanded((prev) => !prev);
     if (expanded) {
-      setIsCollapsing(true); // Set collapsing state when starting to collapse
+      setIsCollapsing(true);
       setTimeout(() => {
-        setIsCollapsing(false); // Reset collapsing state after a delay
-      }, 400); // Delay slightly longer than the animation duration
+        setIsCollapsing(false);
+      }, 400);
     }
   };
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"]; // Example suggestions
+  const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"];
 
   const [inputValue, setInputValue] = useState("");
 
@@ -54,7 +56,7 @@ const Header = forwardRef((props, ref) => {
       setShowSuggestions(false);
     } else {
       const filteredSuggestions = allSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(userInput.toLowerCase())
+        suggestion.toLowerCase().includes(userInput.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
       setShowSuggestions(true);
@@ -66,9 +68,7 @@ const Header = forwardRef((props, ref) => {
     if (!inputValue.trim()) {
       return;
     }
-    // Handle your search redirection here or call an API
     console.log("Searching for:", inputValue);
-    // For redirect you might use useHistory from 'react-router-dom' or window.location
     window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
   };
 
@@ -112,7 +112,7 @@ const Header = forwardRef((props, ref) => {
               className={`d-flex my-2 ${
                 expanded || isCollapsing ? "" : "w-50"
               }`}
-              style={{ position: "relative" }} // Position relative for the suggestion box
+              style={{ position: "relative" }}
             >
               <FormControl
                 id="searchInput"
@@ -123,7 +123,6 @@ const Header = forwardRef((props, ref) => {
                 value={inputValue}
                 onChange={handleInputChange}
                 onBlur={() => {
-                  // Delay hiding suggestions a bit to allow onClick to fire on suggestions
                   setTimeout(() => {
                     setShowSuggestions(false);
                   }, 200);
@@ -170,7 +169,7 @@ const Header = forwardRef((props, ref) => {
                         setInputValue(suggestion);
                         setShowSuggestions(false);
                         setSuggestions([]);
-                        document.getElementById("searchInput").focus(); // Optionally set focus back
+                        document.getElementById("searchInput").focus();
                       }}
                     >
                       {suggestion}
@@ -180,26 +179,35 @@ const Header = forwardRef((props, ref) => {
               )}
             </Form>
             <Nav>
-              {cookies.get("user") === undefined ? (
-                <div></div>
-              ) : (
-                <Nav.Link href="/create">
-                  <i className="bi bi-plus-circle custom-icon"></i>
-                </Nav.Link>
-              )}
-              {cookies.get("user") === undefined ? (
-                <div></div>
-              ) : (
-                <Nav.Link href="/profile">
-                  <i className="bi bi-person-circle custom-icon"></i>
-                </Nav.Link>
-              )}
-              {cookies.get("user") === undefined ? (
-                <div></div>
-              ) : (
-                <Nav.Link href="/messenger">
-                  <i className="bi bi-chat custom-icon"></i>
-                </Nav.Link>
+              {cookies.get("user") !== undefined && (
+                <>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-create">Crear post</Tooltip>}
+                  >
+                    <Nav.Link href="/create">
+                      <i className="bi bi-plus-circle custom-icon"></i>
+                    </Nav.Link>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-profile">Perfil</Tooltip>}
+                  >
+                    <Nav.Link href="/profile">
+                      <i className="bi bi-person-circle custom-icon"></i>
+                    </Nav.Link>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={
+                      <Tooltip id="tooltip-messenger">Mensajes</Tooltip>
+                    }
+                  >
+                    <Nav.Link href="/messenger">
+                      <i className="bi bi-chat custom-icon"></i>
+                    </Nav.Link>
+                  </OverlayTrigger>
+                </>
               )}
               {cookies.get("user") === undefined ? (
                 <Nav.Link

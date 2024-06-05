@@ -66,12 +66,12 @@ function ProfilePage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
+        <h1>Mi Perfil</h1>
         <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <h1>Mi Perfil</h1>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img

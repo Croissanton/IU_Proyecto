@@ -17,6 +17,7 @@ function SearchPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
+      <h1> Foro </h1>
         <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Foro</Breadcrumb.Item>{" "}

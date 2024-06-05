@@ -74,14 +74,13 @@ function PostPage() {
   };
 
   useEffect(() => {
-    // This will correctly enable/disable the button based on current conditions
     if (cookies.get("user") === undefined) {
       return;
     }
     const button = document.getElementById("publicar_button");
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
-  }, [newComment, characterCount]); // Important: React here will watch newComment and characterCount changes
+  }, [newComment, characterCount]);
 
   const handleInputChange = (event) => {
     const commentText = event.target.value;
@@ -98,6 +97,7 @@ function PostPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
+        <h1>Post</h1>
         <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item href="./search">Foro</Breadcrumb.Item>{" "}
@@ -119,7 +119,6 @@ function PostPage() {
           view_num={1000}
         />
       </div>
-
 
       {/* Formulario para añadir un nuevo comentario */}
       {cookies.get("user") === undefined ? (
@@ -173,15 +172,14 @@ function PostPage() {
             key={index}
             title={comment.title}
             author={comment.author}
-            upvotes={comment.upvotes}
-            downvotes={comment.downvotes}
+            initialUpvotes={comment.upvotes}
+            initialDownvotes={comment.downvotes}
             date={comment.date}
           />
         ))}
       </div>
 
       <IndexSelector />
-
     </MainLayout>
   );
 }

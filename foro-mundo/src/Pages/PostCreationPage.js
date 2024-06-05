@@ -52,12 +52,12 @@ function PostCreationPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
+      <h1>Crear Post</h1>
         <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Crear Post</Breadcrumb.Item> {/**/}
         </Breadcrumb>
       </div>
-      <h1>Crear Post</h1>
       <div style={{ display: "flex" }}>
         <div
           className="m-auto"
