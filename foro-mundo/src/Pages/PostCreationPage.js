@@ -24,8 +24,6 @@ function PostCreationPage() {
     setShowToast(true);
   };
   const handleConfirm = () => {
-    //submit form data to backend
-
     setShowModal(false);
     setToastColor("bg-success");
     setToastMessage("El post se ha creado correctamente!");
@@ -40,12 +38,11 @@ function PostCreationPage() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent traditional form submission
+    e.preventDefault(); 
     const form = e.target;
 
-    // Check if form contents are valid:
     if (form.reportValidity()) {
-      setShowModal(true); // Open the modal only if the form is valid
+      setShowModal(true); 
     }
   };
 

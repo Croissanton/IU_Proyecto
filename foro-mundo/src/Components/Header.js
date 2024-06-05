@@ -199,9 +199,7 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                   <OverlayTrigger
                     placement="bottom"
-                    overlay={
-                      <Tooltip id="tooltip-messenger">Mensajes</Tooltip>
-                    }
+                    overlay={<Tooltip id="tooltip-messenger">Mensajes</Tooltip>}
                   >
                     <Nav.Link href="/messenger">
                       <i className="bi bi-chat custom-icon"></i>
@@ -209,6 +207,15 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                 </>
               )}
+              <OverlayTrigger
+                placement="bottom"
+                overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
+              >
+                <Nav.Link href="/contact">
+                  <i className="bi bi-question-circle custom-icon"></i>
+                </Nav.Link>
+              </OverlayTrigger>
+
               {cookies.get("user") === undefined ? (
                 <Nav.Link
                   href="/login"
