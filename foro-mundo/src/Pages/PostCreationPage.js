@@ -7,6 +7,8 @@ import { Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import ToastMessage from "../Components/ToastMessage";
 
+
+
 function PostCreationPage() {
   useEffect(() => {
     document.title = "Crear Post";
@@ -37,10 +39,18 @@ function PostCreationPage() {
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault(); 
     const form = e.target;
-
+  
+    // Verificación adicional para asegurarse de que una categoría válida ha sido seleccionada
+    const categoriaSelect = form.querySelector('#categoria');
+    if (categoriaSelect.value === "default") {
+      alert("Por favor, selecciona una categoría antes de continuar.");
+      return;
+    }
+  
     if (form.reportValidity()) {
       setShowModal(true); 
     }
