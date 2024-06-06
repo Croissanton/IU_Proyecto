@@ -29,9 +29,14 @@ const PostCard = ({
                       <p>{text}</p>
                     </Row>
                     <Row onClick={(e) => e.stopPropagation()}>
-                      <NavLink to={`/profile/id`} style={{ color: "inherit" }}>
-                        <p>{author}</p>
-                      </NavLink>
+                      <Col>
+                        <NavLink
+                          className="custom-text-link"
+                          to={`/profile/id`}
+                        >
+                          <span>{author}</span>
+                        </NavLink>
+                      </Col>
                     </Row>
                     <Row>
                       <p>{date}</p>
