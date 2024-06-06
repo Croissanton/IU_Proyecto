@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
-import ToastMessage from "../Components/ToastMessage";
 import Cookies from "universal-cookie";
+import { useToast } from "../Context/ToastContext.js";
 
 function ProfilePage() {
   useEffect(() => {
@@ -12,9 +12,6 @@ function ProfilePage() {
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
 
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     username: cookieUser ? cookieUser.username : "",
@@ -37,14 +34,14 @@ function ProfilePage() {
     }));
   };
 
+  const { showToast } = useToast();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting Data:", profileData);
     cookies.set("user", profileData, { path: "/" });
     setIsEditing(false); // Disable editing mode on successful validation and submission
-    setToastColor("bg-success");
-    setToastMessage("Se han guardado los cambios!");
-    setShowToast(true);
+    showToast("Se han guardado los cambios!"); 
   };
 
   const handleCancel = () => {
@@ -197,12 +194,6 @@ function ProfilePage() {
           </form>
         </div>
       </div>
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message={toastMessage}
-        color={toastColor}
-      />
     </MainLayout>
   );
 }

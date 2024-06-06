@@ -6,7 +6,6 @@ import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { useEffect } from "react";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
-import ToastMessage from "../Components/ToastMessage";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 
