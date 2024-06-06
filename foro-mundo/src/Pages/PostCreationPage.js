@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
-import ToastMessage from "../Components/ToastMessage";
+import { useToast } from "../Context/ToastContext.js";
+import { useNavigate } from "react-router-dom";
 
 function PostCreationPage() {
   useEffect(() => {
@@ -13,21 +14,18 @@ function PostCreationPage() {
   }, []);
 
   const [showModal, setShowModal] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleClose = () => {
     setShowModal(false);
-    setToastColor("bg-danger");
-    setToastMessage("El post no se ha creado.");
-    setShowToast(true);
+    showToast("El post no se ha creado.", "bg-danger");
   };
+
   const handleConfirm = () => {
     setShowModal(false);
-    setToastColor("bg-success");
-    setToastMessage("El post se ha creado correctamente!");
-    setShowToast(true);
+    showToast("El post se ha creado correctamente!", "bg-success");
+    navigate("/search");
   };
 
   const handleKeyDown = (e) => {
@@ -38,21 +36,21 @@ function PostCreationPage() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const form = e.target;
 
     if (form.reportValidity()) {
-      setShowModal(true); 
+      setShowModal(true);
     }
   };
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-      <h1>Crear Post</h1>
+        <h1>Crear Post</h1>
         <Breadcrumb>
           <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>Crear Post</Breadcrumb.Item> {/**/}
+          <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div style={{ display: "flex" }}>
@@ -121,12 +119,6 @@ function PostCreationPage() {
         handleClose={handleClose}
         handleConfirm={handleConfirm}
       ></ConfirmationModal>
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message={toastMessage}
-        color={toastColor}
-      />
     </MainLayout>
   );
 }

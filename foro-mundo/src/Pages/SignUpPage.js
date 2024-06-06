@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { Breadcrumb } from "react-bootstrap";
 import BackButton from "../Components/BackButton";
+import { useToast } from "../Context/ToastContext.js";
+import { useNavigate } from "react-router-dom";
 
 
 function SignUpPage() {
@@ -18,6 +20,9 @@ function SignUpPage() {
     description: ""
   });
 
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -29,7 +34,8 @@ function SignUpPage() {
 
     // Crear el usuario con los datos del formulario
     cookies.set("user", user, { path: "/" });
-    window.location.href = "/";
+    showToast("Registracion correceta.", "bg-success");
+    navigate("/") // Redirigir después de que se actualice el estado de user
   };
 
   return (
@@ -40,7 +46,7 @@ function SignUpPage() {
           <Breadcrumb.Item active aria-label="enlace_a_registro">Registro</Breadcrumb.Item>
         </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={register} action="/">
-            <div className="login-container text-center">
+    <div className="login-container text-center">
 
             <h1>Registro</h1>
             <p>Por favor, completa el siguiente formulario para registrarte.</p>

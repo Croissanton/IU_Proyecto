@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import BackButton from "../Components/BackButton";
+import { useToast } from "../Context/ToastContext.js";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   useEffect(() => {
@@ -11,12 +13,14 @@ function LoginPage() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (user) {
-      window.location.href = "/"; // Redirigir después de que se actualice el estado de user
+      navigate("/") // Redirigir después de que se actualice el estado de user
     }
-  }, [user]);
+  }, [user, navigate]);
 
   const login = (e) => {
     e.preventDefault();
@@ -32,32 +36,83 @@ function LoginPage() {
         country: "Mexico",
         city: "CDMX",
         socialMedia: "https://www.facebook.com/juanperez",
-        description: "Soy un desarrollador web"
+        description: "Soy un desarrollador web",
       };
       cookies.set("user", userData, { path: "/" });
       setUser(userData);
+      showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
     }
-  }
+  };
 
   return (
-    <div className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
-      <div className="p-4" style={{ maxWidth: "400px", background: "#ececec", borderRadius: "8px", boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)" }}>
+    <div
+      className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light"
+      style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}
+    >
+      <div
+        className="p-4"
+        style={{
+          maxWidth: "400px",
+          background: "#ececec",
+          borderRadius: "8px",
+          boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
+        }}
+      >
         <form className="row col-12 g-3" onSubmit={login}>
           <div className="login-container text-center">
             <h1>Bienvenido</h1>
             <p>Por favor, inicia sesión para continuar.</p>
             <div className="mb-3">
-              <label htmlFor="username" className="form-label">Nombre de usuario</label>
-              <input type="text" className="form-control form-control-sm" aria-label="nombre_de_usuario" required value={username} onChange={(e) => setUsername(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
+              <label htmlFor="username" className="form-label">
+                Nombre de usuario
+              </label>
+              <input
+                type="text"
+                className="form-control form-control-sm"
+                aria-label="nombre_de_usuario"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                style={{
+                  marginBottom: "0.5rem",
+                  width: "300px",
+                  margin: "0 auto",
+                }}
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label">Contraseña</label>
-              <input type="password" className="form-control form-control-sm" aria-label="contraseña" required value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }} />
+              <label htmlFor="password" className="form-label">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                className="form-control form-control-sm"
+                aria-label="contraseña"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{
+                  marginBottom: "0.5rem",
+                  width: "300px",
+                  margin: "0 auto",
+                }}
+              />
             </div>
-            <button type="submit" className="btn btn-primary text-secondary border border-secondary-subtle m-3">Iniciar Sesión</button>
-            <button type="button" onClick={() => window.location.href = "/register" } className="btn btn-primary text-secondary border border-secondary-subtle m-3">Registrarse</button>
+            <button
+              type="submit"
+              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+            >
+              Iniciar Sesión
+            </button>
+            <button
+              type="button"
+              onClick={() => (window.location.href = "/register")}
+              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+            >
+              Registrarse
+            </button>
             <BackButton />
           </div>
         </form>

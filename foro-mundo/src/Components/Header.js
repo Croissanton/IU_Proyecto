@@ -9,6 +9,8 @@ import Cookies from "universal-cookie";
 import ToastMessage from "./ToastMessage";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { useToast } from "../Context/ToastContext.js";
+import { useNavigate } from "react-router-dom";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
@@ -72,16 +74,13 @@ const Header = forwardRef((props, ref) => {
     window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
   };
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     cookies.remove("user");
-    setToastColor("bg-success");
-    setToastMessage("Se ha cerrado la sesión!");
-    setShowToast(true);
-    window.location.href = "/";
+    showToast("Se ha cerrado la sesión!", "bg-success");
+    navigate("/");
   };
 
   return (
@@ -257,12 +256,6 @@ const Header = forwardRef((props, ref) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message={toastMessage}
-        color={toastColor}
-      />
     </Navbar>
   );
 });

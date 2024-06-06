@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import ToastMessage from "../Components/ToastMessage";
 import Cookies from "universal-cookie";
+import { useToast } from "../Context/ToastContext.js";
 
 function PostPage() {
   useEffect(() => {
@@ -19,9 +20,7 @@ function PostPage() {
   const MAX_CHARACTERS = 500;
 
   const [showModal, setShowModal] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  const { showToast } = useToast();
   const [comments, setComments] = useState([
     {
       title: "Que buen foro",
@@ -48,9 +47,7 @@ function PostPage() {
 
   const handleClose = () => {
     setShowModal(false);
-    setToastColor("bg-danger");
-    setToastMessage("El comentario no se ha creado.");
-    setShowToast(true);
+    showToast("El comentario no se ha creado.");
   };
 
   const cookies = new Cookies();
@@ -67,9 +64,7 @@ function PostPage() {
     };
 
     setComments((prevComments) => [newCommentObject, ...prevComments]);
-    setToastColor("bg-success");
-    setToastMessage("El comentario se ha creado correctamente!");
-    setShowToast(true);
+    showToast("El comentario se ha creado correctamente!", "bg-success");
     setNewComment("");
   };
 
@@ -148,12 +143,6 @@ function PostPage() {
             >
               Publicar
             </button>
-            <ToastMessage
-              show={showToast}
-              onClose={() => setShowToast(false)}
-              message={toastMessage}
-              color={toastColor}
-            />
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este post?"
               show={showModal}
