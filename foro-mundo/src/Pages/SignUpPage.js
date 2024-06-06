@@ -1,10 +1,31 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, ProgressBar } from "react-bootstrap";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { useNavigate } from "react-router-dom";
+import zxcvbn from "zxcvbn";
 
+
+function PasswordStrengthMeter({ password }) {
+  const testResult = zxcvbn(password);
+  const score = testResult.score * 25;
+
+  const getProgressBarVariant = (score) => {
+    if (score === 100) return "success";
+    if (score >= 75) return "info";
+    if (score >= 50) return "warning";
+    return "danger";
+  };
+
+  return (
+    <ProgressBar
+      now={score}
+      variant={getProgressBarVariant(score)}
+      label={score === 100 ? "Muy fuerte" : score >= 75 ? "Fuerte" : score >= 50 ? "Regular" : "Débil"}
+    />
+  );
+}
 
 function SignUpPage() {
   const cookies = new Cookies();
@@ -55,6 +76,7 @@ function SignUpPage() {
                 <input type="text" className="form-control form-control-sm" name="username" value={user.username} onChange={handleInputChange} required aria-label="nombre_usuario"/>
                 <label htmlFor="password" className="form-label">Contraseña</label>
                 <input type="password" className="form-control form-control-sm" name="password" value={user.password} onChange={handleInputChange} required aria-label="contraseña"/>
+                <PasswordStrengthMeter password={user.password} />
                 <label htmlFor="name" className="form-label">Nombre</label>
                 <input type="text" className="form-control form-control-sm" name="name" value={user.name} onChange={handleInputChange} required aria-label="nombre"/>
             </div>
