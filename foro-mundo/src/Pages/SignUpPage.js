@@ -57,7 +57,7 @@ function SignUpPage() {
     // Por ejemplo, verificar si todos los campos obligatorios están completos
 
     // Crear el usuario con los datos del formulario
-    cookies.set("user", user, { path: "/" });
+    cookies.set("user", user, { path: "/", secure: true, sameSite: 'None'});
     showToast("Registro correcta.", "bg-success");
     navigate("/"); // Redirigir después de que se actualice el estado de user
   };

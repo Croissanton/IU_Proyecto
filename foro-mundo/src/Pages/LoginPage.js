@@ -54,7 +54,7 @@ function LoginPage() {
         socialMedia: "https://www.facebook.com/juanperez",
         description: "Soy un desarrollador web",
       };
-      cookies.set("user", userData, { path: "/" });
+      cookies.set("user", userData, { path: "/", secure: true, sameSite: 'None'});
       setUser(userData);
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {

@@ -42,7 +42,7 @@ function ProfilePage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting Data:", profileData);
-    cookies.set("user", profileData, { path: "/" });
+    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
     setIsEditing(false); // Disable editing mode on successful validation and submission
     setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
     showToast("Se han guardado los cambios!"); 
