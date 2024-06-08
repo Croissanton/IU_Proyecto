@@ -18,9 +18,11 @@ function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      navigate("/") // Redirigir después de que se actualice el estado de user
+      navigate("/"); // Redirigir después de que se actualice el estado de user
     }
   }, [user, navigate]);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const login = (e) => {
     e.preventDefault();
@@ -86,19 +88,29 @@ function LoginPage() {
               <label htmlFor="password" className="form-label">
                 Contraseña
               </label>
-              <input
-                type="password"
-                className="form-control form-control-sm"
-                aria-label="contraseña"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  marginBottom: "0.5rem",
-                  width: "300px",
-                  margin: "0 auto",
-                }}
-              />
+              <div className="password-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control form-control-sm"
+                  aria-label="contraseña"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    marginBottom: "0.5rem",
+                    width: "300px",
+                    margin: "0 auto",
+                  }}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label="cambiar_visibilidad_contraseña"
+                >
+                  {showPassword ? "Ocultar" : "Mostrar"}
+                </button>
+              </div>
             </div>
             <button
               type="submit"
