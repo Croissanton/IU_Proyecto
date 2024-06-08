@@ -155,7 +155,7 @@ function PostPage() {
 
       {/* Comentarios existentes */}
       <div className="container-xxl my-3">
-        <h3>Comentarios</h3>
+        <h2>Comentarios</h2>
         {comments.map((comment, index) => (
           <PostComment
             key={index}

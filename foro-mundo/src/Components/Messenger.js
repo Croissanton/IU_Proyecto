@@ -143,14 +143,14 @@ const Messenger = () => {
         md={9}
         className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded"
       >
-        <div className="h2 p-3 border-bottom border-secondary-subtle">
+        <div className="p-3 border-bottom border-secondary-subtle">
           <NavLink
             className="bi bi-person-circle d-inline-flex align-items-center"
             to={`/profile/${activeChat}`}
             style={{ color: "inherit", textDecoration: "none" }}
             aria-label={`Perfil de ${activeChat}`}
           >
-            <p className="m-0 ps-2">{activeChat}</p>
+            <h2 className="m-0 ps-2">{activeChat}</h2>
           </NavLink>
         </div>
         <div

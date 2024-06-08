@@ -77,7 +77,7 @@ function ProfilePublic() {
               ></input>
             </div>
             <div className="col-md-4">
-              <label htmlFor="inputCiduad" className="form-label">
+              <label htmlFor="inputCiudad" className="form-label">
                 Ciudad
               </label>
               <input

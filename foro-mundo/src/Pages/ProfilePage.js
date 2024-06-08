@@ -101,6 +101,7 @@ function ProfilePage() {
                 Cambiar foto
               </button>
             )}
+            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label> 
           </div>
         </div>
         <div

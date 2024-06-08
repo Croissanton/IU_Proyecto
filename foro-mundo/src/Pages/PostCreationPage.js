@@ -85,7 +85,7 @@ function PostCreationPage() {
               ></input>
             </div>
             <div className="col-md-6">
-              <label htmlFor="inputCategoria" className="form-label">
+              <label htmlFor="categoria" className="form-label">
                 Categoría
               </label>
               <select
