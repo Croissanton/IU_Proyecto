@@ -66,7 +66,7 @@ function ProfilePublic() {
             </div>
             <div className="col-md-6">
               <label htmlFor="inputPais" className="form-label">
-                Pais
+                País
               </label>
               <input
                 type="text"
