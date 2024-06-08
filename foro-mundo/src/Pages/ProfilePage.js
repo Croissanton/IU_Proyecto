@@ -26,6 +26,8 @@ function ProfilePage() {
     imageInput: cookieUser ? cookieUser.image : "",
   });
 
+  const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setProfileData((prev) => ({
@@ -41,10 +43,12 @@ function ProfilePage() {
     console.log("Submitting Data:", profileData);
     cookies.set("user", profileData, { path: "/" });
     setIsEditing(false); // Disable editing mode on successful validation and submission
+    setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
     showToast("Se han guardado los cambios!"); 
   };
 
   const handleCancel = () => {
+    setProfileData({ ...initialProfileData });
     setIsEditing(false);
   };
 
