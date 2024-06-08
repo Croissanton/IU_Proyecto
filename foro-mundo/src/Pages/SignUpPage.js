@@ -4,6 +4,7 @@ import { Breadcrumb, ProgressBar } from "react-bootstrap";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { useNavigate } from "react-router-dom";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 
 function PasswordStrengthMeter({ password }) {
@@ -76,11 +77,20 @@ function SignUpPage() {
               <label htmlFor="username" className="form-label">Nombre de usuario</label>
               <input type="text" className="form-control form-control-sm" name="username" value={user.username} onChange={handleInputChange} required aria-label="nombre_usuario"/>
               <label htmlFor="password" className="form-label">Contraseña</label>
-              <div className="password-group">
+              <div className="input-group">
                 <input type={showPassword ? "text" : "password"} className="form-control form-control-sm" name="password" value={user.password} onChange={handleInputChange} required aria-label="contraseña"/>
-                <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)} aria-label="cambiar_visibilidad_contraseña">
-                  {showPassword ? "Ocultar" : "Mostrar"}
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-create">{showPassword ? "Ocultar" : "Mostrar"}</Tooltip>}
+                  >
+                <button
+                  type="button"
+                  className= {showPassword ? "bi bi-eye btn btn-outline-secondary" : "bi bi-eye-slash btn btn-outline-secondary"}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label="toggle_password_visibility"
+                >
                 </button>
+              </OverlayTrigger>
               </div>
               <PasswordStrengthMeter password={user.password} />
               <label htmlFor="name" className="form-label">Nombre</label>
