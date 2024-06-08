@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/foro-mundo/static/css/main.9c3fb8a8.css",
-    "main.js": "/foro-mundo/static/js/main.81f7c5e8.js",
-    "static/js/453.bf825dcc.chunk.js": "/foro-mundo/static/js/453.bf825dcc.chunk.js",
-    "static/media/bootstrap-icons.woff?": "/foro-mundo/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
-    "static/media/bootstrap-icons.woff2?": "/foro-mundo/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
-    "index.html": "/foro-mundo/index.html",
-    "main.9c3fb8a8.css.map": "/foro-mundo/static/css/main.9c3fb8a8.css.map",
-    "main.81f7c5e8.js.map": "/foro-mundo/static/js/main.81f7c5e8.js.map",
-    "453.bf825dcc.chunk.js.map": "/foro-mundo/static/js/453.bf825dcc.chunk.js.map"
+    "main.css": "/IU_Proyecto/static/css/main.48fc5237.css",
+    "main.js": "/IU_Proyecto/static/js/main.c8dedc09.js",
+    "static/js/453.bf825dcc.chunk.js": "/IU_Proyecto/static/js/453.bf825dcc.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/IU_Proyecto/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/IU_Proyecto/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "index.html": "/IU_Proyecto/index.html",
+    "main.48fc5237.css.map": "/IU_Proyecto/static/css/main.48fc5237.css.map",
+    "main.c8dedc09.js.map": "/IU_Proyecto/static/js/main.c8dedc09.js.map",
+    "453.bf825dcc.chunk.js.map": "/IU_Proyecto/static/js/453.bf825dcc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9c3fb8a8.css",
-    "static/js/main.81f7c5e8.js"
+    "static/css/main.48fc5237.css",
+    "static/js/main.c8dedc09.js"
   ]
 }
