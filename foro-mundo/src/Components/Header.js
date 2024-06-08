@@ -123,7 +123,7 @@ const Header = forwardRef((props, ref) => {
                 id="searchInput"
                 type="search"
                 className="me-2"
-                aria-label="Busqueda"
+                aria-label="Buscar"
                 value={inputValue}
                 onChange={handleInputChange}
                 onBlur={() => {
@@ -162,7 +162,7 @@ const Header = forwardRef((props, ref) => {
                     boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                   }}
                   role="listbox"
-                  aria-label="Search suggestions"
+                  aria-label="Sugerencias de búsqueda"
                 >
                   {suggestions.map((suggestion, index) => (
                     <div
@@ -199,6 +199,7 @@ const Header = forwardRef((props, ref) => {
                       aria-label="Crear post"
                     >
                       <i className="bi bi-plus-circle custom-icon"></i>
+                      <span className="visually-hidden">Crear post</span>
                     </Nav.Link>
                   </OverlayTrigger>
                   <OverlayTrigger
@@ -212,6 +213,7 @@ const Header = forwardRef((props, ref) => {
                       aria-label="Perfil"
                     >
                       <i className="bi bi-person-circle custom-icon"></i>
+                      <span className="visually-hidden">Perfil</span>
                     </Nav.Link>
                   </OverlayTrigger>
                   <OverlayTrigger
@@ -225,6 +227,7 @@ const Header = forwardRef((props, ref) => {
                       aria-label="Mensajes"
                     >
                       <i className="bi bi-chat custom-icon"></i>
+                      <span className="visually-hidden">Mensajes</span>
                     </Nav.Link>
                   </OverlayTrigger>
                 </>
@@ -240,6 +243,7 @@ const Header = forwardRef((props, ref) => {
                   aria-label="Ayuda"
                 >
                   <i className="bi bi-question-circle custom-icon"></i>
+                  <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>
               </OverlayTrigger>
 
