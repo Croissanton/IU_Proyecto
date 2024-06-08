@@ -9,7 +9,7 @@ import Cookies from "universal-cookie";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
@@ -64,17 +64,18 @@ const Header = forwardRef((props, ref) => {
     }
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!inputValue.trim()) {
       return;
     }
     console.log("Searching for:", inputValue);
-    window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
+    navigate(`/search?query=${encodeURIComponent(inputValue)}`);
   };
 
   const { showToast } = useToast();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     cookies.remove("user");
@@ -92,7 +93,7 @@ const Header = forwardRef((props, ref) => {
     >
       <Container>
         <Navbar.Brand
-          href="/"
+          as={Link} to="/"
           className="text-secondary m-auto"
           style={{
             fontSize: "1.5rem",
@@ -183,7 +184,7 @@ const Header = forwardRef((props, ref) => {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-create">Crear post</Tooltip>}
                   >
-                    <Nav.Link href="/create">
+                    <Nav.Link as={Link} to="/create">
                       <i className="bi bi-plus-circle custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>
@@ -191,7 +192,7 @@ const Header = forwardRef((props, ref) => {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-profile">Perfil</Tooltip>}
                   >
-                    <Nav.Link href="/profile">
+                    <Nav.Link has={Link} to="/profile">
                       <i className="bi bi-person-circle custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>
@@ -199,7 +200,7 @@ const Header = forwardRef((props, ref) => {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-messenger">Mensajes</Tooltip>}
                   >
-                    <Nav.Link href="/messenger">
+                    <Nav.Link as={Link} to="/messenger">
                       <i className="bi bi-chat custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>
@@ -209,14 +210,14 @@ const Header = forwardRef((props, ref) => {
                 placement="bottom"
                 overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
               >
-                <Nav.Link href="/contact">
+                <Nav.Link as={Link} to="/contact">
                   <i className="bi bi-question-circle custom-icon"></i>
                 </Nav.Link>
               </OverlayTrigger>
 
               {cookies.get("user") === undefined ? (
                 <Nav.Link
-                  href="/login"
+                  as={Link} to="/login"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -239,7 +240,7 @@ const Header = forwardRef((props, ref) => {
               )}
               {cookies.get("user") === undefined ? (
                 <Nav.Link
-                  href="/register"
+                  as={Link} to="/register"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
