@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
@@ -6,7 +7,7 @@ function NotFound() {
       <h1>404 No Encontrado</h1>
       <p>La página que estás buscando no existe o ha ocurrido otro error.</p>
       <p>
-        <a href="/">Volver a la página de inicio</a>
+        <Link to="/">Volver a la página de inicio</Link>
       </p>
     </div>
   );

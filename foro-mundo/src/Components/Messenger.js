@@ -189,7 +189,6 @@ const Messenger = () => {
             <FormControl
               className="border-secondary-subtle"
               type="text"
-              placeholder="Type a message..."
               value={inputValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}

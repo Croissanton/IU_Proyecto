@@ -1,6 +1,7 @@
 import Messenger from "../Components/Messenger";
 import MainLayout from "../layout/MainLayout";
 import { Breadcrumb } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function MessengerPage() {
   return (
@@ -8,7 +9,7 @@ function MessengerPage() {
       <div className="container-xxl my-3">
         <h1>Mensajes</h1>
         <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mensajes</Breadcrumb.Item>
         </Breadcrumb>
       </div>

@@ -2,6 +2,7 @@ import MainLayout from "../layout/MainLayout.js";
 import React from "react";
 import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ProfilePublic() {
   useEffect(() => {
@@ -13,7 +14,7 @@ function ProfilePublic() {
       <div className="container-xxl my-3">
       <h1>Perfil</h1>
         <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Perfil</Breadcrumb.Item> {/* */}
         </Breadcrumb>
       </div>

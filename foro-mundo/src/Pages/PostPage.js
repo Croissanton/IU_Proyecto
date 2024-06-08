@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
+import { Link } from "react-router-dom";
 
 function PostPage() {
   useEffect(() => {
@@ -93,8 +94,8 @@ function PostPage() {
       <div className="container-xxl my-3">
         <h1>Post</h1>
         <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item href="./search">Foro</Breadcrumb.Item>{" "}
+          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item as={Link} to="/search">Foro</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del topico */}
           <Breadcrumb.Item active>Post</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del post */}

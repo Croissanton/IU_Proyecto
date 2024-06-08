@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 import { Breadcrumb, ProgressBar } from "react-bootstrap";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 
@@ -66,7 +66,7 @@ function SignUpPage() {
     <div className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
       <div className="p-4" style={{ maxWidth: "400px", background: "#ececec", borderRadius: "8px", boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)" }}>
         <Breadcrumb>
-          <Breadcrumb.Item href="../#" aria-label="enlace_a_inicio">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item as={Link} to="/" aria-label="enlace_a_inicio">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active aria-label="enlace_a_registro">Registro</Breadcrumb.Item>
         </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={register} action="/">

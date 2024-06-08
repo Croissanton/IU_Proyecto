@@ -3,6 +3,7 @@ import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
   useEffect(() => {
@@ -69,7 +70,7 @@ function ProfilePage() {
       <div className="container-xxl my-3">
         <h1>Mi Perfil</h1>
         <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>

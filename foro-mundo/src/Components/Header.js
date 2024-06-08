@@ -116,7 +116,6 @@ const Header = forwardRef((props, ref) => {
               <FormControl
                 id="searchInput"
                 type="search"
-                placeholder="Buscar..."
                 className="me-2"
                 aria-label="Search"
                 value={inputValue}
@@ -192,7 +191,7 @@ const Header = forwardRef((props, ref) => {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-profile">Perfil</Tooltip>}
                   >
-                    <Nav.Link has={Link} to="/profile">
+                    <Nav.Link as={Link} to="/profile">
                       <i className="bi bi-person-circle custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>

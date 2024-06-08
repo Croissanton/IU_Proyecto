@@ -6,7 +6,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -59,7 +59,7 @@ function PostCreationPage() {
       <div className="container-xxl my-3">
         <h1>Crear Post</h1>
         <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -112,7 +112,6 @@ function PostCreationPage() {
                 type="text"
                 className="form-control input-group-lg"
                 required
-                placeholder="Escriba acerca del tema..."
                 rows={7}
                 id="inputTexto"
               ></textarea>
