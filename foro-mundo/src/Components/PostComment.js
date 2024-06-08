@@ -64,7 +64,7 @@ const PostComment = ({
                   >
                     +
                   </Button>
-                  <h5>Votos positivos</h5>
+                  <span className="h5">Votos positivos</span>
                   <p>{upvotes}</p>
                 </Col>
                 <Col className="text-center">
@@ -74,7 +74,7 @@ const PostComment = ({
                   >
                     -
                   </Button>
-                  <h5>Votos negativos</h5>
+                  <span className="h5">Votos negativos</span>
                   <p>{downvotes}</p>
                 </Col>
                 <Col className="text-center">

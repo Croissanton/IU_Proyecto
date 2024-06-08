@@ -23,7 +23,7 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <h4>{titulo}</h4>
+                      <span className="h4">{titulo}</span>
                     </Row>
                     <Row>
                       <p>{text}</p>
@@ -47,11 +47,11 @@ const PostCard = ({
               <Col className="p-3">
                 <Row>
                   <Col className="m-auto">
-                    <h5>Respuestas</h5>
+                    <span className="h5">Respuestas</span>
                     <p>{res_num}</p>
                   </Col>
                   <Col className="m-auto">
-                    <h5>Número de visualizaciones</h5>
+                    <span className="h5">Número de visualizaciones</span>
                     <p>{view_num}</p>
                   </Col>
                   <Col className="m-auto">
