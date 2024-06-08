@@ -3,6 +3,7 @@ import Cookies from "universal-cookie";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { useNavigate } from "react-router-dom";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function LoginPage() {
   useEffect(() => {
@@ -23,6 +24,19 @@ function LoginPage() {
   }, [user, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleKeyDown = (e) => {
+    if (e.ctrlKey && e.key === "r") {
+      navigate("/register");
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   const login = (e) => {
     e.preventDefault();
@@ -88,7 +102,7 @@ function LoginPage() {
               <label htmlFor="password" className="form-label">
                 Contraseña
               </label>
-              <div className="password-group">
+              <div className="input-group" style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }}>
                 <input
                   type={showPassword ? "text" : "password"}
                   className="form-control form-control-sm"
@@ -96,20 +110,19 @@ function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  style={{
-                    marginBottom: "0.5rem",
-                    width: "300px",
-                    margin: "0 auto",
-                  }}
                 />
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-create">{showPassword ? "Ocultar" : "Mostrar"}</Tooltip>}
+                  >
                 <button
                   type="button"
-                  className="btn btn-outline-secondary"
+                  className= {showPassword ? "bi bi-eye btn btn-outline-secondary" : "bi bi-eye-slash btn btn-outline-secondary"}
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label="cambiar_visibilidad_contraseña"
+                  aria-label="toggle_password_visibility"
                 >
-                  {showPassword ? "Ocultar" : "Mostrar"}
                 </button>
+              </OverlayTrigger>
               </div>
             </div>
             <button
@@ -120,7 +133,7 @@ function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => (window.location.href = "/register")}
+              onClick={() => navigate("/register")}
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse
