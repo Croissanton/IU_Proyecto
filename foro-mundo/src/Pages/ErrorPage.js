@@ -14,7 +14,7 @@ function ErrorPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <Breadcrumb>
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
         </Breadcrumb>

@@ -88,6 +88,17 @@ body, html {
 .custom-text-link:hover {
   color: rgba(0, 0, 0, 0.5);
 }
+
+.custom-breadcrumb {
+  a {
+    color: $secondary;
+    transition: color 0.3s;
+  }
+  a:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 

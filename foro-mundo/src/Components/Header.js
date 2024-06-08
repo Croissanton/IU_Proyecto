@@ -79,7 +79,7 @@ const Header = forwardRef((props, ref) => {
   const { showToast } = useToast();
 
   const handleLogout = () => {
-    cookies.remove('user', { path: '/', secure: true, sameSite: 'None' });
+    cookies.remove("user", { path: "/", secure: true, sameSite: "None" });
     showToast("Se ha cerrado la sesión!", "bg-success");
     navigate("/");
   };
@@ -94,7 +94,8 @@ const Header = forwardRef((props, ref) => {
     >
       <Container>
         <Navbar.Brand
-          as={Link} to="/"
+          as={Link}
+          to="/"
           className="text-secondary m-auto"
           style={{
             fontSize: "1.5rem",
@@ -114,7 +115,9 @@ const Header = forwardRef((props, ref) => {
               }`}
               style={{ position: "relative" }}
             >
-              <FormLabel htmlFor="searchInput" className="visually-hidden">Buscar</FormLabel>
+              <FormLabel htmlFor="searchInput" className="visually-hidden">
+                Buscar
+              </FormLabel>
               <FormControl
                 title="Buscar"
                 id="searchInput"
@@ -137,10 +140,12 @@ const Header = forwardRef((props, ref) => {
                 autoComplete="off"
               />
               <Button
+                className="d-flex"
                 variant="outline-secondary"
                 type="submit"
                 disabled={!inputValue.trim()}
               >
+                <span className="me-1">Buscar</span>
                 <i className="bi bi-search"></i>
               </Button>
               {showSuggestions && inputValue && suggestions.length > 0 && (
@@ -179,14 +184,19 @@ const Header = forwardRef((props, ref) => {
                 </div>
               )}
             </Form>
-            <Nav>
+            <Nav className="d-flex align-items-center justify-content-center h-100">
               {cookies.get("user") !== undefined && (
                 <>
                   <OverlayTrigger
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-create">Crear post</Tooltip>}
                   >
-                    <Nav.Link as={Link} to="/create">
+                    <Nav.Link
+                      className="d-flex align-items-center justify-content-center"
+                      as={Link}
+                      to="/create"
+                      aria-label="Crear post"
+                    >
                       <i className="bi bi-plus-circle custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>
@@ -194,7 +204,12 @@ const Header = forwardRef((props, ref) => {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-profile">Perfil</Tooltip>}
                   >
-                    <Nav.Link as={Link} to="/profile">
+                    <Nav.Link
+                      className="d-flex align-items-center justify-content-center"
+                      as={Link}
+                      to="/profile"
+                      aria-label="Perfil"
+                    >
                       <i className="bi bi-person-circle custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>
@@ -202,7 +217,12 @@ const Header = forwardRef((props, ref) => {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-messenger">Mensajes</Tooltip>}
                   >
-                    <Nav.Link as={Link} to="/messenger">
+                    <Nav.Link
+                      className="d-flex align-items-center justify-content-center"
+                      as={Link}
+                      to="/messenger"
+                      aria-label="Mensajes"
+                    >
                       <i className="bi bi-chat custom-icon"></i>
                     </Nav.Link>
                   </OverlayTrigger>
@@ -212,14 +232,20 @@ const Header = forwardRef((props, ref) => {
                 placement="bottom"
                 overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
               >
-                <Nav.Link as={Link} to="/contact">
+                <Nav.Link
+                  className="d-flex align-items-center justify-content-center"
+                  as={Link}
+                  to="/contact"
+                  aria-label="Ayuda"
+                >
                   <i className="bi bi-question-circle custom-icon"></i>
                 </Nav.Link>
               </OverlayTrigger>
 
               {cookies.get("user") === undefined ? (
                 <Nav.Link
-                  as={Link} to="/login"
+                  as={Link}
+                  to="/login"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -242,7 +268,8 @@ const Header = forwardRef((props, ref) => {
               )}
               {cookies.get("user") === undefined ? (
                 <Nav.Link
-                  as={Link} to="/register"
+                  as={Link}
+                  to="/register"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",

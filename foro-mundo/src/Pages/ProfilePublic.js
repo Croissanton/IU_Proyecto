@@ -13,7 +13,7 @@ function ProfilePublic() {
     <MainLayout>
       <div className="container-xxl my-3">
       <h1>Perfil</h1>
-        <Breadcrumb>
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Perfil</Breadcrumb.Item> {/* */}
         </Breadcrumb>

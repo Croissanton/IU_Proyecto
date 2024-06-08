@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Breadcrumb } from "react-bootstrap";
 
 function LoginPage() {
   useEffect(() => {
@@ -54,7 +55,11 @@ function LoginPage() {
         socialMedia: "https://www.facebook.com/juanperez",
         description: "Soy un desarrollador web",
       };
-      cookies.set("user", userData, { path: "/", secure: true, sameSite: 'None'});
+      cookies.set("user", userData, {
+        path: "/",
+        secure: true,
+        sameSite: "None",
+      });
       setUser(userData);
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
@@ -67,6 +72,14 @@ function LoginPage() {
       className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light"
       style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}
     >
+      <Breadcrumb className="custom-breadcrumb">
+        <Breadcrumb.Item as={Link} to="/" aria-label="enlace_a_inicio">
+          Inicio
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active aria-label="enlace_a_login">
+          Login
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <div
         className="p-4"
         style={{
@@ -85,6 +98,8 @@ function LoginPage() {
                 Nombre de usuario
               </label>
               <input
+                id="username"
+                name="username"
                 type="text"
                 className="form-control form-control-sm"
                 aria-label="nombre_de_usuario"
@@ -102,8 +117,17 @@ function LoginPage() {
               <label htmlFor="password" className="form-label">
                 Contraseña
               </label>
-              <div className="input-group" style={{ marginBottom: "0.5rem", width: "300px", margin: "0 auto" }}>
+              <div
+                className="input-group"
+                style={{
+                  marginBottom: "0.5rem",
+                  width: "300px",
+                  margin: "0 auto",
+                }}
+              >
                 <input
+                  id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   className="form-control form-control-sm"
                   aria-label="contraseña"
@@ -112,17 +136,24 @@ function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <OverlayTrigger
-                    placement="bottom"
-                    overlay={<Tooltip id="tooltip-create">{showPassword ? "Ocultar" : "Mostrar"}</Tooltip>}
-                  >
-                <button
-                  type="button"
-                  className= {showPassword ? "bi bi-eye btn btn-outline-secondary" : "bi bi-eye-slash btn btn-outline-secondary"}
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label="toggle_password_visibility"
+                  placement="bottom"
+                  overlay={
+                    <Tooltip id="tooltip-create">
+                      {showPassword ? "Ocultar" : "Mostrar"}
+                    </Tooltip>
+                  }
                 >
-                </button>
-              </OverlayTrigger>
+                  <button
+                    type="button"
+                    className={
+                      showPassword
+                        ? "bi bi-eye btn btn-outline-secondary"
+                        : "bi bi-eye-slash btn btn-outline-secondary"
+                    }
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label="toggle_password_visibility"
+                  ></button>
+                </OverlayTrigger>
               </div>
             </div>
             <button

@@ -93,7 +93,7 @@ function PostPage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Post</h1>
-        <Breadcrumb>
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item as={Link} to="/search">Foro</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del topico */}
