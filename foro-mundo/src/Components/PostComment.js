@@ -59,23 +59,33 @@ const PostComment = ({
               <Row className="p-3">
                 <Col className="text-center">
                   <Button
+                    className="btn"
                     onClick={handleUpvote}
                     variant={userVote === "upvote" ? "success" : "primary"}
                   >
                     +
                   </Button>
-                  <span className="h5">Votos positivos</span>
-                  <p>{upvotes}</p>
+                  <Row>
+                    <span className="h5">Votos positivos</span>
+                  </Row>
+                  <Row>
+                    <p>{upvotes}</p>
+                  </Row>
                 </Col>
                 <Col className="text-center">
                   <Button
+                    className="btn"
                     onClick={handleDownvote}
                     variant={userVote === "downvote" ? "danger" : "primary"}
                   >
                     -
                   </Button>
-                  <span className="h5">Votos negativos</span>
-                  <p>{downvotes}</p>
+                  <Row>
+                    <span className="h5">Votos negativos</span>
+                  </Row>
+                  <Row>
+                    <p>{downvotes}</p>
+                  </Row>
                 </Col>
                 <Col className="text-center">
                   <Row>

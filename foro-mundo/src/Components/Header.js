@@ -114,8 +114,9 @@ const Header = forwardRef((props, ref) => {
               }`}
               style={{ position: "relative" }}
             >
-              <FormLabel htmlFor="searchInput" className="visually-hidden">Busqueda</FormLabel>
+              <FormLabel htmlFor="searchInput" className="visually-hidden">Buscar</FormLabel>
               <FormControl
+                title="Buscar"
                 id="searchInput"
                 type="search"
                 className="me-2"
