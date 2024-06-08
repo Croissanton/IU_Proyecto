@@ -78,7 +78,7 @@ const Header = forwardRef((props, ref) => {
   const { showToast } = useToast();
 
   const handleLogout = () => {
-    cookies.remove("user");
+    cookies.remove('user', { path: '/', secure: true, sameSite: 'None' });
     showToast("Se ha cerrado la sesión!", "bg-success");
     navigate("/");
   };
