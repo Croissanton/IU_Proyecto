@@ -143,6 +143,7 @@ const Header = forwardRef((props, ref) => {
                 className="d-flex"
                 variant="outline-secondary"
                 type="submit"
+                aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
                 <span className="me-1">Buscar</span>
