@@ -10,6 +10,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
+import { FormLabel } from "react-bootstrap";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
@@ -113,11 +114,12 @@ const Header = forwardRef((props, ref) => {
               }`}
               style={{ position: "relative" }}
             >
+              <FormLabel htmlFor="searchInput" className="visually-hidden">Busqueda</FormLabel>
               <FormControl
                 id="searchInput"
                 type="search"
                 className="me-2"
-                aria-label="Search"
+                aria-label="Busqueda"
                 value={inputValue}
                 onChange={handleInputChange}
                 onBlur={() => {
