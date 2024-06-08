@@ -90,7 +90,7 @@ const PostComment = ({
                 <Col className="text-center">
                   <Row>
                     <Col>
-                      <NavLink className="custom-text-link" to={`/profile/id`}>
+                      <NavLink className="custom-text-link" to={`/profile/${author}`}>
                         <span>{author}</span>
                       </NavLink>
                     </Col>
