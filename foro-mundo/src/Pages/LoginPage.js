@@ -72,14 +72,6 @@ function LoginPage() {
       className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light"
       style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}
     >
-      <Breadcrumb className="custom-breadcrumb">
-        <Breadcrumb.Item as={Link} to="/" aria-label="enlace_a_inicio">
-          Inicio
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active aria-label="enlace_a_login">
-          Login
-        </Breadcrumb.Item>
-      </Breadcrumb>
       <div
         className="p-4"
         style={{
@@ -89,6 +81,14 @@ function LoginPage() {
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}
       >
+      <Breadcrumb className="custom-breadcrumb">
+        <Breadcrumb.Item as={Link} to="/" aria-label="enlace_a_inicio">
+          Inicio
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active aria-label="enlace_a_login">
+          Login
+        </Breadcrumb.Item>
+      </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={login}>
           <div className="login-container text-center">
             <h1>Bienvenido</h1>
