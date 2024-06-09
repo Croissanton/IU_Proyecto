@@ -47,13 +47,13 @@ const PostComment = ({
   return (
     <Row className="gy-3">
       <Col className="p-3 m-auto">
-        <Container className="border border-dark-subtle bg-light">
+        <Container className="border border-dark-subtle bg-light" role="region" aria-labelledby="comment-title">
           <Row>
             <Col className="border-end border-dark-subtle p-3">
               <Row>
                 <Col>
                   <Row>
-                    <p>{title}</p>
+                    <p id="comment-title">{title}</p>
                   </Row>
                 </Col>
               </Row>
@@ -62,6 +62,7 @@ const PostComment = ({
               <Row className="p-3">
                 <Col className="text-center">
                   <Button
+                    aria-label="Upvote"
                     disabled={!cookies.get("user")}
                     className="btn"
                     onClick={handleUpvote}
@@ -78,6 +79,7 @@ const PostComment = ({
                 </Col>
                 <Col className="text-center">
                   <Button
+                    aria-label="Downvote"
                     className="btn"
                     disabled={!cookies.get("user")}
                     onClick={handleDownvote}
@@ -95,7 +97,11 @@ const PostComment = ({
                 <Col className="text-center">
                   <Row>
                     <Col>
-                      <NavLink className="custom-text-link" to={`/profile/${author}`}>
+                      <NavLink
+                        className="custom-text-link"
+                        to={`/profile/${author}`}
+                        aria-label={`Profile of ${author}`}
+                      >
                         <span>{author}</span>
                       </NavLink>
                     </Col>
