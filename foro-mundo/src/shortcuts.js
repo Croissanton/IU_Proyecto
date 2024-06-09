@@ -1,6 +1,10 @@
 // src/shortcuts.js
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+const user = cookies.get("user");
 
 const useShortcuts = () => {
   const navigate = useNavigate();
@@ -9,16 +13,19 @@ const useShortcuts = () => {
     if (e.ctrlKey && e.altKey) {
       switch (e.key) {
         case "l":
-          navigate("/login");
+          if (!user) navigate("/login");
           break;
         case "r":
-          navigate("/register");
+          if (!user) navigate("/register");
           break;
         case "p":
-          navigate("/create");
+          if (user) navigate("/create");
           break;
         case "c":
-          navigate("/messenger");
+          if (user) navigate("/messenger");
+          break;
+        case "h":
+          navigate("/contact");
           break;
         default:
           break;
@@ -31,7 +38,7 @@ const useShortcuts = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  });
 };
 
 export default useShortcuts;

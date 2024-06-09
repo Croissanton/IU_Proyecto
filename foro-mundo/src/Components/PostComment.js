@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 const PostComment = ({
   title,
@@ -59,6 +62,7 @@ const PostComment = ({
               <Row className="p-3">
                 <Col className="text-center">
                   <Button
+                    disabled={!cookies.get("user")}
                     className="btn"
                     onClick={handleUpvote}
                     variant={userVote === "upvote" ? "success" : "primary"}
@@ -75,6 +79,7 @@ const PostComment = ({
                 <Col className="text-center">
                   <Button
                     className="btn"
+                    disabled={!cookies.get("user")}
                     onClick={handleDownvote}
                     variant={userVote === "downvote" ? "danger" : "primary"}
                   >
