@@ -28,6 +28,7 @@ function ContactPage() {
           <li>CTRL+ALT+P : Crear publicación</li>
           <li>CTRL+ALT+R : Registro</li>
           <li>CTRL+ALT+L : Inicio de sesión</li>
+          <li>CTRL+ALT+H : Ayuda</li>
         </ul>
       </div>
       <hr />
