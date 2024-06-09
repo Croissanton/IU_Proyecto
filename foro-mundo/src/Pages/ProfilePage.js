@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
-import ToastMessage from "../Components/ToastMessage";
 import Cookies from "universal-cookie";
+import { useToast } from "../Context/ToastContext.js";
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
   useEffect(() => {
@@ -12,9 +13,6 @@ function ProfilePage() {
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
 
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     username: cookieUser ? cookieUser.username : "",
@@ -29,6 +27,8 @@ function ProfilePage() {
     imageInput: cookieUser ? cookieUser.image : "",
   });
 
+  const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setProfileData((prev) => ({
@@ -37,17 +37,19 @@ function ProfilePage() {
     }));
   };
 
+  const { showToast } = useToast();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting Data:", profileData);
-    cookies.set("user", profileData, { path: "/" });
+    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
     setIsEditing(false); // Disable editing mode on successful validation and submission
-    setToastColor("bg-success");
-    setToastMessage("Se han guardado los cambios!");
-    setShowToast(true);
+    setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
+    showToast("Se han guardado los cambios!"); 
   };
 
   const handleCancel = () => {
+    setProfileData({ ...initialProfileData });
     setIsEditing(false);
   };
 
@@ -66,12 +68,12 @@ function ProfilePage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+        <h1>Mi Perfil</h1>
+        <Breadcrumb className="custom-breadcrumb" >
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <h1>Mi Perfil</h1>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img
@@ -99,6 +101,7 @@ function ProfilePage() {
                 Cambiar foto
               </button>
             )}
+            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label> 
           </div>
         </div>
         <div
@@ -197,12 +200,6 @@ function ProfilePage() {
           </form>
         </div>
       </div>
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message={toastMessage}
-        color={toastColor}
-      />
     </MainLayout>
   );
 }
@@ -216,6 +213,8 @@ function InputComponent({
   readOnly,
   required,
 }) {
+  const inputClassNames = `form-control ${readOnly ? "no-background no-border" : ""}`;
+
   return (
     <div className="col-md-6">
       <label htmlFor={id} className="form-label">
@@ -223,7 +222,7 @@ function InputComponent({
       </label>
       {type === "textarea" ? (
         <textarea
-          className="form-control"
+          className={inputClassNames}
           id={id}
           value={value}
           onChange={onChange}
@@ -233,7 +232,7 @@ function InputComponent({
       ) : (
         <input
           type={type}
-          className="form-control"
+          className={inputClassNames}
           id={id}
           value={value}
           onChange={onChange}

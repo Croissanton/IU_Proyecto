@@ -13,7 +13,7 @@ const ForumCard = ({ topic, post_num, view_num }) => {
                 <Row>
                   <Col>
                     <Row>
-                      <h4 className="my-3">{topic}</h4>
+                      <span className="my-3 h4">{topic}</span>
                     </Row>
                   </Col>
                 </Row>
@@ -21,11 +21,11 @@ const ForumCard = ({ topic, post_num, view_num }) => {
               <Col className="p-3">
                 <Row>
                   <Col className="m-auto">
-                    <h5>Posts</h5>
+                    <span className="h5">Posts</span>
                     <p>{post_num}</p>
                   </Col>
                   <Col className="m-auto">
-                    <h5>Número de visualizaciones</h5>
+                    <span className="h5">Número de visualizaciones</span>
                     <p>{view_num}</p>
                   </Col>
                 </Row>

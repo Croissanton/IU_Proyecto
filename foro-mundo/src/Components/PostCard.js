@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const PostCard = ({
@@ -13,8 +13,22 @@ const PostCard = ({
   lm_author,
   lm_date,
 }) => {
+  const navigate = useNavigate();
+
+  const navigateToPost = () => {
+    navigate(`/post`);
+  };
   return (
-    <Link to={`/post`} className="custom-link">
+    <div  
+      onClick={navigateToPost}
+      className="custom-link"
+      role="button"
+      tabIndex="0"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          navigateToPost();
+        }
+      }}>
       <Row className="gy-3">
         <Col className="p-3 m-auto ">
           <Container className="border border-dark-subtle bg-light">
@@ -23,15 +37,20 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <h4>{titulo}</h4>
+                      <span className="h4">{titulo}</span>
                     </Row>
                     <Row>
                       <p>{text}</p>
                     </Row>
                     <Row onClick={(e) => e.stopPropagation()}>
-                      <NavLink to={`/profile/id`} style={{ color: "inherit" }}>
-                        <p>{author}</p>
-                      </NavLink>
+                      <Col>
+                        <NavLink
+                          className="custom-text-link"
+                          to={`/profile/id`}
+                        >
+                          <span>{author}</span>
+                        </NavLink>
+                      </Col>
                     </Row>
                     <Row>
                       <p>{date}</p>
@@ -42,11 +61,11 @@ const PostCard = ({
               <Col className="p-3">
                 <Row>
                   <Col className="m-auto">
-                    <h5>Respuestas</h5>
+                    <span className="h5">Respuestas</span>
                     <p>{res_num}</p>
                   </Col>
                   <Col className="m-auto">
-                    <h5>Número de visualizaciones</h5>
+                    <span className="h5">Número de visualizaciones</span>
                     <p>{view_num}</p>
                   </Col>
                   <Col className="m-auto">
@@ -66,7 +85,7 @@ const PostCard = ({
           </Container>
         </Col>
       </Row>
-    </Link>
+    </div>
   );
 };
 

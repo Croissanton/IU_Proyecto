@@ -2,6 +2,7 @@ import MainLayout from "../layout/MainLayout.js";
 import React from "react";
 import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ProfilePublic() {
   useEffect(() => {
@@ -11,12 +12,12 @@ function ProfilePublic() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
+      <h1>Perfil</h1>
+        <Breadcrumb className="custom-breadcrumb" >
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Perfil</Breadcrumb.Item> {/* */}
         </Breadcrumb>
       </div>
-      <h1>Profile Public</h1>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img
@@ -66,7 +67,7 @@ function ProfilePublic() {
             </div>
             <div className="col-md-6">
               <label htmlFor="inputPais" className="form-label">
-                Pais
+                País
               </label>
               <input
                 type="text"
@@ -76,7 +77,7 @@ function ProfilePublic() {
               ></input>
             </div>
             <div className="col-md-4">
-              <label htmlFor="inputCiduad" className="form-label">
+              <label htmlFor="inputCiudad" className="form-label">
                 Ciudad
               </label>
               <input

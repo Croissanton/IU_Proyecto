@@ -1,4 +1,5 @@
 {
+  "homepage": "https://croissanton.github.io/IU_Proyecto/",
   "name": "foro-mundo",
   "version": "0.1.0",
   "private": true,
@@ -15,9 +16,12 @@
     "react-scripts": "5.0.1",
     "sass": "^1.75.0",
     "universal-cookie": "^7.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zxcvbn": "^4.4.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
   }
 }

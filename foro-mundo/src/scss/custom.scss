@@ -71,6 +71,34 @@ body, html {
     }
   }
 
+.custom-text-link {
+    text-decoration: none;
+    color: $secondary;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    transition: color 0.3s;
+  }
+
+.custom-text-link span {
+  margin: 0; 
+  padding: 0;
+}
+
+.custom-text-link:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-breadcrumb {
+  a {
+    color: $secondary;
+    transition: color 0.3s;
+  }
+  a:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 

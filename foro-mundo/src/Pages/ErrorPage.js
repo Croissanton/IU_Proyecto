@@ -4,6 +4,7 @@ import NotFound from "../Components/NotFound.js";
 import { Container, Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ErrorPage() {
   useEffect(() => {
@@ -13,10 +14,11 @@ function ErrorPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
+        <Breadcrumb className="custom-breadcrumb">
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+        <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
         </Breadcrumb>
+        <h1>ERROR</h1>
       </div>
       <Container>
         <Row

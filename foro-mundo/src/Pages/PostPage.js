@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
-import { useEffect } from "react";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
-import ToastMessage from "../Components/ToastMessage";
 import Cookies from "universal-cookie";
+import { useToast } from "../Context/ToastContext.js";
+import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar ids únicos
 
 function PostPage() {
   useEffect(() => {
@@ -19,11 +20,10 @@ function PostPage() {
   const MAX_CHARACTERS = 500;
 
   const [showModal, setShowModal] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  const { showToast } = useToast();
   const [comments, setComments] = useState([
     {
+      id: uuidv4(),
       title: "Que buen foro",
       author: "Juanito Golondrina",
       upvotes: 10,
@@ -31,6 +31,7 @@ function PostPage() {
       date: new Date(),
     },
     {
+      id: uuidv4(),
       title: "Que mal foro",
       author: "Pepito Grillo",
       upvotes: 15,
@@ -38,6 +39,7 @@ function PostPage() {
       date: new Date(),
     },
     {
+      id: uuidv4(),
       title: "a mi no me gusta tanto la verdad",
       author: "Paquito Palotes",
       upvotes: 2,
@@ -48,9 +50,7 @@ function PostPage() {
 
   const handleClose = () => {
     setShowModal(false);
-    setToastColor("bg-danger");
-    setToastMessage("El comentario no se ha creado.");
-    setShowToast(true);
+    showToast("El comentario no se ha creado.");
   };
 
   const cookies = new Cookies();
@@ -59,6 +59,7 @@ function PostPage() {
   const handleConfirm = () => {
     setShowModal(false);
     const newCommentObject = {
+      id: uuidv4(),
       title: newComment,
       author: cookieUser.username,
       upvotes: 0,
@@ -67,21 +68,18 @@ function PostPage() {
     };
 
     setComments((prevComments) => [newCommentObject, ...prevComments]);
-    setToastColor("bg-success");
-    setToastMessage("El comentario se ha creado correctamente!");
-    setShowToast(true);
+    showToast("El comentario se ha creado correctamente!", "bg-success");
     setNewComment("");
   };
 
   useEffect(() => {
-    // This will correctly enable/disable the button based on current conditions
     if (cookies.get("user") === undefined) {
       return;
     }
     const button = document.getElementById("publicar_button");
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
-  }, [newComment, characterCount]); // Important: React here will watch newComment and characterCount changes
+  }, [newComment, characterCount]);
 
   const handleInputChange = (event) => {
     const commentText = event.target.value;
@@ -98,9 +96,10 @@ function PostPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item href="./search">Foro</Breadcrumb.Item>{" "}
+        <h1>Post</h1>
+        <Breadcrumb className="custom-breadcrumb" >
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del topico */}
           <Breadcrumb.Item active>Post</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del post */}
@@ -120,23 +119,6 @@ function PostPage() {
         />
       </div>
 
-      {/* Comentarios existentes */}
-      <div className="container-xxl my-3">
-        <h3>Comentarios</h3>
-        {comments.map((comment, index) => (
-          <PostComment
-            key={index}
-            title={comment.title}
-            author={comment.author}
-            upvotes={comment.upvotes}
-            downvotes={comment.downvotes}
-            date={comment.date}
-          />
-        ))}
-      </div>
-
-      <IndexSelector />
-
       {/* Formulario para añadir un nuevo comentario */}
       {cookies.get("user") === undefined ? (
         <div></div>
@@ -147,6 +129,7 @@ function PostPage() {
             <div className="mb-3">
               <label htmlFor="commentInput" className="form-label"></label>
               <textarea
+                aria-label="texto_para_nuevo_comentario"
                 required
                 rows={4}
                 type="text"
@@ -165,12 +148,6 @@ function PostPage() {
             >
               Publicar
             </button>
-            <ToastMessage
-              show={showToast}
-              onClose={() => setShowToast(false)}
-              message={toastMessage}
-              color={toastColor}
-            />
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este post?"
               show={showModal}
@@ -180,6 +157,23 @@ function PostPage() {
           </form>
         </div>
       )}
+
+      {/* Comentarios existentes */}
+      <div className="container-xxl my-3">
+        <h2>Comentarios</h2>
+        {comments.map((comment) => (
+          <PostComment
+            key={comment.id} // Usamos el id único
+            title={comment.title}
+            author={comment.author}
+            initialUpvotes={comment.upvotes}
+            initialDownvotes={comment.downvotes}
+            date={comment.date}
+          />
+        ))}
+      </div>
+
+      <IndexSelector />
     </MainLayout>
   );
 }

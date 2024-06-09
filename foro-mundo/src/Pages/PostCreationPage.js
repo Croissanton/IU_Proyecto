@@ -5,7 +5,10 @@ import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
-import ToastMessage from "../Components/ToastMessage";
+import { useToast } from "../Context/ToastContext.js";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 function PostCreationPage() {
   useEffect(() => {
@@ -13,23 +16,18 @@ function PostCreationPage() {
   }, []);
 
   const [showModal, setShowModal] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleClose = () => {
     setShowModal(false);
-    setToastColor("bg-danger");
-    setToastMessage("El post no se ha creado.");
-    setShowToast(true);
+    showToast("El post no se ha creado.", "bg-danger");
   };
-  const handleConfirm = () => {
-    //submit form data to backend
 
+  const handleConfirm = () => {
     setShowModal(false);
-    setToastColor("bg-success");
-    setToastMessage("El post se ha creado correctamente!");
-    setShowToast(true);
+    showToast("El post se ha creado correctamente!", "bg-success");
+    navigate("/search");
   };
 
   const handleKeyDown = (e) => {
@@ -39,25 +37,32 @@ function PostCreationPage() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent traditional form submission
-    const form = e.target;
 
-    // Check if form contents are valid:
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+  
+    // Verificación adicional para asegurarse de que una categoría válida ha sido seleccionada
+    const categoriaSelect = form.querySelector('#categoria');
+    if (categoriaSelect.value === "default") {
+      alert("Por favor, selecciona una categoría antes de continuar.");
+      return;
+    }
+  
     if (form.reportValidity()) {
-      setShowModal(true); // Open the modal only if the form is valid
+      setShowModal(true);
     }
   };
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <Breadcrumb>
-          <Breadcrumb.Item href="../#">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>Crear Post</Breadcrumb.Item> {/**/}
+        <h1>Crear Post</h1>
+        <Breadcrumb className="custom-breadcrumb" >
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <h1>Crear Post</h1>
       <div style={{ display: "flex" }}>
         <div
           className="m-auto"
@@ -80,7 +85,7 @@ function PostCreationPage() {
               ></input>
             </div>
             <div className="col-md-6">
-              <label htmlFor="inputCategoria" className="form-label">
+              <label htmlFor="categoria" className="form-label">
                 Categoría
               </label>
               <select
@@ -107,7 +112,6 @@ function PostCreationPage() {
                 type="text"
                 className="form-control input-group-lg"
                 required
-                placeholder="Escriba acerca del tema..."
                 rows={7}
                 id="inputTexto"
               ></textarea>
@@ -124,12 +128,6 @@ function PostCreationPage() {
         handleClose={handleClose}
         handleConfirm={handleConfirm}
       ></ConfirmationModal>
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message={toastMessage}
-        color={toastColor}
-      />
     </MainLayout>
   );
 }

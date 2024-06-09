@@ -10,57 +10,31 @@ import PostPage from "./Pages/PostPage";
 import PostCreationPage from "./Pages/PostCreationPage";
 import ErrorPage from "./Pages/ErrorPage";
 import LoginPage from "./Pages/LoginPage";
-import ContactPage from "./Pages/ContactPage";
+import HelpPage from "./Pages/HelpPage";
 import ProfilePublic from "./Pages/ProfilePublic";
 import MessengerPage from "./Pages/MessengerPage";
 import SignUpPage from "./Pages/SignUpPage";
+import MainPage from "./Pages/MainPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      { path: "/", element: <MainPage /> },
+      { path: "/profile", element: <ProfilePage /> },
+      { path: "/profile/id", element: <ProfilePublic /> },
+      { path: "/search", element: <SearchPage /> },
+      { path: "/post", element: <PostPage /> },
+      { path: "/create", element: <PostCreationPage /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/register", element: <SignUpPage /> },
+      { path: "/help", element: <HelpPage /> },
+      { path: "/messenger", element: <MessengerPage /> },
+      { path: "*", element: <ErrorPage /> },
+    ],
   },
-  {
-    path: "/profile",
-    element: <ProfilePage />,
-  },
-  {
-    path: "/profile/id",
-    element: <ProfilePublic />,
-  },
-  {
-    path: "/search",
-    element: <SearchPage />,
-  },
-  {
-    path: "/post",
-    element: <PostPage />,
-  },
-  {
-    path: "/create",
-    element: <PostCreationPage />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <SignUpPage />,
-  },
-  {
-    path: "/contact",
-    element: <ContactPage />,
-  },
-  {
-    path: "/messenger",
-    element: <MessengerPage />,
-  },
-  {
-    path: "*",
-    element: <ErrorPage />,
-  },
-]);
+],{basename: process.env.PUBLIC_URL});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -69,7 +43,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

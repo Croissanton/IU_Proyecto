@@ -4,6 +4,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  .no-background {
+    background-color: transparent;
+  }
+  
+  .no-border {
+    border: none;
+  }
 }
 
 code {

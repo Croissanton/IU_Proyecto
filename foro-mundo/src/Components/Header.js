@@ -6,15 +6,19 @@ import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { useState, forwardRef, useRef, useEffect } from "react";
 import Cookies from "universal-cookie";
-import ToastMessage from "./ToastMessage";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import { useToast } from "../Context/ToastContext.js";
+import { Link, useNavigate } from "react-router-dom";
+import { FormLabel } from "react-bootstrap";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
   const [expanded, setExpanded] = useState(false);
-  const [isCollapsing, setIsCollapsing] = useState(false); // New state to track collapsing delay
+  const [isCollapsing, setIsCollapsing] = useState(false);
 
   const containerRef = useRef(null);
-  const combinedRef = ref || containerRef; // Use forwarded ref if available, otherwise use internal ref
+  const combinedRef = ref || containerRef;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,16 +36,16 @@ const Header = forwardRef((props, ref) => {
   const toggleNavbar = () => {
     setExpanded((prev) => !prev);
     if (expanded) {
-      setIsCollapsing(true); // Set collapsing state when starting to collapse
+      setIsCollapsing(true);
       setTimeout(() => {
-        setIsCollapsing(false); // Reset collapsing state after a delay
-      }, 400); // Delay slightly longer than the animation duration
+        setIsCollapsing(false);
+      }, 400);
     }
   };
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"]; // Example suggestions
+  const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"];
 
   const [inputValue, setInputValue] = useState("");
 
@@ -54,33 +58,30 @@ const Header = forwardRef((props, ref) => {
       setShowSuggestions(false);
     } else {
       const filteredSuggestions = allSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(userInput.toLowerCase())
+        suggestion.toLowerCase().includes(userInput.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
       setShowSuggestions(true);
     }
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!inputValue.trim()) {
       return;
     }
-    // Handle your search redirection here or call an API
     console.log("Searching for:", inputValue);
-    // For redirect you might use useHistory from 'react-router-dom' or window.location
-    window.location.href = `/search?query=${encodeURIComponent(inputValue)}`;
+    navigate(`/search?query=${encodeURIComponent(inputValue)}`);
   };
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
+  const { showToast } = useToast();
 
   const handleLogout = () => {
-    cookies.remove("user");
-    setToastColor("bg-success");
-    setToastMessage("Se ha cerrado la sesión!");
-    setShowToast(true);
+    cookies.remove("user", { path: "/", secure: true, sameSite: "None" });
+    showToast("Se ha cerrado la sesión!", "bg-success");
+    navigate("/");
   };
 
   return (
@@ -93,7 +94,8 @@ const Header = forwardRef((props, ref) => {
     >
       <Container>
         <Navbar.Brand
-          href="/"
+          as={Link}
+          to="/"
           className="text-secondary m-auto"
           style={{
             fontSize: "1.5rem",
@@ -111,18 +113,20 @@ const Header = forwardRef((props, ref) => {
               className={`d-flex my-2 ${
                 expanded || isCollapsing ? "" : "w-50"
               }`}
-              style={{ position: "relative" }} // Position relative for the suggestion box
+              style={{ position: "relative" }}
             >
+              <FormLabel htmlFor="searchInput" className="visually-hidden">
+                Buscar
+              </FormLabel>
               <FormControl
+                title="Buscar"
                 id="searchInput"
                 type="search"
-                placeholder="Buscar..."
                 className="me-2"
-                aria-label="Search"
+                aria-label="Buscar"
                 value={inputValue}
                 onChange={handleInputChange}
                 onBlur={() => {
-                  // Delay hiding suggestions a bit to allow onClick to fire on suggestions
                   setTimeout(() => {
                     setShowSuggestions(false);
                   }, 200);
@@ -136,10 +140,13 @@ const Header = forwardRef((props, ref) => {
                 autoComplete="off"
               />
               <Button
+                className="d-flex"
                 variant="outline-secondary"
                 type="submit"
+                aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
+                <span className="me-1">Buscar</span>
                 <i className="bi bi-search"></i>
               </Button>
               {showSuggestions && inputValue && suggestions.length > 0 && (
@@ -155,7 +162,7 @@ const Header = forwardRef((props, ref) => {
                     boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                   }}
                   role="listbox"
-                  aria-label="Search suggestions"
+                  aria-label="Sugerencias de búsqueda"
                 >
                   {suggestions.map((suggestion, index) => (
                     <div
@@ -169,7 +176,7 @@ const Header = forwardRef((props, ref) => {
                         setInputValue(suggestion);
                         setShowSuggestions(false);
                         setSuggestions([]);
-                        document.getElementById("searchInput").focus(); // Optionally set focus back
+                        document.getElementById("searchInput").focus();
                       }}
                     >
                       {suggestion}
@@ -178,31 +185,72 @@ const Header = forwardRef((props, ref) => {
                 </div>
               )}
             </Form>
-            <Nav>
-              {cookies.get("user") === undefined ? (
-                <div></div>
-              ) : (
-                <Nav.Link href="/create">
-                  <i className="bi bi-plus-circle custom-icon"></i>
-                </Nav.Link>
+            <Nav className="d-flex align-items-center justify-content-center h-100">
+              {cookies.get("user") !== undefined && (
+                <>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-create">Crear post</Tooltip>}
+                  >
+                    <Nav.Link
+                      className="d-flex align-items-center justify-content-center"
+                      as={Link}
+                      to="/create"
+                      aria-label="Crear post"
+                    >
+                      <i className="bi bi-plus-circle custom-icon"></i>
+                      <span className="visually-hidden">Crear post</span>
+                    </Nav.Link>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-profile">Perfil</Tooltip>}
+                  >
+                    <Nav.Link
+                      className="d-flex align-items-center justify-content-center"
+                      as={Link}
+                      to="/profile"
+                      aria-label="Perfil"
+                    >
+                      <i className="bi bi-person-circle custom-icon"></i>
+                      <span className="visually-hidden">Perfil</span>
+                    </Nav.Link>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-messenger">Mensajes</Tooltip>}
+                  >
+                    <Nav.Link
+                      className="d-flex align-items-center justify-content-center"
+                      as={Link}
+                      to="/messenger"
+                      aria-label="Mensajes"
+                    >
+                      <i className="bi bi-chat custom-icon"></i>
+                      <span className="visually-hidden">Mensajes</span>
+                    </Nav.Link>
+                  </OverlayTrigger>
+                </>
               )}
-              {cookies.get("user") === undefined ? (
-                <div></div>
-              ) : (
-                <Nav.Link href="/profile">
-                  <i className="bi bi-person-circle custom-icon"></i>
+              <OverlayTrigger
+                placement="bottom"
+                overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
+              >
+                <Nav.Link
+                  className="d-flex align-items-center justify-content-center"
+                  as={Link}
+                  to="/help"
+                  aria-label="Ayuda"
+                >
+                  <i className="bi bi-question-circle custom-icon"></i>
+                  <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>
-              )}
-              {cookies.get("user") === undefined ? (
-                <div></div>
-              ) : (
-                <Nav.Link href="/messenger">
-                  <i className="bi bi-chat custom-icon"></i>
-                </Nav.Link>
-              )}
+              </OverlayTrigger>
+
               {cookies.get("user") === undefined ? (
                 <Nav.Link
-                  href="/login"
+                  as={Link}
+                  to="/login"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -225,7 +273,8 @@ const Header = forwardRef((props, ref) => {
               )}
               {cookies.get("user") === undefined ? (
                 <Nav.Link
-                  href="/register"
+                  as={Link}
+                  to="/register"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -241,12 +290,6 @@ const Header = forwardRef((props, ref) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message={toastMessage}
-        color={toastColor}
-      />
     </Navbar>
   );
 });
