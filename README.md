@@ -1,1 +1,1 @@
-npm install antes de ejecutar por primera vez.
+Para ver el foro solo hace falta entrar en la siguiente url: http://localhost:3000
