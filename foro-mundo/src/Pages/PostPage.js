@@ -129,6 +129,7 @@ function PostPage() {
             <div className="mb-3">
               <label htmlFor="commentInput" className="form-label"></label>
               <textarea
+                aria-label="texto_para_nuevo_comentario"
                 required
                 rows={4}
                 type="text"
