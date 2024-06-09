@@ -24,11 +24,11 @@ function HelpPage() {
       <div className="container-xxl my-3 pb-2 pt-2">
         <h2>Atajos:</h2>
         <ul>
-          <li tabIndex="0">CTRL+ALT+C : Chats</li>
-          <li tabIndex="0">CTRL+ALT+P : Crear post</li>
-          <li tabIndex="0">CTRL+ALT+R : Registro</li>
-          <li tabIndex="0">CTRL+ALT+L : Inicio de sesión</li>
-          <li tabIndex="0">CTRL+ALT+H : Ayuda</li>
+          <li>CTRL+ALT+C : Chats</li>
+          <li>CTRL+ALT+P : Crear post</li>
+          <li>CTRL+ALT+R : Registro</li>
+          <li>CTRL+ALT+L : Inicio de sesión</li>
+          <li>CTRL+ALT+H : Ayuda</li>
         </ul>
       </div>
       <hr />

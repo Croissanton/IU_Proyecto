@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const PostCard = ({
@@ -13,8 +13,22 @@ const PostCard = ({
   lm_author,
   lm_date,
 }) => {
+  const navigate = useNavigate();
+
+  const navigateToPost = () => {
+    navigate(`/post`);
+  };
   return (
-    <Link to={`/post`} className="custom-link">
+    <div  
+      onClick={navigateToPost}
+      className="custom-link"
+      role="button"
+      tabIndex="0"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          navigateToPost();
+        }
+      }}>
       <Row className="gy-3">
         <Col className="p-3 m-auto ">
           <Container className="border border-dark-subtle bg-light">
@@ -71,7 +85,7 @@ const PostCard = ({
           </Container>
         </Col>
       </Row>
-    </Link>
+    </div>
   );
 };
 

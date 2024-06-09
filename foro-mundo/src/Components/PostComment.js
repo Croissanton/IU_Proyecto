@@ -60,7 +60,7 @@ const PostComment = ({
             </Col>
             <Col>
               <Row className="p-3">
-                <Col className="text-center">
+                <Col className="text-center" tabIndex="0">
                   <Button
                     aria-label="Upvote"
                     disabled={!cookies.get("user")}
@@ -77,7 +77,7 @@ const PostComment = ({
                     <p>{upvotes}</p>
                   </Row>
                 </Col>
-                <Col className="text-center">
+                <Col className="text-center" tabIndex="0">
                   <Button
                     aria-label="Downvote"
                     className="btn"
@@ -101,6 +101,7 @@ const PostComment = ({
                         className="custom-text-link"
                         to={`/profile/${author}`}
                         aria-label={`Profile of ${author}`}
+                        tabIndex="0"
                       >
                         <span>{author}</span>
                       </NavLink>
