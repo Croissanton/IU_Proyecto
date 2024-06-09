@@ -24,8 +24,7 @@ function ContactPage() {
         <h2>Atajos:</h2>
         <ul>
           <li>CTRL+ALT+C : Chats</li>
-          <li>CTRL+ALT+M : Mensajes</li>
-          <li>CTRL+ALT+P : Crear publicación</li>
+          <li>CTRL+ALT+P : Crear post</li>
           <li>CTRL+ALT+R : Registro</li>
           <li>CTRL+ALT+L : Inicio de sesión</li>
           <li>CTRL+ALT+H : Ayuda</li>
