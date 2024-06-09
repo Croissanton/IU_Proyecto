@@ -69,7 +69,7 @@ function ProfilePage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Mi Perfil</h1>
-        <Breadcrumb className="custom-breadcrumb" aria-hidden>
+        <Breadcrumb className="custom-breadcrumb" >
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>

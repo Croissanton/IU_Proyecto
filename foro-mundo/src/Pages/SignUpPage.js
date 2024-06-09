@@ -84,7 +84,7 @@ function SignUpPage() {
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}
       >
-        <Breadcrumb className="custom-breadcrumb" aria-hidden>
+        <Breadcrumb className="custom-breadcrumb" >
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active aria-label="enlace_a_registro">
             Registro
