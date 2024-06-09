@@ -239,7 +239,7 @@ const Header = forwardRef((props, ref) => {
                 <Nav.Link
                   className="d-flex align-items-center justify-content-center"
                   as={Link}
-                  to="/contact"
+                  to="/help"
                   aria-label="Ayuda"
                 >
                   <i className="bi bi-question-circle custom-icon"></i>

@@ -25,7 +25,7 @@ const useShortcuts = () => {
           if (user) navigate("/messenger");
           break;
         case "h":
-          navigate("/contact");
+          navigate("/help");
           break;
         default:
           break;

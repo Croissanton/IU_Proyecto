@@ -4,20 +4,20 @@ import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function ContactPage() {
+function HelpPage() {
   useEffect(() => {
-    document.title = "Contacto";
+    document.title = "Ayuda";
   }, []);
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Contacto</h1>
+        <h1>Ayuda y Contacto</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item as={Link} to="/">
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>Contacto</Breadcrumb.Item> {/* */}
+          <Breadcrumb.Item active>Ayuda</Breadcrumb.Item> {/* */}
         </Breadcrumb>
       </div>
       <div className="container-xxl my-3 pb-2 pt-2">
@@ -43,4 +43,4 @@ function ContactPage() {
   );
 }
 
-export default ContactPage;
+export default HelpPage;
