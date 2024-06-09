@@ -97,7 +97,7 @@ function PostPage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Post</h1>
-        <Breadcrumb className="custom-breadcrumb">
+        <Breadcrumb className="custom-breadcrumb" aria-hidden>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del topico */}

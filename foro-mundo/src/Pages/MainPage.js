@@ -14,7 +14,7 @@ function MainPage() {
     <MainLayout>
       <div className="container-xxl my-2">
       <h1> Foros </h1>
-        <Breadcrumb className="custom-breadcrumb">
+        <Breadcrumb className="custom-breadcrumb" aria-hidden>
           <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
         </Breadcrumb>
       </div>
