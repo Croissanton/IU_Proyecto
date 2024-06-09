@@ -252,7 +252,6 @@ function SignUpPage() {
             >
               Registrarse
             </button>
-
           </div>
         </form>
       </div>
