@@ -14,9 +14,7 @@ function HelpPage() {
       <div className="container-xxl my-3">
         <h1>Ayuda y Contacto</h1>
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item as={Link} to="/">
-            Inicio
-          </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Ayuda</Breadcrumb.Item> {/* */}
         </Breadcrumb>
       </div>

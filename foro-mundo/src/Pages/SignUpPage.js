@@ -85,9 +85,7 @@ function SignUpPage() {
         }}
       >
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item as={Link} to="/" aria-label="enlace_a_inicio">
-            Inicio
-          </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active aria-label="enlace_a_registro">
             Registro
           </Breadcrumb.Item>

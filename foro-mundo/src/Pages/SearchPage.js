@@ -19,7 +19,7 @@ function SearchPage() {
       <div className="container-xxl my-3">
       <h1> Foro </h1>
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Foro</Breadcrumb.Item>{" "}
           {/* Aquí debería ir el nombre del topico */}
         </Breadcrumb>
