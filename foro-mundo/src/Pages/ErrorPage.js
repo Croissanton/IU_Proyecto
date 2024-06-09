@@ -18,6 +18,7 @@ function ErrorPage() {
           <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
         </Breadcrumb>
+        <h1>ERROR</h1>
       </div>
       <Container>
         <Row

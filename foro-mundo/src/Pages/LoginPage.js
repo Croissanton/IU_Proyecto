@@ -26,19 +26,6 @@ function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleKeyDown = (e) => {
-    if (e.ctrlKey && e.key === "r") {
-      navigate("/register");
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   const login = (e) => {
     e.preventDefault();
 

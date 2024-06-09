@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
-import { useEffect } from "react";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar ids únicos
 
 function PostPage() {
   useEffect(() => {
@@ -23,6 +23,7 @@ function PostPage() {
   const { showToast } = useToast();
   const [comments, setComments] = useState([
     {
+      id: uuidv4(),
       title: "Que buen foro",
       author: "Juanito Golondrina",
       upvotes: 10,
@@ -30,6 +31,7 @@ function PostPage() {
       date: new Date(),
     },
     {
+      id: uuidv4(),
       title: "Que mal foro",
       author: "Pepito Grillo",
       upvotes: 15,
@@ -37,6 +39,7 @@ function PostPage() {
       date: new Date(),
     },
     {
+      id: uuidv4(),
       title: "a mi no me gusta tanto la verdad",
       author: "Paquito Palotes",
       upvotes: 2,
@@ -56,6 +59,7 @@ function PostPage() {
   const handleConfirm = () => {
     setShowModal(false);
     const newCommentObject = {
+      id: uuidv4(),
       title: newComment,
       author: cookieUser.username,
       upvotes: 0,
@@ -156,9 +160,9 @@ function PostPage() {
       {/* Comentarios existentes */}
       <div className="container-xxl my-3">
         <h2>Comentarios</h2>
-        {comments.map((comment, index) => (
+        {comments.map((comment) => (
           <PostComment
-            key={index}
+            key={comment.id} // Usamos el id único
             title={comment.title}
             author={comment.author}
             initialUpvotes={comment.upvotes}

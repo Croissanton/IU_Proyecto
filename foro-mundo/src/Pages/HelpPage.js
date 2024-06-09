@@ -4,20 +4,33 @@ import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function ContactPage() {
+function HelpPage() {
   useEffect(() => {
-    document.title = "Contacto";
+    document.title = "Ayuda";
   }, []);
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Contacto</h1>
+        <h1>Ayuda y Contacto</h1>
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item as={Link} to="/">Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>Contacto</Breadcrumb.Item> {/* */}
+          <Breadcrumb.Item as={Link} to="/">
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>Ayuda</Breadcrumb.Item> {/* */}
         </Breadcrumb>
       </div>
+      <div className="container-xxl my-3 pb-2 pt-2">
+        <h2>Atajos:</h2>
+        <ul>
+          <li>CTRL+ALT+C : Chats</li>
+          <li>CTRL+ALT+P : Crear post</li>
+          <li>CTRL+ALT+R : Registro</li>
+          <li>CTRL+ALT+L : Inicio de sesión</li>
+          <li>CTRL+ALT+H : Ayuda</li>
+        </ul>
+      </div>
+      <hr />
       <div className="container-xxl my-3">
         <p>
           Si tienes alguna duda o sugerencia, no dudes en ponerte en contacto
@@ -30,4 +43,4 @@ function ContactPage() {
   );
 }
 
-export default ContactPage;
+export default HelpPage;

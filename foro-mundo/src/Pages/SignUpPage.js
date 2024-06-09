@@ -20,7 +20,7 @@ function PasswordStrengthMeter({ password }) {
 
   return (
     <ProgressBar
-      now={score}
+      now={score < 25 && password !== "" ? 10 : score}
       variant={getProgressBarVariant(score)}
       label={
         score === 100
@@ -66,7 +66,7 @@ function SignUpPage() {
 
     // Crear el usuario con los datos del formulario
     cookies.set("user", user, { path: "/", secure: true, sameSite: "None" });
-    showToast("Registro correcta.", "bg-success");
+    showToast("Registro correcto.", "bg-success");
     navigate("/"); // Redirigir después de que se actualice el estado de user
   };
 
@@ -245,13 +245,13 @@ function SignUpPage() {
                 aria-label="descripcion_opcional"
               />
             </div>
+            <BackButton />
             <button
               type="submit"
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse
             </button>
-            <BackButton />
           </div>
         </form>
       </div>
