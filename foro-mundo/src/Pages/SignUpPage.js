@@ -245,13 +245,14 @@ function SignUpPage() {
                 aria-label="descripcion_opcional"
               />
             </div>
+            <BackButton />
             <button
               type="submit"
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse
             </button>
-            <BackButton />
+
           </div>
         </form>
       </div>
