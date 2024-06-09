@@ -11,7 +11,7 @@ function HelpPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Ayuda y Contacto</h1>
+        <h1>Ayuda</h1>
         <nav aria-label="breadcrumb">
           <Breadcrumb className="custom-breadcrumb">
             <Breadcrumb.Item linkAs={NavLink} linkProps={{ to: "/" }}>
