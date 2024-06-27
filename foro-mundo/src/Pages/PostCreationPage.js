@@ -1,14 +1,10 @@
 import MainLayout from "../layout/MainLayout.js";
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Breadcrumb } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Breadcrumb, Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-
-
 
 function PostCreationPage() {
   useEffect(() => {
@@ -16,6 +12,13 @@ function PostCreationPage() {
   }, []);
 
   const [showModal, setShowModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    category: 'default',
+    text: ''
+  });
+
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -25,6 +28,7 @@ function PostCreationPage() {
   };
 
   const handleConfirm = () => {
+    savePostData();
     setShowModal(false);
     showToast("El post se ha creado correctamente!", "bg-success");
     navigate("/search");
@@ -37,28 +41,45 @@ function PostCreationPage() {
     }
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [id]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-  
-    // Verificación adicional para asegurarse de que una categoría válida ha sido seleccionada
-    const categoriaSelect = form.querySelector('#categoria');
-    if (categoriaSelect.value === "default") {
+
+    if (formData.category === "default") {
       alert("Por favor, selecciona una categoría antes de continuar.");
       return;
     }
-  
+
     if (form.reportValidity()) {
       setShowModal(true);
     }
+  };
+
+  const savePostData = () => {
+    const post = {
+      ...formData,
+      image: selectedFile ? URL.createObjectURL(selectedFile) : null
+    };
+
+    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    existingPosts.push(post);
+    localStorage.setItem('posts', JSON.stringify(existingPosts));
   };
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Crear Post</h1>
-        <Breadcrumb className="custom-breadcrumb" >
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
@@ -74,26 +95,29 @@ function PostCreationPage() {
             className="row col-12 g-3"
           >
             <div className="col-md-6">
-              <label htmlFor="inputTitulo" className="form-label">
+              <label htmlFor="title" className="form-label">
                 Título
               </label>
               <input
                 type="text"
                 required
                 className="form-control"
-                id="inputTitulo"
-              ></input>
+                id="title"
+                value={formData.title}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="col-md-6">
-              <label htmlFor="categoria" className="form-label">
+              <label htmlFor="category" className="form-label">
                 Categoría
               </label>
               <select
-                name="categoria"
-                id="categoria"
+                name="category"
+                id="category"
                 required
                 className="form-control"
-                defaultValue={"default"}
+                value={formData.category}
+                onChange={handleInputChange}
               >
                 <option value="default" disabled>
                   Selecciona una categoría...
@@ -105,7 +129,7 @@ function PostCreationPage() {
               </select>
             </div>
             <div className="col-12">
-              <label htmlFor="inputTexto" className="form-label">
+              <label htmlFor="text" className="form-label">
                 Texto
               </label>
               <textarea
@@ -113,8 +137,22 @@ function PostCreationPage() {
                 className="form-control input-group-lg"
                 required
                 rows={7}
-                id="inputTexto"
+                id="text"
+                value={formData.text}
+                onChange={handleInputChange}
               ></textarea>
+            </div>
+            <div className="col-12">
+              <label htmlFor="image" className="form-label">
+                Imagen
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                id="image"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
             </div>
             <Button type="submit" className="btn btn-primary">
               Crear
