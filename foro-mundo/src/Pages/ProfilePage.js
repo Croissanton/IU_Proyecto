@@ -171,13 +171,23 @@ function ProfilePage() {
 
             <div className="col-12">
               {!isEditing ? (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => setIsEditing(true)}
-                >
-                  Editar
-                </button>
+                <div className="col-12">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    Editar
+                  </button>
+                  <Link to="/historial">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                    >
+                      Ver Historial
+                    </button>
+                  </Link>
+                </div>
               ) : (
                 <div className="col-12">
                   <button

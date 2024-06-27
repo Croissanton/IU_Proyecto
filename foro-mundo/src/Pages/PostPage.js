@@ -26,7 +26,7 @@ function PostPage() {
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
 
-  // Cargar comentarios desde localStorage al montar el componente
+  // Cargar comentarios desde localStorage
   useEffect(() => {
     const storedComments = localStorage.getItem('comments');
     if (storedComments) {
