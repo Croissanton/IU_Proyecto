@@ -8,7 +8,7 @@ import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar ids únicos
+import { v4 as uuidv4 } from 'uuid';
 
 function PostPage() {
   useEffect(() => {
@@ -21,40 +21,23 @@ function PostPage() {
 
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
-  const [comments, setComments] = useState([
-    {
-      id: uuidv4(),
-      title: "Que buen foro",
-      author: "Juanito Golondrina",
-      upvotes: 10,
-      downvotes: 5,
-      date: new Date(),
-    },
-    {
-      id: uuidv4(),
-      title: "Que mal foro",
-      author: "Pepito Grillo",
-      upvotes: 15,
-      downvotes: 3,
-      date: new Date(),
-    },
-    {
-      id: uuidv4(),
-      title: "a mi no me gusta tanto la verdad",
-      author: "Paquito Palotes",
-      upvotes: 2,
-      downvotes: 5,
-      date: new Date(),
-    },
-  ]);
+  const [comments, setComments] = useState([]);
+
+  const cookies = new Cookies();
+  const cookieUser = cookies.get("user");
+
+  // Cargar comentarios desde localStorage al montar el componente
+  useEffect(() => {
+    const storedComments = localStorage.getItem('comments');
+    if (storedComments) {
+      setComments(JSON.parse(storedComments));
+    }
+  }, []);
 
   const handleClose = () => {
     setShowModal(false);
     showToast("El comentario no se ha creado.");
   };
-
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
 
   const handleConfirm = () => {
     setShowModal(false);
@@ -67,7 +50,9 @@ function PostPage() {
       date: new Date(),
     };
 
-    setComments((prevComments) => [newCommentObject, ...prevComments]);
+    const updatedComments = [newCommentObject, ...comments];
+    setComments(updatedComments);
+    localStorage.setItem('comments', JSON.stringify(updatedComments));
     showToast("El comentario se ha creado correctamente!", "bg-success");
     setNewComment("");
   };
@@ -97,15 +82,12 @@ function PostPage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Post</h1>
-        <Breadcrumb className="custom-breadcrumb" >
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>{" "}
-          {/* Aquí debería ir el nombre del topico */}
-          <Breadcrumb.Item active>Post</Breadcrumb.Item>{" "}
-          {/* Aquí debería ir el nombre del post */}
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>
+          <Breadcrumb.Item active>Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      {/* PostCard principal */}
       <div className="container-xxl my-3">
         <PostCard
           titulo={"buen foro :D"}
@@ -119,7 +101,6 @@ function PostPage() {
         />
       </div>
 
-      {/* Formulario para añadir un nuevo comentario */}
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
@@ -149,7 +130,7 @@ function PostPage() {
               Publicar
             </button>
             <ConfirmationModal
-              message="¿Estás seguro de que quieres crear este post?"
+              message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
               handleClose={handleClose}
               handleConfirm={handleConfirm}
@@ -158,12 +139,11 @@ function PostPage() {
         </div>
       )}
 
-      {/* Comentarios existentes */}
       <div className="container-xxl my-3">
         <h2>Comentarios</h2>
         {comments.map((comment) => (
           <PostComment
-            key={comment.id} // Usamos el id único
+            key={comment.id}
             title={comment.title}
             author={comment.author}
             initialUpvotes={comment.upvotes}
