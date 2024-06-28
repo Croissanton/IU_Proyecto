@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -6,43 +6,98 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const PostComment = ({
+  id, // Asegúrate de que este prop se pase para identificar el comentario
   title,
   author,
   initialUpvotes,
   initialDownvotes,
   date,
+  onDelete, // Asegúrate de que esta prop se pase para actualizar el estado de los comentarios en el componente padre
 }) => {
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
 
+  const updateLocalStorage = (newUpvotes, newDownvotes) => {
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    const commentIndex = comments.findIndex(comment => comment.id === id);
+
+    if (commentIndex !== -1) {
+      comments[commentIndex].upvotes = newUpvotes;
+      comments[commentIndex].downvotes = newDownvotes;
+    } else {
+      comments.push({
+        id,
+        title,
+        author,
+        upvotes: newUpvotes,
+        downvotes: newDownvotes,
+        date,
+      });
+    }
+
+    localStorage.setItem('comments', JSON.stringify(comments));
+  };
+
   const handleUpvote = () => {
+    let newUpvotes = upvotes;
+    let newDownvotes = downvotes;
+
     if (userVote === "upvote") {
-      setUpvotes(upvotes - 1);
+      newUpvotes -= 1;
       setUserVote(null);
     } else if (userVote === "downvote") {
-      setDownvotes(downvotes - 1);
-      setUpvotes(upvotes + 1);
+      newDownvotes -= 1;
+      newUpvotes += 1;
       setUserVote("upvote");
     } else {
-      setUpvotes(upvotes + 1);
+      newUpvotes += 1;
       setUserVote("upvote");
     }
+
+    setUpvotes(newUpvotes);
+    setDownvotes(newDownvotes);
+    updateLocalStorage(newUpvotes, newDownvotes);
   };
 
   const handleDownvote = () => {
+    let newUpvotes = upvotes;
+    let newDownvotes = downvotes;
+
     if (userVote === "downvote") {
-      setDownvotes(downvotes - 1);
+      newDownvotes -= 1;
       setUserVote(null);
     } else if (userVote === "upvote") {
-      setUpvotes(upvotes - 1);
-      setDownvotes(downvotes + 1);
+      newUpvotes -= 1;
+      newDownvotes += 1;
       setUserVote("downvote");
     } else {
-      setDownvotes(downvotes + 1);
+      newDownvotes += 1;
       setUserVote("downvote");
     }
+
+    setUpvotes(newUpvotes);
+    setDownvotes(newDownvotes);
+    updateLocalStorage(newUpvotes, newDownvotes);
   };
+
+  const handleDelete = () => {
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    const updatedComments = comments.filter(comment => comment.id !== id);
+    localStorage.setItem('comments', JSON.stringify(updatedComments));
+    onDelete(id); // Notificar al componente padre para actualizar la lista de comentarios
+  };
+
+  useEffect(() => {
+    // Initialize the upvotes and downvotes from local storage if available
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    const storedComment = comments.find(comment => comment.id === id);
+
+    if (storedComment) {
+      setUpvotes(storedComment.upvotes);
+      setDownvotes(storedComment.downvotes);
+    }
+  }, [id]);
 
   return (
     <Row className="gy-3">
@@ -110,6 +165,19 @@ const PostComment = ({
                   <Row>
                     <p>{new Date(date).toLocaleString()}</p>
                   </Row>
+                </Col>
+                <Col className="text-center">
+                {cookies.get("user").username !== author ? (
+                  <div></div>
+                ) : (
+                  <Button
+                    aria-label="Eliminar"
+                    className="btn btn-danger"
+                    onClick={handleDelete}
+                  >
+                    Eliminar
+                  </Button>
+                )}
                 </Col>
               </Row>
             </Col>

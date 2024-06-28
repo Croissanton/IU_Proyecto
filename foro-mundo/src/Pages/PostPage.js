@@ -78,6 +78,13 @@ function PostPage() {
     setCharacterCount(0);
   };
 
+  const handleDelete = (id) => {
+    const updatedComments = comments.filter(comment => comment.id !== id);
+    setComments(updatedComments);
+    localStorage.setItem('comments', JSON.stringify(updatedComments));
+    showToast("Comentario eliminado", "bg-danger");
+  };
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">
@@ -144,11 +151,13 @@ function PostPage() {
         {comments.map((comment) => (
           <PostComment
             key={comment.id}
+            id={comment.id}
             title={comment.title}
             author={comment.author}
             initialUpvotes={comment.upvotes}
             initialDownvotes={comment.downvotes}
             date={comment.date}
+            onDelete={handleDelete}
           />
         ))}
       </div>
