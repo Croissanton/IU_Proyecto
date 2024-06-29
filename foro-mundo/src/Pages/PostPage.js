@@ -63,7 +63,7 @@ function PostPage() {
       author: cookieUser.username,
       upvotes: 0,
       downvotes: 0,
-      date: new Date(),
+      date: new Date().toLocaleString(),
     };
   
     // Update comments in localStorage
@@ -80,7 +80,7 @@ function PostPage() {
           res_num: post.res_num + 1,
           lm_text: newCommentObject.title,
           lm_author: newCommentObject.author,
-          lm_date: new Date().toLocaleDateString(),
+          lm_date: new Date().toLocaleString(),
         };
       }
       return post;
@@ -118,9 +118,36 @@ function PostPage() {
   const handleDelete = (id) => {
     const updatedComments = comments.filter(comment => comment.id !== id);
     setComments(updatedComments);
+  
+    // Update comments in localStorage
     localStorage.setItem('comments', JSON.stringify(updatedComments));
     showToast("Comentario eliminado", "bg-danger");
+  
+    // Decrease res_num in localStorage for the corresponding post
+    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    const updatedPosts = existingPosts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          res_num: post.res_num - 1,
+          ...(updatedComments.length > 0 ? {
+            lm_text: updatedComments[0].title,
+            lm_author: updatedComments[0].author,
+            lm_date: updatedComments[0].date,
+          } : {
+            lm_text: "",
+            lm_author: "",
+            lm_date: ""
+          })
+        };
+      }
+      return post;
+    });
+  
+    // Save updated posts back to localStorage
+    localStorage.setItem('posts', JSON.stringify(updatedPosts));
   };
+  
 
   return (
     <MainLayout>

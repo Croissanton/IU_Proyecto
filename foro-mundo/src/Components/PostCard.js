@@ -50,15 +50,12 @@ const PostCard = ({
                           className="custom-text-link"
                           to={`/profile/id`}
                         >
-                          <span>{author}</span>
+                          <span>Creador: {author}</span>
                         </NavLink>
                       </Col>
                     </Row>
                     <Row>
-                      <p>Fecha de creación:</p>
-                    </Row>
-                    <Row>
-                      <p>{date}</p>
+                      <p>Fecha de creación: {date}</p>
                     </Row>
                   </Col>
                 </Row>

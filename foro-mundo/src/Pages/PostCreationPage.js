@@ -75,7 +75,7 @@ function PostCreationPage() {
       text: formData.text,
       category: formData.category,
       author: cookiesUser.username,
-      date: new Date().toLocaleDateString(),
+      date: new Date().toLocaleString(),
       res_num: 0,
       view_num: 0,
       lm_author: "",
