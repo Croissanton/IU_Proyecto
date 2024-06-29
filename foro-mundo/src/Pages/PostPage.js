@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Button } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
@@ -7,7 +7,7 @@ import IndexSelector from "../Components/IndexSelector.js";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 function PostPage() {
@@ -24,6 +24,7 @@ function PostPage() {
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
+  const navigate = useNavigate();
 
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
@@ -147,7 +148,14 @@ function PostPage() {
     // Save updated posts back to localStorage
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
   };
-  
+
+  const handleDeletePost = () => {
+    const updatedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    const filteredPosts = updatedPosts.filter(p => p.id !== postId);
+    localStorage.setItem('posts', JSON.stringify(filteredPosts));
+    showToast("Post eliminado", "bg-danger");
+    navigate("/search");
+  };
 
   return (
     <MainLayout>
@@ -174,6 +182,10 @@ function PostPage() {
           />
         </div>
       )}
+
+            <Button variant="danger" onClick={handleDeletePost}>
+              Eliminar Post
+            </Button>
 
       {cookies.get("user") === undefined ? (
         <div></div>
@@ -215,19 +227,23 @@ function PostPage() {
 
       <div className="container-xxl my-3">
         <h2>Comentarios</h2>
-        {comments.map((comment) => (
-          <PostComment
-            key={comment.id}
-            id={comment.id}
-            postId={comment.postId}
-            title={comment.title}
-            author={comment.author}
-            initialUpvotes={comment.upvotes}
-            initialDownvotes={comment.downvotes}
-            date={comment.date}
-            onDelete={handleDelete}
-          />
-        ))}
+        {comments.length === 0 ? (
+          <p>No hay comentarios.</p>
+        ) : (
+          comments.map((comment) => (
+            <PostComment
+              key={comment.id}
+              id={comment.id}
+              postId={comment.postId}
+              title={comment.title}
+              author={comment.author}
+              initialUpvotes={comment.upvotes}
+              initialDownvotes={comment.downvotes}
+              date={comment.date}
+              onDelete={handleDelete}
+            />
+          ))
+        )}
       </div>
 
       <IndexSelector />

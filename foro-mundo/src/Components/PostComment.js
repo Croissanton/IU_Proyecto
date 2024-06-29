@@ -4,16 +4,17 @@ import { NavLink } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
+const cookieUser = cookies.get("user");
 
 const PostComment = ({
-  id, // Asegúrate de que este prop se pase para identificar el comentario
+  id,
   postId,
   title,
   author,
   initialUpvotes,
   initialDownvotes,
   date,
-  onDelete, // Asegúrate de que esta prop se pase para actualizar el estado de los comentarios en el componente padre
+  onDelete,
 }) => {
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
@@ -87,7 +88,7 @@ const PostComment = ({
     const comments = JSON.parse(localStorage.getItem('comments')) || [];
     const updatedComments = comments.filter(comment => comment.id !== id);
     localStorage.setItem('comments', JSON.stringify(updatedComments));
-    onDelete(id); // Notificar al componente padre para actualizar la lista de comentarios
+    onDelete(id);
   };
 
   useEffect(() => {
@@ -169,7 +170,7 @@ const PostComment = ({
                   </Row>
                 </Col>
                 <Col className="text-center">
-                {cookies.get("user").username !== author ? (
+                {cookieUser.username !== author ? (
                   <div></div>
                 ) : (
                   <Button

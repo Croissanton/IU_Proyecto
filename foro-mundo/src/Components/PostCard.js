@@ -1,7 +1,11 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+const cookieUser = cookies.get("user");
 
 const PostCard = ({
   id,
@@ -20,6 +24,7 @@ const PostCard = ({
   const navigateToPost = () => {
     navigate(`/post/${id}`);
   };
+
   return (
     <div  
       onClick={navigateToPost}
