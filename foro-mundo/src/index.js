@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <ProfilePage /> },
       { path: "/profile/id", element: <ProfilePublic /> },
       { path: "/search", element: <SearchPage /> },
-      { path: "/post", element: <PostPage /> },
+      { path: "/post/:postId", element: <PostPage /> },
       { path: "/create", element: <PostCreationPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <SignUpPage /> },
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       { path: "*", element: <ErrorPage /> },
     ],
   },
-],{basename: process.env.PUBLIC_URL});
+], { basename: process.env.PUBLIC_URL });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

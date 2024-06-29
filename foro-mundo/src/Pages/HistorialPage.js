@@ -4,9 +4,11 @@ import { Breadcrumb } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import PostComment from "../Components/PostComment.js";
 import Cookies from "universal-cookie";
+import PostCard from "../Components/PostCard.js";
 
 function HistorialPage() {
   const [userComments, setUserComments] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
 
@@ -16,6 +18,10 @@ function HistorialPage() {
       const allComments = JSON.parse(localStorage.getItem('comments')) || [];
       const filteredComments = allComments.filter(comment => comment.author === cookieUser.username);
       setUserComments(filteredComments);
+
+      const allPosts = JSON.parse(localStorage.getItem('posts')) || [];
+      const filteredPosts = allPosts.filter(post => post.author === cookieUser.username);
+      setUserPosts(filteredPosts);
     }
   }, [cookieUser]);
 
@@ -36,6 +42,25 @@ function HistorialPage() {
         </nav>
       </div>
       <h2>Posts</h2>
+      <div className="container-xxl my-3">
+        {userPosts.length === 0 ? (
+          <p>No hay posts.</p>
+        ) : (
+          userPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              text={post.text}
+              titulo={post.titulo}
+              author={post.author}
+              date={post.date}
+              res_num={post.res_num}
+              view_num={post.view_num}
+              lm_author={post.lm_author}
+              lm_date={post.lm_date}
+            />
+          ))
+        )}
+      </div>
       <h2>Comentarios</h2>
       <div className="container-xxl my-3">
         {userComments.length === 0 ? (

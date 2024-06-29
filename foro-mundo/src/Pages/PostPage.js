@@ -7,10 +7,12 @@ import IndexSelector from "../Components/IndexSelector.js";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 function PostPage() {
+  const { postId } = useParams();
+
   useEffect(() => {
     document.title = "Post";
   }, []);
@@ -30,9 +32,11 @@ function PostPage() {
   useEffect(() => {
     const storedComments = localStorage.getItem('comments');
     if (storedComments) {
-      setComments(JSON.parse(storedComments));
+      const allComments = JSON.parse(storedComments);
+      const filteredComments = allComments.filter(comment => comment.postId === postId);
+      setComments(filteredComments);
     }
-  }, []);
+  }, [postId]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -43,6 +47,7 @@ function PostPage() {
     setShowModal(false);
     const newCommentObject = {
       id: uuidv4(),
+      postId,
       title: newComment,
       author: cookieUser.username,
       upvotes: 0,
@@ -97,6 +102,7 @@ function PostPage() {
       </div>
       <div className="container-xxl my-3">
         <PostCard
+          id={1}
           titulo={"buen foro :D"}
           text={"Este es un foro muy bueno"}
           author={"Juan Jaun"}
@@ -152,6 +158,7 @@ function PostPage() {
           <PostComment
             key={comment.id}
             id={comment.id}
+            postId={comment.postId}
             title={comment.title}
             author={comment.author}
             initialUpvotes={comment.upvotes}

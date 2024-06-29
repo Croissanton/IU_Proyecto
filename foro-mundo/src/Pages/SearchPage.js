@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
@@ -17,11 +16,10 @@ function SearchPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-      <h1> Foro </h1>
-      <Breadcrumb className="custom-breadcrumb" >
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>Foro</Breadcrumb.Item>{" "}
-          {/* Aquí debería ir el nombre del topico */}
+        <h1>Foro</h1>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item active>Foro</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       {cookies.get("user") === undefined ? (
@@ -38,6 +36,7 @@ function SearchPage() {
 
       <div className="container-xxl my-3">
         <PostCard
+          id={1}
           titulo={"buen foro :D"}
           text={"Este es un foro muy bueno"}
           author={"Juan Jaun"}
@@ -48,6 +47,7 @@ function SearchPage() {
           view_num={1000}
         />
         <PostCard
+          id={2}
           titulo={"Por que me ha explotado el radiador??"}
           text={"El radiador de mi casa ha explotado y no se que hacer"}
           author={"Ignacio19291"}
@@ -58,6 +58,7 @@ function SearchPage() {
           lm_date={"15.04.2024"}
         />
         <PostCard
+          id={3}
           titulo={"Mi gato se ha comido a mi abuela :( que hago"}
           text={"Mi gato se ha comido a mi abuela y no se que hacer :("}
           author={"Ignacio19291"}
@@ -68,6 +69,7 @@ function SearchPage() {
           lm_date={"11.04.2024"}
         />
         <PostCard
+          id={4}
           titulo={"Mi abuela se ha comido a mi gato.........!!"}
           text={"Mi abuela se ha comido a mi gato y no se que hacer :'("}
           author={"percebe43"}
@@ -78,6 +80,7 @@ function SearchPage() {
           lm_date={"03.04.2024"}
         />
         <PostCard
+          id={5}
           titulo={"La gasolina casi a 2€"}
           text={"La gasolina esta a punto de llegar a los 2€, que opinan?"}
           author={"Ignacio19291"}
@@ -88,6 +91,7 @@ function SearchPage() {
           lm_date={"02.04.2024"}
         />
         <PostCard
+          id={6}
           titulo={"no se que poner aqui"}
           text={"no se que poner aqui"}
           author={"percebe43"}

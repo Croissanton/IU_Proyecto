@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const PostCard = ({
+  id,
   titulo,
   text,
   author,
@@ -16,7 +17,7 @@ const PostCard = ({
   const navigate = useNavigate();
 
   const navigateToPost = () => {
-    navigate(`/post`);
+    navigate(`/post/${id}`);
   };
   return (
     <div  

@@ -7,6 +7,7 @@ const cookies = new Cookies();
 
 const PostComment = ({
   id, // Asegúrate de que este prop se pase para identificar el comentario
+  postId,
   title,
   author,
   initialUpvotes,
@@ -28,6 +29,7 @@ const PostComment = ({
     } else {
       comments.push({
         id,
+        postId,
         title,
         author,
         upvotes: newUpvotes,
@@ -155,7 +157,7 @@ const PostComment = ({
                       <NavLink
                         className="custom-text-link"
                         to={`/profile/${author}`}
-                        aria-label={`Profile of ${author}`}
+                        aria-label={`Perfil de ${author}`}
                         tabIndex="0"
                       >
                         <span>{author}</span>
