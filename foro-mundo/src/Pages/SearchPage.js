@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
@@ -12,13 +12,24 @@ function SearchPage() {
   }, []);
 
   const cookies = new Cookies();
+  const [posts, setPosts] = useState([]);
+
+  // Cargar posts desde localStorage
+  useEffect(() => {
+    const storedPosts = localStorage.getItem('posts');
+    if (storedPosts) {
+      setPosts(JSON.parse(storedPosts));
+    }
+  }, []);
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Foro</h1>
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Foro</Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -33,74 +44,25 @@ function SearchPage() {
           </div>
         </div>
       )}
-
       <div className="container-xxl my-3">
-        <PostCard
-          id={1}
-          titulo={"buen foro :D"}
-          text={"Este es un foro muy bueno"}
-          author={"Juan Jaun"}
-          date={"18.10.1992"}
-          lm_author={"Jose Jose"}
-          lm_date={"19.04.2024"}
-          res_num={100}
-          view_num={1000}
-        />
-        <PostCard
-          id={2}
-          titulo={"Por que me ha explotado el radiador??"}
-          text={"El radiador de mi casa ha explotado y no se que hacer"}
-          author={"Ignacio19291"}
-          date={"05.02.2023"}
-          res_num={69}
-          view_num={552}
-          lm_author={"Mikixd"}
-          lm_date={"15.04.2024"}
-        />
-        <PostCard
-          id={3}
-          titulo={"Mi gato se ha comido a mi abuela :( que hago"}
-          text={"Mi gato se ha comido a mi abuela y no se que hacer :("}
-          author={"Ignacio19291"}
-          date={"10.04.2024"}
-          res_num={32}
-          view_num={543}
-          lm_author={"usuarionumeritos1234235345i"}
-          lm_date={"11.04.2024"}
-        />
-        <PostCard
-          id={4}
-          titulo={"Mi abuela se ha comido a mi gato.........!!"}
-          text={"Mi abuela se ha comido a mi gato y no se que hacer :'("}
-          author={"percebe43"}
-          date={"01.04.2024"}
-          res_num={63}
-          view_num={764}
-          lm_author={"wawawaaaa"}
-          lm_date={"03.04.2024"}
-        />
-        <PostCard
-          id={5}
-          titulo={"La gasolina casi a 2€"}
-          text={"La gasolina esta a punto de llegar a los 2€, que opinan?"}
-          author={"Ignacio19291"}
-          date={"12.03.2024"}
-          res_num={52}
-          view_num={430}
-          lm_author={"Mikixd"}
-          lm_date={"02.04.2024"}
-        />
-        <PostCard
-          id={6}
-          titulo={"no se que poner aqui"}
-          text={"no se que poner aqui"}
-          author={"percebe43"}
-          date={"01.04.2024"}
-          res_num={63}
-          view_num={764}
-          lm_author={"lentejas55"}
-          lm_date={"01.04.2024"}
-        />
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostCard
+              key={post.id}
+              id={post.id}
+              titulo={post.title}
+              text={post.text}
+              author={post.author}
+              date={post.date}
+              lm_author={post.lm_author}
+              lm_date={post.lm_date}
+              res_num={post.res_num}
+              view_num={post.view_num}
+            />
+          ))
+        ) : (
+          <p>No hay posts disponibles</p>
+        )}
       </div>
       <IndexSelector />
     </MainLayout>

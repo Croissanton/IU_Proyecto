@@ -11,12 +11,12 @@ import { Link, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 function PostPage() {
-  const { postId } = useParams();
-
   useEffect(() => {
     document.title = "Post";
   }, []);
-
+  
+  const { postId } = useParams();
+  const [post, setPost] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
   const MAX_CHARACTERS = 500;
@@ -27,6 +27,16 @@ function PostPage() {
 
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
+
+  // Cargar post desde localStorage
+  useEffect(() => {
+    const storedPosts = localStorage.getItem('posts');
+    if (storedPosts) {
+      const posts = JSON.parse(storedPosts);
+      const currentPost = posts.find(post => post.id === postId);
+      setPost(currentPost);
+    }
+  }, [postId]);
 
   // Cargar comentarios desde localStorage
   useEffect(() => {
@@ -45,22 +55,44 @@ function PostPage() {
 
   const handleConfirm = () => {
     setShowModal(false);
+  
     const newCommentObject = {
       id: uuidv4(),
-      postId,
+      postId: postId,
       title: newComment,
       author: cookieUser.username,
       upvotes: 0,
       downvotes: 0,
       date: new Date(),
     };
-
+  
+    // Update comments in localStorage
     const updatedComments = [newCommentObject, ...comments];
     setComments(updatedComments);
     localStorage.setItem('comments', JSON.stringify(updatedComments));
+  
+    // Increase res_num in localStorage for the corresponding post
+    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    const updatedPosts = existingPosts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          res_num: post.res_num + 1,
+          lm_text: newCommentObject.title,
+          lm_author: newCommentObject.author,
+          lm_date: new Date().toLocaleDateString(),
+        };
+      }
+      return post;
+    });
+  
+    // Save updated posts back to localStorage
+    localStorage.setItem('posts', JSON.stringify(updatedPosts));
+  
     showToast("El comentario se ha creado correctamente!", "bg-success");
     setNewComment("");
   };
+  
 
   useEffect(() => {
     if (cookies.get("user") === undefined) {
@@ -100,19 +132,21 @@ function PostPage() {
           <Breadcrumb.Item active>Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <div className="container-xxl my-3">
-        <PostCard
-          id={1}
-          titulo={"buen foro :D"}
-          text={"Este es un foro muy bueno"}
-          author={"Juan Jaun"}
-          date={"18.10.1992"}
-          lm_author={"Jose Jose"}
-          lm_date={"19.04.2024"}
-          res_num={100}
-          view_num={1000}
-        />
-      </div>
+      {post && (
+        <div className="container-xxl my-3">
+          <PostCard
+            id={post.id}
+            titulo={post.title}
+            text={post.text}
+            author={post.author}
+            date={post.date}
+            lm_author={post.lm_author}
+            lm_date={post.lm_date}
+            res_num={comments.length}
+            view_num={post.view_num}
+          />
+        </div>
+      )}
 
       {cookies.get("user") === undefined ? (
         <div></div>

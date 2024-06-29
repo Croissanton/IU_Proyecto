@@ -7,6 +7,7 @@ const PostCard = ({
   id,
   titulo,
   text,
+  category,
   author,
   date,
   res_num,
@@ -54,6 +55,9 @@ const PostCard = ({
                       </Col>
                     </Row>
                     <Row>
+                      <p>Fecha de creación:</p>
+                    </Row>
+                    <Row>
                       <p>{date}</p>
                     </Row>
                   </Col>
@@ -75,6 +79,9 @@ const PostCard = ({
                     </Row>
                     <Row>
                       <p>{lm_author}</p>
+                    </Row>
+                    <Row>
+                      <p>Fecha del último mensaje:</p>
                     </Row>
                     <Row>
                       <p>{lm_date}</p>

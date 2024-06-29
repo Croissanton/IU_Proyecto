@@ -1,15 +1,19 @@
 import MainLayout from "../layout/MainLayout.js";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Breadcrumb, Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
+import Cookies from "universal-cookie";
 
 function PostCreationPage() {
   useEffect(() => {
     document.title = "Crear Post";
   }, []);
+
+  const cookies = new Cookies();
+  const cookiesUser = cookies.get("user");
 
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -66,13 +70,23 @@ function PostCreationPage() {
 
   const savePostData = () => {
     const post = {
-      ...formData,
-      image: selectedFile ? URL.createObjectURL(selectedFile) : null
+      id: uuidv4(),
+      title: formData.title,
+      text: formData.text,
+      category: formData.category,
+      author: cookiesUser.username,
+      date: new Date().toLocaleDateString(),
+      res_num: 0,
+      view_num: 0,
+      lm_author: "",
+      lm_date: "",
+      image: selectedFile ? URL.createObjectURL(selectedFile) : null,
     };
 
-    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    // Guardar en localStorage
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     existingPosts.push(post);
-    localStorage.setItem('posts', JSON.stringify(existingPosts));
+    localStorage.setItem("posts", JSON.stringify(existingPosts));
   };
 
   return (
