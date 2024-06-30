@@ -67,15 +67,18 @@ function PostPage() {
       date: new Date().toLocaleString(),
     };
   
-    // Get existing comments from localStorage
+    // Obtener los comentarios existentes del localStorage
     const existingComments = JSON.parse(localStorage.getItem('comments')) || [];
   
-    // Update comments in localStorage
+    // Actualizar los comentarios en el localStorage
     const updatedComments = [newCommentObject, ...existingComments];
-    setComments(updatedComments);
     localStorage.setItem('comments', JSON.stringify(updatedComments));
   
-    // Increase res_num in localStorage for the corresponding post
+    // Filtrar y establecer solo los comentarios para el post actual
+    const postComments = updatedComments.filter(comment => comment.postId === postId);
+    setComments(postComments);
+  
+    // Incrementar res_num en localStorage para el post correspondiente
     const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
     const updatedPosts = existingPosts.map(post => {
       if (post.id === postId) {
@@ -91,9 +94,7 @@ function PostPage() {
     });
   
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
-  };
-  
-  
+  };  
 
   useEffect(() => {
     if (cookies.get("user") === undefined) {
@@ -150,12 +151,19 @@ function PostPage() {
   };
 
   const handleDeletePost = () => {
-    const updatedPosts = JSON.parse(localStorage.getItem('posts')) || [];
-    const filteredPosts = updatedPosts.filter(p => p.id !== postId);
+    // Eliminar el post del localStorage
+    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    const filteredPosts = existingPosts.filter(p => p.id !== postId);
     localStorage.setItem('posts', JSON.stringify(filteredPosts));
+  
+    // Eliminar los comentarios asociados al post del localStorage
+    const existingComments = JSON.parse(localStorage.getItem('comments')) || [];
+    const filteredComments = existingComments.filter(comment => comment.postId !== postId);
+    localStorage.setItem('comments', JSON.stringify(filteredComments));
+  
     showToast("Post eliminado", "bg-danger");
     navigate("/search");
-  };
+  };  
 
   return (
     <MainLayout>
