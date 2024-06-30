@@ -67,8 +67,11 @@ function PostPage() {
       date: new Date().toLocaleString(),
     };
   
+    // Get existing comments from localStorage
+    const existingComments = JSON.parse(localStorage.getItem('comments')) || [];
+  
     // Update comments in localStorage
-    const updatedComments = [newCommentObject, ...comments];
+    const updatedComments = [newCommentObject, ...existingComments];
     setComments(updatedComments);
     localStorage.setItem('comments', JSON.stringify(updatedComments));
   
@@ -87,12 +90,9 @@ function PostPage() {
       return post;
     });
   
-    // Save updated posts back to localStorage
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
-  
-    showToast("El comentario se ha creado correctamente!", "bg-success");
-    setNewComment("");
   };
+  
   
 
   useEffect(() => {
