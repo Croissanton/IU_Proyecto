@@ -94,6 +94,10 @@ function PostPage() {
     });
   
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
+  
+    // Limpiar el área de texto
+    setNewComment("");
+    setCharacterCount(0);
   };  
 
   useEffect(() => {
