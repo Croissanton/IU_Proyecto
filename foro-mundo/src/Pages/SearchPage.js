@@ -5,22 +5,33 @@ import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { useParams } from "react-router-dom";
+
+const forumTopics = [
+  { id: 1, topic: "General" },
+  { id: 2, topic: "Off-topic" },
+  { id: 3, topic: "Tecnología" },
+  { id: 4, topic: "Deportes" },
+  { id: 5, topic: "Cine" },
+];
 
 function SearchPage() {
   useEffect(() => {
     document.title = "Posts";
   }, []);
 
+  const { topicId } = useParams();
   const cookies = new Cookies();
   const [posts, setPosts] = useState([]);
 
   // Cargar posts desde localStorage
   useEffect(() => {
-    const storedPosts = localStorage.getItem('posts');
-    if (storedPosts) {
-      setPosts(JSON.parse(storedPosts));
-    }
-  }, []);
+    const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const filteredPosts = storedPosts.filter((post) => post.topicId === topicId);
+    setPosts(filteredPosts);
+  }, [topicId]);
+
+  const category = forumTopics.find(topic => topic.id === parseInt(topicId));
 
   return (
     <MainLayout>
@@ -30,7 +41,9 @@ function SearchPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>Foro</Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            {category ? category.topic : "Foro"}
+          </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       {cookies.get("user") === undefined ? (
@@ -50,6 +63,7 @@ function SearchPage() {
             <PostCard
               key={post.id}
               id={post.id}
+              topicId={post.topicId}
               titulo={post.title}
               text={post.text}
               author={post.author}

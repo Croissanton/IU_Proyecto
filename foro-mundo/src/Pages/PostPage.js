@@ -10,6 +10,14 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
+const forumTopics = [
+  { id: 1, topic: "General" },
+  { id: 2, topic: "Off-topic" },
+  { id: 3, topic: "Tecnología" },
+  { id: 4, topic: "Deportes" },
+  { id: 5, topic: "Cine" },
+];
+
 function PostPage() {
   useEffect(() => {
     document.title = "Post";
@@ -152,6 +160,7 @@ function PostPage() {
   
     // Save updated posts back to localStorage
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
+    navigate(`/search/${post.topicId}`);
   };
 
   const handleDeletePost = () => {
@@ -166,8 +175,10 @@ function PostPage() {
     localStorage.setItem('comments', JSON.stringify(filteredComments));
   
     showToast("Post eliminado", "bg-danger");
-    navigate("/search");
-  };  
+    navigate(`/search/${post.topicId}`);
+  };
+
+  const category = post ? forumTopics.find(topic => topic.id === parseInt(post.topicId)) : null;
 
   return (
     <MainLayout>
@@ -175,7 +186,9 @@ function PostPage() {
         <h1>Post</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/search/${post?.topicId}` }}>
+            {category ? category.topic : "Foro"}
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -195,9 +208,11 @@ function PostPage() {
         </div>
       )}
 
-            <Button variant="danger" onClick={handleDeletePost}>
-              Eliminar Post
-            </Button>
+      {post && (
+        <Button variant="danger" onClick={handleDeletePost}>
+          Eliminar Post
+        </Button>
+      )}
 
       {cookies.get("user") === undefined ? (
         <div></div>

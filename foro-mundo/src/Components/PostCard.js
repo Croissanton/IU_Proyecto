@@ -9,9 +9,9 @@ const cookieUser = cookies.get("user");
 
 const PostCard = ({
   id,
+  topicId,
   titulo,
   text,
-  category,
   author,
   date,
   res_num,
