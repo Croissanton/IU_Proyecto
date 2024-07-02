@@ -10,7 +10,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-import { FormLabel } from "react-bootstrap";
+import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
 
 const Header = forwardRef((props, ref) => {
   const cookies = new Cookies();
@@ -232,6 +232,36 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                 </>
               )}
+
+                <Dropdown>
+                  <OverlayTrigger
+                  placement="left"
+                  overlay={<Tooltip id="tooltip-help">Accesibilidad</Tooltip>}
+                  >
+                  <Dropdown.Toggle
+                    variant="success"
+                    id="dropdown-basic"
+                    className="d-flex align-items-center justify-content-center"
+                    aria-label="Mostrar menu de accesibilidad"
+                  >
+                    <i className="bi bi-universal-access-circle custom-icon"></i>
+                    <span className="visually-hidden">Menu de accesibilidad</span>
+                  </Dropdown.Toggle>
+                  </OverlayTrigger>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Formato original</Dropdown.Item>
+                    <hr class="dropdown-divider"></hr>
+                    
+                    <Dropdown.Item href="#/action-2"> <i className="bi bi-brightness-high-fill"></i> Alto contraste</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3"><i className="bi bi-brightness-high"></i>  Bajo contraste</Dropdown.Item>
+                    <Dropdown.Item href="#/action-4"><i className="bi bi-plus-circle "></i>  Agrandar texto</Dropdown.Item>
+                    <Dropdown.Item href="#/action-5"><i className="bi bi-dash-circle "></i>  Reducir texto</Dropdown.Item>
+                    <Dropdown.Item href="#/action-6"> <i className="bi bi-alphabet-uppercase "></i>  Fuente para accesibilidad</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                      
+
               <OverlayTrigger
                 placement="bottom"
                 overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
