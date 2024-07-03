@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb, Modal, Button } from "react-bootstrap";
+import { Breadcrumb } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "../Components/ConfirmationModal";
 
 function ProfilePage() {
   useEffect(() => {
@@ -234,41 +235,21 @@ function ProfilePage() {
         </div>
       </div>
 
-      {/* Modal de confirmación de guardar cambios */}
-      <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmar Cambios</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          ¿Estás seguro de que quieres guardar los cambios en tu perfil?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleSaveChanges}>
-            Guardar Cambios
-          </Button>
-          <Button variant="light" onClick={() => setShowConfirmationModal(false)}>
-            Cancelar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ConfirmationModal
+        show={showConfirmationModal}
+        handleClose={() => setShowConfirmationModal(false)}
+        handleConfirm={handleSaveChanges}
+        title="Confirmar Cambios"
+        message="¿Estás seguro de que quieres guardar los cambios en tu perfil?"
+      />
 
-      {/* Modal de confirmación de cancelar */}
-      <Modal show={showCancelConfirmationModal} onHide={() => setShowCancelConfirmationModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmar Cancelación</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          ¿Estás seguro de que quieres cancelar la edición sin guardar los cambios?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleCancelConfirmation}>
-            Confirmar Cancelación
-          </Button>
-          <Button variant="light" onClick={() => setShowCancelConfirmationModal(false)}>
-            Volver a Edición
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ConfirmationModal
+        show={showCancelConfirmationModal}
+        handleClose={() => setShowCancelConfirmationModal(false)}
+        handleConfirm={handleCancelConfirmation}
+        title="Confirmar Cancelación"
+        message="¿Estás seguro de que quieres cancelar la edición sin guardar los cambios?"
+      />
     </MainLayout>
   );
 }

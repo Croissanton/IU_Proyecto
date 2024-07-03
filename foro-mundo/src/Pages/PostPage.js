@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button } from "react-bootstrap";
+import { Breadcrumb, Button, Modal } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
@@ -30,6 +30,10 @@ function PostPage() {
 
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
+
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
   // Cargar post desde localStorage
   useEffect(() => {
@@ -124,7 +128,12 @@ function PostPage() {
   };
 
   const handleDelete = (id) => {
-    const updatedComments = comments.filter(comment => comment.id !== id);
+    setCommentToDelete(id);
+    setShowDeleteCommentModal(true);
+  };
+
+  const handleConfirmDeleteComment = () => {
+    const updatedComments = comments.filter(comment => comment.id !== commentToDelete);
     setComments(updatedComments);
   
     // Update comments in localStorage
@@ -154,10 +163,11 @@ function PostPage() {
   
     // Save updated posts back to localStorage
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
-    navigate(`/search/${post.topicId}`);
+    navigate(`/post/${post.id}`);
+    setShowDeleteCommentModal(false);
   };
 
-  const handleDeletePost = () => {
+  const handleConfirmDeletePost = () => {
     // Eliminar el post del localStorage
     const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
     const filteredPosts = existingPosts.filter(p => p.id !== postId);
@@ -184,6 +194,7 @@ function PostPage() {
 
     showToast("Post eliminado", "bg-danger");
     navigate(`/search/${post.topicId}`);
+    setShowDeletePostModal(false);
   };
 
   const handleClearComment = () => {
@@ -221,9 +232,18 @@ function PostPage() {
       )}
 
       {post && (
-        <Button variant="danger" onClick={handleDeletePost}>
-          Eliminar Post
-        </Button>
+        <div className="container-xxl my-3">
+          <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
+            Eliminar Post
+          </Button>
+          <ConfirmationModal
+            show={showDeletePostModal}
+            handleClose={() => setShowDeletePostModal(false)}
+            handleConfirm={handleConfirmDeletePost}
+            title="Eliminar Post"
+            message="¿Estás seguro de que quieres eliminar este post?"
+          />
+        </div>
       )}
 
       {cookies.get("user") === undefined ? (
@@ -254,10 +274,7 @@ function PostPage() {
             >
               Publicar
             </button>
-            <Button
-              onClick={handleClearComment}
-              className="ms-2"
-            >
+            <Button onClick={handleClearComment} className="ms-2">
               Limpiar
             </Button>
             <ConfirmationModal
@@ -265,13 +282,14 @@ function PostPage() {
               show={showModal}
               handleClose={handleClose}
               handleConfirm={handleConfirm}
-            ></ConfirmationModal>
+              title="Confirmar Comentario"
+            />
           </form>
         </div>
       )}
 
       <div className="container-xxl my-3">
-      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
+        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
         {comments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
@@ -285,12 +303,18 @@ function PostPage() {
               initialUpvotes={comment.upvotes}
               initialDownvotes={comment.downvotes}
               date={comment.date}
-              onDelete={handleDelete}
+              onDelete={() => handleDelete(comment.id)}
             />
           ))
         )}
       </div>
-
+      <ConfirmationModal
+        show={showDeleteCommentModal}
+        handleClose={() => setShowDeleteCommentModal(false)}
+        handleConfirm={handleConfirmDeleteComment}
+        title="Eliminar Comentario"
+        message="¿Estás seguro de que quieres eliminar este comentario?"
+      />
       <IndexSelector />
     </MainLayout>
   );
