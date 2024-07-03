@@ -32,10 +32,10 @@ function PostCreationPage() {
   };
 
   const handleConfirm = () => {
-    savePostData();
+    const postId = savePostData();
     setShowModal(false);
     showToast("El post se ha creado correctamente!", "bg-success");
-    navigate("/search");
+    navigate(`/search/${postId}`);
   };
 
   const handleKeyDown = (e) => {
@@ -71,9 +71,9 @@ function PostCreationPage() {
   const savePostData = () => {
     const post = {
       id: uuidv4(),
+      topicId: formData.category,
       title: formData.title,
       text: formData.text,
-      category: formData.category,
       author: cookiesUser.username,
       date: new Date().toLocaleString(),
       res_num: 0,
@@ -87,6 +87,8 @@ function PostCreationPage() {
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     existingPosts.push(post);
     localStorage.setItem("posts", JSON.stringify(existingPosts));
+
+    return post.topicId; // Devolver el topicId del post creado
   };
 
   return (
@@ -136,10 +138,11 @@ function PostCreationPage() {
                 <option value="default" disabled>
                   Selecciona una categoría...
                 </option>
-                <option value="general">General</option>
-                <option value="coches">Coches</option>
-                <option value="musica">Música</option>
-                <option value="plantas">Plantas</option>
+                <option value='1'>General</option>
+                <option value='2'>Off-topic</option>
+                <option value='3'>Tecnología</option>
+                <option value='4'>Deportes</option>
+                <option value='5'>Cine</option>
               </select>
             </div>
             <div className="col-12">
