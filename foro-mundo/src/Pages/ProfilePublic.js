@@ -12,10 +12,12 @@ function ProfilePublic() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-      <h1>Perfil</h1>
-        <Breadcrumb className="custom-breadcrumb" >
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>Perfil</Breadcrumb.Item> {/* */}
+        <h1>Perfil</h1>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>Perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div style={{ display: "flex" }}>
@@ -32,27 +34,29 @@ function ProfilePublic() {
           style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
         >
           <form className="row col-12 g-3">
-            <div className="col-md-6">
-              <label htmlFor="inputNombre4" className="form-label">
-                Nombre
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="inputNombre4"
-                disabled
-              ></input>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="inputApellidos4" className="form-label">
-                Apellidos
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="inputApellidos4"
-                disabled
-              ></input>
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="inputNombre4" className="form-label">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputNombre4"
+                  disabled
+                ></input>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="inputApellidos4" className="form-label">
+                  Apellidos
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputApellidos4"
+                  disabled
+                ></input>
+              </div>
             </div>
             <div className="col-12">
               <label htmlFor="inputFechaNacimiento" className="form-label">
@@ -65,29 +69,31 @@ function ProfilePublic() {
                 disabled
               ></input>
             </div>
-            <div className="col-md-6">
-              <label htmlFor="inputPais" className="form-label">
-                País
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="inputPais"
-                disabled
-              ></input>
+            <div className="row">
+              <div className="col-md-6">
+                <label htmlFor="inputPais" className="form-label">
+                  País
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputPais"
+                  disabled
+                ></input>
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="inputCiudad" className="form-label">
+                  Ciudad
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputCiudad"
+                  disabled
+                ></input>
+              </div>
             </div>
-            <div className="col-md-4">
-              <label htmlFor="inputCiudad" className="form-label">
-                Ciudad
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="inputCiudad"
-                disabled
-              ></input>
-            </div>
-            <div className="col-md-4">
+            <div className="col-12">
               <label htmlFor="inputRedes" className="form-label">
                 Redes Sociales
               </label>
