@@ -186,6 +186,11 @@ function PostPage() {
     navigate(`/search/${post.topicId}`);
   };
 
+  const handleClearComment = () => {
+    setNewComment("");
+    setCharacterCount(0);
+  };
+
   const category = post ? topics.find(topic => topic.id === parseInt(post.topicId)) : null;
 
   return (
@@ -250,6 +255,12 @@ function PostPage() {
             >
               Publicar
             </button>
+            <Button
+              onClick={handleClearComment}
+              className="ms-2"
+            >
+              Limpiar
+            </Button>
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
