@@ -7,13 +7,7 @@ import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useParams } from "react-router-dom";
 
-const forumTopics = [
-  { id: 1, topic: "General" },
-  { id: 2, topic: "Off-topic" },
-  { id: 3, topic: "Tecnología" },
-  { id: 4, topic: "Deportes" },
-  { id: 5, topic: "Cine" },
-];
+const topics = JSON.parse(localStorage.getItem("topics"));
 
 function SearchPage() {
   useEffect(() => {
@@ -31,7 +25,7 @@ function SearchPage() {
     setPosts(filteredPosts);
   }, [topicId]);
 
-  const category = forumTopics.find(topic => topic.id === parseInt(topicId));
+  const category = topics.find(topic => topic.id === parseInt(topicId));
 
   return (
     <MainLayout>

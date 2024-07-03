@@ -88,6 +88,20 @@ function PostCreationPage() {
     existingPosts.push(post);
     localStorage.setItem("posts", JSON.stringify(existingPosts));
 
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
+    const updatedTopics = existingTopics.map(topic => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) + 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+
     return post.topicId; // Devolver el topicId del post creado
   };
 

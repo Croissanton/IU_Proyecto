@@ -10,13 +10,7 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-const forumTopics = [
-  { id: 1, topic: "General" },
-  { id: 2, topic: "Off-topic" },
-  { id: 3, topic: "Tecnología" },
-  { id: 4, topic: "Deportes" },
-  { id: 5, topic: "Cine" },
-];
+const topics = JSON.parse(localStorage.getItem("topics"));
 
 function PostPage() {
   useEffect(() => {
@@ -174,11 +168,25 @@ function PostPage() {
     const filteredComments = existingComments.filter(comment => comment.postId !== postId);
     localStorage.setItem('comments', JSON.stringify(filteredComments));
   
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
+    const updatedTopics = existingTopics.map(topic => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) - 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+
     showToast("Post eliminado", "bg-danger");
     navigate(`/search/${post.topicId}`);
   };
 
-  const category = post ? forumTopics.find(topic => topic.id === parseInt(post.topicId)) : null;
+  const category = post ? topics.find(topic => topic.id === parseInt(post.topicId)) : null;
 
   return (
     <MainLayout>
