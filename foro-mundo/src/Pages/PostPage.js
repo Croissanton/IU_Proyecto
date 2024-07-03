@@ -201,9 +201,9 @@ function PostPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/search/${post?.topicId}` }}>
             {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>Post</Breadcrumb.Item>
+          <Breadcrumb.Item active>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Post</label>      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{post ? post.title : "Post"}</label>      </div>
       {post && (
         <div className="container-xxl my-3">
           <PostCard

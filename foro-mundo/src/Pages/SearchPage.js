@@ -38,7 +38,7 @@ function SearchPage() {
             {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{category.topic}</label>      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "30px" }}>{category.topic}</label>      </div>
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
