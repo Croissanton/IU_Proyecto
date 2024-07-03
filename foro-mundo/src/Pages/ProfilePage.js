@@ -42,10 +42,10 @@ function ProfilePage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting Data:", profileData);
-    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
+    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None' });
     setIsEditing(false); // Disable editing mode on successful validation and submission
     setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
-    showToast("Se han guardado los cambios!"); 
+    showToast("Se han guardado los cambios!");
   };
 
   const handleCancel = () => {
@@ -61,7 +61,7 @@ function ProfilePage() {
         document.querySelector("img").src = e.target.result;
       };
       reader.readAsDataURL(file);
-      profileData.imageInput = ""; // Puede que se implemente en el futuro, por ahora no.
+      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
     }
   };
 
@@ -87,6 +87,7 @@ function ProfilePage() {
             <input
               type="file"
               id="imageInput"
+              value={profileData.imageInput}
               style={{ display: "none" }}
               onChange={handleImageSelection}
             />
@@ -100,7 +101,7 @@ function ProfilePage() {
                 Cambiar foto
               </button>
             )}
-            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label> 
+            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label>
           </div>
         </div>
         <div
@@ -108,22 +109,26 @@ function ProfilePage() {
           style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
         >
           <form className="row col-12 g-3" onSubmit={handleSubmit}>
-            <InputComponent
-              id="name"
-              label="Nombre"
-              value={profileData.name}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="lastName"
-              label="Apellidos"
-              value={profileData.lastName}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
+            <div className="row">
+              <InputComponent
+                id="name"
+                label="Nombre"
+                value={profileData.name}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={true}
+                colClass="col-md-6"
+              />
+              <InputComponent
+                id="lastName"
+                label="Apellidos"
+                value={profileData.lastName}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={true}
+                colClass="col-md-6"
+              />
+            </div>
             <InputComponent
               id="birthDate"
               type="date"
@@ -133,22 +138,26 @@ function ProfilePage() {
               readOnly={!isEditing}
               required={true}
             />
-            <InputComponent
-              id="country"
-              label="País"
-              value={profileData.country}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="city"
-              label="Ciudad"
-              value={profileData.city}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-            />
+            <div className="row">
+              <InputComponent
+                id="country"
+                label="País"
+                value={profileData.country}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={true}
+                colClass="col-md-6"
+              />
+              <InputComponent
+                id="city"
+                label="Ciudad"
+                value={profileData.city}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={false}
+                colClass="col-md-6"
+              />
+            </div>
             <InputComponent
               id="socialMedia"
               label="Redes"
@@ -174,10 +183,7 @@ function ProfilePage() {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={(e) => {
-                      e.preventDefault(); // Prevent form submission
-                      setIsEditing(true);
-                    }}
+                    onClick={() => setIsEditing(true)}
                   >
                     Editar
                   </button>
@@ -224,11 +230,12 @@ function InputComponent({
   onChange,
   readOnly,
   required,
+  colClass = "col-12"
 }) {
   const inputClassNames = `form-control ${readOnly ? "no-background no-border" : ""}`;
 
   return (
-    <div className="col-md-6">
+    <div className={colClass}>
       <label htmlFor={id} className="form-label">
         {label}
       </label>
