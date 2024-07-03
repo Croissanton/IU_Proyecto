@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Modal, Button } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
@@ -28,6 +28,8 @@ function ProfilePage() {
   });
 
   const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -41,16 +43,25 @@ function ProfilePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting Data:", profileData);
+    setShowConfirmationModal(true);
+  };
+
+  const handleSaveChanges = () => {
     cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
-    setIsEditing(false); // Disable editing mode on successful validation and submission
-    setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
-    showToast("Se han guardado los cambios!"); 
+    setIsEditing(false);
+    setInitialProfileData({ ...profileData });
+    showToast("Se han guardado los cambios!");
+    setShowConfirmationModal(false);
   };
 
   const handleCancel = () => {
+    setShowCancelConfirmationModal(true);
+  };
+
+  const handleCancelConfirmation = () => {
     setProfileData({ ...initialProfileData });
     setIsEditing(false);
+    setShowCancelConfirmationModal(false);
   };
 
   const handleImageSelection = (event) => {
@@ -175,7 +186,7 @@ function ProfilePage() {
                     type="button"
                     className="btn btn-primary"
                     onClick={(e) => {
-                      e.preventDefault(); // Prevent form submission
+                      e.preventDefault();
                       setIsEditing(true);
                     }}
                   >
@@ -185,6 +196,7 @@ function ProfilePage() {
                     <button
                       type="button"
                       className="btn btn-primary"
+                      style={{ marginLeft: "10px" }}
                     >
                       Ver Historial
                     </button>
@@ -212,6 +224,42 @@ function ProfilePage() {
           </form>
         </div>
       </div>
+
+      {/* Modal de confirmación de guardar cambios */}
+      <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Cambios</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que quieres guardar los cambios en tu perfil?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Guardar Cambios
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de confirmación de cancelar */}
+      <Modal show={showCancelConfirmationModal} onHide={() => setShowCancelConfirmationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Cancelación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que quieres cancelar la edición sin guardar los cambios?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCancelConfirmationModal(false)}>
+            Volver a Edición
+          </Button>
+          <Button variant="primary" onClick={handleCancelConfirmation}>
+            Confirmar Cancelación
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </MainLayout>
   );
 }
