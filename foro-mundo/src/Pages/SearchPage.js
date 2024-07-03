@@ -30,7 +30,6 @@ function SearchPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Foro</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
@@ -39,7 +38,7 @@ function SearchPage() {
             {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
         </Breadcrumb>
-      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{category.topic}</label>      </div>
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
@@ -69,7 +68,7 @@ function SearchPage() {
             />
           ))
         ) : (
-          <p>No hay posts disponibles</p>
+          <p>No hay posts disponibles.</p>
         )}
       </div>
       <IndexSelector />

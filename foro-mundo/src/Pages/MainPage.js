@@ -36,12 +36,11 @@ function MainPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-2">
-        <h1> Foros </h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-
+      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Foros</label>
       <div className="container-xxl my-3">
         {topics.map((topic) => (
           <ForumCard

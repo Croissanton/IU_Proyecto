@@ -89,8 +89,8 @@ function SignUpPage() {
         </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={register} action="/">
           <div className="login-container text-center">
-            <h1>Registro</h1>
-            <p>Por favor, completa el siguiente formulario para registrarte.</p>
+          <label style={{ fontSize: "2.5rem" }}>Registro</label>
+          <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>Por favor, completa el siguiente formulario para registrarte.</label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario

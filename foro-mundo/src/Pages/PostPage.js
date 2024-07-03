@@ -196,7 +196,6 @@ function PostPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Post</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/search/${post?.topicId}` }}>
@@ -204,7 +203,7 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Post</Breadcrumb.Item>
         </Breadcrumb>
-      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Post</label>      </div>
       {post && (
         <div className="container-xxl my-3">
           <PostCard
@@ -231,7 +230,7 @@ function PostPage() {
         <div></div>
       ) : (
         <div className="container-xxl my-3">
-          <h3>Añadir un nuevo comentario</h3>
+          <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Añadir un nuevo comentario</label>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="commentInput" className="form-label"></label>
@@ -272,7 +271,7 @@ function PostPage() {
       )}
 
       <div className="container-xxl my-3">
-        <h2>Comentarios</h2>
+      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
         {comments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (

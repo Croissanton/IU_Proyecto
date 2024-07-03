@@ -80,12 +80,11 @@ function ProfilePage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Mi Perfil</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
-      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Mi perfil</label>      </div>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img

@@ -12,7 +12,6 @@ function ProfilePublic() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Perfil</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
@@ -20,6 +19,7 @@ function ProfilePublic() {
           <Breadcrumb.Item active>Perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>
+      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Perfil</label>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img

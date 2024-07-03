@@ -11,7 +11,6 @@ function HelpPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Ayuda</h1>
         <nav aria-label="breadcrumb">
           <Breadcrumb className="custom-breadcrumb">
             <Breadcrumb.Item linkAs={NavLink} linkProps={{ to: "/" }}>
@@ -20,9 +19,10 @@ function HelpPage() {
             <Breadcrumb.Item active aria-current="page">Ayuda</Breadcrumb.Item>
           </Breadcrumb>
         </nav>
+      <label style={{ fontSize: "3rem", fontWeight: "bold" }}>Ayuda</label>
       </div>
       <div className="container-xxl my-3 pb-2 pt-2">
-        <h2>Atajos:</h2>
+      <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Atajos</label>
         <ul>
           <li>CTRL+ALT+C : Chats</li>
           <li>CTRL+ALT+P : Crear post</li>
@@ -33,7 +33,7 @@ function HelpPage() {
       </div>
       <hr />
       <div className="container-xxl my-3">
-        <h2>Contacto</h2>
+      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Contacto</label>
         <p>
           Si tienes alguna duda o sugerencia, no dudes en ponerte en contacto
           con nosotros.
