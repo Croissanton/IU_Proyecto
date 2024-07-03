@@ -244,11 +244,11 @@ function ProfilePage() {
           ¿Estás seguro de que quieres guardar los cambios en tu perfil?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>
-            Cancelar
-          </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
             Guardar Cambios
+          </Button>
+          <Button variant="light" onClick={() => setShowConfirmationModal(false)}>
+            Cancelar
           </Button>
         </Modal.Footer>
       </Modal>
@@ -262,11 +262,11 @@ function ProfilePage() {
           ¿Estás seguro de que quieres cancelar la edición sin guardar los cambios?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowCancelConfirmationModal(false)}>
-            Volver a Edición
-          </Button>
           <Button variant="primary" onClick={handleCancelConfirmation}>
             Confirmar Cancelación
+          </Button>
+          <Button variant="light" onClick={() => setShowCancelConfirmationModal(false)}>
+            Volver a Edición
           </Button>
         </Modal.Footer>
       </Modal>
