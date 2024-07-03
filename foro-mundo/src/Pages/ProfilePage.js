@@ -61,7 +61,7 @@ function ProfilePage() {
         document.querySelector("img").src = e.target.result;
       };
       reader.readAsDataURL(file);
-      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
+      profileData.imageInput = ""; // Puede que se implemente en el futuro, por ahora no.
     }
   };
 
@@ -69,7 +69,7 @@ function ProfilePage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Mi Perfil</h1>
-        <Breadcrumb className="custom-breadcrumb" >
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
@@ -87,7 +87,6 @@ function ProfilePage() {
             <input
               type="file"
               id="imageInput"
-              value={profileData.imageInput}
               style={{ display: "none" }}
               onChange={handleImageSelection}
             />
@@ -175,7 +174,10 @@ function ProfilePage() {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => setIsEditing(true)}
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent form submission
+                      setIsEditing(true);
+                    }}
                   >
                     Editar
                   </button>
