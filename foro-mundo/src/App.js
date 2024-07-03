@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastProvider } from "./Context/ToastContext";
 import useShortcuts from "./shortcuts";
-import initialPosts from "./initialPosts";
+import initialPosts from "./data/initialPosts";
 
 function App() {
   useShortcuts();
