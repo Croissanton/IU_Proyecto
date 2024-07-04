@@ -25,6 +25,18 @@ function SearchPage() {
     setPosts(filteredPosts);
   }, [topicId]);
 
+  const handlePostClick = (id) => {
+    const updatedPosts = posts.map((post) => {
+      if (post.id === id) {
+        return { ...post, view_num: post.view_num + 1 };
+      }
+      return post;
+    });
+
+    setPosts(updatedPosts);
+    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+  };
+
   const category = topics.find(topic => topic.id === parseInt(topicId));
 
   return (
@@ -65,6 +77,7 @@ function SearchPage() {
               lm_date={post.lm_date}
               res_num={post.res_num}
               view_num={post.view_num}
+              onPostClick={handlePostClick}
             />
           ))
         ) : (

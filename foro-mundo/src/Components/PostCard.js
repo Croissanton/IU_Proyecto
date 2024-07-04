@@ -1,11 +1,7 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import Cookies from "universal-cookie";
-
-const cookies = new Cookies();
-const cookieUser = cookies.get("user");
 
 const PostCard = ({
   id,
@@ -18,22 +14,25 @@ const PostCard = ({
   view_num,
   lm_author,
   lm_date,
+  onPostClick,
 }) => {
+
   const navigate = useNavigate();
 
-  const navigateToPost = () => {
+  const handleClick = () => {
+    onPostClick(id);
     navigate(`/post/${id}`);
   };
 
   return (
     <div  
-      onClick={navigateToPost}
+      onClick={handleClick}
       className="custom-link"
       role="button"
       tabIndex="0"
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
-          navigateToPost();
+          handleClick();
         }
       }}>
       <Row className="gy-3">
