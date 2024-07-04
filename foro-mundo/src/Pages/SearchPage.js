@@ -24,6 +24,9 @@ function SearchPage() {
     const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const filteredPosts = storedPosts.filter((post) => post.topicId === topicId);
     setPosts(filteredPosts);
+
+    //Establecer el criterio de ordenación por defecto
+    setSortCriteria("nombreAZ");
   }, [topicId]);
 
   const handlePostClick = (id) => {
@@ -45,15 +48,28 @@ function SearchPage() {
   const sortedPosts = [...posts].sort((a, b) => {
     if (sortCriteria === "title") {
       return a.title.localeCompare(b.title);
-    } else if (sortCriteria === "newest") {
+    } else if (sortCriteria === "nuevo") {
       return new Date(b.date) - new Date(a.date);
-    } else if (sortCriteria === "oldest") {
+    } else if (sortCriteria === "antiguo") {
       return new Date(a.date) - new Date(b.date);
-    } else if (sortCriteria === "view_num") {
+    } else if (sortCriteria === "ultimoNuevo") {
+      return new Date(b.lm_date) - new Date(a.lm_date);
+    } else if (sortCriteria === "ultimoAntiguo") {
+      return new Date(a.lm_date) - new Date(b.lm_date);
+    } else if (sortCriteria === "nombreAZ") {
+      return a.title.localeCompare(b.title);
+    } else if (sortCriteria === "nombreZA") {
+      return b.title.localeCompare(a.title);
+    } else if (sortCriteria === "masVisitas") {
       return b.view_num - a.view_num;
-    } else if (sortCriteria === "res_num") {
+    } else if (sortCriteria === "menosVisitas") {
+      return a.view_num - b.view_num;
+    } else if (sortCriteria === "masRespuestas") {
       return b.res_num - a.res_num;
+    } else if (sortCriteria === "menosRespuestas") {
+      return a.res_num - b.res_num;
     }
+
     return 0;
   });
 
@@ -101,11 +117,16 @@ function SearchPage() {
           <label className="me-2">Ordenar por:</label>
           <div className="d-flex justify-content-center">
             <select className="form-select me-2" onChange={(e) => handleSortChange(e.target.value)}>
-              <option value="newest">Más nuevo</option>
-              <option value="oldest">Más antiguo</option>
-              <option value="title">Título</option>
-              <option value="view_num">Visitas</option>
-              <option value="res_num">Respuestas</option>
+              <option value="nombreAZ">Título A-Z</option>
+              <option value="nombreZA">Título Z-A</option>
+              <option value="nuevo">Más nuevo</option>
+              <option value="antiguo">Más antiguo</option>
+              <option value="ultimoNuevo">Último mensaje más nuevo</option>
+              <option value="ultimoAntiguo">Último mensaje más antiguo</option>
+              <option value="masVisitas"> Más visitas</option>
+              <option value="menosVisitas"> Menos visitas</option>
+              <option value="masRespuestas">Más respuestas</option>
+              <option value="menosRespuestas">Menos respuestas</option>
             </select>
           </div>
         </div>

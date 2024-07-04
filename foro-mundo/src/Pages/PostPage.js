@@ -26,6 +26,7 @@ function PostPage() {
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("newest"); // Estado para el criterio de ordenación
   const navigate = useNavigate();
 
   const cookies = new Cookies();
@@ -43,6 +44,9 @@ function PostPage() {
       const currentPost = posts.find(post => post.id === postId);
       setPost(currentPost);
     }
+
+    //Establecer el criterio de ordenación por defecto
+    setSortCriteria("textoAZ");
   }, [postId]);
 
   // Cargar comentarios desde localStorage
@@ -202,6 +206,32 @@ function PostPage() {
     setCharacterCount(0);
   };
 
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);
+  };
+
+  const sortedComments = [...comments].sort((a, b) => {
+    if (sortCriteria === "textoAZ") {
+      return a.title.localeCompare(b.title);
+    } else if (sortCriteria === "textoZA") {
+      return b.title.localeCompare(a.title);
+    } else if (sortCriteria === "nuevo") {
+      return new Date(b.date) - new Date(a.date);
+    } else if (sortCriteria === "antiguo") {
+      return new Date(a.date) - new Date(b.date);
+    } else if (sortCriteria === "masPositivos") {
+      return b.upvotes - a.upvotes;
+    } else if (sortCriteria === "menosPositivos") {
+      return a.upvotes - b.upvotes;
+    } else if (sortCriteria === "masNegativos") {
+      return b.downvotes - a.downvotes;
+    } else if (sortCriteria === "menosNegativos") {
+      return a.downvotes - b.downvotes;
+    }
+    
+    return 0;
+  });
+
   const category = post ? topics.find(topic => topic.id === parseInt(post.topicId)) : null;
 
   return (
@@ -214,7 +244,8 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item active>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{post ? post.title : "Post"}</label>      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{post ? post.title : "Post"}</label>
+      </div>
       {post && (
         <div className="container-xxl my-3">
           <PostCard
@@ -290,10 +321,28 @@ function PostPage() {
 
       <div className="container-xxl my-3">
         <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
-        {comments.length === 0 ? (
+        <div className="mb-3">
+          <label htmlFor="sortSelect" className="form-label">Ordenar por:</label>
+          <select
+            id="sortSelect"
+            className="form-select"
+            value={sortCriteria}
+            onChange={(e) => handleSortChange(e.target.value)}
+          >
+            <option value="textoAZ">Texto A-Z</option>
+            <option value="textoZA">Texto Z-A</option>
+            <option value="reciente">Más recientes</option>
+            <option value="antiguo">Más antiguos</option>
+            <option value="masPositivos">Más votos positivos</option>
+            <option value="menosPositivos">Menos votos positivos</option>
+            <option value="masNegativos">Más votos negativos</option>
+            <option value="menosNegativos">Menos votos negativos</option>
+          </select>
+        </div>
+        {sortedComments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
-          comments.map((comment) => (
+          sortedComments.map((comment) => (
             <PostComment
               key={comment.id}
               id={comment.id}

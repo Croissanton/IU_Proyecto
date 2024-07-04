@@ -32,6 +32,9 @@ function MainPage() {
       localStorage.setItem("topics", JSON.stringify(defaultTopics));
       setTopics(defaultTopics);
     }
+
+    //Establecer el criterio de ordenación por defecto
+    setSortCriteria("nombreAZ");
   }, []);
 
   const handleTopicClick = (id) => {
@@ -53,13 +56,20 @@ function MainPage() {
 
   // Ordenar los tópicos según el criterio seleccionado
   const sortedTopics = [...topics].sort((a, b) => {
-    if (sortCriteria === "name") {
+    if (sortCriteria === "nombreAZ") {
       return a.topic.localeCompare(b.topic);
-    } else if (sortCriteria === "post_num") {
+    } else if (sortCriteria === "nombreZA") {
+      return b.topic.localeCompare(a.topic);
+    } else if (sortCriteria === "masPosts") {
       return b.post_num - a.post_num;
-    } else if (sortCriteria === "view_num") {
+    } else if (sortCriteria === "menosPosts") {
+      return a.post_num - b.post_num;
+    } else if (sortCriteria === "masVisitas") {
       return b.view_num - a.view_num;
+    } else if (sortCriteria === "menosVisitas") {
+      return a.view_num - b.view_num;
     }
+
     return 0;
   });
 
@@ -76,9 +86,12 @@ function MainPage() {
           <label className="me-2">Ordenar por:</label>
           <div className="d-flex justify-content-center">
             <select className="form-select me-2" onChange={(e) => handleSortChange(e.target.value)}>
-              <option value="name">Nombre</option>
-              <option value="post_num">Posts</option>
-              <option value="view_num">Visitas</option>
+              <option value="nombreAZ">Título A-Z</option>
+              <option value="nombreZA">Título Z-A</option>
+              <option value="masPosts">Más posts</option>
+              <option value="menosPosts">Menos posts</option>
+              <option value="masVisitas">Más visitas</option>
+              <option value="menosVisitas">Menos visitas</option>
             </select>
           </div>
         </div>
