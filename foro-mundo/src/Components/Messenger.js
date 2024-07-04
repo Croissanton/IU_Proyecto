@@ -11,7 +11,8 @@ import {
 import { NavLink } from "react-router-dom";
 
 const Messenger = () => {
-  const initialMessages = {
+  // Obtener mensajes desde localStorage o inicializar con mensajes predeterminados
+  const initialMessages = JSON.parse(localStorage.getItem("messages")) || {
     Pepe: [
       { id: 1, text: "Hola, ¿cómo estás?", sender: "Pepe" },
       {
@@ -76,11 +77,14 @@ const Messenger = () => {
       text: inputValue,
       sender: "You",
     };
-    setMessages({
+    const updatedMessages = {
       ...messages,
       [activeChat]: [...messages[activeChat], newMessage],
-    });
+    };
+    setMessages(updatedMessages);
     setInputValue("");
+    // Guardar mensajes en localStorage
+    localStorage.setItem("messages", JSON.stringify(updatedMessages));
   };
 
   const handleInputChange = (event) => {
@@ -108,9 +112,9 @@ const Messenger = () => {
   }, [messages, activeChat]);
 
   useEffect(() => {
-  const lastMessageRef = messages[activeChat].length - 1;
-  lastMessageRef.current?.focus();
-}, [messages, activeChat]);
+    const lastMessageRef = messages[activeChat].length - 1;
+    lastMessageRef.current?.focus();
+  }, [messages, activeChat]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -177,9 +181,6 @@ const Messenger = () => {
               tabIndex="-1"
               aria-label={`${message.sender} dice ${message.text}`}
             >
-              <strong>
-                {message.sender !== "You" ? `${message.sender}: ` : ""}
-              </strong>
               <span>{message.text}</span>
             </div>
           ))}
