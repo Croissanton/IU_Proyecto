@@ -11,6 +11,7 @@ function MainPage() {
 
   // Estado local para almacenar los tópicos del foro
   const [topics, setTopics] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("name"); // Estado para el criterio de ordenación
 
   // Tópicos predeterminados del foro
   const defaultTopics = [
@@ -45,6 +46,23 @@ function MainPage() {
     localStorage.setItem("topics", JSON.stringify(updatedTopics));
   };
 
+  // Manejador para cambiar el criterio de ordenación
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);
+  };
+
+  // Ordenar los tópicos según el criterio seleccionado
+  const sortedTopics = [...topics].sort((a, b) => {
+    if (sortCriteria === "name") {
+      return a.topic.localeCompare(b.topic);
+    } else if (sortCriteria === "post_num") {
+      return b.post_num - a.post_num;
+    } else if (sortCriteria === "view_num") {
+      return b.view_num - a.view_num;
+    }
+    return 0;
+  });
+
   return (
     <MainLayout>
       <div className="container-xxl my-2">
@@ -54,7 +72,18 @@ function MainPage() {
       </div>
       <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Foros</label>
       <div className="container-xxl my-3">
-        {topics.map((topic) => (
+        <div className="d-flex justify-content-end mb-3">
+          <label className="me-2">Ordenar por:</label>
+          <div className="d-flex justify-content-center">
+            <select className="form-select me-2" onChange={(e) => handleSortChange(e.target.value)}>
+              <option value="name">Nombre</option>
+              <option value="post_num">Posts</option>
+              <option value="view_num">Visitas</option>
+            </select>
+          </div>
+        </div>
+
+        {sortedTopics.map((topic) => (
           <ForumCard
             key={topic.id}
             id={topic.id}
