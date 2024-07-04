@@ -30,15 +30,18 @@ function HistorialPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Historial</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+            Perfil
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Historial</Breadcrumb.Item>
         </Breadcrumb>
+      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Historial</label>
       </div>
-      <h2 className="text-center">Posts</h2>
+      <label style={{ fontSize: "2rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Posts</label>
       <div className="container-xxl my-3">
         {posts.length === 0 ? (
           <p>No hay posts.</p>
@@ -59,7 +62,7 @@ function HistorialPage() {
           ))
         )}
       </div>
-      <h2 className="text-center">Comentarios</h2>
+      <label style={{ fontSize: "2rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Comentarios</label>
       <div className="container-xxl my-3">
         {comments.length === 0 ? (
           <p>No hay comentarios.</p>

@@ -4,6 +4,7 @@ import { Breadcrumb } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "../Components/ConfirmationModal";
 
 function ProfilePage() {
   useEffect(() => {
@@ -28,6 +29,8 @@ function ProfilePage() {
   });
 
   const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -41,16 +44,26 @@ function ProfilePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting Data:", profileData);
+    setShowConfirmationModal(true);
+  };
+
+  const handleSaveChanges = () => {
     cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
-    setIsEditing(false); // Disable editing mode on successful validation and submission
-    setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
-    showToast("Se han guardado los cambios!"); 
+    setIsEditing(false);
+    console.log("Submitting Data:", profileData);
+    setInitialProfileData({ ...profileData });
+    showToast("Se han guardado los cambios!");
+    setShowConfirmationModal(false);
   };
 
   const handleCancel = () => {
+    setShowCancelConfirmationModal(true);
+  };
+
+  const handleCancelConfirmation = () => {
     setProfileData({ ...initialProfileData });
     setIsEditing(false);
+    setShowCancelConfirmationModal(false);
   };
 
   const handleImageSelection = (event) => {
@@ -68,11 +81,11 @@ function ProfilePage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Mi Perfil</h1>
-        <Breadcrumb className="custom-breadcrumb" >
+        <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Mi perfil</label>
       </div>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
@@ -101,7 +114,7 @@ function ProfilePage() {
                 Cambiar foto
               </button>
             )}
-            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label> 
+            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label>
           </div>
         </div>
         <div
@@ -109,22 +122,28 @@ function ProfilePage() {
           style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
         >
           <form className="row col-12 g-3" onSubmit={handleSubmit}>
-            <InputComponent
-              id="name"
-              label="Nombre"
-              value={profileData.name}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="lastName"
-              label="Apellidos"
-              value={profileData.lastName}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
+            <div className="row">
+              <InputComponent
+                id="name"
+                label="Nombre"
+                value={profileData.name}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={true}
+                colClass="col-md-6"
+                noBorder={!isEditing}
+              />
+              <InputComponent
+                id="lastName"
+                label="Apellidos"
+                value={profileData.lastName}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={true}
+                colClass="col-md-6"
+                noBorder={!isEditing}
+              />
+            </div>
             <InputComponent
               id="birthDate"
               type="date"
@@ -133,23 +152,30 @@ function ProfilePage() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               required={true}
+              noBorder={!isEditing}
             />
-            <InputComponent
-              id="country"
-              label="País"
-              value={profileData.country}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="city"
-              label="Ciudad"
-              value={profileData.city}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-            />
+            <div className="row">
+              <InputComponent
+                id="country"
+                label="País"
+                value={profileData.country}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={true}
+                colClass="col-md-6"
+                noBorder={!isEditing}
+              />
+              <InputComponent
+                id="city"
+                label="Ciudad"
+                value={profileData.city}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={false}
+                colClass="col-md-6"
+                noBorder={!isEditing}
+              />
+            </div>
             <InputComponent
               id="socialMedia"
               label="Redes"
@@ -158,6 +184,7 @@ function ProfilePage() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               required={false}
+              noBorder={!isEditing}
             />
             <InputComponent
               id="description"
@@ -167,6 +194,7 @@ function ProfilePage() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               required={false}
+              noBorder={!isEditing}
             />
 
             <div className="col-12">
@@ -175,7 +203,10 @@ function ProfilePage() {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => setIsEditing(true)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditing(true);
+                    }}
                   >
                     Editar
                   </button>
@@ -183,6 +214,7 @@ function ProfilePage() {
                     <button
                       type="button"
                       className="btn btn-primary"
+                      style={{ marginLeft: "10px" }}
                     >
                       Ver Historial
                     </button>
@@ -210,6 +242,22 @@ function ProfilePage() {
           </form>
         </div>
       </div>
+
+      <ConfirmationModal
+        show={showConfirmationModal}
+        handleClose={() => setShowConfirmationModal(false)}
+        handleConfirm={handleSaveChanges}
+        title="Confirmar Cambios"
+        message="¿Estás seguro de que quieres guardar los cambios en tu perfil?"
+      />
+
+      <ConfirmationModal
+        show={showCancelConfirmationModal}
+        handleClose={() => setShowCancelConfirmationModal(false)}
+        handleConfirm={handleCancelConfirmation}
+        title="Confirmar Cancelación"
+        message="¿Estás seguro de que quieres cancelar la edición sin guardar los cambios?"
+      />
     </MainLayout>
   );
 }
@@ -222,17 +270,24 @@ function InputComponent({
   onChange,
   readOnly,
   required,
+  colClass = "col-12",
+  noBorder = false
 }) {
-  const inputClassNames = `form-control ${readOnly ? "no-background no-border" : ""}`;
+  const inputStyles = {
+    border: noBorder ? "none" : "",
+    boxShadow: noBorder ? "none" : "",
+    backgroundColor: noBorder ? "transparent" : ""
+  };
 
   return (
-    <div className="col-md-6">
+    <div className={colClass}>
       <label htmlFor={id} className="form-label">
         {label}
       </label>
       {type === "textarea" ? (
         <textarea
-          className={inputClassNames}
+          className="form-control"
+          style={inputStyles}
           id={id}
           value={value}
           onChange={onChange}
@@ -242,7 +297,8 @@ function InputComponent({
       ) : (
         <input
           type={type}
-          className={inputClassNames}
+          className="form-control"
+          style={inputStyles}
           id={id}
           value={value}
           onChange={onChange}

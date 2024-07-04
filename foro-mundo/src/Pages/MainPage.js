@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import ForumCard from "../Components/ForumCard.js";
@@ -9,31 +9,40 @@ function MainPage() {
     document.title = "Foro Mundo";
   }, []);
 
-  // Definir los tópicos del foro
-  const forumTopics = [
-    { id: 1, topic: "General", post_num: 124, view_num: 154367 },
-    { id: 2, topic: "Off-topic", post_num: 64, view_num: 15436 },
-    { id: 3, topic: "Tecnología", post_num: 59, view_num: 18567 },
-    { id: 4, topic: "Deportes", post_num: 32, view_num: 24357 },
-    { id: 5, topic: "Cine", post_num: 41, view_num: 23580 },
+  // Estado local para almacenar los tópicos del foro
+  const [topics, setTopics] = useState([]);
+
+  // Tópicos predeterminados del foro
+  const defaultTopics = [
+    { id: 1, topic: "General", post_num: 0, view_num: 0 },
+    { id: 2, topic: "Off-topic", post_num: 0, view_num: 0 },
+    { id: 3, topic: "Tecnología", post_num: 0, view_num: 0 },
+    { id: 4, topic: "Deportes", post_num: 0, view_num: 0 },
+    { id: 5, topic: "Cine", post_num: 0, view_num: 0 },
   ];
 
-  // Almacenar los tópicos en localStorage
+  // Al cargar el componente, intenta obtener los tópicos del localStorage
   useEffect(() => {
-    localStorage.setItem("forumTopics", JSON.stringify(forumTopics));
+    const storedTopics = JSON.parse(localStorage.getItem("topics"));
+    if (storedTopics) {
+      setTopics(storedTopics);
+    } else {
+      // Si no hay tópicos en localStorage, los inicializamos con los predeterminados
+      localStorage.setItem("topics", JSON.stringify(defaultTopics));
+      setTopics(defaultTopics);
+    }
   }, []);
 
   return (
     <MainLayout>
       <div className="container-xxl my-2">
-        <h1> Foros </h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-
+      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Foros</label>
       <div className="container-xxl my-3">
-        {forumTopics.map((topic) => (
+        {topics.map((topic) => (
           <ForumCard
             key={topic.id}
             id={topic.id}

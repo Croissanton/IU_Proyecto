@@ -88,18 +88,32 @@ function PostCreationPage() {
     existingPosts.push(post);
     localStorage.setItem("posts", JSON.stringify(existingPosts));
 
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
+    const updatedTopics = existingTopics.map(topic => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) + 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+
     return post.topicId; // Devolver el topicId del post creado
   };
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Crear Post</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
+      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Crear post</label>
       <div style={{ display: "flex" }}>
         <div
           className="m-auto"
@@ -112,7 +126,7 @@ function PostCreationPage() {
           >
             <div className="col-md-6">
               <label htmlFor="title" className="form-label">
-                Título
+                Título (máximo 15 caracteres)
               </label>
               <input
                 type="text"
@@ -120,6 +134,7 @@ function PostCreationPage() {
                 className="form-control"
                 id="title"
                 value={formData.title}
+                maxLength={15}
                 onChange={handleInputChange}
               />
             </div>

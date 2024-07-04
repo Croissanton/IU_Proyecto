@@ -7,13 +7,7 @@ import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useParams } from "react-router-dom";
 
-const forumTopics = [
-  { id: 1, topic: "General" },
-  { id: 2, topic: "Off-topic" },
-  { id: 3, topic: "Tecnología" },
-  { id: 4, topic: "Deportes" },
-  { id: 5, topic: "Cine" },
-];
+const topics = JSON.parse(localStorage.getItem("topics"));
 
 function SearchPage() {
   useEffect(() => {
@@ -31,12 +25,11 @@ function SearchPage() {
     setPosts(filteredPosts);
   }, [topicId]);
 
-  const category = forumTopics.find(topic => topic.id === parseInt(topicId));
+  const category = topics.find(topic => topic.id === parseInt(topicId));
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Foro</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
@@ -45,7 +38,7 @@ function SearchPage() {
             {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
         </Breadcrumb>
-      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "30px" }}>{category.topic}</label>      </div>
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
@@ -75,7 +68,7 @@ function SearchPage() {
             />
           ))
         ) : (
-          <p>No hay posts disponibles</p>
+          <p>No hay posts disponibles.</p>
         )}
       </div>
       <IndexSelector />

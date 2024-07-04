@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button } from "react-bootstrap";
+import { Breadcrumb, Button, Modal } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
@@ -10,13 +10,7 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-const forumTopics = [
-  { id: 1, topic: "General" },
-  { id: 2, topic: "Off-topic" },
-  { id: 3, topic: "Tecnología" },
-  { id: 4, topic: "Deportes" },
-  { id: 5, topic: "Cine" },
-];
+const topics = JSON.parse(localStorage.getItem("topics"));
 
 function PostPage() {
   useEffect(() => {
@@ -36,6 +30,10 @@ function PostPage() {
 
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
+
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
   // Cargar post desde localStorage
   useEffect(() => {
@@ -130,7 +128,12 @@ function PostPage() {
   };
 
   const handleDelete = (id) => {
-    const updatedComments = comments.filter(comment => comment.id !== id);
+    setCommentToDelete(id);
+    setShowDeleteCommentModal(true);
+  };
+
+  const handleConfirmDeleteComment = () => {
+    const updatedComments = comments.filter(comment => comment.id !== commentToDelete);
     setComments(updatedComments);
   
     // Update comments in localStorage
@@ -160,10 +163,11 @@ function PostPage() {
   
     // Save updated posts back to localStorage
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
-    navigate(`/search/${post.topicId}`);
+    navigate(`/post/${post.id}`);
+    setShowDeleteCommentModal(false);
   };
 
-  const handleDeletePost = () => {
+  const handleConfirmDeletePost = () => {
     // Eliminar el post del localStorage
     const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
     const filteredPosts = existingPosts.filter(p => p.id !== postId);
@@ -174,24 +178,43 @@ function PostPage() {
     const filteredComments = existingComments.filter(comment => comment.postId !== postId);
     localStorage.setItem('comments', JSON.stringify(filteredComments));
   
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
+    const updatedTopics = existingTopics.map(topic => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) - 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+
     showToast("Post eliminado", "bg-danger");
     navigate(`/search/${post.topicId}`);
+    setShowDeletePostModal(false);
   };
 
-  const category = post ? forumTopics.find(topic => topic.id === parseInt(post.topicId)) : null;
+  const handleClearComment = () => {
+    setNewComment("");
+    setCharacterCount(0);
+  };
+
+  const category = post ? topics.find(topic => topic.id === parseInt(post.topicId)) : null;
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Post</h1>
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/search/${post?.topicId}` }}>
             {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>Post</Breadcrumb.Item>
+          <Breadcrumb.Item active>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
-      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{post ? post.title : "Post"}</label>      </div>
       {post && (
         <div className="container-xxl my-3">
           <PostCard
@@ -209,16 +232,25 @@ function PostPage() {
       )}
 
       {post && (
-        <Button variant="danger" onClick={handleDeletePost}>
-          Eliminar Post
-        </Button>
+        <div className="container-xxl my-3">
+          <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
+            Eliminar Post
+          </Button>
+          <ConfirmationModal
+            show={showDeletePostModal}
+            handleClose={() => setShowDeletePostModal(false)}
+            handleConfirm={handleConfirmDeletePost}
+            title="Eliminar Post"
+            message="¿Estás seguro de que quieres eliminar este post?"
+          />
+        </div>
       )}
 
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
         <div className="container-xxl my-3">
-          <h3>Añadir un nuevo comentario</h3>
+          <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Añadir un nuevo comentario</label>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="commentInput" className="form-label"></label>
@@ -242,18 +274,22 @@ function PostPage() {
             >
               Publicar
             </button>
+            <Button onClick={handleClearComment} className="ms-2">
+              Limpiar
+            </Button>
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
               handleClose={handleClose}
               handleConfirm={handleConfirm}
-            ></ConfirmationModal>
+              title="Confirmar Comentario"
+            />
           </form>
         </div>
       )}
 
       <div className="container-xxl my-3">
-        <h2>Comentarios</h2>
+        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
         {comments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
@@ -267,12 +303,18 @@ function PostPage() {
               initialUpvotes={comment.upvotes}
               initialDownvotes={comment.downvotes}
               date={comment.date}
-              onDelete={handleDelete}
+              onDelete={() => handleDelete(comment.id)}
             />
           ))
         )}
       </div>
-
+      <ConfirmationModal
+        show={showDeleteCommentModal}
+        handleClose={() => setShowDeleteCommentModal(false)}
+        handleConfirm={handleConfirmDeleteComment}
+        title="Eliminar Comentario"
+        message="¿Estás seguro de que quieres eliminar este comentario?"
+      />
       <IndexSelector />
     </MainLayout>
   );

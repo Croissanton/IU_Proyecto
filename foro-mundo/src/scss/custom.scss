@@ -99,6 +99,13 @@ body, html {
   }
 }
 
+#searchInput:focus {
+  border-color: $secondary;
+  background-color: $light;
+  //box-shadow: 0 0 0 0.25rem rgba(0, 37, 97, 0.25);
+}
+
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 
