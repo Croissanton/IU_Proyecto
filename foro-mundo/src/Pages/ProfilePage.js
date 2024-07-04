@@ -85,7 +85,8 @@ function ProfilePage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Mi perfil</label>      </div>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Mi perfil</label>
+      </div>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img
@@ -130,6 +131,7 @@ function ProfilePage() {
                 readOnly={!isEditing}
                 required={true}
                 colClass="col-md-6"
+                noBorder={!isEditing}
               />
               <InputComponent
                 id="lastName"
@@ -139,6 +141,7 @@ function ProfilePage() {
                 readOnly={!isEditing}
                 required={true}
                 colClass="col-md-6"
+                noBorder={!isEditing}
               />
             </div>
             <InputComponent
@@ -149,6 +152,7 @@ function ProfilePage() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               required={true}
+              noBorder={!isEditing}
             />
             <div className="row">
               <InputComponent
@@ -159,6 +163,7 @@ function ProfilePage() {
                 readOnly={!isEditing}
                 required={true}
                 colClass="col-md-6"
+                noBorder={!isEditing}
               />
               <InputComponent
                 id="city"
@@ -168,6 +173,7 @@ function ProfilePage() {
                 readOnly={!isEditing}
                 required={false}
                 colClass="col-md-6"
+                noBorder={!isEditing}
               />
             </div>
             <InputComponent
@@ -178,6 +184,7 @@ function ProfilePage() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               required={false}
+              noBorder={!isEditing}
             />
             <InputComponent
               id="description"
@@ -187,6 +194,7 @@ function ProfilePage() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               required={false}
+              noBorder={!isEditing}
             />
 
             <div className="col-12">
@@ -262,9 +270,14 @@ function InputComponent({
   onChange,
   readOnly,
   required,
-  colClass = "col-12"
+  colClass = "col-12",
+  noBorder = false
 }) {
-  const inputClassNames = `form-control ${readOnly ? "no-background no-border" : ""}`;
+  const inputStyles = {
+    border: noBorder ? "none" : "",
+    boxShadow: noBorder ? "none" : "",
+    backgroundColor: noBorder ? "transparent" : ""
+  };
 
   return (
     <div className={colClass}>
@@ -273,7 +286,8 @@ function InputComponent({
       </label>
       {type === "textarea" ? (
         <textarea
-          className={inputClassNames}
+          className="form-control"
+          style={inputStyles}
           id={id}
           value={value}
           onChange={onChange}
@@ -283,7 +297,8 @@ function InputComponent({
       ) : (
         <input
           type={type}
-          className={inputClassNames}
+          className="form-control"
+          style={inputStyles}
           id={id}
           value={value}
           onChange={onChange}
