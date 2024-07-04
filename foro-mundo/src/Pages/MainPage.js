@@ -83,7 +83,7 @@ function MainPage() {
       <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Foros</label>
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
-          <label className="me-2">Ordenar por:</label>
+          <label className="me-2" style={{padding: "10px"}}>Ordenar por:</label>
           <div className="d-flex justify-content-center">
             <select className="form-select me-2" onChange={(e) => handleSortChange(e.target.value)}>
               <option value="nombreAZ">Título A-Z</option>

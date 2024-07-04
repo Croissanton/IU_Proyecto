@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { Padding } from "@mui/icons-material";
 
 const topics = JSON.parse(localStorage.getItem("topics"));
 
@@ -319,26 +320,29 @@ function PostPage() {
         </div>
       )}
 
+      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
       <div className="container-xxl my-3">
-        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
-        <div className="mb-3">
-          <label htmlFor="sortSelect" className="form-label">Ordenar por:</label>
-          <select
-            id="sortSelect"
-            className="form-select"
-            value={sortCriteria}
-            onChange={(e) => handleSortChange(e.target.value)}
-          >
-            <option value="textoAZ">Texto A-Z</option>
-            <option value="textoZA">Texto Z-A</option>
-            <option value="reciente">Más recientes</option>
-            <option value="antiguo">Más antiguos</option>
-            <option value="masPositivos">Más votos positivos</option>
-            <option value="menosPositivos">Menos votos positivos</option>
-            <option value="masNegativos">Más votos negativos</option>
-            <option value="menosNegativos">Menos votos negativos</option>
-          </select>
+        <div className="d-flex justify-content-end mb-3">
+          <label htmlFor="sortSelect" className="form-label" style={{padding: "10px"}}>Ordenar por:</label>
+          <div className="d-flex justify-content-center">
+            <select
+              id="sortSelect"
+              className="form-select"
+              value={sortCriteria}
+              onChange={(e) => handleSortChange(e.target.value)}
+            >
+              <option value="textoAZ">Texto A-Z</option>
+              <option value="textoZA">Texto Z-A</option>
+              <option value="reciente">Más recientes</option>
+              <option value="antiguo">Más antiguos</option>
+              <option value="masPositivos">Más votos positivos</option>
+              <option value="menosPositivos">Menos votos positivos</option>
+              <option value="masNegativos">Más votos negativos</option>
+              <option value="menosNegativos">Menos votos negativos</option>
+            </select>
+          </div>
         </div>
+        
         {sortedComments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
