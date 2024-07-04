@@ -27,11 +27,23 @@ function MainPage() {
     if (storedTopics) {
       setTopics(storedTopics);
     } else {
-      // Si no hay tópicos en localStorage, los inicializamos con los predeterminados
+      // Si no hay tópicos en localStorage, los inicializamos 
       localStorage.setItem("topics", JSON.stringify(defaultTopics));
       setTopics(defaultTopics);
     }
   }, []);
+
+  const handleTopicClick = (id) => {
+    const updatedTopics = topics.map((topic) => {
+      if (topic.id === id) {
+        return { ...topic, view_num: topic.view_num + 1 };
+      }
+      return topic;
+    });
+
+    setTopics(updatedTopics);
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+  };
 
   return (
     <MainLayout>
@@ -49,6 +61,7 @@ function MainPage() {
             topic={topic.topic}
             post_num={topic.post_num}
             view_num={topic.view_num}
+            onTopicClick={handleTopicClick}
           />
         ))}
       </div>
