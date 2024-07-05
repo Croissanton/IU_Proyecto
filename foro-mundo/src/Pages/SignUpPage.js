@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
-import { Breadcrumb, ProgressBar } from "react-bootstrap";
+import { Breadcrumb, ProgressBar, OverlayTrigger, Tooltip } from "react-bootstrap";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 
 function PasswordStrengthMeter({ password }) {
@@ -61,10 +60,6 @@ function SignUpPage() {
 
   const register = (e) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para validar los campos del formulario antes de crear el usuario
-    // Por ejemplo, verificar si todos los campos obligatorios están completos
-
-    // Crear el usuario con los datos del formulario
     cookies.set("user", user, { path: "/", secure: true, sameSite: "None" });
     showToast("Registro correcto.", "bg-success");
     navigate("/"); // Redirigir después de que se actualice el estado de user
@@ -84,16 +79,18 @@ function SignUpPage() {
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}
       >
-        <Breadcrumb className="custom-breadcrumb" >
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
           <Breadcrumb.Item active aria-label="enlace_a_registro">
             Registro
           </Breadcrumb.Item>
         </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={register} action="/">
           <div className="login-container text-center">
-            <h1>Registro</h1>
-            <p>Por favor, completa el siguiente formulario para registrarte.</p>
+          <label style={{ fontSize: "2.5rem" }}>Registro</label>
+          <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>Por favor, completa el siguiente formulario para registrarte.</label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario
@@ -108,6 +105,8 @@ function SignUpPage() {
                 required
                 aria-label="nombre_usuario"
               />
+            </div>
+            <div className="mb-3">
               <label htmlFor="password" className="form-label">
                 Contraseña
               </label>
@@ -143,34 +142,38 @@ function SignUpPage() {
                 </OverlayTrigger>
               </div>
               <PasswordStrengthMeter password={user.password} />
-              <label htmlFor="name" className="form-label">
-                Nombre
-              </label>
-              <input
-                id="name"
-                type="text"
-                className="form-control form-control-sm"
-                name="name"
-                value={user.name}
-                onChange={handleInputChange}
-                required
-                aria-label="nombre"
-              />
             </div>
-            <div className="mb-3">
-              <label htmlFor="lastName" className="form-label">
-                Apellidos
-              </label>
-              <input
-                id="lastName"
-                type="text"
-                className="form-control form-control-sm"
-                name="lastName"
-                value={user.lastName}
-                onChange={handleInputChange}
-                required
-                aria-label="apellidos"
-              />
+            <div className="row mb-3">
+              <div className="col-md-6">
+                <label htmlFor="name" className="form-label">
+                  Nombre
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="name"
+                  value={user.name}
+                  onChange={handleInputChange}
+                  required
+                  aria-label="nombre"
+                />
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="lastName" className="form-label">
+                  Apellidos
+                </label>
+                <input
+                  id="lastName"
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="lastName"
+                  value={user.lastName}
+                  onChange={handleInputChange}
+                  required
+                  aria-label="apellidos"
+                />
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="birthDate" className="form-label">
@@ -187,34 +190,36 @@ function SignUpPage() {
                 aria-label="fecha_de_nacimiento"
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="country" className="form-label">
-                País
-              </label>
-              <input
-                id="country"
-                type="text"
-                className="form-control form-control-sm"
-                name="country"
-                value={user.country}
-                onChange={handleInputChange}
-                required
-                aria-label="pais"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="city" className="form-label">
-                Ciudad (Opcional)
-              </label>
-              <input
-                id="city"
-                type="text"
-                className="form-control form-control-sm"
-                name="city"
-                value={user.city}
-                onChange={handleInputChange}
-                aria-label="ciudad_opcional"
-              />
+            <div className="row mb-3">
+              <div className="col-md-6">
+                <label htmlFor="country" className="form-label">
+                  País
+                </label>
+                <input
+                  id="country"
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="country"
+                  value={user.country}
+                  onChange={handleInputChange}
+                  required
+                  aria-label="pais"
+                />
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="city" className="form-label">
+                  Ciudad (Opcional)
+                </label>
+                <input
+                  id="city"
+                  type="text"
+                  className="form-control form-control-sm"
+                  name="city"
+                  value={user.city}
+                  onChange={handleInputChange}
+                  aria-label="ciudad_opcional"
+                />
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="socialMedia" className="form-label">

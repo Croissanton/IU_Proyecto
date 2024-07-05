@@ -1,10 +1,24 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const ForumCard = ({ topic, post_num, view_num }) => {
+const ForumCard = ({ 
+  id,
+  topic,
+  post_num,
+  view_num,
+  onTopicClick,
+ }) => {
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    onTopicClick(id);
+    navigate(`/search/${id}`);
+  };
+
   return (
-    <Link to={`/search/`} className="custom-link">
+    <Link onClick={handleClick} className="custom-link">
       <Row className="gy-3">
         <Col className="p-3 m-auto">
           <Container className="border border-dark-subtle bg-light">

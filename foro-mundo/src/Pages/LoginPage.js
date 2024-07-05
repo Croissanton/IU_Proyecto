@@ -76,8 +76,8 @@ function LoginPage() {
       </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={login}>
           <div className="login-container text-center">
-            <h1>Bienvenido</h1>
-            <p>Por favor, inicia sesión para continuar.</p>
+          <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
+          <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>Por favor, inica sesión para continuar.</label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario

@@ -8,7 +8,11 @@ import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
+import { Padding } from "@mui/icons-material";
+
+const topics = JSON.parse(localStorage.getItem("topics"));
+
 function PostPage() {
   useEffect(() => {
     document.title = "Post";
@@ -23,10 +27,15 @@ function PostPage() {
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("newest"); // Estado para el criterio de ordenación
   const navigate = useNavigate();
 
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
+
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
   // Cargar post desde localStorage
   useEffect(() => {
@@ -42,6 +51,9 @@ function PostPage() {
       setPost(currentPost);
       setComments(currentPost.comments);
     }
+
+    //Establecer el criterio de ordenación por defecto
+    setSortCriteria("textoAZ");
   }, [postId]);
 
   // Cargar comentarios desde localStorage
@@ -144,16 +156,14 @@ function PostPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Post</h1>
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
-            Inicio
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/search/${post?.topicId}` }}>
+            {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>
-            Foro
-          </Breadcrumb.Item>
-          <Breadcrumb.Item active>Post</Breadcrumb.Item>
+          <Breadcrumb.Item active>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
+        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{post ? post.title : "Post"}</label>
       </div>
       {post === null || post === undefined ? (
         <div></div>
@@ -182,13 +192,26 @@ function PostPage() {
         <Button variant="danger" onClick={handleDeletePost}>
           Eliminar Post
         </Button>
+      {post && (
+        <div className="container-xxl my-3">
+          <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
+            Eliminar Post
+          </Button>
+          <ConfirmationModal
+            show={showDeletePostModal}
+            handleClose={() => setShowDeletePostModal(false)}
+            handleConfirm={handleConfirmDeletePost}
+            title="Eliminar Post"
+            message="¿Estás seguro de que quieres eliminar este post?"
+          />
+        </div>
       )}
 
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
         <div className="container-xxl my-3">
-          <h3>Añadir un nuevo comentario</h3>
+          <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Añadir un nuevo comentario</label>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="commentInput" className="form-label"></label>
@@ -212,22 +235,47 @@ function PostPage() {
             >
               Publicar
             </button>
+            <Button onClick={handleClearComment} className="ms-2">
+              Limpiar
+            </Button>
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
               handleClose={handleClose}
               handleConfirm={handleConfirm}
-            ></ConfirmationModal>
+              title="Confirmar Comentario"
+            />
           </form>
         </div>
       )}
 
+      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
       <div className="container-xxl my-3">
-        <h2>Comentarios</h2>
-        {comments.length === 0 ? (
+        <div className="d-flex justify-content-end mb-3">
+          <label htmlFor="sortSelect" className="form-label" style={{padding: "10px"}}>Ordenar por:</label>
+          <div className="d-flex justify-content-center">
+            <select
+              id="sortSelect"
+              className="form-select"
+              value={sortCriteria}
+              onChange={(e) => handleSortChange(e.target.value)}
+            >
+              <option value="textoAZ">Texto A-Z</option>
+              <option value="textoZA">Texto Z-A</option>
+              <option value="reciente">Más recientes</option>
+              <option value="antiguo">Más antiguos</option>
+              <option value="masPositivos">Más votos positivos</option>
+              <option value="menosPositivos">Menos votos positivos</option>
+              <option value="masNegativos">Más votos negativos</option>
+              <option value="menosNegativos">Menos votos negativos</option>
+            </select>
+          </div>
+        </div>
+        
+        {sortedComments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
-          comments.map((comment) => (
+          sortedComments.map((comment) => (
             <PostComment
               key={comment.id}
               id={comment.id}
@@ -237,12 +285,18 @@ function PostPage() {
               initialUpvotes={comment.upvotes}
               initialDownvotes={comment.downvotes}
               date={comment.date}
-              onDelete={handleDelete}
+              onDelete={() => handleDelete(comment.id)}
             />
           ))
         )}
       </div>
-
+      <ConfirmationModal
+        show={showDeleteCommentModal}
+        handleClose={() => setShowDeleteCommentModal(false)}
+        handleConfirm={handleConfirmDeleteComment}
+        title="Eliminar Comentario"
+        message="¿Estás seguro de que quieres eliminar este comentario?"
+      />
       <IndexSelector />
     </MainLayout>
   );
