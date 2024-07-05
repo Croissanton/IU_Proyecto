@@ -50,7 +50,7 @@ function SearchPage() {
             <PostCard
               key={post.id}
               id={post.id}
-              titulo={post.title}
+              title={post.title}
               text={post.text}
               author={post.author}
               date={post.date}
@@ -58,6 +58,7 @@ function SearchPage() {
               lm_date={post.lm_date}
               res_num={post.res_num}
               view_num={post.view_num}
+              category={post.category}
             />
           ))
         ) : (

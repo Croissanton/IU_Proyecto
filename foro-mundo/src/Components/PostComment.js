@@ -3,9 +3,6 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-const cookies = new Cookies();
-const cookieUser = cookies.get("user");
-
 const PostComment = ({
   id,
   postId,
@@ -20,11 +17,17 @@ const PostComment = ({
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
 
-  const updateLocalStorage = (newUpvotes, newDownvotes) => {
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    const commentIndex = comments.findIndex(comment => comment.id === id);
+  const cookies = new Cookies();
+  const cookieUser = cookies.get("user");
 
-    if (commentIndex !== -1) {
+  const updateLocalStorage = (newUpvotes, newDownvotes) => {
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    const post = posts.find((post) => post.id === postId);
+
+    const comments = post.comments || [];
+
+    if (comments.length > 0) {
+      const commentIndex = comments.findIndex((comment) => comment.id === id);
       comments[commentIndex].upvotes = newUpvotes;
       comments[commentIndex].downvotes = newDownvotes;
     } else {
@@ -39,7 +42,9 @@ const PostComment = ({
       });
     }
 
-    localStorage.setItem('comments', JSON.stringify(comments));
+    post.comments = comments;
+    posts[posts.findIndex((post) => post.id === postId)] = post;
+    localStorage.setItem("posts", JSON.stringify(posts));
   };
 
   const handleUpvote = () => {
@@ -85,27 +90,36 @@ const PostComment = ({
   };
 
   const handleDelete = () => {
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    const updatedComments = comments.filter(comment => comment.id !== id);
-    localStorage.setItem('comments', JSON.stringify(updatedComments));
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    const post = posts.find((post) => post.id === postId);
+    const comments = post.comments || [];
+    const updatedComments = comments.filter((comment) => comment.id !== id);
+    post.comments = updatedComments;
+    posts[posts.findIndex((post) => post.id === postId)] = post;
+    localStorage.setItem("posts", JSON.stringify(posts));
     onDelete(id);
   };
 
   useEffect(() => {
     // Initialize the upvotes and downvotes from local storage if available
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    const storedComment = comments.find(comment => comment.id === id);
-
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    const post = posts.find((post) => post.id === postId);
+    const comments = post.comments || [];
+    const storedComment = comments.find((comment) => comment.id === id);
     if (storedComment) {
       setUpvotes(storedComment.upvotes);
       setDownvotes(storedComment.downvotes);
     }
-  }, [id]);
+  }, [postId, id]);
 
   return (
     <Row className="gy-3">
       <Col className="p-3 m-auto">
-        <Container className="border border-dark-subtle bg-light" role="region" aria-labelledby="comment-title">
+        <Container
+          className="border border-dark-subtle bg-light"
+          role="region"
+          aria-labelledby="comment-title"
+        >
           <Row>
             <Col className="border-end border-dark-subtle p-3">
               <Row>
@@ -170,17 +184,17 @@ const PostComment = ({
                   </Row>
                 </Col>
                 <Col className="text-center">
-                {cookieUser.username !== author ? (
-                  <div></div>
-                ) : (
-                  <Button
-                    aria-label="Eliminar"
-                    className="btn btn-danger"
-                    onClick={handleDelete}
-                  >
-                    Eliminar
-                  </Button>
-                )}
+                  {(cookieUser === undefined || cookieUser.username !== author) ? (
+                    <div></div>
+                  ) : (
+                    <Button
+                      aria-label="Eliminar"
+                      className="btn btn-danger"
+                      onClick={handleDelete}
+                    >
+                      Eliminar
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </Col>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -9,7 +9,7 @@ const cookieUser = cookies.get("user");
 
 const PostCard = ({
   id,
-  titulo,
+  title,
   text,
   category,
   author,
@@ -26,16 +26,17 @@ const PostCard = ({
   };
 
   return (
-    <div  
+    <div
       onClick={navigateToPost}
       className="custom-link"
       role="button"
       tabIndex="0"
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           navigateToPost();
         }
-      }}>
+      }}
+    >
       <Row className="gy-3">
         <Col className="p-3 m-auto ">
           <Container className="border border-dark-subtle bg-light">
@@ -44,23 +45,27 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <span className="h4">{titulo}</span>
+                      <span className="h4">{title}</span>
                     </Row>
                     <Row>
                       <p>{text}</p>
                     </Row>
                     <Row onClick={(e) => e.stopPropagation()}>
                       <Col>
+                        <span> Creador: </span>
                         <NavLink
                           className="custom-text-link"
                           to={`/profile/id`}
                         >
-                          <span>Creador: {author}</span>
+                          <span>{author}</span>
                         </NavLink>
                       </Col>
                     </Row>
                     <Row>
                       <p>Fecha de creación: {date}</p>
+                    </Row>
+                    <Row>
+                      <p>Categoria: {category}</p>
                     </Row>
                   </Col>
                 </Row>

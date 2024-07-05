@@ -8,13 +8,12 @@ import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
-
+import { v4 as uuidv4 } from "uuid";
 function PostPage() {
   useEffect(() => {
     document.title = "Post";
   }, []);
-  
+
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [newComment, setNewComment] = useState("");
@@ -31,23 +30,31 @@ function PostPage() {
 
   // Cargar post desde localStorage
   useEffect(() => {
-    const storedPosts = localStorage.getItem('posts');
+    const storedPosts = localStorage.getItem("posts");
     if (storedPosts) {
+      console.log("Stored posts: ", storedPosts);
       const posts = JSON.parse(storedPosts);
-      const currentPost = posts.find(post => post.id === postId);
+      console.log("Posts: ", posts);
+      const currentPost = posts.find(
+        (post) => post.id.toString() === postId.toString(),
+      );
+      console.log("currentPost: ", currentPost);
       setPost(currentPost);
+      setComments(currentPost.comments);
     }
   }, [postId]);
 
   // Cargar comentarios desde localStorage
-  useEffect(() => {
-    const storedComments = localStorage.getItem('comments');
-    if (storedComments) {
-      const allComments = JSON.parse(storedComments);
-      const filteredComments = allComments.filter(comment => comment.postId === postId);
-      setComments(filteredComments);
-    }
-  }, [postId]);
+  // useEffect(() => {
+  //   const storedComments = localStorage.getItem("comments");
+  //   if (storedComments) {
+  //     const allComments = JSON.parse(storedComments);
+  //     const filteredComments = allComments.filter(
+  //       (comment) => comment.postId === postId,
+  //     );
+  //     setComments(filteredComments);
+  //   }
+  // }, [postId]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -56,7 +63,8 @@ function PostPage() {
 
   const handleConfirm = () => {
     setShowModal(false);
-  
+    //instead of saving each comment while being unrelated to the post, we should add a "comments" field to the post object, and save comments there.
+    //it will be easier to get all comments from a single post.
     const newCommentObject = {
       id: uuidv4(),
       postId: postId,
@@ -66,39 +74,24 @@ function PostPage() {
       downvotes: 0,
       date: new Date().toLocaleString(),
     };
-  
-    // Obtener los comentarios existentes del localStorage
-    const existingComments = JSON.parse(localStorage.getItem('comments')) || [];
-  
-    // Actualizar los comentarios en el localStorage
-    const updatedComments = [newCommentObject, ...existingComments];
-    localStorage.setItem('comments', JSON.stringify(updatedComments));
-  
-    // Filtrar y establecer solo los comentarios para el post actual
-    const postComments = updatedComments.filter(comment => comment.postId === postId);
-    setComments(postComments);
-  
-    // Incrementar res_num en localStorage para el post correspondiente
-    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
-    const updatedPosts = existingPosts.map(post => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          res_num: post.res_num + 1,
-          lm_text: newCommentObject.title,
-          lm_author: newCommentObject.author,
-          lm_date: new Date().toLocaleString(),
-        };
-      }
-      return post;
-    });
-  
-    localStorage.setItem('posts', JSON.stringify(updatedPosts));
-  
+
+    post.comments = [...post.comments, newCommentObject];
+    post.res_num = post.comments.length;
+    post.lm_text = newCommentObject.title;
+    post.lm_author = newCommentObject.author;
+    post.lm_date = new Date().toLocaleString();
+
+    //get existing posts and add updated post to the list
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+
+    // Save updated post back to localStorage
+    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+    setComments(post.comments);
     // Limpiar el área de texto
     setNewComment("");
     setCharacterCount(0);
-  };  
+  };
 
   useEffect(() => {
     if (cookies.get("user") === undefined) {
@@ -122,64 +115,49 @@ function PostPage() {
   };
 
   const handleDelete = (id) => {
-    const updatedComments = comments.filter(comment => comment.id !== id);
-    setComments(updatedComments);
-  
-    // Update comments in localStorage
-    localStorage.setItem('comments', JSON.stringify(updatedComments));
+    post.comments = post.comments.filter((comment) => comment.id !== id);
+    post.res_num = post.comments.length;
+    post.lm_text = post.comments.length > 0 ? post.comments[0].title : "";
+    post.lm_author = post.comments.length > 0 ? post.comments[0].author : "";
+    post.lm_date = post.comments.length > 0 ? post.comments[0].date : "";
+    //get existing posts and add updated post to the list
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+
+    // Save updated post back to localStorage
+    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+    setComments(post.comments);
     showToast("Comentario eliminado", "bg-danger");
-  
-    // Decrease res_num in localStorage for the corresponding post
-    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
-    const updatedPosts = existingPosts.map(post => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          res_num: post.res_num - 1,
-          ...(updatedComments.length > 0 ? {
-            lm_text: updatedComments[0].title,
-            lm_author: updatedComments[0].author,
-            lm_date: updatedComments[0].date,
-          } : {
-            lm_text: "",
-            lm_author: "",
-            lm_date: ""
-          })
-        };
-      }
-      return post;
-    });
-  
-    // Save updated posts back to localStorage
-    localStorage.setItem('posts', JSON.stringify(updatedPosts));
   };
 
+  //  This has to be changed so a user can't delete a post that was not his.
   const handleDeletePost = () => {
     // Eliminar el post del localStorage
-    const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
-    const filteredPosts = existingPosts.filter(p => p.id !== postId);
-    localStorage.setItem('posts', JSON.stringify(filteredPosts));
-  
-    // Eliminar los comentarios asociados al post del localStorage
-    const existingComments = JSON.parse(localStorage.getItem('comments')) || [];
-    const filteredComments = existingComments.filter(comment => comment.postId !== postId);
-    localStorage.setItem('comments', JSON.stringify(filteredComments));
-  
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const filteredPosts = existingPosts.filter((p) => p.id !== postId);
+    localStorage.setItem("posts", JSON.stringify(filteredPosts));
+
     showToast("Post eliminado", "bg-danger");
     navigate("/search");
-  };  
+  };
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
         <h1>Post</h1>
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>
+            Foro
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      {post && (
+      {post === null || post === undefined ? (
+        <div></div>
+      ) : (
         <div className="container-xxl my-3">
           <PostCard
             id={post.id}
@@ -191,13 +169,20 @@ function PostPage() {
             lm_date={post.lm_date}
             res_num={comments.length}
             view_num={post.view_num}
+            category={post.category}
           />
         </div>
       )}
 
-            <Button variant="danger" onClick={handleDeletePost}>
-              Eliminar Post
-            </Button>
+      {cookies.get("user") === undefined || post === null || post === undefined ||
+        
+      post.author !== cookies.get("user").username ? (
+        <div></div>
+      ) : (
+        <Button variant="danger" onClick={handleDeletePost}>
+          Eliminar Post
+        </Button>
+      )}
 
       {cookies.get("user") === undefined ? (
         <div></div>

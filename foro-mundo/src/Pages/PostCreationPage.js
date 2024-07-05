@@ -81,6 +81,7 @@ function PostCreationPage() {
       lm_author: "",
       lm_date: "",
       image: selectedFile ? URL.createObjectURL(selectedFile) : null,
+      comments: [],
     };
 
     // Guardar en localStorage
