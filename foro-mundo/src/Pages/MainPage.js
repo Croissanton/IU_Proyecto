@@ -13,13 +13,29 @@ function MainPage() {
   const [topics, setTopics] = useState([]);
   const [sortCriteria, setSortCriteria] = useState("name"); // Estado para el criterio de ordenación
 
+  const getNumberOfPosts = (topicId) => {
+    var storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    if (storedPosts.length <= 0) {
+      console.log("no posts :(");
+      return 0;
+    } else {
+      return storedPosts.filter((post) => post.topicId === topicId).length;
+    }
+  };
+
   // Tópicos predeterminados del foro
   const defaultTopics = [
-    { id: 1, topic: "General", post_num: 0, view_num: 0 },
-    { id: 2, topic: "Off-topic", post_num: 0, view_num: 0 },
-    { id: 3, topic: "Tecnología", post_num: 0, view_num: 0 },
-    { id: 4, topic: "Deportes", post_num: 0, view_num: 0 },
-    { id: 5, topic: "Cine", post_num: 0, view_num: 0 },
+    { id: 1, topic: "General", post_num: getNumberOfPosts(1), view_num: 0 },
+    { id: 2, topic: "Off-topic", post_num: getNumberOfPosts(2), view_num: 0 },
+    {
+      id: 3,
+      topic: "Tecnología",
+      post_num: getNumberOfPosts(3),
+      view_num: 0,
+    },
+    { id: 4, topic: "Deportes", post_num: getNumberOfPosts(4), view_num: 0 },
+    { id: 5, topic: "Cine", post_num: getNumberOfPosts(5), view_num: 0 },
+    { id: 6, topic: "Coches", post_num: getNumberOfPosts(6), view_num: 0 },
   ];
 
   // Al cargar el componente, intenta obtener los tópicos del localStorage
@@ -28,7 +44,7 @@ function MainPage() {
     if (storedTopics) {
       setTopics(storedTopics);
     } else {
-      // Si no hay tópicos en localStorage, los inicializamos 
+      // Si no hay tópicos en localStorage, los inicializamos
       localStorage.setItem("topics", JSON.stringify(defaultTopics));
       setTopics(defaultTopics);
     }
@@ -80,12 +96,26 @@ function MainPage() {
           <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Foros</label>
+      <label
+        style={{
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+        }}
+      >
+        Foros
+      </label>
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
-          <label className="me-2" style={{padding: "10px"}}>Ordenar por:</label>
+          <label className="me-2" style={{ padding: "10px" }}>
+            Ordenar por:
+          </label>
           <div className="d-flex justify-content-center">
-            <select className="form-select me-2" onChange={(e) => handleSortChange(e.target.value)}>
+            <select
+              className="form-select me-2"
+              onChange={(e) => handleSortChange(e.target.value)}
+            >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
               <option value="masPosts">Más posts</option>

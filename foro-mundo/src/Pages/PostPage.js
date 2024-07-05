@@ -8,8 +8,7 @@ import ConfirmationModal from "../Components/ConfirmationModal.js";
 import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
-import { Padding } from "@mui/icons-material";
+import { v4 as uuidv4 } from "uuid";
 
 const topics = JSON.parse(localStorage.getItem("topics"));
 
@@ -41,13 +40,10 @@ function PostPage() {
   useEffect(() => {
     const storedPosts = localStorage.getItem("posts");
     if (storedPosts) {
-      console.log("Stored posts: ", storedPosts);
       const posts = JSON.parse(storedPosts);
-      console.log("Posts: ", posts);
-      const currentPost = posts.find(
-        (post) => post.id.toString() === postId.toString(),
-      );
-      console.log("currentPost: ", currentPost);
+
+      const currentPost = posts.find((post) => post.id.toString() === postId);
+
       setPost(currentPost);
       setComments(currentPost.comments);
     }
@@ -55,18 +51,6 @@ function PostPage() {
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("textoAZ");
   }, [postId]);
-
-  // Cargar comentarios desde localStorage
-  // useEffect(() => {
-  //   const storedComments = localStorage.getItem("comments");
-  //   if (storedComments) {
-  //     const allComments = JSON.parse(storedComments);
-  //     const filteredComments = allComments.filter(
-  //       (comment) => comment.postId === postId,
-  //     );
-  //     setComments(filteredComments);
-  //   }
-  // }, [postId]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -120,14 +104,21 @@ function PostPage() {
     setCharacterCount(commentText.length);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmitComment = (event) => {
     event.preventDefault();
     setShowModal(true);
     setCharacterCount(0);
   };
 
-  const handleDelete = (id) => {
-    post.comments = post.comments.filter((comment) => comment.id !== id);
+  const handleDeleteComment = (id) => {
+    setCommentToDelete(id);
+    setShowDeleteCommentModal(true);
+  };
+
+  const handleConfirmDeleteComment = (id) => {
+    post.comments = post.comments.filter(
+      (comment) => comment.id !== commentToDelete
+    );
     post.res_num = post.comments.length;
     post.lm_text = post.comments.length > 0 ? post.comments[0].title : "";
     post.lm_author = post.comments.length > 0 ? post.comments[0].author : "";
@@ -140,30 +131,100 @@ function PostPage() {
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
     setComments(post.comments);
     showToast("Comentario eliminado", "bg-danger");
+    navigate(`/post/${post.id}`);
+    setShowDeleteCommentModal(false);
   };
 
   //  This has to be changed so a user can't delete a post that was not his.
-  const handleDeletePost = () => {
+  const handleConfirmDeletePost = () => {
     // Eliminar el post del localStorage
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const filteredPosts = existingPosts.filter((p) => p.id !== postId);
+
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
+    const updatedTopics = existingTopics.map((topic) => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) - 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
     localStorage.setItem("posts", JSON.stringify(filteredPosts));
 
     showToast("Post eliminado", "bg-danger");
-    navigate("/search");
+    navigate(`/search/${post.topicId}`);
+    setShowDeletePostModal(false);
   };
+
+  const handleClearComment = () => {
+    setNewComment("");
+    setCharacterCount(0);
+  };
+
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);
+  };
+
+  const sortedComments = [...comments].sort((a, b) => {
+    if (sortCriteria === "textoAZ") {
+      return a.title.localeCompare(b.title);
+    } else if (sortCriteria === "textoZA") {
+      return b.title.localeCompare(a.title);
+    } else if (sortCriteria === "nuevo") {
+      return new Date(b.date) - new Date(a.date);
+    } else if (sortCriteria === "antiguo") {
+      return new Date(a.date) - new Date(b.date);
+    } else if (sortCriteria === "masPositivos") {
+      return b.upvotes - a.upvotes;
+    } else if (sortCriteria === "menosPositivos") {
+      return a.upvotes - b.upvotes;
+    } else if (sortCriteria === "masNegativos") {
+      return b.downvotes - a.downvotes;
+    } else if (sortCriteria === "menosNegativos") {
+      return a.downvotes - b.downvotes;
+    }
+
+    return 0;
+  });
+
+  var topic;
+
+  if (post !== null && post !== undefined) {
+    topic = topics.find((topic) => topic.id === post.topicId);
+  } else {
+    topic = null;
+  }
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/search/${post?.topicId}` }}>
-            {category ? category.topic : "Foro"}
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item
+            linkAs={Link}
+            linkProps={{ to: `/search/${post?.topicId}` }}
+          >
+            {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
           <Breadcrumb.Item active>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>{post ? post.title : "Post"}</label>
+        <label
+          style={{
+            fontSize: "3rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+          }}
+        >
+          {post !== null && post !== undefined ? post.title : "Post"}
+        </label>
       </div>
       {post === null || post === undefined ? (
         <div></div>
@@ -179,20 +240,15 @@ function PostPage() {
             lm_date={post.lm_date}
             res_num={comments.length}
             view_num={post.view_num}
-            category={post.category}
           />
         </div>
       )}
 
-      {cookies.get("user") === undefined || post === null || post === undefined ||
-        
+      {cookies.get("user") === undefined ||
+      post === null ||
       post.author !== cookies.get("user").username ? (
         <div></div>
       ) : (
-        <Button variant="danger" onClick={handleDeletePost}>
-          Eliminar Post
-        </Button>
-      {post && (
         <div className="container-xxl my-3">
           <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
             Eliminar Post
@@ -206,13 +262,14 @@ function PostPage() {
           />
         </div>
       )}
-
       {cookies.get("user") === undefined ? (
         <div></div>
       ) : (
         <div className="container-xxl my-3">
-          <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Añadir un nuevo comentario</label>
-          <form onSubmit={handleSubmit}>
+          <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+            Añadir un nuevo comentario
+          </label>
+          <form onSubmit={handleSubmitComment}>
             <div className="mb-3">
               <label htmlFor="commentInput" className="form-label"></label>
               <textarea
@@ -249,10 +306,18 @@ function PostPage() {
         </div>
       )}
 
-      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Comentarios</label>
+      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
+        Comentarios
+      </label>
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
-          <label htmlFor="sortSelect" className="form-label" style={{padding: "10px"}}>Ordenar por:</label>
+          <label
+            htmlFor="sortSelect"
+            className="form-label"
+            style={{ padding: "10px" }}
+          >
+            Ordenar por:
+          </label>
           <div className="d-flex justify-content-center">
             <select
               id="sortSelect"
@@ -271,8 +336,8 @@ function PostPage() {
             </select>
           </div>
         </div>
-        
-        {sortedComments.length === 0 ? (
+
+        {post === null || sortedComments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
           sortedComments.map((comment) => (
@@ -285,7 +350,7 @@ function PostPage() {
               initialUpvotes={comment.upvotes}
               initialDownvotes={comment.downvotes}
               date={comment.date}
-              onDelete={() => handleDelete(comment.id)}
+              onDelete={() => handleDeleteComment(comment.id)}
             />
           ))
         )}

@@ -6,6 +6,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useParams } from "react-router-dom";
+import data from "../data/initialPosts.json";
 
 const topics = JSON.parse(localStorage.getItem("topics"));
 
@@ -21,8 +22,14 @@ function SearchPage() {
 
   // Cargar posts desde localStorage
   useEffect(() => {
-    const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const filteredPosts = storedPosts.filter((post) => post.topicId === topicId);
+    var storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    if (storedPosts.length <= 0) {
+      storedPosts = data;
+      localStorage.setItem("posts", JSON.stringify(storedPosts));
+    }
+    const filteredPosts = storedPosts.filter(
+      (post) => post.topicId.toString() === topicId
+    );
     setPosts(filteredPosts);
 
     //Establecer el criterio de ordenación por defecto
@@ -114,9 +121,14 @@ function SearchPage() {
 
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
-          <label className="me-2" style={{padding: "10px"}}>Ordenar por:</label>
+          <label className="me-2" style={{ padding: "10px" }}>
+            Ordenar por:
+          </label>
           <div className="d-flex justify-content-center">
-            <select className="form-select me-2" onChange={(e) => handleSortChange(e.target.value)}>
+            <select
+              className="form-select me-2"
+              onChange={(e) => handleSortChange(e.target.value)}
+            >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
               <option value="nuevo">Más nuevo</option>
@@ -144,7 +156,6 @@ function SearchPage() {
               lm_date={post.lm_date}
               res_num={post.res_num}
               view_num={post.view_num}
-              category={post.category}
               onPostClick={handlePostClick}
             />
           ))

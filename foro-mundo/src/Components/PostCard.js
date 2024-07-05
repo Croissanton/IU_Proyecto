@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
@@ -15,7 +15,6 @@ const PostCard = ({
   lm_date,
   onPostClick,
 }) => {
-
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -24,13 +23,13 @@ const PostCard = ({
   };
 
   return (
-    <div  
+    <div
       onClick={handleClick}
       className="custom-link"
       role="button"
       tabIndex="0"
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           handleClick();
         }
       }}
@@ -61,9 +60,6 @@ const PostCard = ({
                     </Row>
                     <Row>
                       <p>Fecha de creación: {date}</p>
-                    </Row>
-                    <Row>
-                      <p>Categoria: {category}</p>
                     </Row>
                   </Col>
                 </Row>

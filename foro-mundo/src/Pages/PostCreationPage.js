@@ -4,7 +4,7 @@ import { Breadcrumb, Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import Cookies from "universal-cookie";
 
 function PostCreationPage() {
@@ -18,9 +18,9 @@ function PostCreationPage() {
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [formData, setFormData] = useState({
-    title: '',
-    category: 'default',
-    text: ''
+    title: "",
+    category: "default",
+    text: "",
   });
 
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ function PostCreationPage() {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [id]: value }));
+    setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -91,7 +91,7 @@ function PostCreationPage() {
 
     // Actualizar el número de posts en el localStorage para el topic correspondiente
     const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
-    const updatedTopics = existingTopics.map(topic => {
+    const updatedTopics = existingTopics.map((topic) => {
       if (topic.id === parseInt(post.topicId)) {
         return {
           ...topic,
@@ -110,11 +110,23 @@ function PostCreationPage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Crear post</label>
+      <label
+        style={{
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+          paddingBottom: "50px",
+        }}
+      >
+        Crear post
+      </label>
       <div style={{ display: "flex" }}>
         <div
           className="m-auto"
@@ -127,7 +139,7 @@ function PostCreationPage() {
           >
             <div className="col-md-6">
               <label htmlFor="title" className="form-label">
-                Título (máximo 15 caracteres)
+                Título (máximo 90 caracteres)
               </label>
               <input
                 type="text"
@@ -135,7 +147,7 @@ function PostCreationPage() {
                 className="form-control"
                 id="title"
                 value={formData.title}
-                maxLength={15}
+                maxLength={90}
                 onChange={handleInputChange}
               />
             </div>
@@ -154,11 +166,12 @@ function PostCreationPage() {
                 <option value="default" disabled>
                   Selecciona una categoría...
                 </option>
-                <option value='1'>General</option>
-                <option value='2'>Off-topic</option>
-                <option value='3'>Tecnología</option>
-                <option value='4'>Deportes</option>
-                <option value='5'>Cine</option>
+                <option value="1">General</option>
+                <option value="2">Off-topic</option>
+                <option value="3">Tecnología</option>
+                <option value="4">Deportes</option>
+                <option value="5">Cine</option>
+                <option value="6">Coches</option>
               </select>
             </div>
             <div className="col-12">

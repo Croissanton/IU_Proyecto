@@ -2,14 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
-const ForumCard = ({ 
-  id,
-  topic,
-  post_num,
-  view_num,
-  onTopicClick,
- }) => {
-
+const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
