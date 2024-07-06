@@ -22,6 +22,12 @@ const PostCard = ({
     navigate(`/post/${id}`);
   };
 
+  const titleStyle = {
+    wordWrap: 'break-word',
+    whiteSpace: 'normal',
+    overflowWrap: 'break-word',
+  };
+
   return (
     <div
       onClick={handleClick}
@@ -42,7 +48,7 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <span className="h4">{title}</span>
+                      <span className="h4" style={titleStyle}>{title}</span>
                     </Row>
                     <Row>
                       <p>{text}</p>

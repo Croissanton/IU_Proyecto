@@ -139,7 +139,7 @@ function PostCreationPage() {
           >
             <div className="col-md-6">
               <label htmlFor="title" className="form-label">
-                Título (máximo 15 caracteres)
+                Título (máximo 90 caracteres)
               </label>
               <input
                 type="text"
@@ -147,7 +147,7 @@ function PostCreationPage() {
                 className="form-control"
                 id="title"
                 value={formData.title}
-                maxLength={15}
+                maxLength={90}
                 onChange={handleInputChange}
               />
             </div>

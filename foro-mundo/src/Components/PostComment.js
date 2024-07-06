@@ -101,14 +101,15 @@ const PostComment = ({
   };
 
   useEffect(() => {
-    // Initialize the upvotes and downvotes from local storage if available
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
     const post = posts.find((post) => post.id === postId);
-    const comments = post.comments || [];
-    const storedComment = comments.find((comment) => comment.id === id);
-    if (storedComment) {
-      setUpvotes(storedComment.upvotes);
-      setDownvotes(storedComment.downvotes);
+    
+    if (post) {
+      const storedComment = post.comments.find((comment) => comment.id === id);
+      if (storedComment) {
+        setUpvotes(storedComment.upvotes);
+        setDownvotes(storedComment.downvotes);
+      }
     }
   }, [postId, id]);
 

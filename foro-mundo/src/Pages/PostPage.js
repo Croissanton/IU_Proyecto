@@ -41,6 +41,12 @@ function PostPage() {
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
 
+  const titleStyle = {
+    wordWrap: 'break-word',
+    whiteSpace: 'normal',
+    overflowWrap: 'break-word',
+  };
+
   // Cargar post desde localStorage
   useEffect(() => {
     const storedPosts = localStorage.getItem("posts");
@@ -226,7 +232,7 @@ function PostPage() {
           >
             {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>{post ? post.title : "Post"}</Breadcrumb.Item>
+          <Breadcrumb.Item active style={{...titleStyle}}>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
         <label
           style={{
@@ -234,6 +240,7 @@ function PostPage() {
             fontWeight: "bold",
             display: "block",
             textAlign: "center",
+            ...titleStyle,
           }}
         >
           {post !== null && post !== undefined ? post.title : "Post"}
