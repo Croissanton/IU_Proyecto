@@ -12,25 +12,31 @@ function HistorialPage({ currentUser }) {
   useEffect(() => {
     document.title = "Historial";
 
+    // Verificar si currentUser y currentUser.username están definidos
     if (currentUser && currentUser.username) {
-      // Obtenemos todos los posts del usuario actual
-      const filteredPosts = localStorage.getItem("posts")
-        ? JSON.parse(localStorage.getItem("posts")).filter(
-            (post) => post.author === currentUser.username
-          )
+      // Obtener posts del localStorage y filtrar por autor
+      const postsFromStorage = localStorage.getItem("posts")
+        ? JSON.parse(localStorage.getItem("posts"))
         : [];
+
+      const filteredPosts = postsFromStorage.filter(
+        (post) => post.author === currentUser.username
+      );
+
       setUserPosts(filteredPosts);
 
-      // Obtenemos todos los comentarios del usuario actual
-      const allComments = localStorage.getItem("comments")
+      // Obtener comentarios del localStorage y filtrar por autor
+      const commentsFromStorage = localStorage.getItem("comments")
         ? JSON.parse(localStorage.getItem("comments"))
         : [];
-      const filteredComments = allComments.filter(
+
+      const filteredComments = commentsFromStorage.filter(
         (comment) => comment.author === currentUser.username
       );
+
       setUserComments(filteredComments);
     } else {
-      // Handle case where currentUser is not defined
+      // Manejar caso donde currentUser no tiene datos válidos
       setUserPosts([]);
       setUserComments([]);
     }
