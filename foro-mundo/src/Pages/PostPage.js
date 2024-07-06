@@ -33,7 +33,7 @@ function PostPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const commentsPerPage = 5;
 
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
 
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
@@ -97,7 +97,7 @@ function PostPage() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("usuario") === undefined) {
+    if (!localStorage.getItem("usuario")) {
       return;
     }
 
