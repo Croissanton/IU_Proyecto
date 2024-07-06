@@ -55,6 +55,16 @@ function ProfilePage() {
 
   const handleSaveChanges = () => {
     localStorage.setItem("usuario", JSON.stringify(profileData));
+    // Actualizar localstorage.usuarios
+
+    localStorage.setItem("usuarios", JSON.stringify(
+      JSON.parse(localStorage.getItem("usuarios")).map((user) => {
+        if (user.username === profileData.username) {
+          return profileData;
+        }
+        return user;
+      })
+    ));
     setIsEditing(false);
     console.log("Submitting Data:", profileData);
     setInitialProfileData({ ...profileData });
