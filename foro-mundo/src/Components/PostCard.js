@@ -58,7 +58,7 @@ const PostCard = ({
                         <span> Creador: </span>
                         <NavLink
                           className="custom-text-link"
-                          to={`/profile/id`}
+                          to={`/profile/${author}`}
                         >
                           <span>{author}</span>
                         </NavLink>

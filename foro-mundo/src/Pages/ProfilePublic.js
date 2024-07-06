@@ -1,13 +1,25 @@
+import React, { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import React from "react";
-import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function ProfilePublic() {
+  const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
+  const [userData, setUserData] = useState(null);
+
   useEffect(() => {
     document.title = "Perfil";
-  }, []);
+
+    // Obtener los datos del usuario desde localStorage basado en el username
+    const storedUsers = localStorage.getItem("usuarios");
+    if (storedUsers) {
+      const parsedUsers = JSON.parse(storedUsers);
+      const user = parsedUsers.find((user) => user.username === username);
+      if (user) {
+        setUserData(user);
+      }
+    }
+  }, [username]);
 
   return (
     <MainLayout>
@@ -19,105 +31,130 @@ function ProfilePublic() {
           <Breadcrumb.Item active>Perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Perfil</label>
-      <div style={{ display: "flex" }}>
-        <div className="m-auto">
-          <img
-            src="https://via.placeholder.com/150"
-            alt="profile"
-            width="250"
-            height="350"
-          />
+      <label
+        style={{
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+          paddingBottom: "50px",
+        }}
+      >
+        Perfil
+      </label>
+      {userData ? (
+        <div style={{ display: "flex" }}>
+          <div className="m-auto">
+            <img
+              src="https://via.placeholder.com/150"
+              alt="profile"
+              width="250"
+              height="350"
+            />
+          </div>
+          <div
+            className="m-auto"
+            style={{
+              width: "60%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <form className="row col-12 g-3">
+              <div className="row">
+                <div className="col-md-6">
+                  <label htmlFor="inputNombre4" className="form-label">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputNombre4"
+                    value={userData.name}
+                    disabled
+                  ></input>
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="inputApellidos4" className="form-label">
+                    Apellidos
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputApellidos4"
+                    value={userData.lastName}
+                    disabled
+                  ></input>
+                </div>
+              </div>
+              <div className="col-12">
+                <label htmlFor="inputFechaNacimiento" className="form-label">
+                  Fecha de nacimiento
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="inputFechaNacimiento"
+                  value={userData.birthDate}
+                  disabled
+                ></input>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <label htmlFor="inputPais" className="form-label">
+                    País
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputPais"
+                    value={userData.country}
+                    disabled
+                  ></input>
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="inputCiudad" className="form-label">
+                    Ciudad
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputCiudad"
+                    value={userData.city}
+                    disabled
+                  ></input>
+                </div>
+              </div>
+              <div className="col-12">
+                <label htmlFor="inputRedes" className="form-label">
+                  Redes Sociales
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputRedes"
+                  value={userData.socialMedia}
+                  disabled
+                ></input>
+              </div>
+              <div className="col-12">
+                <label htmlFor="inputDescripcion" className="form-label">
+                  Descripcion
+                </label>
+                <textarea
+                  className="form-control"
+                  id="inputDescripcion"
+                  rows="3"
+                  value={userData.description}
+                  disabled
+                ></textarea>
+              </div>
+            </form>
+          </div>
         </div>
-        <div
-          className="m-auto"
-          style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
-        >
-          <form className="row col-12 g-3">
-            <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="inputNombre4" className="form-label">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputNombre4"
-                  disabled
-                ></input>
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="inputApellidos4" className="form-label">
-                  Apellidos
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputApellidos4"
-                  disabled
-                ></input>
-              </div>
-            </div>
-            <div className="col-12">
-              <label htmlFor="inputFechaNacimiento" className="form-label">
-                Fecha de nacimiento
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="inputFechaNacimiento"
-                disabled
-              ></input>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="inputPais" className="form-label">
-                  País
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputPais"
-                  disabled
-                ></input>
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="inputCiudad" className="form-label">
-                  Ciudad
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputCiudad"
-                  disabled
-                ></input>
-              </div>
-            </div>
-            <div className="col-12">
-              <label htmlFor="inputRedes" className="form-label">
-                Redes Sociales
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="inputRedes"
-                disabled
-              ></input>
-            </div>
-            <div className="col-12">
-              <label htmlFor="inputDescripcion" className="form-label">
-                Descripcion
-              </label>
-              <textarea
-                className="form-control"
-                id="inputDescripcion"
-                rows="3"
-                disabled
-              ></textarea>
-            </div>
-          </form>
-        </div>
-      </div>
+      ) : (
+        <p>No se encontraron datos para el usuario seleccionado.</p>
+      )}
     </MainLayout>
   );
 }
