@@ -26,8 +26,13 @@ function PostPage() {
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState("newest"); // Estado para el criterio de ordenación
+  // Estado para el criterio de ordenación
+  const [sortCriteria, setSortCriteria] = useState("newest");
   const navigate = useNavigate();
+
+  // Para elegir página
+  const [currentPage, setCurrentPage] = useState(1);
+  const commentsPerPage = 5;
 
   const cookies = new Cookies();
   const cookieUser = cookies.get("user");
@@ -59,8 +64,6 @@ function PostPage() {
 
   const handleConfirm = () => {
     setShowModal(false);
-    //instead of saving each comment while being unrelated to the post, we should add a "comments" field to the post object, and save comments there.
-    //it will be easier to get all comments from a single post.
     const newCommentObject = {
       id: uuidv4(),
       postId: postId,
@@ -93,9 +96,9 @@ function PostPage() {
     if (cookies.get("user") === undefined) {
       return;
     }
+
     const button = document.getElementById("publicar_button");
-    button.disabled =
-      newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
+    button.disabled = newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
 
   const handleInputChange = (event) => {
@@ -119,6 +122,7 @@ function PostPage() {
     post.comments = post.comments.filter(
       (comment) => comment.id !== commentToDelete
     );
+
     post.res_num = post.comments.length;
     post.lm_text = post.comments.length > 0 ? post.comments[0].title : "";
     post.lm_author = post.comments.length > 0 ? post.comments[0].author : "";
@@ -170,6 +174,10 @@ function PostPage() {
     setSortCriteria(criteria);
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const sortedComments = [...comments].sort((a, b) => {
     if (sortCriteria === "textoAZ") {
       return a.title.localeCompare(b.title);
@@ -191,6 +199,11 @@ function PostPage() {
 
     return 0;
   });
+
+  const paginatedComments = sortedComments.slice(
+    (currentPage - 1) * commentsPerPage,
+    currentPage * commentsPerPage
+  );
 
   var topic;
 
@@ -340,7 +353,7 @@ function PostPage() {
         {post === null || sortedComments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
-          sortedComments.map((comment) => (
+          paginatedComments.map((comment) => (
             <PostComment
               key={comment.id}
               id={comment.id}
@@ -362,7 +375,14 @@ function PostPage() {
         title="Eliminar Comentario"
         message="¿Estás seguro de que quieres eliminar este comentario?"
       />
-      <IndexSelector />
+      
+      <IndexSelector
+        totalTopics={sortedComments.length}
+        topicsPerPage={commentsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
+
     </MainLayout>
   );
 }

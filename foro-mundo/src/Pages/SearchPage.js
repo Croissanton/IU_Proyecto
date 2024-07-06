@@ -19,6 +19,8 @@ function SearchPage() {
   const cookies = new Cookies();
   const [posts, setPosts] = useState([]);
   const [sortCriteria, setSortCriteria] = useState("newest"); // Estado para el criterio de ordenación
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
 
   // Cargar posts desde localStorage
   useEffect(() => {
@@ -27,9 +29,11 @@ function SearchPage() {
       storedPosts = data;
       localStorage.setItem("posts", JSON.stringify(storedPosts));
     }
+
     const filteredPosts = storedPosts.filter(
       (post) => post.topicId.toString() === topicId
     );
+    
     setPosts(filteredPosts);
 
     //Establecer el criterio de ordenación por defecto
@@ -50,6 +54,10 @@ function SearchPage() {
 
   const handleSortChange = (criteria) => {
     setSortCriteria(criteria);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   const sortedPosts = [...posts].sort((a, b) => {
@@ -79,6 +87,11 @@ function SearchPage() {
 
     return 0;
   });
+
+  // Calcular el rango de posts a mostrar
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   const category = topics.find((topic) => topic.id === parseInt(topicId));
 
@@ -143,8 +156,8 @@ function SearchPage() {
           </div>
         </div>
 
-        {sortedPosts.length > 0 ? (
-          sortedPosts.map((post) => (
+        {currentPosts.length > 0 ? (
+          currentPosts.map((post) => (
             <PostCard
               key={post.id}
               id={post.id}
@@ -163,7 +176,14 @@ function SearchPage() {
           <p>No hay posts disponibles.</p>
         )}
       </div>
-      <IndexSelector />
+      
+      <IndexSelector
+        totalTopics={sortedPosts.length}
+        topicsPerPage={postsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
+
     </MainLayout>
   );
 }

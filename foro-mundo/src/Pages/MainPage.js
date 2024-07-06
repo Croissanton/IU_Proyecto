@@ -9,9 +9,11 @@ function MainPage() {
     document.title = "Foro Mundo";
   }, []);
 
-  // Estado local para almacenar los tópicos del foro
   const [topics, setTopics] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState("name"); // Estado para el criterio de ordenación
+  // Estado para el criterio de ordenación
+  const [sortCriteria, setSortCriteria] = useState("nombreAZ");
+  const [currentPage, setCurrentPage] = useState(1);
+  const topicsPerPage = 5;
 
   const getNumberOfPosts = (topicId) => {
     var storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -27,12 +29,7 @@ function MainPage() {
   const defaultTopics = [
     { id: 1, topic: "General", post_num: getNumberOfPosts(1), view_num: 0 },
     { id: 2, topic: "Off-topic", post_num: getNumberOfPosts(2), view_num: 0 },
-    {
-      id: 3,
-      topic: "Tecnología",
-      post_num: getNumberOfPosts(3),
-      view_num: 0,
-    },
+    { id: 3, topic: "Tecnología", post_num: getNumberOfPosts(3), view_num: 0 },
     { id: 4, topic: "Deportes", post_num: getNumberOfPosts(4), view_num: 0 },
     { id: 5, topic: "Cine", post_num: getNumberOfPosts(5), view_num: 0 },
     { id: 6, topic: "Coches", post_num: getNumberOfPosts(6), view_num: 0 },
@@ -48,7 +45,6 @@ function MainPage() {
       localStorage.setItem("topics", JSON.stringify(defaultTopics));
       setTopics(defaultTopics);
     }
-
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
   }, []);
@@ -70,6 +66,10 @@ function MainPage() {
     setSortCriteria(criteria);
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   // Ordenar los tópicos según el criterio seleccionado
   const sortedTopics = [...topics].sort((a, b) => {
     if (sortCriteria === "nombreAZ") {
@@ -85,9 +85,12 @@ function MainPage() {
     } else if (sortCriteria === "menosVisitas") {
       return a.view_num - b.view_num;
     }
-
     return 0;
   });
+
+  const indexOfLastTopic = currentPage * topicsPerPage;
+  const indexOfFirstTopic = indexOfLastTopic - topicsPerPage;
+  const currentTopics = sortedTopics.slice(indexOfFirstTopic, indexOfLastTopic);
 
   return (
     <MainLayout>
@@ -126,7 +129,7 @@ function MainPage() {
           </div>
         </div>
 
-        {sortedTopics.map((topic) => (
+        {currentTopics.map((topic) => (
           <ForumCard
             key={topic.id}
             id={topic.id}
@@ -138,7 +141,12 @@ function MainPage() {
         ))}
       </div>
 
-      <IndexSelector />
+      <IndexSelector
+        totalTopics={sortedTopics.length}
+        topicsPerPage={topicsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </MainLayout>
   );
 }
