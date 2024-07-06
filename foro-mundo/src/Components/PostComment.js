@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import Cookies from "universal-cookie";
 
 const PostComment = ({
   id,
@@ -17,8 +16,7 @@ const PostComment = ({
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
 
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
+  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
 
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -136,7 +134,7 @@ const PostComment = ({
                 <Col className="text-center" tabIndex="0">
                   <Button
                     aria-label="Upvote"
-                    disabled={!cookies.get("user")}
+                    disabled={!usuario}
                     className="btn"
                     onClick={handleUpvote}
                     variant={userVote === "upvote" ? "success" : "primary"}
@@ -154,7 +152,7 @@ const PostComment = ({
                   <Button
                     aria-label="Downvote"
                     className="btn"
-                    disabled={!cookies.get("user")}
+                    disabled={!usuario}
                     onClick={handleDownvote}
                     variant={userVote === "downvote" ? "danger" : "primary"}
                   >
@@ -185,7 +183,7 @@ const PostComment = ({
                   </Row>
                 </Col>
                 <Col className="text-center">
-                  {(cookieUser === undefined || cookieUser.username !== author) ? (
+                  {(usuario === undefined || usuario.username !== author) ? (
                     <div></div>
                   ) : (
                     <Button

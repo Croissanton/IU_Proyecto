@@ -4,7 +4,6 @@ import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
 import { useParams } from "react-router-dom";
 import data from "../data/initialPosts.json";
 
@@ -16,7 +15,6 @@ function SearchPage() {
   }, []);
 
   const { topicId } = useParams();
-  const cookies = new Cookies();
   const [posts, setPosts] = useState([]);
   const [sortCriteria, setSortCriteria] = useState("newest"); // Estado para el criterio de ordenación
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,7 +116,7 @@ function SearchPage() {
           {category.topic}
         </label>
       </div>
-      {cookies.get("user") === undefined ? (
+      {localStorage.getItem("usuario") === undefined ? (
         <div></div>
       ) : (
         <div>

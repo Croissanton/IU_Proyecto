@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "universal-cookie";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Breadcrumb } from "react-bootstrap";
 
+function getByUsernameAndPassword(username, password) {
+  // Recuperar la lista de usuarios de localStorage
+  const usuarios = JSON.parse(localStorage.getItem('usuarios'));
+
+  // Buscar el usuario por su username
+  const usuario = usuarios.find(user => user.username === username && user.password === password);
+
+  // Retornar el usuario encontrado o null si no se encuentra
+  return usuario || null;
+}
+
 function LoginPage() {
   useEffect(() => {
     document.title = "Login";
   }, []);
 
-  const cookies = new Cookies();
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -30,24 +39,10 @@ function LoginPage() {
     e.preventDefault();
 
     // Validar credenciales, por ejemplo:
-    if (username === "usuario" && password === "contraseña") {
-      const userData = {
-        username: "usuario",
-        password: "contraseña",
-        name: "Juan",
-        lastName: "Perez",
-        birthDate: "1990-01-01",
-        country: "Mexico",
-        city: "CDMX",
-        socialMedia: "https://www.facebook.com/juanperez",
-        description: "Soy un desarrollador web",
-      };
-      cookies.set("user", userData, {
-        path: "/",
-        secure: true,
-        sameSite: "None",
-      });
-      setUser(userData);
+    const usuario = getByUsernameAndPassword(username, password);
+    if (usuario) {
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      setUser(usuario);
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");

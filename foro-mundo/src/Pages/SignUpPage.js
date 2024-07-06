@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Cookies from "universal-cookie";
 import { Breadcrumb, ProgressBar, OverlayTrigger, Tooltip } from "react-bootstrap";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
@@ -35,8 +34,8 @@ function PasswordStrengthMeter({ password }) {
 }
 
 function SignUpPage() {
-  const cookies = new Cookies();
-  const [user, setUser] = useState({
+
+  const [usuario, setUsuario] = useState({
     username: "",
     password: "",
     name: "",
@@ -46,6 +45,15 @@ function SignUpPage() {
     city: "",
     socialMedia: "",
     description: "",
+    profilePicture: "",
+    friendList: [],
+    blockedList: [],
+    upPosts: [],
+    downPosts: [],
+    upComments: [],
+    downComments: [],
+    lastConnection: "",
+    lastDisconnection: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -55,14 +63,21 @@ function SignUpPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUsuario({ ...usuario, [name]: value });
   };
 
   const register = (e) => {
     e.preventDefault();
-    cookies.set("user", user, { path: "/", secure: true, sameSite: "None" });
+    usuario.lastConnection = new Date().toLocaleString();
+    usuario.lastDisconnection = usuario.lastConnection;
+
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("usuario", JSON.stringify(usuario));
+    
     showToast("Registro correcto.", "bg-success");
-    navigate("/"); // Redirigir después de que se actualice el estado de user
+    navigate("/"); // Redirigir después de que se actualice el estado de usuario
   };
 
   return (
@@ -100,7 +115,7 @@ function SignUpPage() {
                 type="text"
                 className="form-control form-control-sm"
                 name="username"
-                value={user.username}
+                value={usuario.username}
                 onChange={handleInputChange}
                 required
                 aria-label="nombre_usuario"
@@ -116,7 +131,7 @@ function SignUpPage() {
                   type={showPassword ? "text" : "password"}
                   className="form-control form-control-sm"
                   name="password"
-                  value={user.password}
+                  value={usuario.password}
                   onChange={handleInputChange}
                   required
                   aria-label="contraseña"
@@ -141,7 +156,7 @@ function SignUpPage() {
                   ></button>
                 </OverlayTrigger>
               </div>
-              <PasswordStrengthMeter password={user.password} />
+              <PasswordStrengthMeter password={usuario.password} />
             </div>
             <div className="row mb-3">
               <div className="col-md-6">
@@ -153,7 +168,7 @@ function SignUpPage() {
                   type="text"
                   className="form-control form-control-sm"
                   name="name"
-                  value={user.name}
+                  value={usuario.name}
                   onChange={handleInputChange}
                   required
                   aria-label="nombre"
@@ -168,7 +183,7 @@ function SignUpPage() {
                   type="text"
                   className="form-control form-control-sm"
                   name="lastName"
-                  value={user.lastName}
+                  value={usuario.lastName}
                   onChange={handleInputChange}
                   required
                   aria-label="apellidos"
@@ -184,7 +199,7 @@ function SignUpPage() {
                 type="date"
                 className="form-control form-control-sm"
                 name="birthDate"
-                value={user.birthDate}
+                value={usuario.birthDate}
                 onChange={handleInputChange}
                 required
                 aria-label="fecha_de_nacimiento"
@@ -200,7 +215,7 @@ function SignUpPage() {
                   type="text"
                   className="form-control form-control-sm"
                   name="country"
-                  value={user.country}
+                  value={usuario.country}
                   onChange={handleInputChange}
                   required
                   aria-label="pais"
@@ -215,7 +230,7 @@ function SignUpPage() {
                   type="text"
                   className="form-control form-control-sm"
                   name="city"
-                  value={user.city}
+                  value={usuario.city}
                   onChange={handleInputChange}
                   aria-label="ciudad_opcional"
                 />
@@ -230,7 +245,7 @@ function SignUpPage() {
                 type="text"
                 className="form-control form-control-sm"
                 name="socialMedia"
-                value={user.socialMedia}
+                value={usuario.socialMedia}
                 onChange={handleInputChange}
                 aria-label="redes_sociales_opcional"
               />
@@ -243,7 +258,7 @@ function SignUpPage() {
                 id="description"
                 className="form-control form-control-sm"
                 name="description"
-                value={user.description}
+                value={usuario.description}
                 onChange={handleInputChange}
                 aria-label="descripcion_opcional"
               />

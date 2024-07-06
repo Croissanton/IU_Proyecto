@@ -4,7 +4,8 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastProvider } from "./Context/ToastContext";
 import useShortcuts from "./shortcuts";
-import data from "./data/initialPosts.json";
+import posts from "./data/initialPosts.json";
+import usuarios from "./data/usuarios.json";
 
 function App() {
   useShortcuts();
@@ -14,9 +15,14 @@ function App() {
   }, []);
 
   var storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+  var storedUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
   if (storedPosts.length <= 0) {
-    storedPosts = data;
+    storedPosts = posts;
     localStorage.setItem("posts", JSON.stringify(storedPosts));
+  }
+  if (storedUsuarios.length <= 0) {
+    storedUsuarios = usuarios;
+    localStorage.setItem("usuarios", JSON.stringify(storedUsuarios));
   }
 
   return (

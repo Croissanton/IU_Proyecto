@@ -5,7 +5,6 @@ import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
-import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -34,8 +33,7 @@ function PostPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const commentsPerPage = 5;
 
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
 
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
@@ -74,7 +72,7 @@ function PostPage() {
       id: uuidv4(),
       postId: postId,
       title: newComment,
-      author: cookieUser.username,
+      author: usuario.username,
       upvotes: 0,
       downvotes: 0,
       date: new Date().toLocaleString(),
@@ -99,7 +97,7 @@ function PostPage() {
   };
 
   useEffect(() => {
-    if (cookies.get("user") === undefined) {
+    if (localStorage.getItem("usuario") === undefined) {
       return;
     }
 
@@ -264,9 +262,9 @@ function PostPage() {
         </div>
       )}
 
-      {cookies.get("user") === undefined ||
+      {usuario === undefined ||
       post === null ||
-      post.author !== cookies.get("user").username ? (
+      post.author !== usuario.username ? (
         <div></div>
       ) : (
         <div className="container-xxl my-3">
@@ -282,7 +280,7 @@ function PostPage() {
           />
         </div>
       )}
-      {cookies.get("user") === undefined ? (
+      {usuario === undefined ? (
         <div></div>
       ) : (
         <div className="container-xxl my-3">

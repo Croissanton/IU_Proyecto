@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
-import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../Components/ConfirmationModal";
@@ -11,21 +10,28 @@ function ProfilePage() {
     document.title = "Perfil";
   }, []);
 
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
 
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    username: cookieUser ? cookieUser.username : "",
-    password: cookieUser ? cookieUser.password : "",
-    name: cookieUser ? cookieUser.name : "",
-    lastName: cookieUser ? cookieUser.lastName : "",
-    birthDate: cookieUser ? cookieUser.birthDate : "",
-    country: cookieUser ? cookieUser.country : "",
-    city: cookieUser ? cookieUser.city : "",
-    socialMedia: cookieUser ? cookieUser.socialMedia : "",
-    description: cookieUser ? cookieUser.description : "",
-    imageInput: cookieUser ? cookieUser.image : "",
+    username: usuario ? usuario.username : "",
+    password: usuario ? usuario.password : "",
+    name: usuario ? usuario.name : "",
+    lastName: usuario ? usuario.lastName : "",
+    birthDate: usuario ? usuario.birthDate : "",
+    country: usuario ? usuario.country : "",
+    city: usuario ? usuario.city : "",
+    socialMedia: usuario ? usuario.socialMedia : "",
+    description: usuario ? usuario.description : "",
+    profilePicture: usuario ? usuario.profilePicture : "",
+    friendList: usuario ? usuario.friendList : [],
+    blockList: usuario ? usuario.blockList : [],
+    upPosts: usuario ? usuario.upPosts : [],
+    downPosts: usuario ? usuario.downPosts : [],
+    upComments: usuario ? usuario.upComments : [],
+    downComments: usuario ? usuario.downComments : [],
+    lastConnection: usuario ? usuario.lastConnection : "",
+    lastDisconnection: usuario ? usuario.lastDisconnection : "",
   });
 
   const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
@@ -48,7 +54,7 @@ function ProfilePage() {
   };
 
   const handleSaveChanges = () => {
-    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
+    localStorage.setItem("usuario", JSON.stringify(profileData));
     setIsEditing(false);
     console.log("Submitting Data:", profileData);
     setInitialProfileData({ ...profileData });

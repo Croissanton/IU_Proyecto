@@ -5,7 +5,6 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { useState, forwardRef, useRef, useEffect } from "react";
-import Cookies from "universal-cookie";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
@@ -13,12 +12,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormLabel } from "react-bootstrap";
 
 const Header = forwardRef((props, ref) => {
-  const cookies = new Cookies();
   const [expanded, setExpanded] = useState(false);
   const [isCollapsing, setIsCollapsing] = useState(false);
 
   const containerRef = useRef(null);
   const combinedRef = ref || containerRef;
+
+  const usuario = localStorage.getItem("usuario") || undefined;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -79,7 +79,7 @@ const Header = forwardRef((props, ref) => {
   const { showToast } = useToast();
 
   const handleLogout = () => {
-    cookies.remove("user", { path: "/", secure: true, sameSite: "None" });
+    localStorage.removeItem("usuario");
     showToast("Se ha cerrado la sesión!", "bg-success");
     navigate("/");
   };
@@ -186,7 +186,7 @@ const Header = forwardRef((props, ref) => {
               )}
             </Form>
             <Nav className="d-flex align-items-center justify-content-center h-100">
-              {cookies.get("user") !== undefined && (
+              {usuario !== undefined && (
                 <>
                   <OverlayTrigger
                     placement="bottom"
@@ -247,7 +247,7 @@ const Header = forwardRef((props, ref) => {
                 </Nav.Link>
               </OverlayTrigger>
 
-              {cookies.get("user") === undefined ? (
+              {usuario === undefined ? (
                 <Nav.Link
                   as={Link}
                   to="/login"
@@ -271,7 +271,7 @@ const Header = forwardRef((props, ref) => {
                   Cerrar Sesión
                 </Nav.Link>
               )}
-              {cookies.get("user") === undefined ? (
+              {usuario === undefined ? (
                 <Nav.Link
                   as={Link}
                   to="/register"

@@ -5,15 +5,13 @@ import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import Cookies from "universal-cookie";
 
 function PostCreationPage() {
   useEffect(() => {
     document.title = "Crear Post";
   }, []);
 
-  const cookies = new Cookies();
-  const cookiesUser = cookies.get("user");
+  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
 
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -74,7 +72,7 @@ function PostCreationPage() {
       topicId: formData.category,
       title: formData.title,
       text: formData.text,
-      author: cookiesUser.username,
+      author: usuario.username,
       date: new Date().toLocaleString(),
       res_num: 0,
       view_num: 0,
