@@ -53,7 +53,7 @@ function PostPage() {
     if (storedPosts) {
       const posts = JSON.parse(storedPosts);
 
-      const currentPost = posts.find((post) => post.id === parseInt(postId));
+      const currentPost = posts.find((post) => post.id.toString() === postId);
 
       setPost(currentPost);
       setComments(currentPost.comments);
@@ -76,7 +76,7 @@ function PostPage() {
     setShowModal(false);
     const newCommentObject = {
       id: uuidv4(),
-      postId: parseInt(postId),
+      postId: postId,
       title: newComment,
       author: usuario.username,
       upvotes: 0,
@@ -93,7 +93,7 @@ function PostPage() {
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const updatedPosts = existingPosts.map((p) => {
-      if (p.id === parseInt(postId)) {
+      if (p.id.toString() === postId) {
         return post;
       }
       return p;
@@ -146,7 +146,7 @@ function PostPage() {
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const updatedPosts = existingPosts.map((p) =>
-      p.id === parseInt(postId) ? post : p
+      p.id.toString() === postId ? post : p
     );
 
     // Save updated post back to localStorage
@@ -162,13 +162,13 @@ function PostPage() {
     // Eliminar el post del localStorage
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const filteredPosts = existingPosts.filter(
-      (p) => p.id !== parseInt(postId)
+      (p) => p.id.toString() !== postId
     );
 
     // Actualizar el número de posts en el localStorage para el topic correspondiente
     const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
     const updatedTopics = existingTopics.map((topic) => {
-      if (topic.id === parseInt(post.topicId)) {
+      if (topic.id.toString() === post.topicId) {
         return {
           ...topic,
           post_num: (topic.post_num || 0) - 1,
@@ -385,7 +385,7 @@ function PostPage() {
             <PostComment
               key={comment.id}
               id={comment.id}
-              postId={parseInt(comment.postId)}
+              postId={comment.postId}
               title={comment.title}
               author={comment.author}
               initialUpvotes={comment.upvotes}

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import ToastMessage from "../Components/ToastMessage";
@@ -7,33 +7,30 @@ import { Outlet } from "react-router-dom";
 
 function MainLayout({ children }) {
   const controlRef = useRef(null);
-  const [padding, setPadding] = useState(0);
+  const [topOffset, setTopOffset] = useState(0);
 
-  useLayoutEffect(() => {
-    if (controlRef.current) {
-      setPadding(controlRef.current.offsetHeight);
-    }
-
-    const handleResize = () => {
+  useEffect(() => {
+    const updatePadding = () => {
       if (controlRef.current) {
-        setPadding(controlRef.current.offsetHeight);
+        setTopOffset(controlRef.current.offsetHeight);
       }
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [controlRef]);
+    updatePadding();
+    window.addEventListener("resize", updatePadding);
+    return () => window.removeEventListener("resize", updatePadding);
+  }, []);
 
   return (
-    <div className="d-flex flex-column" style={{ height: "100vh" }}>
+    <div className="d-flex flex-column vh-100">
       <Header ref={controlRef} />
       <div
-        className="flex-grow-1 px-5 pb-5 mx-5"
-        style={{ paddingTop: `${padding}px` }}
+        className="flex-grow-1 pb-5"
+        style={{ paddingTop: `${topOffset}px` }}
       >
-          {children}
-          <Outlet />
-          <ToastMessagesLayout />
+        {children}
+        <Outlet />
+        <ToastMessagesLayout />
       </div>
       <Footer />
     </div>

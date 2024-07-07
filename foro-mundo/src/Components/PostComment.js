@@ -29,7 +29,7 @@ const PostComment = ({
 
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const post = posts.find((post) => post.id === postId);
+    const post = posts.find((post) => post.id.toString() === postId);
 
     const comments = post.comments || [];
 
@@ -50,7 +50,7 @@ const PostComment = ({
     }
 
     post.comments = comments;
-    posts[posts.findIndex((post) => post.id === postId)] = post;
+    posts[posts.findIndex((post) => post.id.toString() === postId)] = post;
     localStorage.setItem("posts", JSON.stringify(posts));
   };
 
@@ -140,18 +140,18 @@ const PostComment = ({
 
   const handleDelete = () => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const post = posts.find((post) => post.id === postId);
+    const post = posts.find((post) => post.id.toString() === postId);
     const comments = post.comments || [];
     const updatedComments = comments.filter((comment) => comment.id !== id);
     post.comments = updatedComments;
-    posts[posts.findIndex((post) => post.id === postId)] = post;
+    posts[posts.findIndex((post) => post.id.toString() === postId)] = post;
     localStorage.setItem("posts", JSON.stringify(posts));
     onDelete(id);
   };
 
   useEffect(() => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const post = posts.find((post) => post.id === postId);
+    const post = posts.find((post) => post.id.toString() === postId);
 
     if (post) {
       const storedComment = post.comments.find((comment) => comment.id === id);

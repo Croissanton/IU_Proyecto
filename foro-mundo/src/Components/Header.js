@@ -13,7 +13,21 @@ import { FormLabel } from "react-bootstrap";
 
 const Header = forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
+  const [isMobile, setMobile] = useState(window.innerWidth < 992);
   const [isCollapsing, setIsCollapsing] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMobile(window.innerWidth < 992);
+    };
+    // Set the initial state based on current window width
+    handleResize();
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function to remove the listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const containerRef = useRef(null);
   const combinedRef = ref || containerRef;
@@ -253,6 +267,7 @@ const Header = forwardRef((props, ref) => {
                       to="/create"
                       aria-label="Crear post"
                     >
+                      {isMobile && <span className="me-2">Crear</span>}
                       <i className="bi bi-plus-circle custom-icon"></i>
                       <span className="visually-hidden">Crear post</span>
                     </Nav.Link>
@@ -267,6 +282,7 @@ const Header = forwardRef((props, ref) => {
                       to="/profile"
                       aria-label="Perfil"
                     >
+                      {isMobile && <span className="me-2">Perfil</span>}
                       <i className="bi bi-person-circle custom-icon"></i>
                       <span className="visually-hidden">Perfil</span>
                     </Nav.Link>
@@ -281,6 +297,7 @@ const Header = forwardRef((props, ref) => {
                       to="/messenger"
                       aria-label="Mensajes"
                     >
+                      {isMobile && <span className="me-2">Mensajes</span>}
                       <i className="bi bi-chat custom-icon"></i>
                       <span className="visually-hidden">Mensajes</span>
                     </Nav.Link>
@@ -297,6 +314,7 @@ const Header = forwardRef((props, ref) => {
                   to="/help"
                   aria-label="Ayuda"
                 >
+                  {isMobile && <span className="me-2">Ayuda</span>}
                   <i className="bi bi-question-circle custom-icon"></i>
                   <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>
