@@ -5,7 +5,6 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el modal de confirmación
 
-
 function ProfilePublic() {
   const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
   const [userData, setUserData] = useState(null);
@@ -15,7 +14,7 @@ function ProfilePublic() {
   const { showToast } = useToast();
   const [showBlockModal, setShowBlockModal] = useState(false);
   const [showFriendModal, setShowFriendModal] = useState(false);
-
+  const [isButtonUnavailable, setIsButtonUnavailable] = useState(false);
 
   useEffect(() => {
     document.title = "Perfil";
@@ -33,6 +32,10 @@ function ProfilePublic() {
     }
   }, [username]);
 
+  useEffect(() => {
+    handleUnavailabilityOfButtons();
+  }, [blockStatus, username]);
+
   const handleShowBlockModal = () => setShowBlockModal(true);
   const handleShowFriendModal = () => setShowFriendModal(true);
 
@@ -40,12 +43,11 @@ function ProfilePublic() {
     handleBlockUser();
     setShowBlockModal(false);
   };
-  
+
   const confirmFriendRequest = () => {
     handleFriendRequest();
     setShowFriendModal(false);
   };
-  
 
   const updateStatuses = (currentUser, user) => {
     if (currentUser && user) {
@@ -72,6 +74,7 @@ function ProfilePublic() {
   const handleBlockUser = () => {
     let currentUser = JSON.parse(localStorage.getItem("usuario"));
     const allUsers = JSON.parse(localStorage.getItem("usuarios"));
+    let otherUser = allUsers.find((user) => user.username === username);
 
     if (currentUser && allUsers) {
       // Asegurarse de que currentUser tenga una blockList
@@ -83,9 +86,33 @@ function ProfilePublic() {
         // Añadir usuario a la lista de bloqueados
         currentUser.blockList.push(username);
         setBlockStatus("Desbloquear Usuario");
+
+        if (currentUser.friendList.includes(username)) {
+          // Borrar amigo de la lista de amigos
+          currentUser.friendList = currentUser.friendList.filter(
+            (friend) => friend !== username
+          );
+          otherUser.friendList = otherUser.friendList.filter(
+            (friend) => friend !== currentUser.username
+          );
+        }
+        if (currentUser.incomingRequests.includes(username)) {
+          // Borrar solicitud de amistad
+          currentUser.incomingRequests = currentUser.incomingRequests.filter(
+            (request) => request !== username
+          );
+        }
+        if (otherUser.incomingRequests.includes(currentUser.username)) {
+          // Borrar solicitud de amistad
+          otherUser.incomingRequests = otherUser.incomingRequests.filter(
+            (request) => request !== currentUser.username
+          );
+        }
       } else {
         // Eliminar usuario de la lista de bloqueados
-        currentUser.blockList = currentUser.blockList.filter(user => user !== username);
+        currentUser.blockList = currentUser.blockList.filter(
+          (user) => user !== username
+        );
         setBlockStatus("Bloquear Usuario");
       }
 
@@ -96,6 +123,9 @@ function ProfilePublic() {
       const updatedUsers = allUsers.map((user) => {
         if (user.username === currentUser.username) {
           return currentUser;
+        }
+        if (user.username === otherUser.username) {
+          return otherUser;
         }
         return user;
       });
@@ -110,7 +140,7 @@ function ProfilePublic() {
   const handleFriendRequest = () => {
     let currentUser = JSON.parse(localStorage.getItem("usuario"));
     const allUsers = JSON.parse(localStorage.getItem("usuarios"));
-    let friendUser = allUsers.find(user => user.username === username);
+    let friendUser = allUsers.find((user) => user.username === username);
 
     if (currentUser && friendUser && allUsers) {
       // Inicializar las propiedades si no existen
@@ -122,18 +152,26 @@ function ProfilePublic() {
       // Comprobaciones y actualizaciones de las listas de amigos y solicitudes
       if (currentUser.friendList.includes(username)) {
         // Borrar amigo de la lista de amigos
-        currentUser.friendList = currentUser.friendList.filter(friend => friend !== username);
-        friendUser.friendList = friendUser.friendList.filter(friend => friend !== currentUser.username);
+        currentUser.friendList = currentUser.friendList.filter(
+          (friend) => friend !== username
+        );
+        friendUser.friendList = friendUser.friendList.filter(
+          (friend) => friend !== currentUser.username
+        );
         setFriendStatus("Agregar Amigo");
       } else if (currentUser.incomingRequests.includes(username)) {
         // Añadir usuario a la lista de amigos
         currentUser.friendList.push(username);
         friendUser.friendList.push(currentUser.username);
-        currentUser.incomingRequests = currentUser.incomingRequests.filter(request => request !== username);
+        currentUser.incomingRequests = currentUser.incomingRequests.filter(
+          (request) => request !== username
+        );
         setFriendStatus("Eliminar Amigo");
       } else if (friendUser.incomingRequests.includes(currentUser.username)) {
         // Quitar solicitud de amistad
-        friendUser.incomingRequests = friendUser.incomingRequests.filter(request => request !== currentUser.username);
+        friendUser.incomingRequests = friendUser.incomingRequests.filter(
+          (request) => request !== currentUser.username
+        );
         setFriendStatus("Agregar Amigo");
       } else {
         // Añadir solicitud de amistad
@@ -142,7 +180,7 @@ function ProfilePublic() {
       }
 
       // Actualizar la lista de usuarios en localStorage
-      const updatedUsers = allUsers.map(user => {
+      const updatedUsers = allUsers.map((user) => {
         if (user.username === currentUser.username) return currentUser;
         if (user.username === friendUser.username) return friendUser;
         return user;
@@ -153,6 +191,25 @@ function ProfilePublic() {
 
       // Mostrar mensaje de éxito
       showToast("Solicitud de amistad enviada correctamente.", "bg-success");
+    }
+  };
+
+  const handleUnavailabilityOfButtons = () => {
+    let currentUser = JSON.parse(localStorage.getItem("usuario"));
+    const allUsers = JSON.parse(localStorage.getItem("usuarios"));
+    let otherUser = allUsers.find((user) => user.username === username);
+
+    if (currentUser && otherUser) {
+      if (
+        currentUser.blockList?.includes(username) ||
+        otherUser.blockList?.includes(currentUser.username) ||
+        currentUser.username === username
+      ) {
+        setFriendStatus("Agregar Amigo");
+        setIsButtonUnavailable(true);
+      } else {
+        setIsButtonUnavailable(false);
+      }
     }
   };
 
@@ -285,6 +342,7 @@ function ProfilePublic() {
                 ></textarea>
               </div>
               <div className="col-12">
+                {!isButtonUnavailable && (
                 <Link to={`/historial/${username}`}>
                   <button
                     type="button"
@@ -294,6 +352,8 @@ function ProfilePublic() {
                     Ver Historial
                   </button>
                 </Link>
+                )
+              }
                 <button
                   type="button"
                   className="btn btn-danger"
@@ -306,23 +366,43 @@ function ProfilePublic() {
                   show={showBlockModal}
                   handleClose={() => setShowBlockModal(false)}
                   handleConfirm={confirmBlockUser}
-                  title={blockStatus === "Bloquear Usuario" ? "Bloquear Usuario" : "Desbloquear Usuario"}
-                  message={`¿Estás seguro de que quieres ${blockStatus === "Bloquear Usuario" ? "bloquear" : "desbloquear"} a este usuario?`}
+                  title={
+                    blockStatus === "Bloquear Usuario"
+                      ? "Bloquear Usuario"
+                      : "Desbloquear Usuario"
+                  }
+                  message={`¿Estás seguro de que quieres ${
+                    blockStatus === "Bloquear Usuario"
+                      ? "bloquear"
+                      : "desbloquear"
+                  } a este usuario?`}
                 />
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  style={{ margin: "5px" }}
-                  onClick={handleShowFriendModal}
-                >
-                  {friendStatus}
-                </button>
+                {!isButtonUnavailable && (
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    style={{ margin: "5px" }}
+                    onClick={handleShowFriendModal}
+                  >
+                    {friendStatus}
+                  </button>
+                )}
                 <ConfirmationModal
                   show={showFriendModal}
                   handleClose={() => setShowFriendModal(false)}
                   handleConfirm={confirmFriendRequest}
-                  title={friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "Añadir Amigo" : "Eliminar Amigo"}
-                  message={`¿Estás seguro de que quieres ${friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "añadir a" : "eliminar a"} este usuario como amigo?`}
+                  title={
+                    friendStatus === "Agregar Amigo" ||
+                    friendStatus === "Aceptar Solicitud"
+                      ? "Añadir Amigo"
+                      : "Eliminar Amigo"
+                  }
+                  message={`¿Estás seguro de que quieres ${
+                    friendStatus === "Agregar Amigo" ||
+                    friendStatus === "Aceptar Solicitud"
+                      ? "añadir a"
+                      : "eliminar a"
+                  } este usuario como amigo?`}
                 />
               </div>
             </form>
