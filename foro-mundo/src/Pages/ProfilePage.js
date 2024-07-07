@@ -247,6 +247,16 @@ function ProfilePage() {
                       Ver Bloqueados
                     </button>
                   </Link>
+
+                  <Link to={`/friends`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ margin: "5px" }}
+                    >
+                      Ver Amigos
+                    </button>
+                  </Link>
                 </div>
               ) : (
                 <div className="col-12">
