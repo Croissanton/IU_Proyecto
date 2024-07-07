@@ -7,6 +7,8 @@ const PostCard = ({
   id,
   title,
   text,
+  upvotes,
+  downvotes,
   author,
   date,
   res_num,
@@ -79,6 +81,14 @@ const PostCard = ({
                     </Row>
                     <Row>
                       <p>Fecha de creación: {date}</p>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span> Votos positivos: {upvotes} </span>
+                      </Col>
+                      <Col>
+                        <span> Votos negativos: {downvotes} </span>
+                      </Col>
                     </Row>
                   </Col>
                 </Row>

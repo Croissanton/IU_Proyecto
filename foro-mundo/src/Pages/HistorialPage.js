@@ -85,6 +85,8 @@ function HistorialPage() {
               view_num={post.view_num || 0}
               onPostClick={() => handleViewPost(post.id)}
               comments={post.comments}
+              upvotes={post.upvotes}
+              downvotes={post.downvotes}
             />
           ))
         )}

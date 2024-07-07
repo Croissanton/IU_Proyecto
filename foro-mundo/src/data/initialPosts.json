@@ -1,5 +1,5 @@
 [
-  {
+    {
       "id": 1,
       "topicId": 1,
       "title": "buen foro :D",
@@ -11,36 +11,38 @@
       "lm_author": "EDddd",
       "lm_date": "12/10/2009",
       "comments": [
-          {
-              "id": 1,
-              "postId": 1,
-              "title": "Estoy de acuerdo",
-              "author": "Ignacio19291",
-              "upvotes": 5,
-              "downvotes": 0,
-              "date": "10/19/2001"
-          },
-          {
-              "id": 2,
-              "postId": 1,
-              "title": "Interesante punto de vista",
-              "author": "Silla1234",
-              "upvotes": 3,
-              "downvotes": 0,
-              "date": "10/20/2005"
-          },
-          {
-              "id": 3,
-              "postId": 1,
-              "title": "yo no",
-              "author": "EDddd",
-              "upvotes": 2,
-              "downvotes": 1,
-              "date": "12/10/2009"
-          }
-      ]
-  },
-  {
+        {
+          "id": 1,
+          "postId": 1,
+          "title": "Estoy de acuerdo",
+          "author": "Ignacio19291",
+          "upvotes": 5,
+          "downvotes": 0,
+          "date": "10/19/2001"
+        },
+        {
+          "id": 2,
+          "postId": 1,
+          "title": "Interesante punto de vista",
+          "author": "Silla1234",
+          "upvotes": 3,
+          "downvotes": 0,
+          "date": "10/20/2005"
+        },
+        {
+          "id": 3,
+          "postId": 1,
+          "title": "yo no",
+          "author": "EDddd",
+          "upvotes": 2,
+          "downvotes": 1,
+          "date": "12/10/2009"
+        }
+      ],
+      "upvotes": 0,
+      "downvotes": 0
+    },
+    {
       "id": 2,
       "topicId": 6,
       "title": "Por qué me ha explotado el radiador??",
@@ -52,36 +54,38 @@
       "lm_author": "MecanicExpert",
       "lm_date": "2/7/2023",
       "comments": [
-          {
-              "id": 4,
-              "postId": 2,
-              "title": "Revisa la válvula de presión",
-              "author": "FixItJuan",
-              "upvotes": 4,
-              "downvotes": 0,
-              "date": "2/6/2023"
-          },
-          {
-              "id": 5,
-              "postId": 2,
-              "title": "Podría ser un problema de antigüedad",
-              "author": "OldTimer22",
-              "upvotes": 3,
-              "downvotes": 0,
-              "date": "2/6/2023"
-          },
-          {
-              "id": 6,
-              "postId": 2,
-              "title": "Contacta a un profesional",
-              "author": "MecanicExpert",
-              "upvotes": 5,
-              "downvotes": 0,
-              "date": "2/7/2023"
-          }
-      ]
-  },
-  {
+        {
+          "id": 4,
+          "postId": 2,
+          "title": "Revisa la válvula de presión",
+          "author": "FixItJuan",
+          "upvotes": 4,
+          "downvotes": 0,
+          "date": "2/6/2023"
+        },
+        {
+          "id": 5,
+          "postId": 2,
+          "title": "Podría ser un problema de antigüedad",
+          "author": "OldTimer22",
+          "upvotes": 3,
+          "downvotes": 0,
+          "date": "2/6/2023"
+        },
+        {
+          "id": 6,
+          "postId": 2,
+          "title": "Contacta a un profesional",
+          "author": "MecanicExpert",
+          "upvotes": 5,
+          "downvotes": 0,
+          "date": "2/7/2023"
+        }
+      ],
+      "upvotes": 0,
+      "downvotes": 0
+    },
+    {
       "id": 3,
       "topicId": 2,
       "title": "Mi gato se ha comido a mi abuela :( ¿qué hago?",
@@ -93,18 +97,20 @@
       "lm_author": "DrZoo",
       "lm_date": "4/11/2024",
       "comments": [
-          {
-              "id": 7,
-              "postId": 3,
-              "title": "Llama a emergencias",
-              "author": "SensibleSally",
-              "upvotes": 8,
-              "downvotes": 0,
-              "date": "4/11/2024"
-          }
-      ]
-  },
-  {
+        {
+          "id": 7,
+          "postId": 3,
+          "title": "Llama a emergencias",
+          "author": "SensibleSally",
+          "upvotes": 8,
+          "downvotes": 0,
+          "date": "4/11/2024"
+        }
+      ],
+      "upvotes": 0,
+      "downvotes": 0
+    },
+    {
       "id": 4,
       "topicId": 2,
       "title": "Mi abuela se ha comido a mi gato.........!!",
@@ -115,9 +121,11 @@
       "view_num": 20,
       "lm_author": "",
       "lm_date": "",
-      "comments": []
-  },
-  {
+      "comments": [],
+      "upvotes": 0,
+      "downvotes": 0
+    },
+    {
       "id": 5,
       "topicId": 6,
       "title": "La gasolina casi a 2€",
@@ -129,27 +137,29 @@
       "lm_author": "EcoDriver",
       "lm_date": "3/14/2024",
       "comments": [
-          {
-              "id": 8,
-              "postId": 5,
-              "title": "Es insostenible para los salarios medios",
-              "author": "WageWarrior",
-              "upvotes": 10,
-              "downvotes": 1,
-              "date": "3/13/2024"
-          },
-          {
-              "id": 9,
-              "postId": 5,
-              "title": "Considerar alternativas como coches eléctricos",
-              "author": "EcoDriver",
-              "upvotes": 5,
-              "downvotes": 0,
-              "date": "3/14/2024"
-          }
-      ]
-  },
-  {
+        {
+          "id": 8,
+          "postId": 5,
+          "title": "Es insostenible para los salarios medios",
+          "author": "WageWarrior",
+          "upvotes": 10,
+          "downvotes": 1,
+          "date": "3/13/2024"
+        },
+        {
+          "id": 9,
+          "postId": 5,
+          "title": "Considerar alternativas como coches eléctricos",
+          "author": "EcoDriver",
+          "upvotes": 5,
+          "downvotes": 0,
+          "date": "3/14/2024"
+        }
+      ],
+      "upvotes": 0,
+      "downvotes": 0
+    },
+    {
       "id": 6,
       "topicId": 2,
       "title": "Desesperadamente buscando consejos para escribir",
@@ -161,24 +171,27 @@
       "lm_author": "WriteWell",
       "lm_date": "2/4/2024",
       "comments": [
-          {
-              "id": 10,
-              "postId": 6,
-              "title": "Prueba la técnica Pomodoro",
-              "author": "TimeMngr",
-              "upvotes": 4,
-              "downvotes": 0,
-              "date": "2/4/2024"
-          },
-          {
-              "id": 11,
-              "postId": 6,
-              "title": "Intenta leer más y encontrar inspiración en otros autores",
-              "author": "BookwormBetty",
-              "upvotes": 6,
-              "downvotes": 0,
-              "date": "2/4/2024"
-          }
-      ]
-  }
-]
+        {
+          "id": 10,
+          "postId": 6,
+          "title": "Prueba la técnica Pomodoro",
+          "author": "TimeMngr",
+          "upvotes": 4,
+          "downvotes": 0,
+          "date": "2/4/2024"
+        },
+        {
+          "id": 11,
+          "postId": 6,
+          "title": "Intenta leer más y encontrar inspiración en otros autores",
+          "author": "BookwormBetty",
+          "upvotes": 6,
+          "downvotes": 0,
+          "date": "2/4/2024"
+        }
+      ],
+      "upvotes": 0,
+      "downvotes": 0
+    }
+  ]
+  

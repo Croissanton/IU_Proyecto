@@ -281,6 +281,9 @@ function PostPage() {
             lm_date={post.lm_date}
             res_num={comments.length}
             view_num={post.view_num}
+            comments={post.comments}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
           />
         </div>
       )}

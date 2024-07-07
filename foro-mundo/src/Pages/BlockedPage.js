@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useToast } from "../Context/ToastContext.js";
 
 function BlockedUsersPage() {
   const [blockedUsers, setBlockedUsers] = useState([]);
+  const { showToast } = useToast();
 
   useEffect(() => {
     document.title = "Bloqueados";
@@ -17,6 +19,44 @@ function BlockedUsersPage() {
       setBlockedUsers(bloqueados);
     }
   }, []);
+
+  const handleUnblock = (username) => {
+    const currentUser = JSON.parse(localStorage.getItem("usuario"));
+    const allUsers = JSON.parse(localStorage.getItem("usuarios"));
+
+    if (currentUser && allUsers) {
+      // Asegurarse de que currentUser tenga una blockList
+      if (!currentUser.blockList) {
+        currentUser.blockList = [];
+      }
+
+      if (currentUser.blockList.includes(username)) {
+        // Eliminar usuario de la lista de bloqueados
+        currentUser.blockList = currentUser.blockList.filter((blockedUser) => blockedUser !== username);
+
+        // Actualizar el usuario actual en localStorage
+        localStorage.setItem("usuario", JSON.stringify(currentUser));
+
+        // Actualizar la lista de usuarios en localStorage
+        const updatedUsers = allUsers.map((user) => {
+          if (user.username === currentUser.username) {
+            return currentUser;
+          }
+          return user;
+        });
+
+        localStorage.setItem("usuarios", JSON.stringify(updatedUsers));
+
+        // Actualizar la lista de bloqueados
+        const updatedBlockedUsers = blockedUsers.filter((user) => user.username !== username);
+        setBlockedUsers(updatedBlockedUsers);
+
+        showToast("Usuario desbloqueado correctamente.", "bg-success");
+      } else {
+        alert("Este usuario no está bloqueado.");
+      }
+    }
+  }
 
   return (
     <MainLayout>
@@ -43,7 +83,15 @@ function BlockedUsersPage() {
       </div>
       <div className="container-xxl my-3">
         {blockedUsers.length === 0 ? (
-          <p>No hay usuarios bloqueados.</p>
+            <label
+                style={{
+                fontSize: "1rem",
+                display: "block",
+                textAlign: "center",
+                }}
+            >
+                No hay usuarios bloqueados.
+            </label>
         ) : (
           blockedUsers.map((user) => (
             <div key={user.username} className="card mb-3">
@@ -51,12 +99,7 @@ function BlockedUsersPage() {
                 <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
                 <button
                     className="btn btn-danger"
-                    onClick={() => {
-                        const usuario = JSON.parse(localStorage.getItem("usuario"));
-                        usuario.blockList = usuario.blockList.filter((username) => username !== user.username);
-                        localStorage.setItem("usuario", JSON.stringify(usuario));
-                        setBlockedUsers(blockedUsers.filter((u) => u.username !== user.username));
-                    }}
+                    onClick={() => { handleUnblock(user.username); }}
                     style={{ margin: "5px", float: "right"}}
                 >
                     Desbloquear
