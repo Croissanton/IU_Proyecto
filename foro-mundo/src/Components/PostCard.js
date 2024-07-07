@@ -29,7 +29,7 @@ const PostCard = ({
   return (
     <div
       onClick={handleClick}
-      className="custom-link m-0 p-0"
+      className="custom-link mb-2 mx-0 mt-0 p-0"
       role="button"
       tabIndex="0"
       onKeyDown={(e) => {

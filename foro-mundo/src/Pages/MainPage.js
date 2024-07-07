@@ -109,16 +109,14 @@ function MainPage() {
         <Container>
           {currentTopics.map((topic) => (
             // <div className="col-12 col-sm-6 col-md-4 col-lg-3 px-0 px-sm-2">
-            <Row className="mb-2">
-              <ForumCard
-                key={topic.id}
-                id={topic.id}
-                topic={topic.topic}
-                post_num={topic.post_num}
-                view_num={topic.view_num}
-                onTopicClick={handleTopicClick}
-              />
-            </Row>
+            <ForumCard
+              key={topic.id}
+              id={topic.id}
+              topic={topic.topic}
+              post_num={topic.post_num}
+              view_num={topic.view_num}
+              onTopicClick={handleTopicClick}
+            />
             // </div>
           ))}
         </Container>

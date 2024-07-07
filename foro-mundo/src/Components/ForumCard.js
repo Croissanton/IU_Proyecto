@@ -11,7 +11,7 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
   };
 
   return (
-    <Link onClick={handleClick} className="custom-link mx-0 px-0">
+    <Link onClick={handleClick} className="custom-link mx-0 px-0 mb-2">
       <Container className="border border-dark-subtle bg-light mx-0 px-0">
         <Row className="custom-link-container mx-0 px-0">
           <Col className="p-3 d-flex align-items-center">
