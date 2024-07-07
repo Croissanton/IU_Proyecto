@@ -12,11 +12,20 @@ const PostComment = ({
   date,
   onDelete,
 }) => {
+  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
 
-  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+  useEffect(() => {
+    if (usuario) {
+      if (usuario.upComments.includes(id)) {
+        setUserVote("upvote");
+      } else if (usuario.downComments.includes(id)) {
+        setUserVote("downvote");
+      }
+    }
+  }, [id, usuario]);
 
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -52,17 +61,26 @@ const PostComment = ({
     if (userVote === "upvote") {
       newUpvotes -= 1;
       setUserVote(null);
+      // remove from usuario upvotes
+      usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
     } else if (userVote === "downvote") {
       newDownvotes -= 1;
       newUpvotes += 1;
       setUserVote("upvote");
+      // remove from usuario downvotes
+      usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+      // add to usuario upvotes
+      usuario.upComments.push(id);
     } else {
       newUpvotes += 1;
       setUserVote("upvote");
+      // add to usuario upvotes
+      usuario.upComments.push(id);
     }
 
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
+    localStorage.setItem("usuario", JSON.stringify(usuario));
     updateLocalStorage(newUpvotes, newDownvotes);
   };
 
@@ -73,17 +91,26 @@ const PostComment = ({
     if (userVote === "downvote") {
       newDownvotes -= 1;
       setUserVote(null);
+      // remove from usuario downvotes
+      usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
     } else if (userVote === "upvote") {
       newUpvotes -= 1;
       newDownvotes += 1;
       setUserVote("downvote");
+      // remove from usuario upvotes
+      usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+      // add to usuario downvotes
+      usuario.downComments.push(id);
     } else {
       newDownvotes += 1;
       setUserVote("downvote");
+      // add to usuario downvotes
+      usuario.downComments.push(id);
     }
 
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
+    localStorage.setItem("usuario", JSON.stringify(usuario));
     updateLocalStorage(newUpvotes, newDownvotes);
   };
 

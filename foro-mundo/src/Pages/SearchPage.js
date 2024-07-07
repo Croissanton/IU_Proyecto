@@ -117,7 +117,7 @@ function SearchPage() {
           {category.topic}
         </label>
       </div>
-      {localStorage.getItem("usuario") === undefined ? (
+      {localStorage.getItem("usuario") === null ? (
         <div></div>
       ) : (
         <div>
