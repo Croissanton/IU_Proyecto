@@ -25,6 +25,7 @@ function ProfilePage() {
     description: usuario ? usuario.description : "",
     profilePicture: usuario ? usuario.profilePicture : "",
     friendList: usuario ? usuario.friendList : [],
+    incomingRequests: usuario ? usuario.incomingRequests : [],
     blockList: usuario ? usuario.blockList : [],
     upPosts: usuario ? usuario.upPosts : [],
     downPosts: usuario ? usuario.downPosts : [],
