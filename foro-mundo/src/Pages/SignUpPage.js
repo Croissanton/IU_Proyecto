@@ -68,10 +68,15 @@ function SignUpPage() {
 
   const register = (e) => {
     e.preventDefault();
+    //Si ya hay un usuario con ese username o correo, mostrar un mensaje de error
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    if (usuarios.find((u) => u.username === usuario.username)) {
+      alert("El nombre de usuario ya está en uso.");
+      return;
+    }
     usuario.lastConnection = new Date().toLocaleString();
     usuario.lastDisconnection = usuario.lastConnection;
 
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
     localStorage.setItem("usuario", JSON.stringify(usuario));

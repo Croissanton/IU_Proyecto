@@ -10,7 +10,7 @@ function getByUsernameAndPassword(username, password) {
   const usuarios = JSON.parse(localStorage.getItem('usuarios'));
 
   // Buscar el usuario por su username
-  const usuario = usuarios.find(user => user.username === username && user.password === password);
+  const usuario = usuarios.find(usuario => usuario.username === username && usuario.password === password);
 
   // Retornar el usuario encontrado o null si no se encuentra
   return usuario || null;
@@ -21,17 +21,17 @@ function LoginPage() {
     document.title = "Login";
   }, []);
 
-  const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
+  const [usuario, setusuario] = useState(null);
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (user) {
-      navigate("/"); // Redirigir después de que se actualice el estado de user
+    if (usuario) {
+      navigate("/"); // Redirigir después de que se actualice el estado de usuario
     }
-  }, [user, navigate]);
+  }, [usuario, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,8 +41,15 @@ function LoginPage() {
     // Validar credenciales, por ejemplo:
     const usuario = getByUsernameAndPassword(username, password);
     if (usuario) {
+      usuario.lastConnection = new Date().toLocaleString();
       localStorage.setItem("usuario", JSON.stringify(usuario));
-      setUser(usuario);
+      setusuario(usuario);
+      localStorage.setItem("usuarios", JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+          u.username === usuario.username ? usuario : u
+        )
+      
+      ));
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
@@ -85,7 +92,7 @@ function LoginPage() {
                 aria-label="nombre_de_usuario"
                 required
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setusername(e.target.value)}
                 style={{
                   marginBottom: "0.5rem",
                   width: "300px",
