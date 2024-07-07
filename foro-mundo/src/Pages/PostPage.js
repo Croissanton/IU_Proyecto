@@ -39,6 +39,8 @@ function PostPage() {
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
 
+  const [blockedUsers, setBlockedUsers] = useState([]);
+
   const titleStyle = {
     wordWrap: "break-word",
     whiteSpace: "normal",
@@ -56,6 +58,10 @@ function PostPage() {
       setPost(currentPost);
       setComments(currentPost.comments);
     }
+
+    const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+    const storedBlockedUsers = usuario ? usuario.blockList || [] : [];
+    setBlockedUsers(storedBlockedUsers);
 
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("textoAZ");
@@ -83,6 +89,9 @@ function PostPage() {
     post.lm_text = newCommentObject.title;
     post.lm_author = newCommentObject.author;
     post.lm_date = new Date().toLocaleString();
+
+    console.log("New comment:", newCommentObject);
+    console.log("Updated post comments:", post.comments);
 
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -191,7 +200,10 @@ function PostPage() {
     setCurrentPage(pageNumber);
   };
 
-  const sortedComments = [...comments].sort((a, b) => {
+  // Filtrar comentarios de usuarios bloqueados
+  const filteredComments = comments.filter(comment => !blockedUsers.includes(comment.author));
+
+  const sortedComments = [...filteredComments].sort((a, b) => {
     if (sortCriteria === "textoAZ") {
       return a.title.localeCompare(b.title);
     } else if (sortCriteria === "textoZA") {
