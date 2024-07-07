@@ -20,6 +20,18 @@ const Header = forwardRef((props, ref) => {
 
   const usuario = localStorage.getItem("usuario") || undefined;
 
+  const posts = JSON.parse(localStorage.getItem("posts")) || [];
+  const topics = JSON.parse(localStorage.getItem("topics")) || [];
+  const comments = posts.reduce(
+    (acc, post) => [
+      ...acc,
+      ...post.comments.map((comment) => ({
+        ...comment, // Spread all existing properties of the comment
+      })),
+    ],
+    []
+  );
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (combinedRef.current && !combinedRef.current.contains(event.target)) {
@@ -45,7 +57,6 @@ const Header = forwardRef((props, ref) => {
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"];
 
   const [inputValue, setInputValue] = useState("");
 
@@ -54,14 +65,67 @@ const Header = forwardRef((props, ref) => {
     setInputValue(userInput);
 
     if (!userInput.trim()) {
-      setSuggestions([]);
+      setSuggestions(["No se ha encontrado ninguna sugerencia."]);
       setShowSuggestions(false);
     } else {
-      const filteredSuggestions = allSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(userInput.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
+      const topicSuggestions = topics
+        .filter((topic) =>
+          topic.topic.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((topic) => ({
+          label: `Topic: ${topic.topic}`,
+          type: "topic",
+          id: topic.id,
+        }));
+
+      const postSuggestions = posts
+        .filter((post) =>
+          post.title.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((post) => ({
+          label: `Post: ${post.title}`,
+          type: "post",
+          id: post.id,
+        }));
+
+      const commentSuggestions = comments
+        .filter((comment) =>
+          comment.title.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((comment) => ({
+          label: `Comment in Post ${comment.postId}: ${comment.title}`,
+          type: "comment",
+          id: comment.id,
+          postId: comment.postId,
+        }));
+
+      const combinedSuggestions = [
+        ...topicSuggestions,
+        ...postSuggestions,
+        ...commentSuggestions,
+      ];
+      setSuggestions(combinedSuggestions.slice(0, 5));
       setShowSuggestions(true);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setShowSuggestions(false);
+    setInputValue(suggestion.label);
+    setSuggestions([]);
+
+    switch (suggestion.type) {
+      case "topic":
+        navigate(`/search/${suggestion.id}`);
+        break;
+      case "post":
+        navigate(`/post/${suggestion.id}`);
+        break;
+      case "comment":
+        navigate(`/post/${suggestion.postId}`);
+        break;
+      default:
+        console.log("Unknown suggestion type");
     }
   };
 
@@ -166,17 +230,11 @@ const Header = forwardRef((props, ref) => {
                       key={index}
                       role="option"
                       tabIndex="0"
-                      aria-selected={inputValue === suggestion}
-                      style={{ padding: "10px", cursor: "pointer" }}
-                      onClick={() => {
-                        console.log("Selected suggestion:", suggestion);
-                        setInputValue(suggestion);
-                        setShowSuggestions(false);
-                        setSuggestions([]);
-                        document.getElementById("searchInput").focus();
-                      }}
+                      aria-selected={inputValue === suggestion.label}
+                      style={{ padding: "10px", cursor: "likePointer" }}
+                      onClick={() => handleSuggestionClick(suggestion)}
                     >
-                      {suggestion}
+                      {suggestion.label}
                     </div>
                   ))}
                 </div>
