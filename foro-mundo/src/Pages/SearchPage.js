@@ -31,15 +31,16 @@ function SearchPage() {
     const filteredPosts = storedPosts.filter(
       (post) => post.topicId.toString() === topicId
     );
-    
     setPosts(filteredPosts);
 
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
   }, [topicId]);
 
+  //update the view_num on clicking a post
   const handlePostClick = (id) => {
-    const updatedPosts = posts.map((post) => {
+    const allPosts = JSON.parse(localStorage.getItem("posts"));
+    const updatedPosts = allPosts.map((post) => {
       if (post.id === id) {
         return { ...post, view_num: post.view_num + 1 };
       }
@@ -174,14 +175,13 @@ function SearchPage() {
           <p>No hay posts disponibles.</p>
         )}
       </div>
-      
+
       <IndexSelector
         totalTopics={sortedPosts.length}
         topicsPerPage={postsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-
     </MainLayout>
   );
 }

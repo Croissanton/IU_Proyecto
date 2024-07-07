@@ -18,14 +18,16 @@ const PostCard = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    onPostClick(id);
-    navigate(`/post/${id}`);
+    if (onPostClick) {
+      onPostClick(id);
+      navigate(`/post/${id}`);
+    }
   };
 
   const titleStyle = {
-    wordWrap: 'break-word',
-    whiteSpace: 'normal',
-    overflowWrap: 'break-word',
+    wordWrap: "break-word",
+    whiteSpace: "normal",
+    overflowWrap: "break-word",
   };
 
   return (
@@ -48,7 +50,9 @@ const PostCard = ({
                 <Row>
                   <Col>
                     <Row>
-                      <span className="h4" style={titleStyle}>{title}</span>
+                      <span className="h4" style={titleStyle}>
+                        {title}
+                      </span>
                     </Row>
                     <Row>
                       <p>{text}</p>
