@@ -109,18 +109,18 @@ function RequestsPage() {
               <div className="card-body">
                 <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
                 <button
-                  className="btn btn-success"
-                  onClick={() => handleAcceptRequest(user.username)}
-                  style={{ margin: "5px", float: "right" }}
-                >
-                  Aceptar
-                </button>
-                <button
                   className="btn btn-danger"
                   onClick={() => handleRejectRequest(user.username)}
                   style={{ margin: "5px", float: "right" }}
                 >
                   Rechazar
+                </button>
+                <button
+                  className="btn btn-success"
+                  onClick={() => handleAcceptRequest(user.username)}
+                  style={{ margin: "5px", float: "right" }}
+                >
+                  Aceptar
                 </button>
               </div>
             </div>
