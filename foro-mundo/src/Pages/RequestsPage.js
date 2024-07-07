@@ -107,7 +107,14 @@ function RequestsPage() {
           requests.map((user) => (
             <div key={user.username} className="card mb-3">
               <div className="card-body">
-                <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
+                <Link to={`/profile/${user.username}`} 
+                style={{ 
+                  fontSize: "1.5rem",
+                  textDecoration: 'none',
+                  color: 'black'
+                  }}>
+                  {user.username}
+                </Link>
                 <button
                   className="btn btn-danger"
                   onClick={() => handleRejectRequest(user.username)}
