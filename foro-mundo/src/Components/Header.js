@@ -58,7 +58,7 @@ const Header = forwardRef((props, ref) => {
       setShowSuggestions(false);
     } else {
       const filteredSuggestions = allSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(userInput.toLowerCase()),
+        suggestion.toLowerCase().includes(userInput.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
       setShowSuggestions(true);
@@ -96,11 +96,8 @@ const Header = forwardRef((props, ref) => {
         <Navbar.Brand
           as={Link}
           to="/"
+          id="brand"
           className="text-secondary m-auto"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-          }}
         >
           Mundo Foro
         </Navbar.Brand>

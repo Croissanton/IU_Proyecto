@@ -10,7 +10,7 @@ const useShortcuts = () => {
   const navigate = useNavigate();
 
   const handleKeyDown = (e) => {
-    if (e.ctrlKey && e.altKey) {
+    if (e.ctrlKey && (e.altKey || e.metaKey)) {
       switch (e.key) {
         case "l":
           if (!user) navigate("/login");

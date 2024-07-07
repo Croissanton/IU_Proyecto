@@ -40,9 +40,9 @@ function PostPage() {
   const [commentToDelete, setCommentToDelete] = useState(null);
 
   const titleStyle = {
-    wordWrap: 'break-word',
-    whiteSpace: 'normal',
-    overflowWrap: 'break-word',
+    wordWrap: "break-word",
+    whiteSpace: "normal",
+    overflowWrap: "break-word",
   };
 
   // Cargar post desde localStorage
@@ -61,12 +61,12 @@ function PostPage() {
     setSortCriteria("textoAZ");
   }, [postId]);
 
-  const handleClose = () => {
+  const handleCloseCommentModal = () => {
     setShowModal(false);
     showToast("El comentario no se ha creado.");
   };
 
-  const handleConfirm = () => {
+  const handleConfirmCommentModal = () => {
     setShowModal(false);
     const newCommentObject = {
       id: uuidv4(),
@@ -86,7 +86,15 @@ function PostPage() {
 
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+    // const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+    const updatedPosts = existingPosts.map((p) => {
+      console.log(`Checking post with ID ${p.id} against ${postId}`);
+      if (p.id.toString() === postId) {
+        console.log("Found post to update");
+        return post;
+      }
+      return p;
+    });
 
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
@@ -102,7 +110,8 @@ function PostPage() {
     }
 
     const button = document.getElementById("publicar_button");
-    button.disabled = newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
+    button.disabled =
+      newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
 
   const handleInputChange = (event) => {
@@ -230,7 +239,9 @@ function PostPage() {
           >
             {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active style={{...titleStyle}}>{post ? post.title : "Post"}</Breadcrumb.Item>
+          <Breadcrumb.Item active style={{ ...titleStyle }}>
+            {post ? post.title : "Post"}
+          </Breadcrumb.Item>
         </Breadcrumb>
         <label
           style={{
@@ -316,8 +327,8 @@ function PostPage() {
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
-              handleClose={handleClose}
-              handleConfirm={handleConfirm}
+              handleClose={handleCloseCommentModal}
+              handleConfirm={handleConfirmCommentModal}
               title="Confirmar Comentario"
             />
           </form>
@@ -380,14 +391,13 @@ function PostPage() {
         title="Eliminar Comentario"
         message="¿Estás seguro de que quieres eliminar este comentario?"
       />
-      
+
       <IndexSelector
         totalTopics={sortedComments.length}
         topicsPerPage={commentsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-
     </MainLayout>
   );
 }
