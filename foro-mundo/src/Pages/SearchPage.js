@@ -49,8 +49,10 @@ function SearchPage() {
     setSortCriteria("nombreAZ");
   }, [topicId]);
 
+  //update the view_num on clicking a post
   const handlePostClick = (id) => {
-    const updatedPosts = posts.map((post) => {
+    const allPosts = JSON.parse(localStorage.getItem("posts"));
+    const updatedPosts = allPosts.map((post) => {
       if (post.id === id) {
         return { ...post, view_num: post.view_num + 1 };
       }
@@ -127,7 +129,7 @@ function SearchPage() {
           {category.topic}
         </label>
       </div>
-      {localStorage.getItem("usuario") === undefined ? (
+      {localStorage.getItem("usuario") === null ? (
         <div></div>
       ) : (
         <div>
@@ -185,14 +187,13 @@ function SearchPage() {
           <p>No hay posts disponibles.</p>
         )}
       </div>
-      
+
       <IndexSelector
         totalTopics={sortedPosts.length}
         topicsPerPage={postsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-
     </MainLayout>
   );
 }
