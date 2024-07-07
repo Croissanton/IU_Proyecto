@@ -11,36 +11,26 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
   };
 
   return (
-    <Link onClick={handleClick} className="custom-link">
-      <Row className="gy-3">
-        <Col className="p-3 m-auto">
-          <Container className="border border-dark-subtle bg-light">
-            <Row className="custom-link-container">
-              <Col className="p-3">
-                <Row>
-                  <Col>
-                    <Row>
-                      <span className="my-3 h4">{topic}</span>
-                    </Row>
-                  </Col>
-                </Row>
+    <Link onClick={handleClick} className="custom-link mx-0 px-0">
+      <Container className="border border-dark-subtle bg-light mx-0 px-0">
+        <Row className="custom-link-container mx-0 px-0">
+          <Col className="p-3 d-flex align-items-center">
+            <span className=" h4">{topic}</span>
+          </Col>
+          <Col className="p-3">
+            <Row>
+              <Col className="m-auto">
+                <span className="h5">Número de posts</span>
+                <p>{post_num}</p>
               </Col>
-              <Col className="p-3">
-                <Row>
-                  <Col className="m-auto">
-                    <span className="h5">Número de posts</span>
-                    <p>{post_num}</p>
-                  </Col>
-                  <Col className="m-auto">
-                    <span className="h5">Número de visualizaciones</span>
-                    <p>{view_num}</p>
-                  </Col>
-                </Row>
+              <Col className="m-auto">
+                <span className="h5">Número de visualizaciones</span>
+                <p>{view_num}</p>
               </Col>
             </Row>
-          </Container>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Container>
     </Link>
   );
 };
