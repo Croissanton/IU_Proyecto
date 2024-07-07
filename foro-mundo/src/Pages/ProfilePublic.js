@@ -19,6 +19,8 @@ function ProfilePublic() {
   const currentUser = JSON.parse(localStorage.getItem("usuario"));
   const isCurrentUser = currentUser?.username === username;
 
+  const friendButtonColor = friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
+
   useEffect(() => {
     document.title = "Perfil";
 
@@ -361,7 +363,7 @@ function ProfilePublic() {
                   <>
                     <button
                       type="button"
-                      className="btn btn-danger"
+                      className="btn btn-primary"
                       style={{ margin: "5px" }}
                       onClick={handleShowBlockModal}
                     >
@@ -379,7 +381,7 @@ function ProfilePublic() {
                     {!isButtonUnavailable && (
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className={`btn ${friendButtonColor}`}
                       style={{ margin: "5px" }}
                       onClick={handleShowFriendModal}
                     >
