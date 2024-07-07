@@ -84,9 +84,14 @@ function PostPage() {
     post.lm_author = newCommentObject.author;
     post.lm_date = new Date().toLocaleString();
 
+    console.log("New comment:", newCommentObject);
+    console.log("Updated post comments:", post.comments);
+
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    console.log("Existing posts before update:", existingPosts);
     const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+    console.log("Updated posts:", updatedPosts);
 
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
