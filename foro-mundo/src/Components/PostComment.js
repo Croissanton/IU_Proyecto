@@ -62,13 +62,17 @@ const PostComment = ({
       newUpvotes -= 1;
       setUserVote(null);
       // remove from usuario upvotes
-      usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+      usuario.upComments = usuario.upComments.filter(
+        (commentId) => commentId !== id
+      );
     } else if (userVote === "downvote") {
       newDownvotes -= 1;
       newUpvotes += 1;
       setUserVote("upvote");
       // remove from usuario downvotes
-      usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+      usuario.downComments = usuario.downComments.filter(
+        (commentId) => commentId !== id
+      );
       // add to usuario upvotes
       usuario.upComments.push(id);
     } else {
@@ -81,9 +85,13 @@ const PostComment = ({
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
     localStorage.setItem("usuario", JSON.stringify(usuario));
-    localStorage.setItem("usuarios", JSON.stringify(
-      JSON.parse(localStorage.getItem("usuarios")).map((u) => u.username === usuario.username ? usuario : u)
-    )
+    localStorage.setItem(
+      "usuarios",
+      JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+          u.username === usuario.username ? usuario : u
+        )
+      )
     );
     updateLocalStorage(newUpvotes, newDownvotes);
   };
@@ -96,13 +104,17 @@ const PostComment = ({
       newDownvotes -= 1;
       setUserVote(null);
       // remove from usuario downvotes
-      usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+      usuario.downComments = usuario.downComments.filter(
+        (commentId) => commentId !== id
+      );
     } else if (userVote === "upvote") {
       newUpvotes -= 1;
       newDownvotes += 1;
       setUserVote("downvote");
       // remove from usuario upvotes
-      usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+      usuario.upComments = usuario.upComments.filter(
+        (commentId) => commentId !== id
+      );
       // add to usuario downvotes
       usuario.downComments.push(id);
     } else {
@@ -115,9 +127,13 @@ const PostComment = ({
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
     localStorage.setItem("usuario", JSON.stringify(usuario));
-    localStorage.setItem("usuarios", JSON.stringify(
-      JSON.parse(localStorage.getItem("usuarios")).map((u) => u.username === usuario.username ? usuario : u)
-    )
+    localStorage.setItem(
+      "usuarios",
+      JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+          u.username === usuario.username ? usuario : u
+        )
+      )
     );
     updateLocalStorage(newUpvotes, newDownvotes);
   };
@@ -136,7 +152,7 @@ const PostComment = ({
   useEffect(() => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
     const post = posts.find((post) => post.id === postId);
-    
+
     if (post) {
       const storedComment = post.comments.find((comment) => comment.id === id);
       if (storedComment) {
@@ -218,7 +234,7 @@ const PostComment = ({
                   </Row>
                 </Col>
                 <Col className="text-center">
-                  {(usuario === undefined || usuario.username !== author) ? (
+                  {usuario === undefined || usuario.username !== author ? (
                     <div></div>
                   ) : (
                     <Button

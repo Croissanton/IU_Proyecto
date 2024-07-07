@@ -53,7 +53,7 @@ function PostPage() {
     if (storedPosts) {
       const posts = JSON.parse(storedPosts);
 
-      const currentPost = posts.find((post) => post.id.toString() === postId);
+      const currentPost = posts.find((post) => post.id === parseInt(postId));
 
       setPost(currentPost);
       setComments(currentPost.comments);
@@ -76,7 +76,7 @@ function PostPage() {
     setShowModal(false);
     const newCommentObject = {
       id: uuidv4(),
-      postId: postId,
+      postId: parseInt(postId),
       title: newComment,
       author: usuario.username,
       upvotes: 0,
@@ -90,16 +90,10 @@ function PostPage() {
     post.lm_author = newCommentObject.author;
     post.lm_date = new Date().toLocaleString();
 
-    console.log("New comment:", newCommentObject);
-    console.log("Updated post comments:", post.comments);
-
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    // const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
     const updatedPosts = existingPosts.map((p) => {
-      console.log(`Checking post with ID ${p.id} against ${postId}`);
-      if (p.id.toString() === postId) {
-        console.log("Found post to update");
+      if (p.id === parseInt(postId)) {
         return post;
       }
       return p;
@@ -151,7 +145,9 @@ function PostPage() {
     post.lm_date = post.comments.length > 0 ? post.comments[0].date : "";
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+    const updatedPosts = existingPosts.map((p) =>
+      p.id === parseInt(postId) ? post : p
+    );
 
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
@@ -165,7 +161,9 @@ function PostPage() {
   const handleConfirmDeletePost = () => {
     // Eliminar el post del localStorage
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const filteredPosts = existingPosts.filter((p) => p.id !== postId);
+    const filteredPosts = existingPosts.filter(
+      (p) => p.id !== parseInt(postId)
+    );
 
     // Actualizar el número de posts en el localStorage para el topic correspondiente
     const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
@@ -201,7 +199,9 @@ function PostPage() {
   };
 
   // Filtrar comentarios de usuarios bloqueados
-  const filteredComments = comments.filter(comment => !blockedUsers.includes(comment.author));
+  const filteredComments = comments.filter(
+    (comment) => !blockedUsers.includes(comment.author)
+  );
 
   const sortedComments = [...filteredComments].sort((a, b) => {
     if (sortCriteria === "textoAZ") {
@@ -385,7 +385,7 @@ function PostPage() {
             <PostComment
               key={comment.id}
               id={comment.id}
-              postId={comment.postId}
+              postId={parseInt(comment.postId)}
               title={comment.title}
               author={comment.author}
               initialUpvotes={comment.upvotes}
