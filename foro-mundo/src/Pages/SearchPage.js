@@ -94,6 +94,14 @@ function SearchPage() {
       return b.res_num - a.res_num;
     } else if (sortCriteria === "menosRespuestas") {
       return a.res_num - b.res_num;
+    } else if (sortCriteria === "masPositivos") {
+      return b.upvotes - a.upvotes;
+    } else if (sortCriteria === "menosPositivos") {
+      return a.upvotes - b.upvotes;
+    } else if (sortCriteria === "masNegativos") {
+      return b.downvotes - a.downvotes;
+    } else if (sortCriteria === "menosNegativos") {
+      return a.downvotes - b.downvotes;
     }
 
     return 0;
@@ -163,6 +171,10 @@ function SearchPage() {
               <option value="menosVisitas"> Menos visitas</option>
               <option value="masRespuestas">Más respuestas</option>
               <option value="menosRespuestas">Menos respuestas</option>
+              <option value="masPositivos">Más votos positivos</option>
+              <option value="menosPositivos">Menos votos positivos</option>
+              <option value="masNegativos">Más votos negativos</option>
+              <option value="menosNegativos">Menos votos negativos</option>
             </select>
           </div>
         </div>
@@ -180,6 +192,9 @@ function SearchPage() {
               lm_date={post.lm_date}
               res_num={post.res_num}
               view_num={post.view_num}
+              comments={post.comments}
+              upvotes={post.upvotes}
+              downvotes={post.downvotes}
               onPostClick={handlePostClick}
             />
           ))

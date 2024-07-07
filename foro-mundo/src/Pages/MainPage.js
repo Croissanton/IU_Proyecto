@@ -25,26 +25,13 @@ function MainPage() {
     }
   };
 
-  // Tópicos predeterminados del foro
-  const defaultTopics = [
-    { id: 1, topic: "General", post_num: getNumberOfPosts(1), view_num: 0 },
-    { id: 2, topic: "Off-topic", post_num: getNumberOfPosts(2), view_num: 0 },
-    { id: 3, topic: "Tecnología", post_num: getNumberOfPosts(3), view_num: 0 },
-    { id: 4, topic: "Deportes", post_num: getNumberOfPosts(4), view_num: 0 },
-    { id: 5, topic: "Cine", post_num: getNumberOfPosts(5), view_num: 0 },
-    { id: 6, topic: "Coches", post_num: getNumberOfPosts(6), view_num: 0 },
-  ];
-
   // Al cargar el componente, intenta obtener los tópicos del localStorage
   useEffect(() => {
     const storedTopics = JSON.parse(localStorage.getItem("topics"));
     if (storedTopics) {
       setTopics(storedTopics);
-    } else {
-      // Si no hay tópicos en localStorage, los inicializamos
-      localStorage.setItem("topics", JSON.stringify(defaultTopics));
-      setTopics(defaultTopics);
     }
+    
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
   }, []);

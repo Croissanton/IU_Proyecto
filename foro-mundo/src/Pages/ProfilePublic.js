@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { useToast } from "../Context/ToastContext.js";
 
 function ProfilePublic() {
   const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     document.title = "Perfil";
@@ -51,6 +53,7 @@ function ProfilePublic() {
 
         // Navegar a la página de usuarios bloqueados o mostrar un mensaje de éxito
         navigate("/blocked");
+        showToast("Usuario bloqueado correctamente.", "bg-success");
       } else {
         alert("Este usuario ya está bloqueado.");
       }

@@ -281,6 +281,9 @@ function PostPage() {
             lm_date={post.lm_date}
             res_num={comments.length}
             view_num={post.view_num}
+            comments={post.comments}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
           />
         </div>
       )}
@@ -346,10 +349,11 @@ function PostPage() {
           </form>
         </div>
       )}
-
-      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
-        Comentarios
-      </label>
+      <div className="container-xxl my-3">
+        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
+          Comentarios
+        </label>
+      </div>
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
           <label
