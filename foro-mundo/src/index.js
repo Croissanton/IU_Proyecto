@@ -18,6 +18,7 @@ import MainPage from "./Pages/MainPage";
 import HistorialPage from "./Pages/HistorialPage";
 import BlockedPage from "./Pages/BlockedPage";
 import FriendsPage from "./Pages/FriendsPage";
+import RequestsPage from "./Pages/RequestsPage";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       { path: "/historial/:username", element: <HistorialPage /> },
       { path: "/blocked", element: <BlockedPage />},
       { path: "/friends", element: <FriendsPage />},
+      { path: "/requests", element: <RequestsPage />},
       { path: "*", element: <ErrorPage /> },
     ],
   },

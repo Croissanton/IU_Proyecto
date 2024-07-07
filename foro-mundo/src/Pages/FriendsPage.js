@@ -33,6 +33,11 @@ function FriendsPage() {
       if (currentUser.friendList.includes(username)) {
         // Eliminar usuario de la lista de amigos
         currentUser.friendList = currentUser.friendList.filter((friend) => friend !== username);
+        // Eliminar usuario de la lista de amigos del amigo
+        const friendUser = allUsers.find((user) => user.username === username);
+        if (friendUser.friendList) {
+            friendUser.friendList = friendUser.friendList.filter((friend) => friend !== currentUser.username);
+            }
 
         // Actualizar el usuario actual en localStorage
         localStorage.setItem("usuario", JSON.stringify(currentUser));
@@ -42,6 +47,10 @@ function FriendsPage() {
           if (user.username === currentUser.username) {
             return currentUser;
           }
+          if(user.username === friendUser.username)
+            {
+                return friendUser;
+            }
           return user;
         });
 
@@ -82,6 +91,11 @@ function FriendsPage() {
         </label>
       </div>
       <div className="container-xxl my-3">
+        <Link to="/requests">
+          <button className="btn btn-secondary" style={{ marginBottom: "20px" }}>
+            Peticiones de Amistad
+          </button>
+        </Link>
         {friends.length === 0 ? (
             <label
                 style={{
