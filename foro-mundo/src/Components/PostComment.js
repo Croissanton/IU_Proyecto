@@ -81,6 +81,10 @@ const PostComment = ({
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
     localStorage.setItem("usuario", JSON.stringify(usuario));
+    localStorage.setItem("usuarios", JSON.stringify(
+      JSON.parse(localStorage.getItem("usuarios")).map((u) => u.username === usuario.username ? usuario : u)
+    )
+    );
     updateLocalStorage(newUpvotes, newDownvotes);
   };
 
@@ -111,6 +115,10 @@ const PostComment = ({
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
     localStorage.setItem("usuario", JSON.stringify(usuario));
+    localStorage.setItem("usuarios", JSON.stringify(
+      JSON.parse(localStorage.getItem("usuarios")).map((u) => u.username === usuario.username ? usuario : u)
+    )
+    );
     updateLocalStorage(newUpvotes, newDownvotes);
   };
 
