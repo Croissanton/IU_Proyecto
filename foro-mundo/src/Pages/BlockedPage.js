@@ -110,7 +110,14 @@ function BlockedUsersPage() {
           blockedUsers.map((user) => (
             <div key={user.username} className="card mb-3">
               <div className="card-body">
-                <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
+              <Link to={`/profile/${user.username}`} 
+              style={{ 
+                fontSize: "1.5rem",
+                textDecoration: 'none',
+                color: 'black'
+                }}>
+                {user.username}
+              </Link>
                 <button
                     className="btn btn-danger"
                     onClick={() => { handleShowUnblockModal(user.username); }}

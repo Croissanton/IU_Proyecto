@@ -107,20 +107,27 @@ function RequestsPage() {
           requests.map((user) => (
             <div key={user.username} className="card mb-3">
               <div className="card-body">
-                <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
-                <button
-                  className="btn btn-success"
-                  onClick={() => handleAcceptRequest(user.username)}
-                  style={{ margin: "5px", float: "right" }}
-                >
-                  Aceptar
-                </button>
+                <Link to={`/profile/${user.username}`} 
+                style={{ 
+                  fontSize: "1.5rem",
+                  textDecoration: 'none',
+                  color: 'black'
+                  }}>
+                  {user.username}
+                </Link>
                 <button
                   className="btn btn-danger"
                   onClick={() => handleRejectRequest(user.username)}
                   style={{ margin: "5px", float: "right" }}
                 >
                   Rechazar
+                </button>
+                <button
+                  className="btn btn-success"
+                  onClick={() => handleAcceptRequest(user.username)}
+                  style={{ margin: "5px", float: "right" }}
+                >
+                  Aceptar
                 </button>
               </div>
             </div>

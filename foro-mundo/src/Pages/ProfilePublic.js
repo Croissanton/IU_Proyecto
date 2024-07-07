@@ -6,7 +6,7 @@ import { useToast } from "../Context/ToastContext.js";
 import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el modal de confirmación
 
 function ProfilePublic() {
-  const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
+  const { username } = useParams();
   const [userData, setUserData] = useState(null);
   const [friendStatus, setFriendStatus] = useState("");
   const [blockStatus, setBlockStatus] = useState("");
@@ -15,6 +15,9 @@ function ProfilePublic() {
   const [showBlockModal, setShowBlockModal] = useState(false);
   const [showFriendModal, setShowFriendModal] = useState(false);
   const [isButtonUnavailable, setIsButtonUnavailable] = useState(false);
+  
+  const currentUser = JSON.parse(localStorage.getItem("usuario"));
+  const isCurrentUser = currentUser?.username === username;
 
   useEffect(() => {
     document.title = "Perfil";
@@ -341,6 +344,7 @@ function ProfilePublic() {
                   disabled
                 ></textarea>
               </div>
+
               <div className="col-12">
                 {!isButtonUnavailable && (
                 <Link to={`/historial/${username}`}>
@@ -352,58 +356,46 @@ function ProfilePublic() {
                     Ver Historial
                   </button>
                 </Link>
-                )
-              }
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  style={{ margin: "5px" }}
-                  onClick={handleShowBlockModal}
-                >
-                  {blockStatus}
-                </button>
-                <ConfirmationModal
-                  show={showBlockModal}
-                  handleClose={() => setShowBlockModal(false)}
-                  handleConfirm={confirmBlockUser}
-                  title={
-                    blockStatus === "Bloquear Usuario"
-                      ? "Bloquear Usuario"
-                      : "Desbloquear Usuario"
-                  }
-                  message={`¿Estás seguro de que quieres ${
-                    blockStatus === "Bloquear Usuario"
-                      ? "bloquear"
-                      : "desbloquear"
-                  } a este usuario?`}
-                />
-                {!isButtonUnavailable && (
-                  <button
-                    type="button"
-                    className="btn btn-success"
-                    style={{ margin: "5px" }}
-                    onClick={handleShowFriendModal}
-                  >
-                    {friendStatus}
-                  </button>
                 )}
-                <ConfirmationModal
-                  show={showFriendModal}
-                  handleClose={() => setShowFriendModal(false)}
-                  handleConfirm={confirmFriendRequest}
-                  title={
-                    friendStatus === "Agregar Amigo" ||
-                    friendStatus === "Aceptar Solicitud"
-                      ? "Añadir Amigo"
-                      : "Eliminar Amigo"
-                  }
-                  message={`¿Estás seguro de que quieres ${
-                    friendStatus === "Agregar Amigo" ||
-                    friendStatus === "Aceptar Solicitud"
-                      ? "añadir a"
-                      : "eliminar a"
-                  } este usuario como amigo?`}
-                />
+                {!isCurrentUser && (
+                  <>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      style={{ margin: "5px" }}
+                      onClick={handleShowBlockModal}
+                    >
+                      {blockStatus}
+                    </button>
+
+                    <ConfirmationModal
+                      show={showBlockModal}
+                      handleClose={() => setShowBlockModal(false)}
+                      handleConfirm={confirmBlockUser}
+                      title={blockStatus === "Bloquear Usuario" ? "Bloquear Usuario" : "Desbloquear Usuario"}
+                      message={`¿Estás seguro de que quieres ${blockStatus === "Bloquear Usuario" ? "bloquear" : "desbloquear"} a este usuario?`}
+                    />
+
+                    {!isButtonUnavailable && (
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      style={{ margin: "5px" }}
+                      onClick={handleShowFriendModal}
+                    >
+                      {friendStatus}
+                    </button>
+                    )
+                    }
+                    <ConfirmationModal
+                      show={showFriendModal}
+                      handleClose={() => setShowFriendModal(false)}
+                      handleConfirm={confirmFriendRequest}
+                      title={friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "Añadir Amigo" : "Eliminar Amigo"}
+                      message={`¿Estás seguro de que quieres ${friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "añadir a" : "eliminar a"} este usuario como amigo?`}
+                    />
+                  </>
+                )}
               </div>
             </form>
           </div>
