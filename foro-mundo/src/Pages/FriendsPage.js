@@ -51,7 +51,7 @@ function FriendsPage() {
         const updatedFriends = friends.filter((user) => user.username !== username);
         setFriends(updatedFriends);
 
-        showToast("Amigo eliminado correctamente.", "bg-success");
+        showToast("Amigo eliminado correctamente.", "bg-danger");
       } else {
         alert("Este usuario no está en tu lista de amigos.");
       }

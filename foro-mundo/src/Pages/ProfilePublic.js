@@ -7,6 +7,8 @@ import { useToast } from "../Context/ToastContext.js";
 function ProfilePublic() {
   const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
   const [userData, setUserData] = useState(null);
+  const [friendStatus, setFriendStatus] = useState("");
+  const [blockStatus, setBlockStatus] = useState("");
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -15,14 +17,38 @@ function ProfilePublic() {
 
     // Obtener los datos del usuario desde localStorage basado en el username
     const storedUsers = localStorage.getItem("usuarios");
+    const currentUser = JSON.parse(localStorage.getItem("usuario"));
     if (storedUsers) {
       const parsedUsers = JSON.parse(storedUsers);
       const user = parsedUsers.find((user) => user.username === username);
       if (user) {
         setUserData(user);
+        updateStatuses(currentUser, user);
       }
     }
   }, [username]);
+
+  const updateStatuses = (currentUser, user) => {
+    if (currentUser && user) {
+      // Determinar el estado de la solicitud de amistad
+      if (currentUser.friendList?.includes(username)) {
+        setFriendStatus("Eliminar Amigo");
+      } else if (currentUser.incomingRequests?.includes(username)) {
+        setFriendStatus("Aceptar Solicitud");
+      } else if (user.incomingRequests?.includes(currentUser.username)) {
+        setFriendStatus("Solicitud Enviada");
+      } else {
+        setFriendStatus("Agregar Amigo");
+      }
+
+      // Determinar el estado de bloqueo
+      if (currentUser.blockList?.includes(username)) {
+        setBlockStatus("Desbloquear Usuario");
+      } else {
+        setBlockStatus("Bloquear Usuario");
+      }
+    }
+  };
 
   const handleBlockUser = () => {
     let currentUser = JSON.parse(localStorage.getItem("usuario"));
@@ -37,26 +63,77 @@ function ProfilePublic() {
       if (!currentUser.blockList.includes(username)) {
         // Añadir usuario a la lista de bloqueados
         currentUser.blockList.push(username);
-
-        // Actualizar el usuario actual en localStorage
-        localStorage.setItem("usuario", JSON.stringify(currentUser));
-
-        // Actualizar la lista de usuarios en localStorage
-        const updatedUsers = allUsers.map((user) => {
-          if (user.username === currentUser.username) {
-            return currentUser;
-          }
-          return user;
-        });
-
-        localStorage.setItem("usuarios", JSON.stringify(updatedUsers));
-
-        // Navegar a la página de usuarios bloqueados o mostrar un mensaje de éxito
-        navigate("/blocked");
-        showToast("Usuario bloqueado correctamente.", "bg-success");
+        setBlockStatus("Desbloquear Usuario");
       } else {
-        alert("Este usuario ya está bloqueado.");
+        // Eliminar usuario de la lista de bloqueados
+        currentUser.blockList = currentUser.blockList.filter(user => user !== username);
+        setBlockStatus("Bloquear Usuario");
       }
+
+      // Actualizar el usuario actual en localStorage
+      localStorage.setItem("usuario", JSON.stringify(currentUser));
+
+      // Actualizar la lista de usuarios en localStorage
+      const updatedUsers = allUsers.map((user) => {
+        if (user.username === currentUser.username) {
+          return currentUser;
+        }
+        return user;
+      });
+
+      localStorage.setItem("usuarios", JSON.stringify(updatedUsers));
+
+      // Mostrar mensaje de éxito
+      showToast("Estado de bloqueo actualizado correctamente.", "bg-success");
+    }
+  };
+
+  const handleFriendRequest = () => {
+    let currentUser = JSON.parse(localStorage.getItem("usuario"));
+    const allUsers = JSON.parse(localStorage.getItem("usuarios"));
+    let friendUser = allUsers.find(user => user.username === username);
+
+    if (currentUser && friendUser && allUsers) {
+      // Inicializar las propiedades si no existen
+      if (!currentUser.friendList) currentUser.friendList = [];
+      if (!currentUser.incomingRequests) currentUser.incomingRequests = [];
+      if (!friendUser.friendList) friendUser.friendList = [];
+      if (!friendUser.incomingRequests) friendUser.incomingRequests = [];
+
+      // Comprobaciones y actualizaciones de las listas de amigos y solicitudes
+      if (currentUser.friendList.includes(username)) {
+        // Borrar amigo de la lista de amigos
+        currentUser.friendList = currentUser.friendList.filter(friend => friend !== username);
+        friendUser.friendList = friendUser.friendList.filter(friend => friend !== currentUser.username);
+        setFriendStatus("Agregar Amigo");
+      } else if (currentUser.incomingRequests.includes(username)) {
+        // Añadir usuario a la lista de amigos
+        currentUser.friendList.push(username);
+        friendUser.friendList.push(currentUser.username);
+        currentUser.incomingRequests = currentUser.incomingRequests.filter(request => request !== username);
+        setFriendStatus("Eliminar Amigo");
+      } else if (friendUser.incomingRequests.includes(currentUser.username)) {
+        // Quitar solicitud de amistad
+        friendUser.incomingRequests = friendUser.incomingRequests.filter(request => request !== currentUser.username);
+        setFriendStatus("Agregar Amigo");
+      } else {
+        // Añadir solicitud de amistad
+        friendUser.incomingRequests.push(currentUser.username);
+        setFriendStatus("Solicitud Enviada");
+      }
+
+      // Actualizar la lista de usuarios en localStorage
+      const updatedUsers = allUsers.map(user => {
+        if (user.username === currentUser.username) return currentUser;
+        if (user.username === friendUser.username) return friendUser;
+        return user;
+      });
+
+      localStorage.setItem("usuario", JSON.stringify(currentUser));
+      localStorage.setItem("usuarios", JSON.stringify(updatedUsers));
+
+      // Mostrar mensaje de éxito
+      showToast("Solicitud de amistad enviada correctamente.", "bg-success");
     }
   };
 
@@ -204,7 +281,15 @@ function ProfilePublic() {
                   style={{ margin: "5px" }}
                   onClick={handleBlockUser}
                 >
-                  Bloquear Usuario
+                  {blockStatus}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  style={{ margin: "5px" }}
+                  onClick={handleFriendRequest}
+                >
+                  {friendStatus}
                 </button>
               </div>
             </form>
