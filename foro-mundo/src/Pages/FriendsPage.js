@@ -3,10 +3,14 @@ import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
+import ConfirmationModal from '../Components/ConfirmationModal';
 
 function FriendsPage() {
   const [friends, setFriends] = useState([]);
   const { showToast } = useToast();
+
+  const [showRemoveFriendModal, setShowRemoveFriendModal] = useState(false);
+  const [usernameToRemove, setUsernameToRemove] = useState("");
 
   useEffect(() => {
     document.title = "Amigos";
@@ -19,6 +23,16 @@ function FriendsPage() {
       setFriends(amigos);
     }
   }, []);
+
+  const handleShowRemoveFriendModal = (username) => {
+    setUsernameToRemove(username);
+    setShowRemoveFriendModal(true);
+  };
+  
+  const confirmRemoveFriend = () => {
+    handleRemoveFriend(usernameToRemove);
+    setShowRemoveFriendModal(false);
+  };  
 
   const handleRemoveFriend = (username) => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
@@ -113,11 +127,18 @@ function FriendsPage() {
                 <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
                 <button
                     className="btn btn-danger"
-                    onClick={() => { handleRemoveFriend(user.username); }}
+                    onClick={() => { handleShowRemoveFriendModal(user.username); }}
                     style={{ margin: "5px", float: "right"}}
                 >
                     Eliminar amigo
                 </button>
+                <ConfirmationModal
+                  show={showRemoveFriendModal}
+                  handleClose={() => setShowRemoveFriendModal(false)}
+                  handleConfirm={confirmRemoveFriend}
+                  title="Eliminar Amigo"
+                  message="¿Estás seguro de que quieres eliminar a este amigo?"
+                />
               </div>
             </div>
           ))

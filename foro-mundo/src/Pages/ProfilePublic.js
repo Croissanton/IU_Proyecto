@@ -3,6 +3,8 @@ import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
+import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el modal de confirmación
+
 
 function ProfilePublic() {
   const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
@@ -11,6 +13,9 @@ function ProfilePublic() {
   const [blockStatus, setBlockStatus] = useState("");
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  const [showFriendModal, setShowFriendModal] = useState(false);
+
 
   useEffect(() => {
     document.title = "Perfil";
@@ -27,6 +32,20 @@ function ProfilePublic() {
       }
     }
   }, [username]);
+
+  const handleShowBlockModal = () => setShowBlockModal(true);
+  const handleShowFriendModal = () => setShowFriendModal(true);
+
+  const confirmBlockUser = () => {
+    handleBlockUser();
+    setShowBlockModal(false);
+  };
+  
+  const confirmFriendRequest = () => {
+    handleFriendRequest();
+    setShowFriendModal(false);
+  };
+  
 
   const updateStatuses = (currentUser, user) => {
     if (currentUser && user) {
@@ -279,18 +298,32 @@ function ProfilePublic() {
                   type="button"
                   className="btn btn-danger"
                   style={{ margin: "5px" }}
-                  onClick={handleBlockUser}
+                  onClick={handleShowBlockModal}
                 >
                   {blockStatus}
                 </button>
+                <ConfirmationModal
+                  show={showBlockModal}
+                  handleClose={() => setShowBlockModal(false)}
+                  handleConfirm={confirmBlockUser}
+                  title={blockStatus === "Bloquear Usuario" ? "Bloquear Usuario" : "Desbloquear Usuario"}
+                  message={`¿Estás seguro de que quieres ${blockStatus === "Bloquear Usuario" ? "bloquear" : "desbloquear"} a este usuario?`}
+                />
                 <button
                   type="button"
                   className="btn btn-success"
                   style={{ margin: "5px" }}
-                  onClick={handleFriendRequest}
+                  onClick={handleShowFriendModal}
                 >
                   {friendStatus}
                 </button>
+                <ConfirmationModal
+                  show={showFriendModal}
+                  handleClose={() => setShowFriendModal(false)}
+                  handleConfirm={confirmFriendRequest}
+                  title={friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "Añadir Amigo" : "Eliminar Amigo"}
+                  message={`¿Estás seguro de que quieres ${friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "añadir a" : "eliminar a"} este usuario como amigo?`}
+                />
               </div>
             </form>
           </div>

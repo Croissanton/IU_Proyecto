@@ -3,10 +3,14 @@ import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
+import ConfirmationModal from '../Components/ConfirmationModal';
 
 function BlockedUsersPage() {
   const [blockedUsers, setBlockedUsers] = useState([]);
   const { showToast } = useToast();
+
+  const [showUnblockModal, setShowUnblockModal] = useState(false);
+  const [usernameToUnblock, setUsernameToUnblock] = useState("");
 
   useEffect(() => {
     document.title = "Bloqueados";
@@ -19,6 +23,16 @@ function BlockedUsersPage() {
       setBlockedUsers(bloqueados);
     }
   }, []);
+
+  const handleShowUnblockModal = (username) => {
+    setUsernameToUnblock(username);
+    setShowUnblockModal(true);
+  };
+
+  const confirmUnblock = () => {
+    handleUnblock(usernameToUnblock);
+    setShowUnblockModal(false);
+  };
 
   const handleUnblock = (username) => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
@@ -99,11 +113,18 @@ function BlockedUsersPage() {
                 <label style={{ fontSize: "1.5rem" }}> {user.username} </label>
                 <button
                     className="btn btn-danger"
-                    onClick={() => { handleUnblock(user.username); }}
+                    onClick={() => { handleShowUnblockModal(user.username); }}
                     style={{ margin: "5px", float: "right"}}
                 >
                     Desbloquear
                 </button>
+                <ConfirmationModal
+                  show={showUnblockModal}
+                  handleClose={() => setShowUnblockModal(false)}
+                  handleConfirm={confirmUnblock}
+                  title="Desbloquear Usuario"
+                  message="¿Estás seguro de que quieres desbloquear a este usuario?"
+                />
               </div>
             </div>
           ))
