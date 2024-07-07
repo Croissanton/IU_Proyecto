@@ -225,7 +225,7 @@ function ProfilePage() {
                   >
                     Editar
                   </button>
-                  <Link to="/historial">
+                  <Link to={`/historial/${profileData.username}`}>
                     <button
                       type="button"
                       className="btn btn-primary"

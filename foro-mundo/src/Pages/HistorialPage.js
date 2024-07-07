@@ -1,46 +1,34 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import PostCard from "../Components/PostCard";
 
-function HistorialPage({ currentUser }) {
+function HistorialPage() {
+  const { username } = useParams();
+  const navigate = useNavigate();
   const [userPosts, setUserPosts] = useState([]);
   const [userComments, setUserComments] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Historial";
 
-    // Verificar si currentUser y currentUser.username están definidos
-    if (currentUser && currentUser.username) {
-      // Obtener posts del localStorage y filtrar por autor
-      const postsFromStorage = localStorage.getItem("posts")
-        ? JSON.parse(localStorage.getItem("posts"))
-        : [];
+    // Obtener posts del localStorage y filtrar por autor
+    const postsFromStorage = localStorage.getItem("posts")
+      ? JSON.parse(localStorage.getItem("posts"))
+      : [];
 
-      const filteredPosts = postsFromStorage.filter(
-        (post) => post.author === currentUser.username
-      );
+    const filteredPosts = postsFromStorage.filter(
+      (post) => post.author === username
+    );
 
-      setUserPosts(filteredPosts);
+    const commentsByUser = postsFromStorage.flatMap(post => 
+      post.comments ? post.comments.filter(comment => comment.author === username) : []
+    );
 
-      // Obtener comentarios del localStorage y filtrar por autor
-      const commentsFromStorage = localStorage.getItem("comments")
-        ? JSON.parse(localStorage.getItem("comments"))
-        : [];
-
-      const filteredComments = commentsFromStorage.filter(
-        (comment) => comment.author === currentUser.username
-      );
-
-      setUserComments(filteredComments);
-    } else {
-      // Manejar caso donde currentUser no tiene datos válidos
-      setUserPosts([]);
-      setUserComments([]);
-    }
-  }, [currentUser]);
+    setUserPosts(filteredPosts);
+    setUserComments(commentsByUser);
+  }, [username]);
 
   const handleViewPost = (postId) => {
     navigate(`/post/${postId}`);
@@ -87,7 +75,7 @@ function HistorialPage({ currentUser }) {
             <PostCard
               key={post.id}
               id={post.id}
-              titulo={post.title}
+              title={post.title}
               text={post.text}
               author={post.author}
               date={post.date}
@@ -96,6 +84,7 @@ function HistorialPage({ currentUser }) {
               res_num={post.comments ? post.comments.length : 0}
               view_num={post.view_num || 0}
               onPostClick={() => handleViewPost(post.id)}
+              comments={post.comments}
             />
           ))
         )}
