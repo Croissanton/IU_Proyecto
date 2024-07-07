@@ -149,6 +149,17 @@ function ProfilePublic() {
                   disabled
                 ></textarea>
               </div>
+              <div className="col-12">
+                <Link to={`/historial/${username}`}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ marginTop: "20px" }}
+                  >
+                    Ver Historial
+                  </button>
+                </Link>
+              </div>
             </form>
           </div>
         </div>
