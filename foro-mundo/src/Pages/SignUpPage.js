@@ -48,6 +48,7 @@ function SignUpPage() {
     profilePicture: "",
     friendList: [],
     blockedList: [],
+    incomingRequests: [],
     upPosts: [],
     downPosts: [],
     upComments: [],
