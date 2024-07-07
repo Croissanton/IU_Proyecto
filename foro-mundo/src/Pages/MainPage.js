@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Container, Row } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import ForumCard from "../Components/ForumCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
@@ -15,23 +15,13 @@ function MainPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const topicsPerPage = 5;
 
-  const getNumberOfPosts = (topicId) => {
-    var storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    if (storedPosts.length <= 0) {
-      console.log("no posts :(");
-      return 0;
-    } else {
-      return storedPosts.filter((post) => post.topicId === topicId).length;
-    }
-  };
-
   // Al cargar el componente, intenta obtener los tópicos del localStorage
   useEffect(() => {
     const storedTopics = JSON.parse(localStorage.getItem("topics"));
     if (storedTopics) {
       setTopics(storedTopics);
     }
-    
+
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
   }, []);
@@ -116,16 +106,22 @@ function MainPage() {
           </div>
         </div>
 
-        {currentTopics.map((topic) => (
-          <ForumCard
-            key={topic.id}
-            id={topic.id}
-            topic={topic.topic}
-            post_num={topic.post_num}
-            view_num={topic.view_num}
-            onTopicClick={handleTopicClick}
-          />
-        ))}
+        <Container>
+          {currentTopics.map((topic) => (
+            // <div className="col-12 col-sm-6 col-md-4 col-lg-3 px-0 px-sm-2">
+            <Row className="mb-2">
+              <ForumCard
+                key={topic.id}
+                id={topic.id}
+                topic={topic.topic}
+                post_num={topic.post_num}
+                view_num={topic.view_num}
+                onTopicClick={handleTopicClick}
+              />
+            </Row>
+            // </div>
+          ))}
+        </Container>
       </div>
 
       <IndexSelector

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import data from "../data/initialPosts.json";
@@ -31,7 +31,7 @@ function SearchPage() {
     const filteredPosts = storedPosts.filter(
       (post) => post.topicId.toString() === topicId
     );
-    
+
     // Filtrar posts de usuarios no bloqueados
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
@@ -179,28 +179,32 @@ function SearchPage() {
           </div>
         </div>
 
-        {currentPosts.length > 0 ? (
-          currentPosts.map((post) => (
-            <PostCard
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              text={post.text}
-              author={post.author}
-              date={post.date}
-              lm_author={post.lm_author}
-              lm_date={post.lm_date}
-              res_num={post.res_num}
-              view_num={post.view_num}
-              comments={post.comments}
-              upvotes={post.upvotes}
-              downvotes={post.downvotes}
-              onPostClick={handlePostClick}
-            />
-          ))
-        ) : (
-          <p>No hay posts disponibles.</p>
-        )}
+        <Container>
+          {currentPosts.length > 0 ? (
+            currentPosts.map((post) => (
+              <Row className="mb-2">
+                <PostCard
+                  key={post.id}
+                  id={post.id}
+                  title={post.title}
+                  text={post.text}
+                  author={post.author}
+                  date={post.date}
+                  lm_author={post.lm_author}
+                  lm_date={post.lm_date}
+                  res_num={post.res_num}
+                  view_num={post.view_num}
+                  comments={post.comments}
+                  upvotes={post.upvotes}
+                  downvotes={post.downvotes}
+                  onPostClick={handlePostClick}
+                />
+              </Row>
+            ))
+          ) : (
+            <p>No hay posts disponibles.</p>
+          )}
+        </Container>
       </div>
 
       <IndexSelector
