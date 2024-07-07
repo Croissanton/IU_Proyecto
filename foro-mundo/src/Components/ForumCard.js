@@ -16,7 +16,7 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
         <Col className="p-3 m-auto">
           <Container className="border border-dark-subtle bg-light">
             <Row className="custom-link-container">
-              <Col className="border-end border-dark-subtle p-3">
+              <Col className="p-3">
                 <Row>
                   <Col>
                     <Row>
@@ -28,7 +28,7 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
               <Col className="p-3">
                 <Row>
                   <Col className="m-auto">
-                    <span className="h5">Posts</span>
+                    <span className="h5">Número de posts</span>
                     <p>{post_num}</p>
                   </Col>
                   <Col className="m-auto">
