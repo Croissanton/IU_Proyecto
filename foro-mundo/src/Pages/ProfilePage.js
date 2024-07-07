@@ -222,16 +222,28 @@ function ProfilePage() {
                       e.preventDefault();
                       setIsEditing(true);
                     }}
+                    style={{ margin: "5px" }}
                   >
                     Editar
                   </button>
+                  
                   <Link to={`/historial/${profileData.username}`}>
                     <button
                       type="button"
                       className="btn btn-primary"
-                      style={{ marginLeft: "10px" }}
+                      style={{ margin: "5px" }}
                     >
                       Ver Historial
+                    </button>
+                  </Link>
+
+                  <Link to={`/blocked`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ margin: "5px" }}
+                    >
+                      Ver Bloqueados
                     </button>
                   </Link>
                 </div>

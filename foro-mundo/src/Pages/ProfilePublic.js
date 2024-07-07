@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function ProfilePublic() {
   const { username } = useParams(); // Obtener el username de usuario desde los parámetros de la URL
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Perfil";
@@ -21,6 +22,41 @@ function ProfilePublic() {
     }
   }, [username]);
 
+  const handleBlockUser = () => {
+    let currentUser = JSON.parse(localStorage.getItem("usuario"));
+    const allUsers = JSON.parse(localStorage.getItem("usuarios"));
+
+    if (currentUser && allUsers) {
+      // Asegurarse de que currentUser tenga una blockList
+      if (!currentUser.blockList) {
+        currentUser.blockList = [];
+      }
+
+      if (!currentUser.blockList.includes(username)) {
+        // Añadir usuario a la lista de bloqueados
+        currentUser.blockList.push(username);
+
+        // Actualizar el usuario actual en localStorage
+        localStorage.setItem("usuario", JSON.stringify(currentUser));
+
+        // Actualizar la lista de usuarios en localStorage
+        const updatedUsers = allUsers.map((user) => {
+          if (user.username === currentUser.username) {
+            return currentUser;
+          }
+          return user;
+        });
+
+        localStorage.setItem("usuarios", JSON.stringify(updatedUsers));
+
+        // Navegar a la página de usuarios bloqueados o mostrar un mensaje de éxito
+        navigate("/blocked");
+      } else {
+        alert("Este usuario ya está bloqueado.");
+      }
+    }
+  };
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">
@@ -28,7 +64,7 @@ function ProfilePublic() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>Perfil</Breadcrumb.Item>
+          <Breadcrumb.Item active>{username}</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <label
@@ -40,7 +76,7 @@ function ProfilePublic() {
           paddingBottom: "50px",
         }}
       >
-        Perfil
+        {username}
       </label>
       {userData ? (
         <div style={{ display: "flex" }}>
@@ -154,11 +190,19 @@ function ProfilePublic() {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    style={{ marginTop: "20px" }}
+                    style={{ margin: "5px" }}
                   >
                     Ver Historial
                   </button>
                 </Link>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  style={{ margin: "5px" }}
+                  onClick={handleBlockUser}
+                >
+                  Bloquear Usuario
+                </button>
               </div>
             </form>
           </div>

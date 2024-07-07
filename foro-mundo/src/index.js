@@ -16,6 +16,7 @@ import MessengerPage from "./Pages/MessengerPage";
 import SignUpPage from "./Pages/SignUpPage";
 import MainPage from "./Pages/MainPage";
 import HistorialPage from "./Pages/HistorialPage";
+import BlockedPage from "./Pages/BlockedPage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: "/help", element: <HelpPage /> },
       { path: "/messenger", element: <MessengerPage /> },
       { path: "/historial/:username", element: <HistorialPage /> },
+      { path: "/blocked", element: <BlockedPage />},
       { path: "*", element: <ErrorPage /> },
     ],
   },

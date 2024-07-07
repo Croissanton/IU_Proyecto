@@ -31,7 +31,19 @@ function SearchPage() {
     const filteredPosts = storedPosts.filter(
       (post) => post.topicId.toString() === topicId
     );
-    setPosts(filteredPosts);
+    
+    // Filtrar posts de usuarios no bloqueados
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    if (usuario && usuarios && Array.isArray(usuario.blockList)) {
+      const bloqueados = usuario.blockList;
+      const postsFiltrados = filteredPosts.filter(
+        (post) => !bloqueados.includes(post.author)
+      );
+      setPosts(postsFiltrados);
+    } else {
+      setPosts(filteredPosts);
+    }
 
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
