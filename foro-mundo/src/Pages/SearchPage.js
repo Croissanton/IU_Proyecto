@@ -172,10 +172,10 @@ const SearchPage = () => {
         <h2>Resultados de busqueda: "{query}"</h2>
         <hr />
         <Row>
-          {renderSuggestionList("Users", suggestions.users)}
+          {renderSuggestionList("Usuarios", suggestions.users)}
           {renderSuggestionList("Posts", suggestions.posts)}
-          {renderSuggestionList("Comments", suggestions.comments)}
-          {renderSuggestionList("Topics", suggestions.topics)}
+          {renderSuggestionList("Comentarios", suggestions.comments)}
+          {renderSuggestionList("Foros", suggestions.topics)}
         </Row>
       </Container>
     </MainLayout>
