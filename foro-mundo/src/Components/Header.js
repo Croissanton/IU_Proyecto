@@ -157,6 +157,13 @@ const Header = forwardRef((props, ref) => {
   const { showToast } = useToast();
 
   const handleLogout = () => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    usuario.lastDisconnection = new Date().toLocaleString();
+    localStorage.setItem("usuarios", JSON.stringify(
+      JSON.parse(localStorage.getItem("usuarios")).map((user) =>
+        user.username === usuario.username ? usuario : user
+      )
+    ));
     localStorage.removeItem("usuario");
     showToast("Se ha cerrado la sesión!", "bg-success");
     navigate("/");

@@ -44,8 +44,8 @@ function ProfilePublic() {
           setIsBlocked(true);
         } else {
           setUserData(user);
-          updateStatuses(currentUser, user);
         }
+        updateStatuses(currentUser, user);
       }
     }
   }, [username]);
@@ -255,17 +255,7 @@ function ProfilePublic() {
         {username}
       </label>
       {isBlocked ? (
-        // make this centered
-        <p style={
-          {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "black"
-          }
-        } >Perfil no disponible. Este usuario te ha bloqueado.</p>
+        <p>Este usuario te ha bloqueado.</p>
       ) : userData ? (
         <div style={{ display: "flex" }}>
           <div className="m-auto">
