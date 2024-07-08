@@ -17,12 +17,18 @@ import { v4 as uuidv4 } from "uuid";
 import data from "../data/initialMessages.json";
 
 const Messenger = () => {
-  // Obtener mensajes desde localStorage o inicializar con mensajes predeterminados
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
 
   const getConversationsForUser = (username) => {
-    const allMessages = JSON.parse(localStorage.getItem("messages")) || data;
-
+    // Get messages from localstorage, if empty get them from data and store to localstorage.
+    var allMessages;
+    const storedMessages = JSON.parse(localStorage.getItem("messages"));
+    if (!storedMessages) {
+      localStorage.setItem("messages", JSON.stringify(data));
+      allMessages = data;
+    } else {
+      allMessages = storedMessages;
+    }
     // Filter the keys where the current username is part of the conversation
     const userConversations = Object.keys(allMessages).filter((key) =>
       key.includes(username)
@@ -69,14 +75,15 @@ const Messenger = () => {
     }
   }, [usuario]);
 
-  const [inputValue, setInputValue] = useState("");
+  const [chatInputValue, setChatInputValue] = useState("");
+  const [modalInputValue, setModalInputValue] = useState("");
   const chatboxRef = useRef(null);
 
   const handleSendMessage = () => {
-    if (!inputValue.trim() || !activeChat) return;
+    if (!chatInputValue.trim() || !activeChat) return;
     const newMessage = {
       id: uuidv4(),
-      text: inputValue,
+      text: chatInputValue,
       sender: usuario.username,
       timestamp: new Date().toISOString(),
     };
@@ -85,7 +92,7 @@ const Messenger = () => {
       newMessage,
     ];
     setMessages({ ...messages, [activeChat.conversationKey]: updatedMessages });
-    setInputValue("");
+    setChatInputValue("");
     localStorage.setItem(
       "messages",
       JSON.stringify({
@@ -95,8 +102,8 @@ const Messenger = () => {
     );
   };
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleChatInputChange = (event) => {
+    setChatInputValue(event.target.value);
   };
 
   const handleChatChange = (convo) => {
@@ -134,20 +141,21 @@ const Messenger = () => {
 
   const addChat = () => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
-    const newChatUser = inputValue;
+    const newChatUser = modalInputValue;
 
     if (!currentUser || !newChatUser) {
       console.error("Current user or new chat user is not defined");
       return;
     }
 
-    const conversationKey = [currentUser.username, newChatUser]
-      .sort()
-      .join("@");
+    const conversationKey = `${currentUser.username}@${newChatUser}`;
 
     const existingMessages = JSON.parse(localStorage.getItem("messages")) || {};
 
-    if (existingMessages[conversationKey]) {
+    if (
+      existingMessages.hasOwnProperty(conversationKey) ||
+      existingMessages.hasOwnProperty(`${newChatUser}@${currentUser.username}`)
+    ) {
       console.warn("This chat already exists");
       return;
     }
@@ -171,19 +179,22 @@ const Messenger = () => {
       ...prevConversations,
       newConversation,
     ]);
+
     setActiveChat(newConversation);
-    setInputValue("");
+    setModalInputValue("");
   };
 
   const handleConfirmModal = () => {
     addChat();
     setShowModal(false);
     showToast("El chat se ha añadido correctamente.", "bg-success");
+    setModalInputValue("");
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    showToast("El chat no se ha añadido.", "bg-danger");
+    showToast("El chat no se ha añadido.", "bg-info");
+    setModalInputValue("");
   };
 
   return (
@@ -229,7 +240,7 @@ const Messenger = () => {
             <div className="p-3 border-bottom border-secondary-subtle">
               <NavLink
                 className="bi bi-person-circle d-inline-flex align-items-center"
-                to={`/profile/${activeChat.otherUser}`}
+                to={`/perfil/${activeChat.otherUser}`}
                 style={{ color: "inherit", textDecoration: "none" }}
                 aria-label={`Perfil de ${activeChat.otherUser}`}
               >
@@ -274,8 +285,8 @@ const Messenger = () => {
                 <FormControl
                   className="border-secondary-subtle"
                   type="text"
-                  value={inputValue}
-                  onChange={handleInputChange}
+                  value={chatInputValue}
+                  onChange={handleChatInputChange}
                   onKeyDown={handleKeyDown}
                   aria-label="Esribe tu mensaje aqui."
                 />
@@ -299,9 +310,9 @@ const Messenger = () => {
         show={showModal}
         handleClose={handleCloseModal}
         handleConfirm={handleConfirmModal}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        handleInputChange={handleInputChange}
+        inputValue={modalInputValue}
+        setInputValue={setModalInputValue}
+        handleInputChange={(e) => setModalInputValue(e.target.value)}
       />
     </Row>
   );
@@ -323,26 +334,21 @@ function AddChatModal({
       setSuggestions([]);
       setShowSuggestions(false);
     } else {
-      const usuarios = JSON.parse(localStorage.getItem("usuarios"));
-      const usernameSuggestions = usuarios.filter((usuario) =>
-        usuario.username.toLowerCase().includes(inputValue.toLowerCase())
+      const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+      const currentUser = JSON.parse(localStorage.getItem("usuario"));
+      const lowercasedInput = inputValue.toLowerCase();
+
+      const filteredUsers = usuarios.filter(
+        (usuario) =>
+          usuario.username !== currentUser.username &&
+          (usuario.username.toLowerCase().includes(lowercasedInput) ||
+            usuario.name.toLowerCase().includes(lowercasedInput) ||
+            usuario.lastName.toLowerCase().includes(lowercasedInput))
       );
 
-      const nameSuggestions = usuarios.filter((usuario) =>
-        usuario.name.toLowerCase().includes(inputValue.toLowerCase())
-      );
-
-      const lastNameSuggestions = usuarios.filter((usuario) =>
-        usuario.lastName.toLowerCase().includes(inputValue.toLowerCase())
-      );
-
-      const combinedSuggestions = [
-        ...usernameSuggestions,
-        ...nameSuggestions,
-        ...lastNameSuggestions,
-      ];
-      setSuggestions(combinedSuggestions.slice(0, 5));
-      setShowSuggestions(true);
+      const uniqueUsers = removeDuplicates(filteredUsers);
+      setSuggestions(uniqueUsers.slice(0, 5));
+      setShowSuggestions(uniqueUsers.length > 0);
     }
   }, [inputValue]);
 
@@ -352,13 +358,48 @@ function AddChatModal({
     setSuggestions([]);
   };
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const checkChatExists = (newChatUser) => {
+    const currentUser = JSON.parse(localStorage.getItem("usuario"));
+    if (!currentUser) return false;
+
+    const existingMessages = JSON.parse(localStorage.getItem("messages")) || {};
+    const conversationKey1 = `${currentUser.username}@${newChatUser}`;
+    const conversationKey2 = `${newChatUser}@${currentUser.username}`;
+
+    return (
+      existingMessages.hasOwnProperty(conversationKey1) ||
+      existingMessages.hasOwnProperty(conversationKey2)
+    );
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (checkChatExists(inputValue)) {
+      setErrorMessage("Este chat ya existe.");
+    } else {
+      setErrorMessage("");
+      handleConfirm();
+    }
+  };
+
+  const removeDuplicates = (users) => {
+    const seen = new Set();
+    return users.filter((user) => {
+      const duplicate = seen.has(user.username);
+      seen.add(user.username);
+      return !duplicate;
+    });
+  };
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Añadir nuevo chat</Modal.Title>
       </Modal.Header>
       <Form
-        onSubmit={handleConfirm}
+        onSubmit={handleSubmit}
         className={`my-2`}
         style={{ position: "relative" }}
       >
@@ -385,6 +426,9 @@ function AddChatModal({
             required
             autoComplete="off"
           />
+          {errorMessage && (
+            <div className="text-danger mt-2">{errorMessage}</div>
+          )}
           {showSuggestions && inputValue && suggestions.length > 0 && (
             <div
               className="bg-white"
@@ -400,9 +444,9 @@ function AddChatModal({
               role="listbox"
               aria-label="Sugerencias de búsqueda"
             >
-              {suggestions.map((suggestion, index) => (
+              {suggestions.map((suggestion) => (
                 <div
-                  key={index}
+                  key={suggestion.username}
                   role="option"
                   tabIndex="0"
                   aria-selected={inputValue === suggestion.username}
