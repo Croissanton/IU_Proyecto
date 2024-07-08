@@ -348,6 +348,7 @@ function ProfilePublic() {
               </div>
 
               <div className="col-12">
+                {!isButtonUnavailable && (
                 <Link to={`/historial/${username}`}>
                   <button
                     type="button"
@@ -357,6 +358,7 @@ function ProfilePublic() {
                     Ver Historial
                   </button>
                 </Link>
+                )}
                 {!isCurrentUser && (
                   <>
                     <button
