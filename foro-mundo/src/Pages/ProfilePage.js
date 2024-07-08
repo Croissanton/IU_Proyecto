@@ -101,7 +101,16 @@ function ProfilePage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Mi perfil</label>
+        <label
+          style={{ 
+            fontSize: "3rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+            paddingBottom: "50px"
+        }}>
+            {profileData.username}
+        </label>
       </div>
       <div style={{ display: "flex" }}>
         <div className="m-auto">

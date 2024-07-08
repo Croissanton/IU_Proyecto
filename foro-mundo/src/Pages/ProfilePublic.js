@@ -22,7 +22,7 @@ function ProfilePublic() {
   const friendButtonColor = friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
 
   useEffect(() => {
-    document.title = "Perfil";
+    document.title = "Perfil de " + username;
 
     // Obtener los datos del usuario desde localStorage basado en el username
     const storedUsers = localStorage.getItem("usuarios");
