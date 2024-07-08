@@ -22,6 +22,8 @@ const PostCard = ({
   const [postUpvotes, setPostUpvotes] = useState(upvotes);
   const [postDownvotes, setPostDownvotes] = useState(downvotes);
   const [userVote, setUserVote] = useState(null);
+  const [authorProfilePicture, setAuthorProfilePicture] = useState("");
+  const [lmAuthorProfilePicture, setLmAuthorProfilePicture] = useState("");
 
   useEffect(() => {
     if (usuario) {
@@ -32,6 +34,19 @@ const PostCard = ({
       }
     }
   }, [id, usuario]);
+
+  useEffect(() => {
+    const allUsers = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const authorData = allUsers.find((user) => user.username === author);
+    const lmAuthorData = allUsers.find((user) => user.username === lm_author);
+
+    if (authorData) {
+      setAuthorProfilePicture(authorData.profilePicture || "https://via.placeholder.com/150");
+    }
+    if (lmAuthorData) {
+      setLmAuthorProfilePicture(lmAuthorData.profilePicture || "https://via.placeholder.com/150");
+    }
+  }, [author, lm_author]);
 
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -161,6 +176,13 @@ const PostCard = ({
             </Row>
             <Row onClick={(e) => e.stopPropagation()}>
               <Col>
+                <img
+                  src={authorProfilePicture}
+                  alt="author profile"
+                  width="30"
+                  height="30"
+                  style={{ marginRight: "10px", borderRadius: "50%" }}
+                />
                 <span> Creador: </span>
                 <NavLink className="custom-text-link" to={`/perfil/${author}`}>
                   <span>{author}</span>
@@ -207,15 +229,13 @@ const PostCard = ({
                 <span className="h5">Número de visualizaciones</span>
                 <p>{view_num}</p>
               </Col>
-              <Col className="m-auto">
+              {lm_author && (
+                <Col className="m-auto">
                 <Row>
                   <p>Último mensaje por:</p>
                 </Row>
                 <Row>
-                  <NavLink
-                    className="custom-text-link"
-                    to={`/perfil/${lm_author}`
-                  }>
+                  <NavLink className="custom-text-link" to={`/perfil/${lm_author}`}>
                     <span>{lm_author}</span>
                   </NavLink>
                 </Row>
@@ -226,6 +246,7 @@ const PostCard = ({
                   <p>{lm_date}</p>
                 </Row>
               </Col>
+              )}
             </Row>
           </Col>
         </Row>
