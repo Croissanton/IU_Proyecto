@@ -88,7 +88,8 @@ const Header = forwardRef((props, ref) => {
           topic.topic.toLowerCase().includes(userInput.toLowerCase())
         )
         .map((topic) => ({
-          label: `Topic: ${topic.topic}`,
+          label: `Topic: `,
+          display: topic.topic,
           type: "topic",
           id: topic.id,
         }));
@@ -98,7 +99,8 @@ const Header = forwardRef((props, ref) => {
           post.title.toLowerCase().includes(userInput.toLowerCase())
         )
         .map((post) => ({
-          label: `Post: ${post.title}`,
+          label: `Post: `,
+          display: post.title,
           type: "post",
           id: post.id,
         }));
@@ -108,7 +110,8 @@ const Header = forwardRef((props, ref) => {
           comment.title.toLowerCase().includes(userInput.toLowerCase())
         )
         .map((comment) => ({
-          label: `Comment in Post ${comment.postId}: ${comment.title}`,
+          label: `Comment: `,
+          display: comment.title,
           type: "comment",
           id: comment.id,
           postId: comment.postId,
@@ -119,7 +122,8 @@ const Header = forwardRef((props, ref) => {
           user.username.toLowerCase().includes(userInput.toLowerCase())
         )
         .map((user) => ({
-          label: `Usuario: ${user.username}`,
+          label: `Usuario: `,
+          display: user.username,
           type: "user",
           id: user.username,
         }));
@@ -273,7 +277,8 @@ const Header = forwardRef((props, ref) => {
                       style={{ padding: "10px", cursor: "likePointer" }}
                       onClick={() => handleSuggestionClick(suggestion)}
                     >
-                      {suggestion.label}
+                      <strong>{suggestion.label}</strong>
+                      <span>{suggestion.display}</span>
                     </div>
                   ))}
                 </div>

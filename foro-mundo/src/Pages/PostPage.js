@@ -23,13 +23,11 @@ function PostPage() {
   const MAX_CHARACTERS = 500;
 
   const [showModal, setShowModal] = useState(false);
-  const [showClearCommentModal, setShowClearCommentModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
-  const navigate = useNavigate();
-
   // Estado para el criterio de ordenación
   const [sortCriteria, setSortCriteria] = useState("newest");
+  const navigate = useNavigate();
 
   // Para elegir página
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,12 +39,10 @@ function PostPage() {
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
 
-  const [blockedUsers, setBlockedUsers] = useState([]);
-
   const titleStyle = {
-    wordWrap: "break-word",
-    whiteSpace: "normal",
-    overflowWrap: "break-word",
+    wordWrap: 'break-word',
+    whiteSpace: 'normal',
+    overflowWrap: 'break-word',
   };
 
   // Cargar post desde localStorage
@@ -61,19 +57,16 @@ function PostPage() {
       setComments(currentPost.comments);
     }
 
-    const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
-    const storedBlockedUsers = usuario ? usuario.blockList || [] : [];
-    setBlockedUsers(storedBlockedUsers);
-
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("textoAZ");
   }, [postId]);
 
-  const handleCloseCommentModal = () => {
+  const handleClose = () => {
     setShowModal(false);
+    showToast("El comentario no se ha creado.");
   };
 
-  const handleConfirmCommentModal = () => {
+  const handleConfirm = () => {
     setShowModal(false);
     const newCommentObject = {
       id: uuidv4(),
@@ -93,18 +86,11 @@ function PostPage() {
 
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) => {
-      if (p.id.toString() === postId) {
-        return post;
-      }
-      return p;
-    });
+    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
 
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
     setComments(post.comments);
-    showToast("El comentario se ha creado correctamente.", "bg-success");
-
     // Limpiar el área de texto
     setNewComment("");
     setCharacterCount(0);
@@ -116,8 +102,7 @@ function PostPage() {
     }
 
     const button = document.getElementById("publicar_button");
-    button.disabled =
-      newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
+    button.disabled = newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
 
   const handleInputChange = (event) => {
@@ -148,9 +133,7 @@ function PostPage() {
     post.lm_date = post.comments.length > 0 ? post.comments[0].date : "";
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) =>
-      p.id.toString() === postId ? post : p
-    );
+    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
 
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
@@ -164,14 +147,12 @@ function PostPage() {
   const handleConfirmDeletePost = () => {
     // Eliminar el post del localStorage
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const filteredPosts = existingPosts.filter(
-      (p) => p.id.toString() !== postId
-    );
+    const filteredPosts = existingPosts.filter((p) => p.id !== postId);
 
     // Actualizar el número de posts en el localStorage para el topic correspondiente
     const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
     const updatedTopics = existingTopics.map((topic) => {
-      if (topic.id.toString() === post.topicId) {
+      if (topic.id === parseInt(post.topicId)) {
         return {
           ...topic,
           post_num: (topic.post_num || 0) - 1,
@@ -184,18 +165,13 @@ function PostPage() {
     localStorage.setItem("posts", JSON.stringify(filteredPosts));
 
     showToast("Post eliminado", "bg-danger");
-    navigate(`/buscar/${post.topicId}`);
+    navigate(`/topic/${post.topicId}`);
     setShowDeletePostModal(false);
   };
 
   const handleClearComment = () => {
-    setShowClearCommentModal(true);
-  };
-
-  const handleConfirmClearComment = () => {
     setNewComment("");
     setCharacterCount(0);
-    setShowClearCommentModal(false);
   };
 
   const handleSortChange = (criteria) => {
@@ -206,12 +182,7 @@ function PostPage() {
     setCurrentPage(pageNumber);
   };
 
-  // Filtrar comentarios de usuarios bloqueados
-  const filteredComments = comments.filter(
-    (comment) => !blockedUsers.includes(comment.author)
-  );
-
-  const sortedComments = [...filteredComments].sort((a, b) => {
+  const sortedComments = [...comments].sort((a, b) => {
     if (sortCriteria === "textoAZ") {
       return a.title.localeCompare(b.title);
     } else if (sortCriteria === "textoZA") {
@@ -255,13 +226,11 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item
             linkAs={Link}
-            linkProps={{ to: `/buscar/${post?.topicId}` }}
+            linkProps={{ to: `/search/${post?.topicId}` }}
           >
             {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active style={{ ...titleStyle }}>
-            {post ? post.title : "Post"}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item active style={{...titleStyle}}>{post ? post.title : "Post"}</Breadcrumb.Item>
         </Breadcrumb>
         <label
           style={{
@@ -289,9 +258,6 @@ function PostPage() {
             lm_date={post.lm_date}
             res_num={comments.length}
             view_num={post.view_num}
-            comments={post.comments}
-            upvotes={post.upvotes}
-            downvotes={post.downvotes}
           />
         </div>
       )}
@@ -344,34 +310,24 @@ function PostPage() {
             >
               Publicar
             </button>
-
-            <ConfirmationModal
-              message="¿Estás seguro de que quieres crear este comentario?"
-              show={showModal}
-              handleClose={handleCloseCommentModal}
-              handleConfirm={handleConfirmCommentModal}
-              title="Confirmar Comentario"
-            />
-
             <Button onClick={handleClearComment} className="ms-2">
               Limpiar
             </Button>
-
             <ConfirmationModal
-              message="¿Estás seguro de que quieres limpiar el comentario?"
-              show={showClearCommentModal}
-              handleClose={() => setShowClearCommentModal(false)}
-              handleConfirm={handleConfirmClearComment}
-              title="Confirmar Limpieza"
+              message="¿Estás seguro de que quieres crear este comentario?"
+              show={showModal}
+              handleClose={handleClose}
+              handleConfirm={handleConfirm}
+              title="Confirmar Comentario"
             />
           </form>
         </div>
       )}
 
+      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
+        Comentarios
+      </label>
       <div className="container-xxl my-3">
-        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
-          Comentarios
-        </label>
         <div className="d-flex justify-content-end mb-3">
           <label
             htmlFor="sortSelect"
@@ -386,7 +342,6 @@ function PostPage() {
               className="form-select"
               value={sortCriteria}
               onChange={(e) => handleSortChange(e.target.value)}
-              aria-label="Ordenar por"
             >
               <option value="textoAZ">Texto A-Z</option>
               <option value="textoZA">Texto Z-A</option>
@@ -425,13 +380,14 @@ function PostPage() {
         title="Eliminar Comentario"
         message="¿Estás seguro de que quieres eliminar este comentario?"
       />
-
+      
       <IndexSelector
         totalTopics={sortedComments.length}
         topicsPerPage={commentsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
+
     </MainLayout>
   );
 }

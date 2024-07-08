@@ -32,7 +32,7 @@ function PostCreationPage() {
     const postId = savePostData();
     setShowModal(false);
     showToast("El post se ha creado correctamente!", "bg-success");
-    navigate(`/buscar/${postId}`);
+    navigate(`/post/${postId}`);
   };
 
   const handleKeyDown = (e) => {
@@ -102,7 +102,7 @@ function PostCreationPage() {
 
     localStorage.setItem("topics", JSON.stringify(updatedTopics));
 
-    return post.topicId; // Devolver el topicId del post creado
+    return post.id;
   };
 
   return (

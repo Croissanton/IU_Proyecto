@@ -278,6 +278,7 @@ const Messenger = () => {
                     aria-label={`${message.sender} dice ${message.text}`}
                   >
                     <span>{message.text}</span>
+                    <span className=""></span>
                   </div>
                 ))}
             </div>
