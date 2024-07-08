@@ -210,7 +210,12 @@ const PostCard = ({
                   <p>Último mensaje por:</p>
                 </Row>
                 <Row>
-                  <p>{lm_author}</p>
+                  <NavLink
+                    className="custom-text-link"
+                    to={`/profile/${lm_author}`
+                  }>
+                    <span>{lm_author}</span>
+                  </NavLink>
                 </Row>
                 <Row>
                   <p>Fecha del último mensaje:</p>

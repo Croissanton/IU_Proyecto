@@ -125,11 +125,12 @@ function FriendsPage() {
             <div key={user.username} className="card mb-3">
               <div className="card-body">
               <Link to={`/profile/${user.username}`} 
+              className='custom-text-link'
               style={{ 
                 fontSize: "1.5rem",
-                textDecoration: 'none',
-                color: 'black'
-                }}>
+                color: 'black',
+                marginLeft: '10px',
+              }}>
                 {user.username}
               </Link>
                 <button
