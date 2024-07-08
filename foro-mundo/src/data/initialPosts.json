@@ -1,197 +1,196 @@
 [
-    {
-      "id": 1,
-      "topicId": 1,
-      "title": "buen foro :D",
-      "text": "Este es un foro muy bueno",
-      "author": "Juan Jaun",
-      "date": "10/18/1992",
-      "res_num": 3,
-      "view_num": 10,
-      "lm_author": "EDddd",
-      "lm_date": "12/10/2009",
-      "comments": [
-        {
-          "id": 1,
-          "postId": 1,
-          "title": "Estoy de acuerdo",
-          "author": "Ignacio19291",
-          "upvotes": 5,
-          "downvotes": 0,
-          "date": "10/19/2001"
-        },
-        {
-          "id": 2,
-          "postId": 1,
-          "title": "Interesante punto de vista",
-          "author": "Silla1234",
-          "upvotes": 3,
-          "downvotes": 0,
-          "date": "10/20/2005"
-        },
-        {
-          "id": 3,
-          "postId": 1,
-          "title": "yo no",
-          "author": "EDddd",
-          "upvotes": 2,
-          "downvotes": 1,
-          "date": "12/10/2009"
-        }
-      ],
-      "upvotes": 0,
-      "downvotes": 0
-    },
-    {
-      "id": 2,
-      "topicId": 6,
-      "title": "Por qué me ha explotado el radiador??",
-      "text": "El radiador de mi casa ha explotado y no sé qué hacer. ¿Alguien sabe qué pudo haber causado esto?",
-      "author": "Ignacio19291",
-      "date": "2/5/2023",
-      "res_num": 3,
-      "view_num": 120,
-      "lm_author": "MecanicExpert",
-      "lm_date": "2/7/2023",
-      "comments": [
-        {
-          "id": 4,
-          "postId": 2,
-          "title": "Revisa la válvula de presión",
-          "author": "FixItJuan",
-          "upvotes": 4,
-          "downvotes": 0,
-          "date": "2/6/2023"
-        },
-        {
-          "id": 5,
-          "postId": 2,
-          "title": "Podría ser un problema de antigüedad",
-          "author": "OldTimer22",
-          "upvotes": 3,
-          "downvotes": 0,
-          "date": "2/6/2023"
-        },
-        {
-          "id": 6,
-          "postId": 2,
-          "title": "Contacta a un profesional",
-          "author": "MecanicExpert",
-          "upvotes": 5,
-          "downvotes": 0,
-          "date": "2/7/2023"
-        }
-      ],
-      "upvotes": 0,
-      "downvotes": 0
-    },
-    {
-      "id": 3,
-      "topicId": 2,
-      "title": "Mi gato se ha comido a mi abuela :( ¿qué hago?",
-      "text": "En un sorprendente giro de acontecimientos, mi gato se ha comido a mi abuela. Estoy desconcertado y no sé cómo manejar la situación.",
-      "author": "Ignacio19291",
-      "date": "4/10/2024",
-      "res_num": 1,
-      "view_num": 50,
-      "lm_author": "DrZoo",
-      "lm_date": "4/11/2024",
-      "comments": [
-        {
-          "id": 7,
-          "postId": 3,
-          "title": "Llama a emergencias",
-          "author": "SensibleSally",
-          "upvotes": 8,
-          "downvotes": 0,
-          "date": "4/11/2024"
-        }
-      ],
-      "upvotes": 0,
-      "downvotes": 0
-    },
-    {
-      "id": 4,
-      "topicId": 2,
-      "title": "Mi abuela se ha comido a mi gato.........!!",
-      "text": "Después de un extraño contratiempo, mi abuela se ha comido a mi gato y estoy totalmente impactado. ¿Alguien más ha pasado por algo similar?",
-      "author": "percebe43",
-      "date": "4/1/2024",
-      "res_num": 0,
-      "view_num": 20,
-      "lm_author": "",
-      "lm_date": "",
-      "comments": [],
-      "upvotes": 0,
-      "downvotes": 0
-    },
-    {
-      "id": 5,
-      "topicId": 6,
-      "title": "La gasolina casi a 2€",
-      "text": "La gasolina está a punto de llegar a los 2€ por litro. ¿Qué opinan sobre este incremento? ¿Cómo afectará a nuestro día a día?",
-      "author": "Ignacio19291",
-      "date": "3/12/2024",
-      "res_num": 2,
-      "view_num": 100,
-      "lm_author": "EcoDriver",
-      "lm_date": "3/14/2024",
-      "comments": [
-        {
-          "id": 8,
-          "postId": 5,
-          "title": "Es insostenible para los salarios medios",
-          "author": "WageWarrior",
-          "upvotes": 10,
-          "downvotes": 1,
-          "date": "3/13/2024"
-        },
-        {
-          "id": 9,
-          "postId": 5,
-          "title": "Considerar alternativas como coches eléctricos",
-          "author": "EcoDriver",
-          "upvotes": 5,
-          "downvotes": 0,
-          "date": "3/14/2024"
-        }
-      ],
-      "upvotes": 0,
-      "downvotes": 0
-    },
-    {
-      "id": 6,
-      "topicId": 2,
-      "title": "Desesperadamente buscando consejos para escribir",
-      "text": "Estoy enfrentando un bloqueo de escritor y no sé cómo superarlo. ¿Algún consejo?",
-      "author": "percebe43",
-      "date": "2/1/2024",
-      "res_num": 2,
-      "view_num": 30,
-      "lm_author": "WriteWell",
-      "lm_date": "2/4/2024",
-      "comments": [
-        {
-          "id": 10,
-          "postId": 6,
-          "title": "Prueba la técnica Pomodoro",
-          "author": "TimeMngr",
-          "upvotes": 4,
-          "downvotes": 0,
-          "date": "2/4/2024"
-        },
-        {
-          "id": 11,
-          "postId": 6,
-          "title": "Intenta leer más y encontrar inspiración en otros autores",
-          "author": "BookwormBetty",
-          "upvotes": 6,
-          "downvotes": 0,
-          "date": "2/4/2024"
-        }
-      ],
-      "upvotes": 0,
-      "downvotes": 0
-    }
-  ]
-  
+  {
+    "id": 1,
+    "topicId": 1,
+    "title": "buen foro :D",
+    "text": "Este es un foro muy bueno",
+    "author": "Juan_Jaun",
+    "date": "10/18/1992",
+    "res_num": 3,
+    "view_num": 10,
+    "lm_author": "EDddd",
+    "lm_date": "12/10/2009",
+    "comments": [
+      {
+        "id": 1,
+        "postId": 1,
+        "title": "Estoy de acuerdo",
+        "author": "Ignacio19291",
+        "upvotes": 5,
+        "downvotes": 0,
+        "date": "10/19/2001"
+      },
+      {
+        "id": 2,
+        "postId": 1,
+        "title": "Interesante punto de vista",
+        "author": "Silla1234",
+        "upvotes": 3,
+        "downvotes": 0,
+        "date": "10/20/2005"
+      },
+      {
+        "id": 3,
+        "postId": 1,
+        "title": "yo no",
+        "author": "EDddd",
+        "upvotes": 2,
+        "downvotes": 1,
+        "date": "12/10/2009"
+      }
+    ],
+    "upvotes": 0,
+    "downvotes": 0
+  },
+  {
+    "id": 2,
+    "topicId": 6,
+    "title": "Por qué me ha explotado el radiador??",
+    "text": "El radiador de mi casa ha explotado y no sé qué hacer. ¿Alguien sabe qué pudo haber causado esto?",
+    "author": "Ignacio19291",
+    "date": "2/5/2023",
+    "res_num": 3,
+    "view_num": 120,
+    "lm_author": "MecanicExpert",
+    "lm_date": "2/7/2023",
+    "comments": [
+      {
+        "id": 4,
+        "postId": 2,
+        "title": "Revisa la válvula de presión",
+        "author": "FixItJuan",
+        "upvotes": 4,
+        "downvotes": 0,
+        "date": "2/6/2023"
+      },
+      {
+        "id": 5,
+        "postId": 2,
+        "title": "Podría ser un problema de antigüedad",
+        "author": "OldTimer22",
+        "upvotes": 3,
+        "downvotes": 0,
+        "date": "2/6/2023"
+      },
+      {
+        "id": 6,
+        "postId": 2,
+        "title": "Contacta a un profesional",
+        "author": "MecanicExpert",
+        "upvotes": 5,
+        "downvotes": 0,
+        "date": "2/7/2023"
+      }
+    ],
+    "upvotes": 0,
+    "downvotes": 0
+  },
+  {
+    "id": 3,
+    "topicId": 2,
+    "title": "Mi gato se ha comido a mi abuela :( ¿qué hago?",
+    "text": "En un sorprendente giro de acontecimientos, mi gato se ha comido a mi abuela. Estoy desconcertado y no sé cómo manejar la situación.",
+    "author": "Ignacio19291",
+    "date": "4/10/2024",
+    "res_num": 1,
+    "view_num": 50,
+    "lm_author": "DrZoo",
+    "lm_date": "4/11/2024",
+    "comments": [
+      {
+        "id": 7,
+        "postId": 3,
+        "title": "Llama a emergencias",
+        "author": "SensibleSally",
+        "upvotes": 8,
+        "downvotes": 0,
+        "date": "4/11/2024"
+      }
+    ],
+    "upvotes": 0,
+    "downvotes": 0
+  },
+  {
+    "id": 4,
+    "topicId": 2,
+    "title": "Mi abuela se ha comido a mi gato.........!!",
+    "text": "Después de un extraño contratiempo, mi abuela se ha comido a mi gato y estoy totalmente impactado. ¿Alguien más ha pasado por algo similar?",
+    "author": "percebe43",
+    "date": "4/1/2024",
+    "res_num": 0,
+    "view_num": 20,
+    "lm_author": "",
+    "lm_date": "",
+    "comments": [],
+    "upvotes": 0,
+    "downvotes": 0
+  },
+  {
+    "id": 5,
+    "topicId": 6,
+    "title": "La gasolina casi a 2€",
+    "text": "La gasolina está a punto de llegar a los 2€ por litro. ¿Qué opinan sobre este incremento? ¿Cómo afectará a nuestro día a día?",
+    "author": "Ignacio19291",
+    "date": "3/12/2024",
+    "res_num": 2,
+    "view_num": 100,
+    "lm_author": "EcoDriver",
+    "lm_date": "3/14/2024",
+    "comments": [
+      {
+        "id": 8,
+        "postId": 5,
+        "title": "Es insostenible para los salarios medios",
+        "author": "WageWarrior",
+        "upvotes": 10,
+        "downvotes": 1,
+        "date": "3/13/2024"
+      },
+      {
+        "id": 9,
+        "postId": 5,
+        "title": "Considerar alternativas como coches eléctricos",
+        "author": "EcoDriver",
+        "upvotes": 5,
+        "downvotes": 0,
+        "date": "3/14/2024"
+      }
+    ],
+    "upvotes": 0,
+    "downvotes": 0
+  },
+  {
+    "id": 6,
+    "topicId": 2,
+    "title": "Desesperadamente buscando consejos para escribir",
+    "text": "Estoy enfrentando un bloqueo de escritor y no sé cómo superarlo. ¿Algún consejo?",
+    "author": "percebe43",
+    "date": "2/1/2024",
+    "res_num": 2,
+    "view_num": 30,
+    "lm_author": "WriteWell",
+    "lm_date": "2/4/2024",
+    "comments": [
+      {
+        "id": 10,
+        "postId": 6,
+        "title": "Prueba la técnica Pomodoro",
+        "author": "TimeMngr",
+        "upvotes": 4,
+        "downvotes": 0,
+        "date": "2/4/2024"
+      },
+      {
+        "id": 11,
+        "postId": 6,
+        "title": "Intenta leer más y encontrar inspiración en otros autores",
+        "author": "BookwormBetty",
+        "upvotes": 6,
+        "downvotes": 0,
+        "date": "2/4/2024"
+      }
+    ],
+    "upvotes": 0,
+    "downvotes": 0
+  }
+]

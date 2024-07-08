@@ -79,7 +79,7 @@ const Header = forwardRef((props, ref) => {
     setInputValue(userInput);
 
     if (!userInput.trim()) {
-      setSuggestions(["No se ha encontrado ninguna sugerencia."]);
+      setSuggestions([]);
       setShowSuggestions(false);
     } else {
       const topicSuggestions = topics
@@ -251,7 +251,7 @@ const Header = forwardRef((props, ref) => {
                       key={index}
                       role="option"
                       tabIndex="0"
-                      aria-selected={inputValue === suggestion.label}
+                      aria-selected={inputValue === suggestion.username}
                       style={{ padding: "10px", cursor: "likePointer" }}
                       onClick={() => handleSuggestionClick(suggestion)}
                     >
