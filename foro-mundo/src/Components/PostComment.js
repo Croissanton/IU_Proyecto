@@ -194,11 +194,11 @@ const PostComment = ({
               <Row className="p-3">
                 <Col className="text-center" tabIndex="0">
                   <Button
-                    aria-label="Upvote"
                     disabled={!usuario}
                     className="btn"
                     onClick={handleUpvote}
                     variant={userVote === "upvote" ? "success" : "primary"}
+                    aria-label="Votar positivamente"
                   >
                     +
                   </Button>
@@ -211,11 +211,11 @@ const PostComment = ({
                 </Col>
                 <Col className="text-center" tabIndex="0">
                   <Button
-                    aria-label="Downvote"
                     className="btn"
                     disabled={!usuario}
                     onClick={handleDownvote}
                     variant={userVote === "downvote" ? "danger" : "primary"}
+                    aria-label="Votar negativamente"
                   >
                     -
                   </Button>

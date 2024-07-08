@@ -160,6 +160,7 @@ function SearchPage() {
             <select
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Ordenar por"
             >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>

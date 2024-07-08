@@ -13,7 +13,16 @@ function MessengerPage() {
           <Breadcrumb.Item active>Mensajes</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Mensajes</label>
+      <label 
+        style={{ 
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center"
+        }}
+      >
+        Mensajes
+      </label>
       <Messenger />
     </MainLayout>
   );

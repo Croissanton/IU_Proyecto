@@ -174,10 +174,10 @@ const PostCard = ({
               <Col>
                 <span> Votos positivos: {postUpvotes} </span>
                 <Button
-                  aria-label="Upvote"
                   className={`btn ${userVote === "upvote" ? "btn-success" : "btn-primary"}`}
                   onClick={handleUpvote}
                   style={{ margin: "5px" }}
+                  aria-label="Votar positivamente"
                 >
                   +
                 </Button>
@@ -185,10 +185,10 @@ const PostCard = ({
               <Col>
                 <span> Votos negativos: {postDownvotes} </span>
                 <Button
-                  aria-label="Downvote"
                   className={`btn ${userVote === "downvote" ? "btn-danger" : "btn-primary"}`}
                   onClick={handleDownvote}
                   style={{ margin: "5px" }}
+                  aria-label="Votar negativamente"
                 >
                   -
                 </Button>

@@ -152,7 +152,7 @@ const Messenger = () => {
               onClick={handleSendMessage}
               variant="primary"
             >
-              Send
+              Enviar
             </Button>
           </InputGroup>
         </Form>

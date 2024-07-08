@@ -368,6 +368,7 @@ function PostPage() {
               className="form-select"
               value={sortCriteria}
               onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Ordenar por"
             >
               <option value="textoAZ">Texto A-Z</option>
               <option value="textoZA">Texto Z-A</option>

@@ -118,8 +118,13 @@ function HistorialPage() {
                 <Button
                   variant="primary"
                   onClick={() => handleViewPost(comment.postId)}
-                >
-                  Ver Post
+                  aria-label={`${comment.title} 
+                    Fecha ${comment.date} 
+                    Votos positivos ${comment.upvotes}
+                    Votos negativos ${comment.downvotes}
+                    Ver Post`}
+                  >
+                    Ver Post
                 </Button>
               </div>
             </div>

@@ -102,7 +102,7 @@ function BlockedUsersPage() {
                 fontSize: "1rem",
                 display: "block",
                 textAlign: "center",
-                }}
+              }}
             >
                 No hay usuarios bloqueados.
             </label>
