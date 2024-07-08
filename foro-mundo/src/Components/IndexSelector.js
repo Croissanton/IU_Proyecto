@@ -16,6 +16,7 @@ function IndexSelector({ totalTopics, topicsPerPage, currentPage, onPageChange }
         key={number}
         active={number === currentPage}
         onClick={() => handlePageClick(number)}
+        aria-label={`selección de página número ${number} de ${totalPages}`}
       >
         {number}
       </Pagination.Item>

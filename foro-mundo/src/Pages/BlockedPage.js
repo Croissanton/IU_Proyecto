@@ -79,7 +79,7 @@ function BlockedUsersPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Bloqueados</Breadcrumb.Item>
@@ -102,7 +102,7 @@ function BlockedUsersPage() {
                 fontSize: "1rem",
                 display: "block",
                 textAlign: "center",
-                }}
+              }}
             >
                 No hay usuarios bloqueados.
             </label>
@@ -110,11 +110,12 @@ function BlockedUsersPage() {
           blockedUsers.map((user) => (
             <div key={user.username} className="card mb-3">
               <div className="card-body">
-              <Link to={`/profile/${user.username}`} 
+              <Link to={`/perfil/${user.username}`} 
+              className='custom-text-link'
               style={{ 
                 fontSize: "1.5rem",
-                textDecoration: 'none',
-                color: 'black'
+                color: 'black',
+                marginLeft: '10px',
                 }}>
                 {user.username}
               </Link>

@@ -20,7 +20,7 @@ function MainPage() {
     const storedTopics = JSON.parse(localStorage.getItem("topics"));
     if (storedTopics) {
       setTopics(storedTopics);
-    }
+    } 
 
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
@@ -95,6 +95,7 @@ function MainPage() {
             <select
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Ordenar por"
             >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
@@ -108,7 +109,6 @@ function MainPage() {
 
         <Container>
           {currentTopics.map((topic) => (
-            // <div className="col-12 col-sm-6 col-md-4 col-lg-3 px-0 px-sm-2">
             <ForumCard
               key={topic.id}
               id={topic.id}
@@ -117,7 +117,6 @@ function MainPage() {
               view_num={topic.view_num}
               onTopicClick={handleTopicClick}
             />
-            // </div>
           ))}
         </Container>
       </div>

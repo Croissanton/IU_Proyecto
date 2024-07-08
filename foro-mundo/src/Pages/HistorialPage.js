@@ -41,7 +41,7 @@ function HistorialPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Historial</Breadcrumb.Item>
@@ -118,8 +118,13 @@ function HistorialPage() {
                 <Button
                   variant="primary"
                   onClick={() => handleViewPost(comment.postId)}
-                >
-                  Ver Post
+                  aria-label={`${comment.title} 
+                    Fecha ${comment.date} 
+                    Votos positivos ${comment.upvotes}
+                    Votos negativos ${comment.downvotes}
+                    Ver Post`}
+                  >
+                    Ver Post
                 </Button>
               </div>
             </div>

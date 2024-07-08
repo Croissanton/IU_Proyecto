@@ -23,11 +23,13 @@ function PostPage() {
   const MAX_CHARACTERS = 500;
 
   const [showModal, setShowModal] = useState(false);
+  const [showClearCommentModal, setShowClearCommentModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
+  const navigate = useNavigate();
+
   // Estado para el criterio de ordenación
   const [sortCriteria, setSortCriteria] = useState("newest");
-  const navigate = useNavigate();
 
   // Para elegir página
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,7 +71,6 @@ function PostPage() {
 
   const handleCloseCommentModal = () => {
     setShowModal(false);
-    showToast("El comentario no se ha creado.");
   };
 
   const handleConfirmCommentModal = () => {
@@ -102,6 +103,8 @@ function PostPage() {
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
     setComments(post.comments);
+    showToast("El comentario se ha creado correctamente.", "bg-success");
+
     // Limpiar el área de texto
     setNewComment("");
     setCharacterCount(0);
@@ -181,13 +184,18 @@ function PostPage() {
     localStorage.setItem("posts", JSON.stringify(filteredPosts));
 
     showToast("Post eliminado", "bg-danger");
-    navigate(`/search/${post.topicId}`);
+    navigate(`/buscar/${post.topicId}`);
     setShowDeletePostModal(false);
   };
 
   const handleClearComment = () => {
+    setShowClearCommentModal(true);
+  };
+
+  const handleConfirmClearComment = () => {
     setNewComment("");
     setCharacterCount(0);
+    setShowClearCommentModal(false);
   };
 
   const handleSortChange = (criteria) => {
@@ -247,7 +255,7 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item
             linkAs={Link}
-            linkProps={{ to: `/search/${post?.topicId}` }}
+            linkProps={{ to: `/buscar/${post?.topicId}` }}
           >
             {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
@@ -336,15 +344,25 @@ function PostPage() {
             >
               Publicar
             </button>
-            <Button onClick={handleClearComment} className="ms-2">
-              Limpiar
-            </Button>
+
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
               handleClose={handleCloseCommentModal}
               handleConfirm={handleConfirmCommentModal}
               title="Confirmar Comentario"
+            />
+
+            <Button onClick={handleClearComment} className="ms-2">
+              Limpiar
+            </Button>
+
+            <ConfirmationModal
+              message="¿Estás seguro de que quieres limpiar el comentario?"
+              show={showClearCommentModal}
+              handleClose={() => setShowClearCommentModal(false)}
+              handleConfirm={handleConfirmClearComment}
+              title="Confirmar Limpieza"
             />
           </form>
         </div>
@@ -368,6 +386,7 @@ function PostPage() {
               className="form-select"
               value={sortCriteria}
               onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Ordenar por"
             >
               <option value="textoAZ">Texto A-Z</option>
               <option value="textoZA">Texto Z-A</option>

@@ -76,7 +76,7 @@ function RequestsPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Peticiones de Amistad</Breadcrumb.Item>
@@ -107,7 +107,7 @@ function RequestsPage() {
           requests.map((user) => (
             <div key={user.username} className="card mb-3">
               <div className="card-body">
-                <Link to={`/profile/${user.username}`} 
+                <Link to={`/perfil/${user.username}`} 
                 style={{ 
                   fontSize: "1.5rem",
                   textDecoration: 'none',

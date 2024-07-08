@@ -71,7 +71,12 @@ function LoginPage() {
         }}
       >
       <Breadcrumb className="custom-breadcrumb">
-      <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+      <Breadcrumb.Item
+        linkAs={Link} 
+        linkProps={{ to: "/" }}
+      >
+        Inicio
+      </Breadcrumb.Item>
         <Breadcrumb.Item active aria-label="enlace_a_login">
           Login
         </Breadcrumb.Item>
@@ -79,7 +84,11 @@ function LoginPage() {
         <form className="row col-12 g-3" onSubmit={login}>
           <div className="login-container text-center">
           <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
-          <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>Por favor, inica sesión para continuar.</label>
+          <label 
+            style={{ fontSize: "1rem", paddingBottom: "25px" }}
+          >
+            Por favor, inicia sesión para continuar.
+          </label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario
@@ -151,7 +160,7 @@ function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/registro")}
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse

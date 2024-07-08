@@ -7,7 +7,7 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
 
   const handleClick = () => {
     onTopicClick(id);
-    navigate(`/search/${id}`);
+    navigate(`/buscar/${id}`);
   };
 
   return (

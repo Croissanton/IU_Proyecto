@@ -4,7 +4,6 @@ import { Breadcrumb } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el modal de confirmación
-import ProfilePage from "./ProfilePage.js";
 
 function ProfilePublic() {
   const { username } = useParams();
@@ -14,7 +13,6 @@ function ProfilePublic() {
   const [userData, setUserData] = useState(null);
   const [friendStatus, setFriendStatus] = useState("");
   const [blockStatus, setBlockStatus] = useState("");
-  const [isBlocked, setIsBlocked] = useState(false);
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [showBlockModal, setShowBlockModal] = useState(false);
@@ -39,12 +37,7 @@ function ProfilePublic() {
       const parsedUsers = JSON.parse(storedUsers);
       const user = parsedUsers.find((user) => user.username === username);
       if (user) {
-        // Check if the user has blocked the current user
-        if (user.blockList?.includes(currentUser.username)) {
-          setIsBlocked(true);
-        } else {
-          setUserData(user);
-        }
+        setUserData(user);
         updateStatuses(currentUser, user);
       }
     }
@@ -231,7 +224,7 @@ function ProfilePublic() {
     }
   };
 
-  if (isCurrentUser) return <ProfilePage />;
+  if(JSON.parse(localStorage.getItem("usuarios")).find((user) => user.username === username).blockList?.includes(currentUser.username)) return <p>Este usuario te ha bloqueado.</p>;
 
   return (
     <MainLayout>
@@ -254,9 +247,7 @@ function ProfilePublic() {
       >
         {username}
       </label>
-      {isBlocked ? (
-        <p>Este usuario te ha bloqueado.</p>
-      ) : userData ? (
+      {userData ? (
         <div style={{ display: "flex" }}>
           <div className="m-auto">
             <img
@@ -366,15 +357,15 @@ function ProfilePublic() {
 
               <div className="col-12">
                 {!isButtonUnavailable && (
-                  <Link to={`/historial/${username}`}>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      style={{ margin: "5px" }}
-                    >
-                      Ver Historial
-                    </button>
-                  </Link>
+                <Link to={`/historial/${username}`}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ margin: "5px" }}
+                  >
+                    Ver Historial
+                  </button>
+                </Link>
                 )}
                 {!isCurrentUser && (
                   <>
@@ -396,15 +387,16 @@ function ProfilePublic() {
                     />
 
                     {!isButtonUnavailable && (
-                      <button
-                        type="button"
-                        className={`btn ${friendButtonColor}`}
-                        style={{ margin: "5px" }}
-                        onClick={handleShowFriendModal}
-                      >
-                        {friendStatus}
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      className={`btn ${friendButtonColor}`}
+                      style={{ margin: "5px" }}
+                      onClick={handleShowFriendModal}
+                    >
+                      {friendStatus}
+                    </button>
+                    )
+                    }
                     <ConfirmationModal
                       show={showFriendModal}
                       handleClose={() => setShowFriendModal(false)}

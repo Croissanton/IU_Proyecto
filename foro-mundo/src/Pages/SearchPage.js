@@ -143,7 +143,7 @@ function SearchPage() {
         <div>
           <div className="row justify-content-center">
             <div className="col-auto">
-              <Link to="/create" className="btn btn-primary">
+              <Link to="/crear" className="btn btn-primary">
                 Crear Nuevo Post
               </Link>
             </div>
@@ -160,6 +160,7 @@ function SearchPage() {
             <select
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
+              aria-label="Ordenar por"
             >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>

@@ -88,7 +88,7 @@ function FriendsPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Amigos</Breadcrumb.Item>
@@ -105,7 +105,7 @@ function FriendsPage() {
         </label>
       </div>
       <div className="container-xxl my-3">
-        <Link to="/requests">
+        <Link to="/peticiones">
           <button className="btn btn-secondary" style={{ marginBottom: "20px" }}>
             Peticiones de Amistad
           </button>
@@ -124,12 +124,13 @@ function FriendsPage() {
           friends.map((user) => (
             <div key={user.username} className="card mb-3">
               <div className="card-body">
-              <Link to={`/profile/${user.username}`} 
+              <Link to={`/perfil/${user.username}`} 
+              className='custom-text-link'
               style={{ 
                 fontSize: "1.5rem",
-                textDecoration: 'none',
-                color: 'black'
-                }}>
+                color: 'black',
+                marginLeft: '10px',
+              }}>
                 {user.username}
               </Link>
                 <button

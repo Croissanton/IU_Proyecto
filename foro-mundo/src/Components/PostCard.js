@@ -162,7 +162,7 @@ const PostCard = ({
             <Row onClick={(e) => e.stopPropagation()}>
               <Col>
                 <span> Creador: </span>
-                <NavLink className="custom-text-link" to={`/profile/${author}`}>
+                <NavLink className="custom-text-link" to={`/perfil/${author}`}>
                   <span>{author}</span>
                 </NavLink>
               </Col>
@@ -174,10 +174,10 @@ const PostCard = ({
               <Col>
                 <span> Votos positivos: {postUpvotes} </span>
                 <Button
-                  aria-label="Upvote"
                   className={`btn ${userVote === "upvote" ? "btn-success" : "btn-primary"}`}
                   onClick={handleUpvote}
                   style={{ margin: "5px" }}
+                  aria-label="Votar positivamente"
                 >
                   +
                 </Button>
@@ -185,10 +185,10 @@ const PostCard = ({
               <Col>
                 <span> Votos negativos: {postDownvotes} </span>
                 <Button
-                  aria-label="Downvote"
                   className={`btn ${userVote === "downvote" ? "btn-danger" : "btn-primary"}`}
                   onClick={handleDownvote}
                   style={{ margin: "5px" }}
+                  aria-label="Votar negativamente"
                 >
                   -
                 </Button>
@@ -210,7 +210,12 @@ const PostCard = ({
                   <p>Último mensaje por:</p>
                 </Row>
                 <Row>
-                  <p>{lm_author}</p>
+                  <NavLink
+                    className="custom-text-link"
+                    to={`/perfil/${lm_author}`
+                  }>
+                    <span>{lm_author}</span>
+                  </NavLink>
                 </Row>
                 <Row>
                   <p>Fecha del último mensaje:</p>
