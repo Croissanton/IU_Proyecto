@@ -7,6 +7,9 @@ import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el m
 
 function ProfilePublic() {
   const { username } = useParams();
+  const currentUser = JSON.parse(localStorage.getItem("usuario"));
+  const isCurrentUser = currentUser?.username === username;
+
   const [userData, setUserData] = useState(null);
   const [friendStatus, setFriendStatus] = useState("");
   const [blockStatus, setBlockStatus] = useState("");
@@ -15,11 +18,14 @@ function ProfilePublic() {
   const [showBlockModal, setShowBlockModal] = useState(false);
   const [showFriendModal, setShowFriendModal] = useState(false);
   const [isButtonUnavailable, setIsButtonUnavailable] = useState(false);
-  
-  const currentUser = JSON.parse(localStorage.getItem("usuario"));
-  const isCurrentUser = currentUser?.username === username;
 
   const friendButtonColor = friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
+
+  useEffect(() => {
+    if (username === currentUser?.username) {
+      navigate("/perfil");
+    }
+  }, [username, currentUser, navigate]);  
 
   useEffect(() => {
     document.title = "Perfil de " + username;
