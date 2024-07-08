@@ -16,6 +16,7 @@ const PostComment = ({
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
+  const [authorProfilePicture, setAuthorProfilePicture] = useState("");
 
   useEffect(() => {
     if (usuario) {
@@ -26,6 +27,15 @@ const PostComment = ({
       }
     }
   }, [id, usuario]);
+
+  useEffect(() => {
+    const allUsers = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const authorData = allUsers.find((user) => user.username === author);
+
+    if (authorData) {
+      setAuthorProfilePicture(authorData.profilePicture || "https://via.placeholder.com/150");
+    }
+  }, [author]);
 
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -62,7 +72,6 @@ const PostComment = ({
     if (userVote === "upvote") {
       newUpvotes -= 1;
       setUserVote(null);
-      // remove from usuario upvotes
       usuario.upComments = usuario.upComments.filter(
         (commentId) => commentId !== id
       );
@@ -70,16 +79,13 @@ const PostComment = ({
       newDownvotes -= 1;
       newUpvotes += 1;
       setUserVote("upvote");
-      // remove from usuario downvotes
       usuario.downComments = usuario.downComments.filter(
         (commentId) => commentId !== id
       );
-      // add to usuario upvotes
       usuario.upComments.push(id);
     } else {
       newUpvotes += 1;
       setUserVote("upvote");
-      // add to usuario upvotes
       usuario.upComments.push(id);
     }
 
@@ -104,7 +110,6 @@ const PostComment = ({
     if (userVote === "downvote") {
       newDownvotes -= 1;
       setUserVote(null);
-      // remove from usuario downvotes
       usuario.downComments = usuario.downComments.filter(
         (commentId) => commentId !== id
       );
@@ -112,16 +117,13 @@ const PostComment = ({
       newUpvotes -= 1;
       newDownvotes += 1;
       setUserVote("downvote");
-      // remove from usuario upvotes
       usuario.upComments = usuario.upComments.filter(
         (commentId) => commentId !== id
       );
-      // add to usuario downvotes
       usuario.downComments.push(id);
     } else {
       newDownvotes += 1;
       setUserVote("downvote");
-      // add to usuario downvotes
       usuario.downComments.push(id);
     }
 
@@ -229,6 +231,13 @@ const PostComment = ({
                 <Col className="text-center">
                   <Row>
                     <Col>
+                      <img
+                        src={authorProfilePicture}
+                        alt="author profile"
+                        width="30"
+                        height="30"
+                        style={{ marginRight: "10px", borderRadius: "50%" }}
+                      />
                       <NavLink
                         className="custom-text-link"
                         to={`/perfil/${author}`}
