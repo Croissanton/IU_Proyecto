@@ -84,6 +84,10 @@ body, html {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.custom-list-item:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 #searchInput {
   border-color: var(--bs-secondary-border-subtle);
   background-color: #ededed;
