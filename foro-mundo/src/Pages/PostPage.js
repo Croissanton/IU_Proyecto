@@ -347,7 +347,7 @@ function PostPage() {
               <option value="textoZA">Texto Z-A</option>
               <option value="reciente">Más recientes</option>
               <option value="antiguo">Más antiguos</option>
-              <option value="masPositivos">Más votos positivos</option>
+              <option selected value="masPositivos">Más votos positivos</option>
               <option value="menosPositivos">Menos votos positivos</option>
               <option value="masNegativos">Más votos negativos</option>
               <option value="menosNegativos">Menos votos negativos</option>

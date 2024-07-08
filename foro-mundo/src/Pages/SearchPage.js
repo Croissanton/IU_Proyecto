@@ -126,7 +126,20 @@ const SearchPage = () => {
             onClick={() => handleSuggestionClick(suggestion)}
           >
             <Container>
-              {suggestion.title || suggestion.topic || suggestion.username}
+              {suggestion.type === "user" ? (
+                <>
+                  <img
+                    src={suggestion.profilePicture || "https://via.placeholder.com/150"}
+                    alt="profile"
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px", borderRadius: "50%" }}
+                  />
+                  {suggestion.username}
+                </>
+              ) : (
+                suggestion.title || suggestion.topic || suggestion.username
+              )}
               {suggestion.author && (
                 <>
                   <br />
