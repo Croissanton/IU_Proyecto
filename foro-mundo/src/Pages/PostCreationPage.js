@@ -26,14 +26,13 @@ function PostCreationPage() {
 
   const handleClose = () => {
     setShowModal(false);
-    showToast("El post no se ha creado.", "bg-danger");
   };
 
   const handleConfirm = () => {
     const postId = savePostData();
     setShowModal(false);
     showToast("El post se ha creado correctamente!", "bg-success");
-    navigate(`/search/${postId}`);
+    navigate(`/buscar/${postId}`);
   };
 
   const handleKeyDown = (e) => {

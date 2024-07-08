@@ -247,7 +247,7 @@ function ProfilePage() {
                     </button>
                   </Link>
 
-                  <Link to={`/blocked`}>
+                  <Link to={`/bloqueados`}>
                     <button
                       type="button"
                       className="btn btn-primary"
@@ -257,7 +257,7 @@ function ProfilePage() {
                     </button>
                   </Link>
 
-                  <Link to={`/friends`}>
+                  <Link to={`/amigos`}>
                     <button
                       type="button"
                       className="btn btn-primary"

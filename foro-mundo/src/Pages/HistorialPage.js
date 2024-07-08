@@ -41,7 +41,7 @@ function HistorialPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Historial</Breadcrumb.Item>

@@ -130,7 +130,7 @@ const Header = forwardRef((props, ref) => {
 
     switch (suggestion.type) {
       case "topic":
-        navigate(`/search/${suggestion.id}`);
+        navigate(`/buscar/${suggestion.id}`);
         break;
       case "post":
         navigate(`/post/${suggestion.id}`);
@@ -151,7 +151,7 @@ const Header = forwardRef((props, ref) => {
       return;
     }
     console.log("Searching for:", inputValue);
-    navigate(`/search?query=${encodeURIComponent(inputValue)}`);
+    navigate(`/buscar?query=${encodeURIComponent(inputValue)}`);
   };
 
   const { showToast } = useToast();
@@ -264,7 +264,7 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/create"
+                      to="/crear"
                       aria-label="Crear post"
                     >
                       {isMobile && <span className="me-2">Crear</span>}
@@ -279,7 +279,7 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/profile"
+                      to="/perfil"
                       aria-label="Perfil"
                     >
                       {isMobile && <span className="me-2">Perfil</span>}
@@ -294,7 +294,7 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/messenger"
+                      to="/mensajes"
                       aria-label="Mensajes"
                     >
                       {isMobile && <span className="me-2">Mensajes</span>}
@@ -311,7 +311,7 @@ const Header = forwardRef((props, ref) => {
                 <Nav.Link
                   className="d-flex align-items-center justify-content-center"
                   as={Link}
-                  to="/help"
+                  to="/ayuda"
                   aria-label="Ayuda"
                 >
                   {isMobile && <span className="me-2">Ayuda</span>}
@@ -323,7 +323,7 @@ const Header = forwardRef((props, ref) => {
               {usuario === undefined ? (
                 <Nav.Link
                   as={Link}
-                  to="/login"
+                  to="/inicioSesion"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -347,7 +347,7 @@ const Header = forwardRef((props, ref) => {
               {usuario === undefined ? (
                 <Nav.Link
                   as={Link}
-                  to="/register"
+                  to="/registro"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",

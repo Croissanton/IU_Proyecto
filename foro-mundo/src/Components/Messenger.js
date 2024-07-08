@@ -102,7 +102,7 @@ const Messenger = () => {
         <div className="p-3 border-bottom border-secondary-subtle">
           <NavLink
             className="bi bi-person-circle d-inline-flex align-items-center"
-            to={`/profile/${activeChat}`}
+            to={`/perfil/${activeChat}`}
             style={{ color: "inherit", textDecoration: "none" }}
             aria-label={`Perfil de ${activeChat}`}
           >

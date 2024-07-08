@@ -160,7 +160,7 @@ function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/registro")}
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse

@@ -162,7 +162,7 @@ const PostCard = ({
             <Row onClick={(e) => e.stopPropagation()}>
               <Col>
                 <span> Creador: </span>
-                <NavLink className="custom-text-link" to={`/profile/${author}`}>
+                <NavLink className="custom-text-link" to={`/perfil/${author}`}>
                   <span>{author}</span>
                 </NavLink>
               </Col>
@@ -212,7 +212,7 @@ const PostCard = ({
                 <Row>
                   <NavLink
                     className="custom-text-link"
-                    to={`/profile/${lm_author}`
+                    to={`/perfil/${lm_author}`
                   }>
                     <span>{lm_author}</span>
                   </NavLink>

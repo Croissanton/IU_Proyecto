@@ -231,7 +231,7 @@ const PostComment = ({
                     <Col>
                       <NavLink
                         className="custom-text-link"
-                        to={`/profile/${author}`}
+                        to={`/perfil/${author}`}
                         aria-label={`Perfil de ${author}`}
                         tabIndex="0"
                       >
