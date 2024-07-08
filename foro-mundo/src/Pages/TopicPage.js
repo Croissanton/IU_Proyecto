@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
@@ -170,7 +171,7 @@ function TopicPage() {
               <option value="ultimoAntiguo">Último mensaje más antiguo</option>
               <option value="masVisitas"> Más visitas</option>
               <option value="menosVisitas"> Menos visitas</option>
-              <option value="masRespuestas">Más respuestas</option>
+              <option selected value="masRespuestas">Más respuestas</option>
               <option value="menosRespuestas">Menos respuestas</option>
               <option value="masPositivos">Más votos positivos</option>
               <option value="menosPositivos">Menos votos positivos</option>

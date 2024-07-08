@@ -99,7 +99,7 @@ function MainPage() {
             >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
-              <option value="masPosts">Más posts</option>
+              <option selected value="masPosts">Más posts</option>
               <option value="menosPosts">Menos posts</option>
               <option value="masVisitas">Más visitas</option>
               <option value="menosVisitas">Menos visitas</option>
