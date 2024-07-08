@@ -40,7 +40,7 @@ function ProfilePublic() {
       const user = parsedUsers.find((user) => user.username === username);
       if (user) {
         // Check if the user has blocked the current user
-        if (user.blockList?.includes(currentUser.username)) {
+        if (user.blockList?.includes(currentUser?.username)) {
           setIsBlocked(true);
         } else {
           setUserData(user);
@@ -260,7 +260,7 @@ function ProfilePublic() {
         <div style={{ display: "flex" }}>
           <div className="m-auto">
             <img
-              src="https://via.placeholder.com/150"
+              src={userData.profilePicture ? userData.profilePicture : "https://via.placeholder.com/150"}
               alt="profile"
               width="250"
               height="350"
@@ -376,7 +376,7 @@ function ProfilePublic() {
                     </button>
                   </Link>
                 )}
-                {!isCurrentUser && (
+                {!isCurrentUser && currentUser && (
                   <>
                     <button
                       type="button"

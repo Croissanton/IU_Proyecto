@@ -23,7 +23,7 @@ function ProfilePage() {
     city: usuario ? usuario.city : "",
     socialMedia: usuario ? usuario.socialMedia : "",
     description: usuario ? usuario.description : "",
-    profilePicture: usuario ? usuario.profilePicture : "",
+    profilePicture: usuario ? usuario.profilePicture : "https://via.placeholder.com/150",
     friendList: usuario ? usuario.friendList : [],
     incomingRequests: usuario ? usuario.incomingRequests : [],
     blockList: usuario ? usuario.blockList : [],
@@ -87,10 +87,12 @@ function ProfilePage() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        document.querySelector("img").src = e.target.result;
+        setProfileData((prev) => ({
+          ...prev,
+          profilePicture: e.target.result,
+        }));
       };
       reader.readAsDataURL(file);
-      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
     }
   };
 
@@ -115,7 +117,7 @@ function ProfilePage() {
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img
-            src="https://via.placeholder.com/150"
+            src={profileData.profilePicture}
             alt="profile"
             width="250"
             height="350"
@@ -125,7 +127,6 @@ function ProfilePage() {
             <input
               type="file"
               id="imageInput"
-              value={profileData.imageInput}
               style={{ display: "none" }}
               onChange={handleImageSelection}
             />
@@ -139,7 +140,7 @@ function ProfilePage() {
                 Cambiar foto
               </button>
             )}
-            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label>
+            <label htmlFor="imageInput" className="form-label" hidden> Imagen del perfil </label>
           </div>
         </div>
         <div
