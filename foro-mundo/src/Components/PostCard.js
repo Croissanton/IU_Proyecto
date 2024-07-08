@@ -176,6 +176,7 @@ const PostCard = ({
                 <Button
                   className={`btn ${userVote === "upvote" ? "btn-success" : "btn-primary"}`}
                   onClick={handleUpvote}
+                  disabled={!usuario}
                   style={{ margin: "5px" }}
                   aria-label="Votar positivamente"
                 >
@@ -186,6 +187,7 @@ const PostCard = ({
                 <span> Votos negativos: {postDownvotes} </span>
                 <Button
                   className={`btn ${userVote === "downvote" ? "btn-danger" : "btn-primary"}`}
+                  disabled={!usuario}
                   onClick={handleDownvote}
                   style={{ margin: "5px" }}
                   aria-label="Votar negativamente"
