@@ -7,10 +7,12 @@ import { Breadcrumb } from "react-bootstrap";
 
 function getByUsernameAndPassword(username, password) {
   // Recuperar la lista de usuarios de localStorage
-  const usuarios = JSON.parse(localStorage.getItem('usuarios'));
+  const usuarios = JSON.parse(localStorage.getItem("usuarios"));
 
   // Buscar el usuario por su username
-  const usuario = usuarios.find(usuario => usuario.username === username && usuario.password === password);
+  const usuario = usuarios.find(
+    (usuario) => usuario.username === username && usuario.password === password
+  );
 
   // Retornar el usuario encontrado o null si no se encuentra
   return usuario || null;
@@ -44,12 +46,15 @@ function LoginPage() {
       usuario.lastConnection = new Date().toLocaleString();
       localStorage.setItem("usuario", JSON.stringify(usuario));
       setusuario(usuario);
-      localStorage.setItem("usuarios", JSON.stringify(
-        JSON.parse(localStorage.getItem("usuarios")).map((u) =>
-          u.username === usuario.username ? usuario : u
+      localStorage.setItem(
+        "usuarios",
+        JSON.stringify(
+          JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+            u.username === usuario.username ? usuario : u
+          )
         )
-      
-      ));
+      );
+
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
@@ -70,25 +75,20 @@ function LoginPage() {
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}
       >
-      <Breadcrumb className="custom-breadcrumb">
-      <Breadcrumb.Item
-        linkAs={Link} 
-        linkProps={{ to: "/" }}
-      >
-        Inicio
-      </Breadcrumb.Item>
-        <Breadcrumb.Item active aria-label="enlace_a_login">
-          Login
-        </Breadcrumb.Item>
-      </Breadcrumb>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active aria-label="enlace_a_login">
+            Login
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={login}>
           <div className="login-container text-center">
-          <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
-          <label 
-            style={{ fontSize: "1rem", paddingBottom: "25px" }}
-          >
-            Por favor, inicia sesión para continuar.
-          </label>
+            <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
+            <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>
+              Por favor, inicia sesión para continuar.
+            </label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario

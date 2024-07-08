@@ -73,7 +73,7 @@ const Messenger = () => {
         setActiveChat(userConversations[0]);
       }
     }
-  }, [usuario]);
+  }, [usuario, conversations, activeChat]);
 
   const [chatInputValue, setChatInputValue] = useState("");
   const [modalInputValue, setModalInputValue] = useState("");
@@ -81,6 +81,7 @@ const Messenger = () => {
 
   const handleSendMessage = () => {
     if (!chatInputValue.trim() || !activeChat) return;
+    const allMessages = JSON.parse(localStorage.getItem("messages")) || {};
     const newMessage = {
       id: uuidv4(),
       text: chatInputValue,
@@ -96,7 +97,7 @@ const Messenger = () => {
     localStorage.setItem(
       "messages",
       JSON.stringify({
-        ...messages,
+        ...allMessages,
         [activeChat.conversationKey]: updatedMessages,
       })
     );

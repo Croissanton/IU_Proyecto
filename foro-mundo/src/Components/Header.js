@@ -36,6 +36,7 @@ const Header = forwardRef((props, ref) => {
 
   const posts = JSON.parse(localStorage.getItem("posts")) || [];
   const topics = JSON.parse(localStorage.getItem("topics")) || [];
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
   const comments = posts.reduce(
     (acc, post) => [
       ...acc,
@@ -113,10 +114,21 @@ const Header = forwardRef((props, ref) => {
           postId: comment.postId,
         }));
 
+      const userSuggestions = usuarios
+        .filter((user) =>
+          user.username.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((user) => ({
+          label: `Usuario: ${user.username}`,
+          type: "user",
+          id: user.username,
+        }));
+
       const combinedSuggestions = [
         ...topicSuggestions,
         ...postSuggestions,
         ...commentSuggestions,
+        ...userSuggestions,
       ];
       setSuggestions(combinedSuggestions.slice(0, 5));
       setShowSuggestions(true);
@@ -130,13 +142,16 @@ const Header = forwardRef((props, ref) => {
 
     switch (suggestion.type) {
       case "topic":
-        navigate(`/buscar/${suggestion.id}`);
+        navigate(`/topic/${suggestion.id}`);
         break;
       case "post":
         navigate(`/post/${suggestion.id}`);
         break;
       case "comment":
         navigate(`/post/${suggestion.postId}`);
+        break;
+      case "user":
+        navigate(`/perfil/${suggestion.id}`);
         break;
       default:
         console.log("Unknown suggestion type");
@@ -159,11 +174,14 @@ const Header = forwardRef((props, ref) => {
   const handleLogout = () => {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     usuario.lastDisconnection = new Date().toLocaleString();
-    localStorage.setItem("usuarios", JSON.stringify(
-      JSON.parse(localStorage.getItem("usuarios")).map((user) =>
-        user.username === usuario.username ? usuario : user
+    localStorage.setItem(
+      "usuarios",
+      JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((user) =>
+          user.username === usuario.username ? usuario : user
+        )
       )
-    ));
+    );
     localStorage.removeItem("usuario");
     showToast("Se ha cerrado la sesión!", "bg-success");
     navigate("/");

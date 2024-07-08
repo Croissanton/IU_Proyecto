@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Container, Row } from "react-bootstrap";
+import { Breadcrumb, Container } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import ForumCard from "../Components/ForumCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
@@ -20,7 +20,7 @@ function MainPage() {
     const storedTopics = JSON.parse(localStorage.getItem("topics"));
     if (storedTopics) {
       setTopics(storedTopics);
-    } 
+    }
 
     //Establecer el criterio de ordenación por defecto
     setSortCriteria("nombreAZ");
