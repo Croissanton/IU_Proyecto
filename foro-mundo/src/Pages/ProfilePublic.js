@@ -4,6 +4,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el modal de confirmación
+import ProfilePage from "./ProfilePage.js";
 
 function ProfilePublic() {
   const { username } = useParams();
@@ -13,6 +14,7 @@ function ProfilePublic() {
   const [userData, setUserData] = useState(null);
   const [friendStatus, setFriendStatus] = useState("");
   const [blockStatus, setBlockStatus] = useState("");
+  const [isBlocked, setIsBlocked] = useState(false);
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [showBlockModal, setShowBlockModal] = useState(false);
@@ -37,8 +39,13 @@ function ProfilePublic() {
       const parsedUsers = JSON.parse(storedUsers);
       const user = parsedUsers.find((user) => user.username === username);
       if (user) {
-        setUserData(user);
-        updateStatuses(currentUser, user);
+        // Check if the user has blocked the current user
+        if (user.blockList?.includes(currentUser.username)) {
+          setIsBlocked(true);
+        } else {
+          setUserData(user);
+          updateStatuses(currentUser, user);
+        }
       }
     }
   }, [username]);
@@ -224,6 +231,8 @@ function ProfilePublic() {
     }
   };
 
+  if (isCurrentUser) return <ProfilePage />;
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">
@@ -245,7 +254,19 @@ function ProfilePublic() {
       >
         {username}
       </label>
-      {userData ? (
+      {isBlocked ? (
+        // make this centered
+        <p style={
+          {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "black"
+          }
+        } >Perfil no disponible. Este usuario te ha bloqueado.</p>
+      ) : userData ? (
         <div style={{ display: "flex" }}>
           <div className="m-auto">
             <img
@@ -355,15 +376,15 @@ function ProfilePublic() {
 
               <div className="col-12">
                 {!isButtonUnavailable && (
-                <Link to={`/historial/${username}`}>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    style={{ margin: "5px" }}
-                  >
-                    Ver Historial
-                  </button>
-                </Link>
+                  <Link to={`/historial/${username}`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ margin: "5px" }}
+                    >
+                      Ver Historial
+                    </button>
+                  </Link>
                 )}
                 {!isCurrentUser && (
                   <>
@@ -385,16 +406,15 @@ function ProfilePublic() {
                     />
 
                     {!isButtonUnavailable && (
-                    <button
-                      type="button"
-                      className={`btn ${friendButtonColor}`}
-                      style={{ margin: "5px" }}
-                      onClick={handleShowFriendModal}
-                    >
-                      {friendStatus}
-                    </button>
-                    )
-                    }
+                      <button
+                        type="button"
+                        className={`btn ${friendButtonColor}`}
+                        style={{ margin: "5px" }}
+                        onClick={handleShowFriendModal}
+                      >
+                        {friendStatus}
+                      </button>
+                    )}
                     <ConfirmationModal
                       show={showFriendModal}
                       handleClose={() => setShowFriendModal(false)}
