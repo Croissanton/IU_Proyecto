@@ -58,14 +58,30 @@ function SignUpPage() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showInvalidCharNotification, setShowInvalidCharNotification] = useState(false);
 
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUsuario({ ...usuario, [name]: value });
-  };
+  
+    if (name === "username") {
+      // Validar el nombre de usuario para permitir letras, números, y caracteres - _ .
+      const validUsername = value.replace(/[^a-zA-Z0-9\-\_\.]/g, "");
+      setUsuario({ ...usuario, [name]: validUsername });
+  
+      // Mostrar notificación si se ingresó un carácter inválido
+      if (value !== validUsername) {
+        setShowInvalidCharNotification(true);
+        setTimeout(() => {
+          setShowInvalidCharNotification(false);
+        }, 3000); // Ocultar la notificación después de 3 segundos
+      }
+    } else {
+      setUsuario({ ...usuario, [name]: value });
+    }
+  };   
 
   const register = (e) => {
     e.preventDefault();
@@ -75,6 +91,7 @@ function SignUpPage() {
       alert("El nombre de usuario ya está en uso.");
       return;
     }
+
     usuario.lastConnection = new Date().toLocaleString();
     usuario.lastDisconnection = usuario.lastConnection;
 
@@ -126,6 +143,11 @@ function SignUpPage() {
                 required
                 aria-label="nombre_usuario"
               />
+              {showInvalidCharNotification && (
+                <div className="alert alert-danger" role="alert">
+                  El nombre de usuario solo puede contener letras, números, guiones (-), guiones bajos (_) y puntos (.).
+                </div>
+              )}
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
