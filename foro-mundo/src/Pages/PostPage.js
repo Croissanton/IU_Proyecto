@@ -356,23 +356,17 @@ function PostPage() {
           Comentarios
         </label>
         <div className="d-flex justify-content-end mb-3">
-          <label
-            htmlFor="sortSelect"
-            className="form-label"
-            style={{ padding: "10px" }}
-          >
+          <label htmlFor="sortSelect" className="form-label p-2 mb-0">
             Ordenar por:
           </label>
           <div className="d-flex justify-content-center">
             <select
               id="sortSelect"
               className="form-select"
-              value={sortCriteria}
               onChange={(e) => handleSortChange(e.target.value)}
+              defaultValue="masPositivos"
             >
-              <option selected value="masPositivos">
-                Más votos positivos
-              </option>
+              <option value="masPositivos">Más votos positivos</option>
               <option value="menosPositivos">Menos votos positivos</option>
               <option value="masNegativos">Más votos negativos</option>
               <option value="menosNegativos">Menos votos negativos</option>
