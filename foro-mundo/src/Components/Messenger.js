@@ -288,6 +288,7 @@ const Messenger = () => {
 
   return (
     <Row className="g-0">
+      {/* lista de chats */}
       <Col md={3}>
         <ListGroup>
           <ListGroup.Item className="border-0">
@@ -334,12 +335,14 @@ const Messenger = () => {
             ))}
         </ListGroup>
       </Col>
+      {/* chatbox */}
       <Col
         md={9}
         className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded"
       >
         {activeChat ? (
           <>
+            {/* header de chatbox y el boton de archivar */}
             <div className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center">
               <NavLink
                 className="bi bi-person-circle d-inline-flex align-items-center"
@@ -369,6 +372,7 @@ const Messenger = () => {
                 )}
               </Button>
             </div>
+            {/* mensajes */}
             <div
               className="flex-grow-1 overflow-auto p-3"
               style={{ height: "60vh" }}
@@ -377,6 +381,7 @@ const Messenger = () => {
               aria-atomic="true"
               aria-live="polite"
             >
+              {/* solo se ejecuta si hay chat selecionado y se puede leer mensajes */}
               {activeChat &&
                 messages[activeChat.conversationKey] &&
                 messages[activeChat.conversationKey].map((message) => (
@@ -396,6 +401,7 @@ const Messenger = () => {
                     }}
                     onClick={() => toggleMessage(message.id)}
                   >
+                    {/* solo se ejecuta cuando el mensaje es "abierto" */}
                     {expandedMessages[message.id] && (
                       <div className="d-flex justify-content-between align-items-center mb-1">
                         {message.sender === usuario.username && (
@@ -414,11 +420,13 @@ const Messenger = () => {
                             <span>Borrar mensaje</span>
                           </Button>
                         )}
+                        {/* timestamp */}
                         <small className="text-muted">
                           {formatTimestamp(message.timestamp)}
                         </small>
                       </div>
                     )}
+                    {/* el text de mensaje */}
                     <span>{message.text}</span>
                   </div>
                 ))}
@@ -449,6 +457,7 @@ const Messenger = () => {
           </div>
         )}
       </Col>
+      {/* modals para anadir chat, confirmacion, y chats archivados */}
       <AddChatModal
         show={showAddChatModal}
         handleClose={handleCloseAddChatModal}
