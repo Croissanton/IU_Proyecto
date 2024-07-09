@@ -32,7 +32,7 @@ const router = createBrowserRouter(
         { path: "/perfil/:username", element: <ProfilePublic /> },
         { path: "/topic/:topicId", element: <TopicPage /> },
         { path: "/post/:postId", element: <PostPage /> },
-        { path: "/crear", element: <PostCreationPage /> },
+        { path: "/crear/:topicId", element: <PostCreationPage /> },
         { path: "/inicioSesion", element: <LoginPage /> },
         { path: "/registro", element: <SignUpPage /> },
         { path: "/ayuda", element: <HelpPage /> },

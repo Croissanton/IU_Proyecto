@@ -294,7 +294,7 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/crear"
+                      to="/crear/0"
                       aria-label="Crear post"
                     >
                       {isMobile && <span className="me-2">Crear</span>}

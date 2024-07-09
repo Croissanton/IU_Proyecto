@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Breadcrumb, Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 function PostCreationPage() {
@@ -11,6 +11,7 @@ function PostCreationPage() {
     document.title = "Crear Post";
   }, []);
 
+  const { topicId } = useParams();
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
   const topics = JSON.parse(localStorage.getItem("topics")) || [];
 
@@ -18,7 +19,7 @@ function PostCreationPage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
-    category: "default",
+    category: topicId !== "0" ? topicId : "default",
     text: "",
   });
 
@@ -162,7 +163,7 @@ function PostCreationPage() {
                 value={formData.category}
                 onChange={handleInputChange}
               >
-                <option value="default" disabled>
+                <option value="default" disabled={formData.category !== "default"}>
                   Selecciona una categoría...
                 </option>
                 {topics.map(topic => (

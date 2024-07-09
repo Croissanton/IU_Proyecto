@@ -165,7 +165,7 @@ function TopicPage() {
         <div>
           <div className="row justify-content-center">
             <div className="col-auto">
-              <Link to="/crear" className="btn btn-primary">
+              <Link to={`/crear/${topicId}`} className="btn btn-primary">
                 <i className="bi bi-plus-circle"></i>{" "}
                 <span>Crear Nuevo Post</span>
               </Link>
