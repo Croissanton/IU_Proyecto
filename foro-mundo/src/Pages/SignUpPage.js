@@ -5,6 +5,7 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import zxcvbn from "zxcvbn";
 
+
 function PasswordStrengthMeter({ password }) {
   const testResult = zxcvbn(password);
   const score = testResult.score * 25;

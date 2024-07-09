@@ -8,8 +8,67 @@ $light: #e0dede;
 $light-light: #efeded;
 $dark: #262626;
 $white: #f5f5f5;
-$secondary-subtle: var(--bs-secondary-border-subtle);
+$secondary-subtle: lighten($secondary, 10%);
 
+:root
+{
+  --bs-primary: $primary;
+  --bs-secondary: $secondary;
+  --bs-success: $success;
+  --bs-info: $info;
+  --bs-warning: $warning;
+  --bs-danger: $danger;
+  --bs-light: $light;
+  --bs-dark: $dark;
+  --bs-white: $white;
+  --bs-secondary-border-subtle: $secondary-subtle;
+}
+
+[data-bs-theme="light"]{
+  --bs-primary: $primary;
+  --bs-secondary: $secondary;
+  --bs-success: $success;
+  --bs-info: $info;
+  --bs-warning: $warning;
+  --bs-danger: $danger;
+  --bs-light: $light;
+  --bs-dark: $dark;
+  --bs-white: $white;
+  --bs-secondary-border-subtle: $secondary-subtle;
+
+}
+
+
+[data-bs-theme="dark"] {
+  --bs-primary: var(--bs-secondary);
+  --bs-secondary: var(--bs-primary)
+  --bs-success: rgb(0, 100, 53);
+  --bs-info: darken($info, 50%);
+  --bs-warning: darken($warning, 50%);
+  --bs-danger: darken($danger, 50%);
+  --bs-light: $dark
+  --bs-dark: $light
+  --bs-white: black;
+  --bs-secondary-border-subtle: darken($secondary, 10%);
+  .custom-footer {
+    background-color: $secondary;
+  }
+  .custom-button{
+    background-color: $secondary;
+    color: $primary;
+  }
+
+}
+
+/* Custom CSS for Footer */
+.custom-footer {
+  background-color: var(--bs-primary); /* Bootstrap primary background color */
+  color: var(--bs-secondary); /* Bootstrap secondary text color */
+  text-align: center; /* Center align text */
+  padding-top: 1rem; /* Top padding 1rem */
+  padding-bottom: 1rem; /* Bottom padding 1rem */
+  border-top: 1px solid var(--bs-dark-subtle); /* Subtle dark border on top */
+}
 
 body, html {
   height: 100%;
@@ -22,10 +81,6 @@ body, html {
   min-height: 100%;
 }
 
-.custom-button {
-  background-color: $primary;
-  color: $secondary;
-}
 
 .custom-pagination .page-link {
     color: $secondary; 
@@ -68,7 +123,7 @@ body, html {
       color: rgba(0, 0, 0, 0.5);
     }
   }
-
+/*
 .custom-button {
     background-color: $light; 
     text-decoration: none;
@@ -81,7 +136,7 @@ body, html {
       background-color: rgba(0, 0, 0, 0.2);
     }
   }
-
+*/
 .custom-text-link {
     color: $secondary;
     display: inline-block;

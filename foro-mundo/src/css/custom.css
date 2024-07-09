@@ -1,4 +1,60 @@
 @charset "UTF-8";
+:root {
+  --bs-primary: $primary;
+  --bs-secondary: $secondary;
+  --bs-success: $success;
+  --bs-info: $info;
+  --bs-warning: $warning;
+  --bs-danger: $danger;
+  --bs-light: $light;
+  --bs-dark: $dark;
+  --bs-white: $white;
+  --bs-secondary-border-subtle: $secondary-subtle;
+}
+
+[data-bs-theme=light] {
+  --bs-primary: $primary;
+  --bs-secondary: $secondary;
+  --bs-success: $success;
+  --bs-info: $info;
+  --bs-warning: $warning;
+  --bs-danger: $danger;
+  --bs-light: $light;
+  --bs-dark: $dark;
+  --bs-white: $white;
+  --bs-secondary-border-subtle: $secondary-subtle;
+}
+
+[data-bs-theme=dark] {
+  --bs-primary: var(--bs-secondary);
+  --bs-secondary: var(--bs-primary)
+  --bs-success: rgb(0, 100, 53);
+  --bs-info: darken($info, 50%);
+  --bs-warning: darken($warning, 50%);
+  --bs-danger: darken($danger, 50%);
+  --bs-light: $dark
+  --bs-dark: $light
+  --bs-white: black;
+  --bs-secondary-border-subtle: darken($secondary, 10%);
+}
+[data-bs-theme=dark] .custom-footer {
+  background-color: #002561;
+}
+[data-bs-theme=dark] .custom-button {
+  background-color: #002561;
+  color: #B4DBFC;
+}
+
+/* Custom CSS for Footer */
+.custom-footer {
+  background-color: var(--bs-primary); /* Bootstrap primary background color */
+  color: var(--bs-secondary); /* Bootstrap secondary text color */
+  text-align: center; /* Center align text */
+  padding-top: 1rem; /* Top padding 1rem */
+  padding-bottom: 1rem; /* Bottom padding 1rem */
+  border-top: 1px solid var(--bs-dark-subtle); /* Subtle dark border on top */
+}
+
 body, html {
   height: 100%;
   margin: 0;
@@ -10,27 +66,22 @@ body, html {
   min-height: 100%;
 }
 
-.custom-button {
-  background-color: #B4DBFC;
-  color: #002561;
-}
-
 .custom-pagination .page-link {
   color: #002561;
   background-color: #B4DBFC;
-  border-color: var(--bs-secondary-border-subtle);
+  border-color: #003894;
 }
 
 .custom-pagination .page-link:hover {
   color: #002561;
   background-color: #e0dede;
-  border-color: var(--bs-secondary-border-subtle);
+  border-color: #003894;
 }
 
 .custom-pagination .page-item.active .page-link {
   color: #B4DBFC;
   background-color: #002561;
-  border-color: var(--bs-secondary-border-subtle);
+  border-color: #003894;
 }
 
 .custom-link {
@@ -57,17 +108,20 @@ body, html {
   color: rgba(0, 0, 0, 0.5);
 }
 
+/*
 .custom-button {
-  background-color: #e0dede;
-  text-decoration: none;
-}
-.custom-button.active {
-  background-color: #7eb5be;
-}
-.custom-button:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
+    background-color: $light; 
+    text-decoration: none;
 
+    &.active {
+      background-color: $info;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+*/
 .custom-text-link {
   color: #002561;
   display: inline-block;
@@ -99,7 +153,7 @@ body, html {
 }
 
 #searchInput {
-  border-color: var(--bs-secondary-border-subtle);
+  border-color: #003894;
   background-color: #ededed;
 }
 
