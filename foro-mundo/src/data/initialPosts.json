@@ -4,6 +4,8 @@
     "topicId": 1,
     "title": "buen foro :D",
     "text": "Este es un foro muy bueno",
+    "upvotes": 0,
+    "downvotes": 0,
     "author": "Juan_Jaun",
     "date": "10/18/1992",
     "res_num": 3,
@@ -38,15 +40,15 @@
         "downvotes": 1,
         "date": "12/10/2009"
       }
-    ],
-    "upvotes": 0,
-    "downvotes": 0
+    ]
   },
   {
     "id": 2,
     "topicId": 6,
     "title": "Por qué me ha explotado el radiador??",
     "text": "El radiador de mi casa ha explotado y no sé qué hacer. ¿Alguien sabe qué pudo haber causado esto?",
+    "upvotes": 0,
+    "downvotes": 0,
     "author": "Ignacio19291",
     "date": "2/5/2023",
     "res_num": 3,
@@ -81,15 +83,15 @@
         "downvotes": 0,
         "date": "2/7/2023"
       }
-    ],
-    "upvotes": 0,
-    "downvotes": 0
+    ]
   },
   {
     "id": 3,
     "topicId": 2,
     "title": "Mi gato se ha comido a mi abuela :( ¿qué hago?",
     "text": "En un sorprendente giro de acontecimientos, mi gato se ha comido a mi abuela. Estoy desconcertado y no sé cómo manejar la situación.",
+    "upvotes": 0,
+    "downvotes": 0,
     "author": "Ignacio19291",
     "date": "4/10/2024",
     "res_num": 1,
@@ -106,30 +108,30 @@
         "downvotes": 0,
         "date": "4/11/2024"
       }
-    ],
-    "upvotes": 0,
-    "downvotes": 0
+    ]
   },
   {
     "id": 4,
     "topicId": 2,
     "title": "Mi abuela se ha comido a mi gato.........!!",
     "text": "Después de un extraño contratiempo, mi abuela se ha comido a mi gato y estoy totalmente impactado. ¿Alguien más ha pasado por algo similar?",
+    "upvotes": 0,
+    "downvotes": 0,
     "author": "percebe43",
     "date": "4/1/2024",
     "res_num": 0,
     "view_num": 20,
     "lm_author": "",
     "lm_date": "",
-    "comments": [],
-    "upvotes": 0,
-    "downvotes": 0
+    "comments": []
   },
   {
     "id": 5,
     "topicId": 6,
     "title": "La gasolina casi a 2€",
     "text": "La gasolina está a punto de llegar a los 2€ por litro. ¿Qué opinan sobre este incremento? ¿Cómo afectará a nuestro día a día?",
+    "upvotes": 0,
+    "downvotes": 0,
     "author": "Ignacio19291",
     "date": "3/12/2024",
     "res_num": 2,
@@ -155,15 +157,15 @@
         "downvotes": 0,
         "date": "3/14/2024"
       }
-    ],
-    "upvotes": 0,
-    "downvotes": 0
+    ]
   },
   {
     "id": 6,
     "topicId": 2,
     "title": "Desesperadamente buscando consejos para escribir",
     "text": "Estoy enfrentando un bloqueo de escritor y no sé cómo superarlo. ¿Algún consejo?",
+    "upvotes": 0,
+    "downvotes": 0,
     "author": "percebe43",
     "date": "2/1/2024",
     "res_num": 2,
@@ -189,8 +191,6 @@
         "downvotes": 0,
         "date": "2/4/2024"
       }
-    ],
-    "upvotes": 0,
-    "downvotes": 0
+    ]
   }
 ]

@@ -26,7 +26,7 @@ function PostPage() {
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
   // Estado para el criterio de ordenación
-  const [sortCriteria, setSortCriteria] = useState("newest");
+  const [sortCriteria, setSortCriteria] = useState("masPositivos");
   const navigate = useNavigate();
 
   // Para elegir página
@@ -58,7 +58,7 @@ function PostPage() {
     }
 
     //Establecer el criterio de ordenación por defecto
-    setSortCriteria("textoAZ");
+    setSortCriteria("masPositivos");
   }, [postId]);
 
   const handleClose = () => {
@@ -226,7 +226,7 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item
             linkAs={Link}
-            linkProps={{ to: `/search/${post?.topicId}` }}
+            linkProps={{ to: `/topic/${post?.topicId}` }}
           >
             {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
@@ -324,7 +324,7 @@ function PostPage() {
         </div>
       )}
 
-      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
+      <label style={{ fontSize: "2rem", fontWeight: "bold", marginLeft: "80px" }}>
         Comentarios
       </label>
       <div className="container-xxl my-3">
@@ -343,14 +343,14 @@ function PostPage() {
               value={sortCriteria}
               onChange={(e) => handleSortChange(e.target.value)}
             >
-              <option value="textoAZ">Texto A-Z</option>
-              <option value="textoZA">Texto Z-A</option>
-              <option value="reciente">Más recientes</option>
-              <option value="antiguo">Más antiguos</option>
               <option selected value="masPositivos">Más votos positivos</option>
               <option value="menosPositivos">Menos votos positivos</option>
               <option value="masNegativos">Más votos negativos</option>
               <option value="menosNegativos">Menos votos negativos</option>
+              <option value="textoAZ">Texto A-Z</option>
+              <option value="textoZA">Texto Z-A</option>
+              <option value="reciente">Más recientes</option>
+              <option value="antiguo">Más antiguos</option>
             </select>
           </div>
         </div>

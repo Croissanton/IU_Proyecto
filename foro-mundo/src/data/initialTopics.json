@@ -14,19 +14,19 @@
     {
         "id": 3,
         "topic": "Música", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 4,
         "topic": "Deportes", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 5,
         "topic": "Videojuegos", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
@@ -38,85 +38,85 @@
     {
         "id": 7,
         "topic": "Cocina", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 8,
         "topic": "Tecnología", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 9,
         "topic": "Cine", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 10,
         "topic": "Literatura", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 11,
         "topic": "Ciencia", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 12,
         "topic": "Historia", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 13,
         "topic": "Arte", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 14,
         "topic": "Política", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 15,
         "topic": "Economía", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 16,
         "topic": "Salud", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 17,
         "topic": "Viajes", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 18,
         "topic": "Moda", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 19,
         "topic": "Belleza", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     },
     {
         "id": 20,
         "topic": "Hogar", 
-        "post_num": 1,
+        "post_num": 0,
         "view_num": 0
     }
 ]
