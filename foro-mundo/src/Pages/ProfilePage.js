@@ -118,25 +118,27 @@ function ProfilePage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
-        <label
-          style={{
-            fontSize: "3rem",
-            fontWeight: "bold",
-            display: "block",
-            textAlign: "center",
-            paddingBottom: "50px",
-          }}
-        >
-          {profileData.username}
-        </label>
       </div>
       <Container>
         <Row>
           <Col md={3} className="m-auto">
             <Row>
+              <label
+                style={{
+                  fontSize: "3rem",
+                  fontWeight: "bold",
+                  display: "block",
+                  textAlign: "center",
+                  paddingBottom: "50px",
+                }}
+              >
+                {profileData.username}
+              </label>
+            </Row>
+            <Row>
               <img
                 src={profileData.profilePicture}
-                alt="profile"
+                alt="imagen del perfil"
                 className="m-auto shadow"
               />
             </Row>

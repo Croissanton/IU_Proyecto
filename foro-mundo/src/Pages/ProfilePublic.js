@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Container, Row, Col } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
-import ConfirmationModal from '../Components/ConfirmationModal'; // Importa el modal de confirmación
+import ConfirmationModal from "../Components/ConfirmationModal"; // Importa el modal de confirmación
 import ProfilePage from "./ProfilePage.js";
 
 function ProfilePublic() {
@@ -21,13 +21,14 @@ function ProfilePublic() {
   const [showFriendModal, setShowFriendModal] = useState(false);
   const [isButtonUnavailable, setIsButtonUnavailable] = useState(false);
 
-  const friendButtonColor = friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
+  const friendButtonColor =
+    friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
 
   useEffect(() => {
     if (username === currentUser?.username) {
       navigate("/perfil");
     }
-  }, [username, currentUser, navigate]);  
+  }, [username, currentUser, navigate]);
 
   useEffect(() => {
     document.title = "Perfil de " + username;
@@ -243,181 +244,222 @@ function ProfilePublic() {
           <Breadcrumb.Item active>{username}</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <label
-        style={{
-          fontSize: "3rem",
-          fontWeight: "bold",
-          display: "block",
-          textAlign: "center",
-          paddingBottom: "50px",
-        }}
-      >
-        {username}
-      </label>
       {isBlocked ? (
         <p>Este usuario te ha bloqueado.</p>
       ) : userData ? (
-        <div style={{ display: "flex" }}>
-          <div className="m-auto">
-            <img
-              src={userData.profilePicture ? userData.profilePicture : "https://via.placeholder.com/150"}
-              alt="profile"
-              width="250"
-              height="350"
-            />
-          </div>
-          <div
-            className="m-auto"
-            style={{
-              width: "60%",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <form className="row col-12 g-3">
-              <div className="row">
-                <div className="col-md-6">
-                  <label htmlFor="inputNombre4" className="form-label">
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputNombre4"
-                    value={userData.name}
-                    disabled
-                  ></input>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="inputApellidos4" className="form-label">
-                    Apellidos
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputApellidos4"
-                    value={userData.lastName}
-                    disabled
-                  ></input>
-                </div>
-              </div>
-              <div className="col-12">
-                <label htmlFor="inputFechaNacimiento" className="form-label">
-                  Fecha de nacimiento
+        <Container>
+          <Row>
+            <Col md={3} className="m-auto">
+              <Row>
+                <label
+                  style={{
+                    fontSize: "3rem",
+                    fontWeight: "bold",
+                    display: "block",
+                    textAlign: "center",
+                    paddingBottom: "50px",
+                  }}
+                >
+                  {username}
                 </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="inputFechaNacimiento"
-                  value={userData.birthDate}
-                  disabled
-                ></input>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <label htmlFor="inputPais" className="form-label">
-                    País
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputPais"
-                    value={userData.country}
-                    disabled
-                  ></input>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="inputCiudad" className="form-label">
-                    Ciudad
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputCiudad"
-                    value={userData.city}
-                    disabled
-                  ></input>
-                </div>
-              </div>
-              <div className="col-12">
-                <label htmlFor="inputRedes" className="form-label">
-                  Redes Sociales
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputRedes"
-                  value={userData.socialMedia}
-                  disabled
-                ></input>
-              </div>
-              <div className="col-12">
-                <label htmlFor="inputDescripcion" className="form-label">
-                  Descripcion
-                </label>
-                <textarea
-                  className="form-control"
-                  id="inputDescripcion"
-                  rows="3"
-                  value={userData.description}
-                  disabled
-                ></textarea>
-              </div>
-
-              <div className="col-12">
-                {!isButtonUnavailable && (
-                  <Link to={`/historial/${username}`}>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      style={{ margin: "5px" }}
+              </Row>
+              <Row>
+                <img
+                  src={
+                    userData.profilePicture
+                      ? userData.profilePicture
+                      : "https://via.placeholder.com/150"
+                  }
+                  alt="imagen del perfil"
+                  className="m-auto shadow"
+                />
+              </Row>
+            </Col>
+            <Col md={6} className="m-auto shadow">
+              <form className="p-3">
+                <Row>
+                  <Col md={6}>
+                    <label
+                      htmlFor="inputNombre4"
+                      className="form-label border-bottom border-dark-subtle"
                     >
-                      Ver Historial
-                    </button>
-                  </Link>
-                )}
-                {!isCurrentUser && currentUser && (
-                  <>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      style={{ margin: "5px" }}
-                      onClick={handleShowBlockModal}
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-white"
+                      id="inputNombre4"
+                      value={userData.name}
+                      disabled
+                    ></input>
+                  </Col>
+                  <Col md={6}>
+                    <label
+                      htmlFor="inputApellidos4"
+                      className="form-label border-bottom border-dark-subtle"
                     >
-                      {blockStatus}
-                    </button>
+                      Apellidos
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-white"
+                      id="inputApellidos4"
+                      value={userData.lastName}
+                      disabled
+                    ></input>
+                  </Col>
+                </Row>
+                <Col md={6}>
+                  <label
+                    htmlFor="inputFechaNacimiento"
+                    className="form-label border-bottom border-dark-subtle"
+                  >
+                    Fecha de nacimiento
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control border-0 bg-white"
+                    id="inputFechaNacimiento"
+                    value={userData.birthDate}
+                    disabled
+                  ></input>
+                </Col>
+                <Row>
+                  <Col md={6}>
+                    <label
+                      htmlFor="inputPais"
+                      className="form-label border-bottom border-dark-subtle"
+                    >
+                      País
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-white"
+                      id="inputPais"
+                      value={userData.country}
+                      disabled
+                    ></input>
+                  </Col>
+                  <Col md={6}>
+                    <label
+                      htmlFor="inputCiudad"
+                      className="form-label border-bottom border-dark-subtle"
+                    >
+                      Ciudad
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-white"
+                      id="inputCiudad"
+                      value={userData.city}
+                      disabled
+                    ></input>
+                  </Col>
+                </Row>
+                <Col>
+                  <label
+                    htmlFor="inputRedes"
+                    className="form-label border-bottom border-dark-subtle"
+                  >
+                    Redes Sociales
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control border-0 bg-white"
+                    id="inputRedes"
+                    value={userData.socialMedia}
+                    disabled
+                  ></input>
+                </Col>
+                <Col>
+                  <label
+                    htmlFor="inputDescripcion"
+                    className="form-label border-bottom border-dark-subtle"
+                  >
+                    Descripcion
+                  </label>
+                  <textarea
+                    className="form-control border-0 bg-white"
+                    id="inputDescripcion"
+                    rows="3"
+                    value={userData.description}
+                    disabled
+                  ></textarea>
+                </Col>
 
-                    <ConfirmationModal
-                      show={showBlockModal}
-                      handleClose={() => setShowBlockModal(false)}
-                      handleConfirm={confirmBlockUser}
-                      title={blockStatus === "Bloquear Usuario" ? "Bloquear Usuario" : "Desbloquear Usuario"}
-                      message={`¿Estás seguro de que quieres ${blockStatus === "Bloquear Usuario" ? "bloquear" : "desbloquear"} a este usuario?`}
-                    />
-
-                    {!isButtonUnavailable && (
+                <Col>
+                  {!isButtonUnavailable && (
+                    <Link to={`/historial/${username}`}>
                       <button
                         type="button"
-                        className={`btn ${friendButtonColor}`}
+                        className="btn btn-primary"
                         style={{ margin: "5px" }}
-                        onClick={handleShowFriendModal}
                       >
-                        {friendStatus}
+                        Ver Historial
                       </button>
-                    )}
-                    <ConfirmationModal
-                      show={showFriendModal}
-                      handleClose={() => setShowFriendModal(false)}
-                      handleConfirm={confirmFriendRequest}
-                      title={friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "Añadir Amigo" : "Eliminar Amigo"}
-                      message={`¿Estás seguro de que quieres ${friendStatus === "Agregar Amigo" || friendStatus === "Aceptar Solicitud" ? "añadir a" : "eliminar a"} este usuario como amigo?`}
-                    />
-                  </>
-                )}
-              </div>
-            </form>
-          </div>
-        </div>
+                    </Link>
+                  )}
+                  {!isCurrentUser && currentUser && (
+                    <>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                        onClick={handleShowBlockModal}
+                      >
+                        {blockStatus}
+                      </button>
+
+                      <ConfirmationModal
+                        show={showBlockModal}
+                        handleClose={() => setShowBlockModal(false)}
+                        handleConfirm={confirmBlockUser}
+                        title={
+                          blockStatus === "Bloquear Usuario"
+                            ? "Bloquear Usuario"
+                            : "Desbloquear Usuario"
+                        }
+                        message={`¿Estás seguro de que quieres ${
+                          blockStatus === "Bloquear Usuario"
+                            ? "bloquear"
+                            : "desbloquear"
+                        } a este usuario?`}
+                      />
+
+                      {!isButtonUnavailable && (
+                        <button
+                          type="button"
+                          className={`btn ${friendButtonColor}`}
+                          style={{ margin: "5px" }}
+                          onClick={handleShowFriendModal}
+                        >
+                          {friendStatus}
+                        </button>
+                      )}
+                      <ConfirmationModal
+                        show={showFriendModal}
+                        handleClose={() => setShowFriendModal(false)}
+                        handleConfirm={confirmFriendRequest}
+                        title={
+                          friendStatus === "Agregar Amigo" ||
+                          friendStatus === "Aceptar Solicitud"
+                            ? "Añadir Amigo"
+                            : "Eliminar Amigo"
+                        }
+                        message={`¿Estás seguro de que quieres ${
+                          friendStatus === "Agregar Amigo" ||
+                          friendStatus === "Aceptar Solicitud"
+                            ? "añadir a"
+                            : "eliminar a"
+                        } este usuario como amigo?`}
+                      />
+                    </>
+                  )}
+                </Col>
+              </form>
+            </Col>
+          </Row>
+        </Container>
       ) : (
         <p>No se encontraron datos para el usuario seleccionado.</p>
       )}
