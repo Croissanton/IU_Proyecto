@@ -12,6 +12,7 @@ function PostCreationPage() {
   }, []);
 
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+  const topics = JSON.parse(localStorage.getItem("topics")) || [];
 
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -89,8 +90,7 @@ function PostCreationPage() {
     localStorage.setItem("posts", JSON.stringify(existingPosts));
 
     // Actualizar el número de posts en el localStorage para el topic correspondiente
-    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
-    const updatedTopics = existingTopics.map((topic) => {
+    const updatedTopics = topics.map((topic) => {
       if (topic.id === parseInt(post.topicId)) {
         return {
           ...topic,
@@ -165,12 +165,9 @@ function PostCreationPage() {
                 <option value="default" disabled>
                   Selecciona una categoría...
                 </option>
-                <option value="1">General</option>
-                <option value="2">Off-topic</option>
-                <option value="3">Tecnología</option>
-                <option value="4">Deportes</option>
-                <option value="5">Cine</option>
-                <option value="6">Coches</option>
+                {topics.map(topic => (
+                  <option key={topic.id} value={topic.id}>{topic.topic}</option>
+                ))}
               </select>
             </div>
             <div className="col-12">

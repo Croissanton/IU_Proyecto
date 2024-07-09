@@ -11,7 +11,7 @@ function MainPage() {
 
   const [topics, setTopics] = useState([]);
   // Estado para el criterio de ordenación
-  const [sortCriteria, setSortCriteria] = useState("nombreAZ");
+  const [sortCriteria, setSortCriteria] = useState("masPosts");
   const [currentPage, setCurrentPage] = useState(1);
   const topicsPerPage = 5;
 
@@ -23,7 +23,7 @@ function MainPage() {
     }
 
     //Establecer el criterio de ordenación por defecto
-    setSortCriteria("nombreAZ");
+    setSortCriteria("masPosts");
   }, []);
 
   const handleTopicClick = (id) => {

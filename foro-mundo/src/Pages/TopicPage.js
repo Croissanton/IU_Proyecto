@@ -17,7 +17,7 @@ function TopicPage() {
 
   const { topicId } = useParams();
   const [posts, setPosts] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState("newest"); // Estado para el criterio de ordenación
+  const [sortCriteria, setSortCriteria] = useState("masPositivos"); // Estado para el criterio de ordenación
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 5;
 
@@ -47,7 +47,7 @@ function TopicPage() {
     }
 
     //Establecer el criterio de ordenación por defecto
-    setSortCriteria("nombreAZ");
+    setSortCriteria("masPositivos");
   }, [topicId]);
 
   //update the view_num on clicking a post
@@ -163,6 +163,10 @@ function TopicPage() {
               onChange={(e) => handleSortChange(e.target.value)}
               aria-label="Ordenar por"
             >
+              <option value="masPositivos">Más votos positivos</option>
+              <option value="menosPositivos">Menos votos positivos</option>
+              <option value="masNegativos">Más votos negativos</option>
+              <option value="menosNegativos">Menos votos negativos</option>
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
               <option value="nuevo">Más nuevo</option>
@@ -173,10 +177,6 @@ function TopicPage() {
               <option value="menosVisitas"> Menos visitas</option>
               <option selected value="masRespuestas">Más respuestas</option>
               <option value="menosRespuestas">Menos respuestas</option>
-              <option value="masPositivos">Más votos positivos</option>
-              <option value="menosPositivos">Menos votos positivos</option>
-              <option value="masNegativos">Más votos negativos</option>
-              <option value="menosNegativos">Menos votos negativos</option>
             </select>
           </div>
         </div>
