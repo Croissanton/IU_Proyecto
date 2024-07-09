@@ -33,7 +33,9 @@ const PostComment = ({
     const authorData = allUsers.find((user) => user.username === author);
 
     if (authorData) {
-      setAuthorProfilePicture(authorData.profilePicture || "https://via.placeholder.com/150");
+      setAuthorProfilePicture(
+        authorData.profilePicture || "https://via.placeholder.com/150"
+      );
     }
   }, [author]);
 
@@ -261,7 +263,8 @@ const PostComment = ({
                       className="btn btn-danger"
                       onClick={handleDelete}
                     >
-                      Eliminar
+                      <i className="bi bi-trash"></i>
+                      <span>Eliminar</span>
                     </Button>
                   )}
                 </Col>
