@@ -268,7 +268,7 @@ function ProfilePublic() {
                   src={
                     userData.profilePicture
                       ? userData.profilePicture
-                      : "https://via.placeholder.com/150"
+                      : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                   }
                   alt="imagen del perfil"
                   className="m-auto shadow"
