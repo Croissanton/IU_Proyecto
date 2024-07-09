@@ -198,6 +198,26 @@ const Messenger = () => {
     setModalInputValue("");
   };
 
+  const [visibleTimestamps, setVisibleTimestamps] = useState({});
+
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const toggleTimestamp = (messageId) => {
+    setVisibleTimestamps((prev) => ({
+      ...prev,
+      [messageId]: !prev[messageId],
+    }));
+  };
+
   return (
     <Row className="g-0">
       <Col md={3}>
@@ -273,12 +293,18 @@ const Messenger = () => {
                       maxWidth: "80%",
                       marginLeft:
                         message.sender === usuario.username ? "auto" : "0",
+                      cursor: "pointer",
                     }}
-                    tabIndex="-1"
+                    onClick={() => toggleTimestamp(message.id)}
+                    tabIndex="0"
                     aria-label={`${message.sender} dice ${message.text}`}
                   >
+                    {visibleTimestamps[message.id] && (
+                      <small className="d-block text-muted mb-1">
+                        {formatTimestamp(message.timestamp)}
+                      </small>
+                    )}
                     <span>{message.text}</span>
-                    <span className=""></span>
                   </div>
                 ))}
             </div>
