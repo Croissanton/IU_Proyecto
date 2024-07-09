@@ -285,6 +285,8 @@ function PostPage() {
             id={post.id}
             titulo={post.title}
             text={post.text}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
             author={post.author}
             date={post.date}
             lm_author={post.lm_author}
