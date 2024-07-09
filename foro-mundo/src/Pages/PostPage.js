@@ -40,9 +40,9 @@ function PostPage() {
   const [commentToDelete, setCommentToDelete] = useState(null);
 
   const titleStyle = {
-    wordWrap: 'break-word',
-    whiteSpace: 'normal',
-    overflowWrap: 'break-word',
+    wordWrap: "break-word",
+    whiteSpace: "normal",
+    overflowWrap: "break-word",
   };
 
   // Cargar post desde localStorage
@@ -86,7 +86,9 @@ function PostPage() {
 
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
+    const updatedPosts = existingPosts.map((p) =>
+      p.id.toString() === postId.toString() ? post : p
+    );
 
     // Save updated post back to localStorage
     localStorage.setItem("posts", JSON.stringify(updatedPosts));
@@ -102,7 +104,8 @@ function PostPage() {
     }
 
     const button = document.getElementById("publicar_button");
-    button.disabled = newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
+    button.disabled =
+      newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
 
   const handleInputChange = (event) => {
@@ -226,11 +229,13 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item
             linkAs={Link}
-            linkProps={{ to: `/search/${post?.topicId}` }}
+            linkProps={{ to: `/topic/${post?.topicId}` }}
           >
             {topic !== null && topic !== undefined ? topic.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active style={{...titleStyle}}>{post ? post.title : "Post"}</Breadcrumb.Item>
+          <Breadcrumb.Item active style={{ ...titleStyle }}>
+            {post ? post.title : "Post"}
+          </Breadcrumb.Item>
         </Breadcrumb>
         <label
           style={{
@@ -324,10 +329,10 @@ function PostPage() {
         </div>
       )}
 
-      <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
-        Comentarios
-      </label>
       <div className="container-xxl my-3">
+        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
+          Comentarios
+        </label>
         <div className="d-flex justify-content-end mb-3">
           <label
             htmlFor="sortSelect"
@@ -347,7 +352,9 @@ function PostPage() {
               <option value="textoZA">Texto Z-A</option>
               <option value="reciente">Más recientes</option>
               <option value="antiguo">Más antiguos</option>
-              <option selected value="masPositivos">Más votos positivos</option>
+              <option selected value="masPositivos">
+                Más votos positivos
+              </option>
               <option value="menosPositivos">Menos votos positivos</option>
               <option value="masNegativos">Más votos negativos</option>
               <option value="menosNegativos">Menos votos negativos</option>
@@ -380,14 +387,13 @@ function PostPage() {
         title="Eliminar Comentario"
         message="¿Estás seguro de que quieres eliminar este comentario?"
       />
-      
+
       <IndexSelector
         totalTopics={sortedComments.length}
         topicsPerPage={commentsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-
     </MainLayout>
   );
 }
