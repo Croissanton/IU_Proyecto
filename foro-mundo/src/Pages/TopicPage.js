@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
@@ -113,8 +112,30 @@ function TopicPage() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const category = topics.find((topic) => topic.id === parseInt(topicId));
+  useEffect(() => {
+    const loadTopics = () => {
+      try {
+        const storedTopics = JSON.parse(localStorage.getItem("topics"));
+        if (Array.isArray(storedTopics) && storedTopics.length > 0) {
+          setTopics(storedTopics);
+        } else {
+          console.error("Topics data is empty or invalid");
+          setTopics([]);
+        }
+      } catch (error) {
+        console.error("Error parsing topics from localStorage:", error);
+        setTopics([]);
+      }
+    };
 
+    loadTopics();
+  }, []);
+
+  const [topics, setTopics] = useState([]);
+
+  const category = topics.find((topic) => topic.id === parseInt(topicId)) || {
+    topic: "Unknown",
+  };
   return (
     <MainLayout>
       <div className="container-xxl my-3">
@@ -175,7 +196,9 @@ function TopicPage() {
               <option value="ultimoAntiguo">Último mensaje más antiguo</option>
               <option value="masVisitas"> Más visitas</option>
               <option value="menosVisitas"> Menos visitas</option>
-              <option selected value="masRespuestas">Más respuestas</option>
+              <option selected value="masRespuestas">
+                Más respuestas
+              </option>
               <option value="menosRespuestas">Menos respuestas</option>
             </select>
           </div>
