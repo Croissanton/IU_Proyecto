@@ -5,17 +5,13 @@ import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
+import ErrorPage from "./ErrorPage.js";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-const topics = JSON.parse(localStorage.getItem("topics"));
-
 function PostPage() {
-  useEffect(() => {
-    document.title = "Post";
-  }, []);
-
+  const [topics, setTopics] = useState([]);
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [newComment, setNewComment] = useState("");
@@ -25,11 +21,9 @@ function PostPage() {
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
   const [comments, setComments] = useState([]);
-  // Estado para el criterio de ordenación
   const [sortCriteria, setSortCriteria] = useState("masPositivos");
   const navigate = useNavigate();
 
-  // Para elegir página
   const [currentPage, setCurrentPage] = useState(1);
   const commentsPerPage = 5;
 
@@ -45,21 +39,48 @@ function PostPage() {
     overflowWrap: "break-word",
   };
 
-  // Cargar post desde localStorage
   useEffect(() => {
-    const storedPosts = localStorage.getItem("posts");
-    if (storedPosts) {
-      const posts = JSON.parse(storedPosts);
+    document.title = "Post";
 
-      const currentPost = posts.find((post) => post.id.toString() === postId);
+    // Load topics
+    const loadTopics = () => {
+      try {
+        const storedTopics = JSON.parse(localStorage.getItem("topics"));
+        if (Array.isArray(storedTopics) && storedTopics.length > 0) {
+          setTopics(storedTopics);
+        } else {
+          console.warn("Topics data is empty or invalid");
+          setTopics([]);
+        }
+      } catch (error) {
+        console.warn("Error parsing topics from localStorage:", error);
+        setTopics([]);
+      }
+    };
 
-      setPost(currentPost);
-      setComments(currentPost.comments);
-    }
+    loadTopics();
 
-    //Establecer el criterio de ordenación por defecto
+    // Load post
+    const loadPost = () => {
+      const storedPosts = localStorage.getItem("posts");
+      if (storedPosts) {
+        const posts = JSON.parse(storedPosts);
+        const currentPost = posts.find((post) => post.id.toString() === postId);
+
+        if (currentPost) {
+          setPost(currentPost);
+          setComments(currentPost.comments || []);
+        } else {
+          console.warn("Post not found");
+        }
+      } else {
+        console.warn("No posts found in localStorage");
+      }
+    };
+
+    loadPost();
     setSortCriteria("masPositivos");
-  }, [postId]);
+  }, [postId, navigate, showToast]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -104,6 +125,9 @@ function PostPage() {
     }
 
     const button = document.getElementById("publicar_button");
+    if (!button) {
+      return;
+    }
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
@@ -212,12 +236,10 @@ function PostPage() {
     currentPage * commentsPerPage
   );
 
-  var topic;
+  const topic = post ? topics.find((t) => t.id === post.topicId) : null;
 
-  if (post !== null && post !== undefined) {
-    topic = topics.find((topic) => topic.id === post.topicId);
-  } else {
-    topic = null;
+  if (!post) {
+    return <ErrorPage />;
   }
 
   return (
@@ -229,12 +251,12 @@ function PostPage() {
           </Breadcrumb.Item>
           <Breadcrumb.Item
             linkAs={Link}
-            linkProps={{ to: `/topic/${post?.topicId}` }}
+            linkProps={{ to: `/topic/${post.topicId}` }}
           >
-            {topic !== null && topic !== undefined ? topic.topic : "Foro"}
+            {topic ? topic.topic : "Foro"}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active style={{ ...titleStyle }}>
-            {post ? post.title : "Post"}
+          <Breadcrumb.Item active style={titleStyle}>
+            {post.title}
           </Breadcrumb.Item>
         </Breadcrumb>
         <label
@@ -246,7 +268,7 @@ function PostPage() {
             ...titleStyle,
           }}
         >
-          {post !== null && post !== undefined ? post.title : "Post"}
+          {post.title}
         </label>
       </div>
       {post === null || post === undefined ? (
@@ -348,7 +370,9 @@ function PostPage() {
               value={sortCriteria}
               onChange={(e) => handleSortChange(e.target.value)}
             >
-              <option selected value="masPositivos">Más votos positivos</option>
+              <option selected value="masPositivos">
+                Más votos positivos
+              </option>
               <option value="menosPositivos">Menos votos positivos</option>
               <option value="masNegativos">Más votos negativos</option>
               <option value="menosNegativos">Menos votos negativos</option>

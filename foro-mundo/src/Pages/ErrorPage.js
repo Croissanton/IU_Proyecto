@@ -15,8 +15,10 @@ function ErrorPage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <Breadcrumb className="custom-breadcrumb">
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>ERROR</Breadcrumb.Item> {/* */}
         </Breadcrumb>
         <h1>ERROR</h1>
       </div>
@@ -26,7 +28,7 @@ function ErrorPage() {
           style={{ minHeight: "80vh" }}
         >
           <Col xs={12} sm={6} md={4}>
-            <NotFound />
+            <NotFound message="La página que estás buscando no existe o ha ocurrido otro error." />
           </Col>
         </Row>
       </Container>
