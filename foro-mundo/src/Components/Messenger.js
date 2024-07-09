@@ -15,6 +15,7 @@ import { NavLink } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import { v4 as uuidv4 } from "uuid";
 import data from "../data/initialMessages.json";
+import ConfirmationModal from "./ConfirmationModal.js";
 
 const Messenger = () => {
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
@@ -137,7 +138,7 @@ const Messenger = () => {
     }
   };
 
-  const [showModal, setShowModal] = useState(false);
+  const [showAddChatModal, setShowAddChatModal] = useState(false);
   const { showToast } = useToast();
 
   const addChat = () => {
@@ -185,20 +186,20 @@ const Messenger = () => {
     setModalInputValue("");
   };
 
-  const handleConfirmModal = () => {
+  const handleConfirmAddChatModal = () => {
     addChat();
-    setShowModal(false);
+    setShowAddChatModal(false);
     showToast("El chat se ha añadido correctamente.", "bg-success");
     setModalInputValue("");
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const handleCloseAddChatModal = () => {
+    setShowAddChatModal(false);
     showToast("El chat no se ha añadido.", "bg-info");
     setModalInputValue("");
   };
 
-  const [visibleTimestamps, setVisibleTimestamps] = useState({});
+  const [expandedMessages, setExpandedMessages] = useState({});
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -211,10 +212,48 @@ const Messenger = () => {
     });
   };
 
-  const toggleTimestamp = (messageId) => {
-    setVisibleTimestamps((prev) => ({
+  const toggleMessage = (messageId) => {
+    setExpandedMessages((prev) => ({
       ...prev,
       [messageId]: !prev[messageId],
+    }));
+  };
+
+  const [showDeleteMessageModal, setShowDeleteMessageModal] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState(null);
+
+  const handleConfirmDeleteMessageModal = () => {
+    if (messageToDelete) {
+      deleteMessage(messageToDelete);
+      setShowDeleteMessageModal(false);
+      setMessageToDelete(null);
+      showToast("El mensaje se ha eliminado correctamente.", "bg-success");
+    }
+  };
+
+  const deleteMessage = (messageId) => {
+    if (!activeChat) return;
+
+    const updatedMessages = messages[activeChat.conversationKey].filter(
+      (message) => message.id !== messageId
+    );
+
+    const newMessages = {
+      ...messages,
+      [activeChat.conversationKey]: updatedMessages,
+    };
+
+    setMessages(newMessages);
+
+    // Update localStorage
+    const allMessages = JSON.parse(localStorage.getItem("messages")) || {};
+    allMessages[activeChat.conversationKey] = updatedMessages;
+    localStorage.setItem("messages", JSON.stringify(allMessages));
+
+    // Close the expanded view
+    setExpandedMessages((prev) => ({
+      ...prev,
+      [messageId]: false,
     }));
   };
 
@@ -225,7 +264,7 @@ const Messenger = () => {
           <ListGroup.Item className="border-0">
             <button
               className={`d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button`}
-              onClick={() => setShowModal(true)}
+              onClick={() => setShowAddChatModal(true)}
               style={{ cursor: "pointer" }}
             >
               <i className="bi bi-plus-circle custom-icon me-2"></i>
@@ -285,7 +324,7 @@ const Messenger = () => {
                     key={message.id}
                     className={`my-2 p-2 rounded border border-secondary-subtle ${
                       message.sender === usuario.username
-                        ? "bg-primary text-secondary align-self-end text-end"
+                        ? "bg-primary text-secondary align-self-end"
                         : "bg-light text-start"
                     }`}
                     style={{
@@ -295,14 +334,30 @@ const Messenger = () => {
                         message.sender === usuario.username ? "auto" : "0",
                       cursor: "pointer",
                     }}
-                    onClick={() => toggleTimestamp(message.id)}
-                    tabIndex="0"
-                    aria-label={`${message.sender} dice ${message.text}`}
+                    onClick={() => toggleMessage(message.id)}
                   >
-                    {visibleTimestamps[message.id] && (
-                      <small className="d-block text-muted mb-1">
-                        {formatTimestamp(message.timestamp)}
-                      </small>
+                    {expandedMessages[message.id] && (
+                      <div className="d-flex justify-content-between align-items-center mb-1">
+                        {message.sender === usuario.username && (
+                          <Button
+                            className="me-2"
+                            variant="danger"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setMessageToDelete(message.id);
+                              setShowDeleteMessageModal(true);
+                            }}
+                            aria-label="Eliminar mensaje"
+                          >
+                            <i className="bi bi-trash"></i>
+                            <span>Borrar mensaje</span>
+                          </Button>
+                        )}
+                        <small className="text-muted">
+                          {formatTimestamp(message.timestamp)}
+                        </small>
+                      </div>
                     )}
                     <span>{message.text}</span>
                   </div>
@@ -335,12 +390,21 @@ const Messenger = () => {
         )}
       </Col>
       <AddChatModal
-        show={showModal}
-        handleClose={handleCloseModal}
-        handleConfirm={handleConfirmModal}
+        show={showAddChatModal}
+        handleClose={handleCloseAddChatModal}
+        handleConfirm={handleConfirmAddChatModal}
         inputValue={modalInputValue}
         setInputValue={setModalInputValue}
         handleInputChange={(e) => setModalInputValue(e.target.value)}
+      />
+      <ConfirmationModal
+        message="¿Estás seguro de que quieres eliminar este mensaje?"
+        show={showDeleteMessageModal}
+        handleClose={() => {
+          setShowDeleteMessageModal(false);
+          setMessageToDelete(null);
+        }}
+        handleConfirm={handleConfirmDeleteMessageModal}
       />
     </Row>
   );
