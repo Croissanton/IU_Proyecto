@@ -296,7 +296,8 @@ function PostPage() {
       ) : (
         <div className="container-xxl my-3">
           <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
-            Eliminar Post
+            <i className="bi bi-trash"></i>
+            <span>Eliminar Post</span>
           </Button>
           <ConfirmationModal
             show={showDeletePostModal}
