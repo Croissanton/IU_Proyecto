@@ -447,11 +447,14 @@ function ProfilePublic() {
                             : "Eliminar Amigo"
                         }
                         message={`¿Estás seguro de que quieres ${
-                          friendStatus === "Agregar Amigo" ||
-                          friendStatus === "Aceptar Solicitud"
-                            ? "añadir a"
-                            : "eliminar a"
-                        } este usuario como amigo?`}
+                          friendStatus === "Agregar Amigo"
+                            ? "enviar una solicitud de amistad a " + username
+                            : friendStatus === "Aceptar Solicitud"
+                            ? "aceptar la solicitud de amistad de " + username
+                            : friendStatus === "Solicitud Enviada"
+                            ? "cancelar la solicitud de amistad a " + username
+                            : "eliminar a " + username + " de tu lista de amigos"
+                        }?`}
                       />
                     </>
                   )}
