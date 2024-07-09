@@ -71,6 +71,8 @@ function PostCreationPage() {
       id: uuidv4(),
       topicId: formData.category,
       title: formData.title,
+      upvotes: 0,
+      downvotes: 0,
       text: formData.text,
       author: usuario.username,
       date: new Date().toLocaleString(),
@@ -80,8 +82,6 @@ function PostCreationPage() {
       lm_date: "",
       image: selectedFile ? URL.createObjectURL(selectedFile) : null,
       comments: [],
-      upvotes: 0,
-      downvotes: 0,
     };
 
     // Guardar en localStorage
