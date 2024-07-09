@@ -34,6 +34,11 @@ body, html {
   background-color: transparent;
 }
 
+.custom-link-container-dark {
+  background-color: #262626;
+  transition: background-color 0.3s;
+}
+
 .custom-link-container:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
