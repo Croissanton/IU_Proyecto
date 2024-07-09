@@ -175,14 +175,13 @@ function TopicPage() {
 
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
-          <label className="me-2" style={{ padding: "10px" }}>
-            Ordenar por:
-          </label>
+          <label className="p-2">Ordenar por:</label>
           <div className="d-flex justify-content-center">
             <select
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
               aria-label="Ordenar por"
+              defaultValue="masRespuestas"
             >
               <option value="masPositivos">Más votos positivos</option>
               <option value="menosPositivos">Menos votos positivos</option>
@@ -196,9 +195,7 @@ function TopicPage() {
               <option value="ultimoAntiguo">Último mensaje más antiguo</option>
               <option value="masVisitas"> Más visitas</option>
               <option value="menosVisitas"> Menos visitas</option>
-              <option selected value="masRespuestas">
-                Más respuestas
-              </option>
+              <option value="masRespuestas">Más respuestas</option>
               <option value="menosRespuestas">Menos respuestas</option>
             </select>
           </div>
