@@ -72,13 +72,13 @@ const PostComment = ({
     let newDownvotes = downvotes;
 
     if (userVote === "upvote") {
-      newUpvotes -= 1;
+      if (newUpvotes > 0) newUpvotes -= 1;
       setUserVote(null);
       usuario.upComments = usuario.upComments.filter(
         (commentId) => commentId !== id
       );
     } else if (userVote === "downvote") {
-      newDownvotes -= 1;
+      if (newDownvotes > 0) newDownvotes -= 1;
       newUpvotes += 1;
       setUserVote("upvote");
       usuario.downComments = usuario.downComments.filter(
@@ -110,13 +110,13 @@ const PostComment = ({
     let newDownvotes = downvotes;
 
     if (userVote === "downvote") {
-      newDownvotes -= 1;
+      if (newDownvotes > 0) newDownvotes -= 1;
       setUserVote(null);
       usuario.downComments = usuario.downComments.filter(
         (commentId) => commentId !== id
       );
     } else if (userVote === "upvote") {
-      newUpvotes -= 1;
+      if (newUpvotes > 0) newUpvotes -= 1;
       newDownvotes += 1;
       setUserVote("downvote");
       usuario.upComments = usuario.upComments.filter(

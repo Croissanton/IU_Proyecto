@@ -65,11 +65,11 @@ const PostCard = ({
     let newDownvotes = postDownvotes;
 
     if (userVote === "upvote") {
-      newUpvotes -= 1;
+      if (newUpvotes > 0) newUpvotes -= 1;
       setUserVote(null);
       usuario.upPosts = usuario.upPosts.filter((postId) => postId !== id);
     } else if (userVote === "downvote") {
-      newDownvotes -= 1;
+      if (newDownvotes > 0) newDownvotes -= 1;
       newUpvotes += 1;
       setUserVote("upvote");
       usuario.downPosts = usuario.downPosts.filter((postId) => postId !== id);
@@ -100,11 +100,11 @@ const PostCard = ({
     let newDownvotes = postDownvotes;
 
     if (userVote === "downvote") {
-      newDownvotes -= 1;
+      if (newDownvotes > 0) newDownvotes -= 1;
       setUserVote(null);
       usuario.downPosts = usuario.downPosts.filter((postId) => postId !== id);
     } else if (userVote === "upvote") {
-      newUpvotes -= 1;
+      if (newUpvotes > 0) newUpvotes -= 1;
       newDownvotes += 1;
       setUserVote("downvote");
       usuario.upPosts = usuario.upPosts.filter((postId) => postId !== id);
