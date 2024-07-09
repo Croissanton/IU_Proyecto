@@ -182,7 +182,7 @@ function TopicPage() {
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
               aria-label="Ordenar por"
-              defaultValue="masRespuestas"
+              defaultValue="masPositivos"
             >
               <option value="masPositivos">Más votos positivos</option>
               <option value="menosPositivos">Menos votos positivos</option>

@@ -9,6 +9,9 @@ import ProfilePage from "./ProfilePage.js";
 function ProfilePublic() {
   const { username } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("usuario"));
+  if (!currentUser.friendList) currentUser.friendList = [];
+  if (!currentUser.incomingRequests) currentUser.incomingRequests = [];
+  if (!currentUser.blockList) currentUser.blockList = [];
   const isCurrentUser = currentUser?.username === username;
 
   const [userData, setUserData] = useState(null);
@@ -94,6 +97,12 @@ function ProfilePublic() {
     let currentUser = JSON.parse(localStorage.getItem("usuario"));
     const allUsers = JSON.parse(localStorage.getItem("usuarios"));
     let otherUser = allUsers.find((user) => user.username === username);
+
+    if (!currentUser.blockList) {currentUser.blockList = [];}
+    if (!currentUser.friendList) {currentUser.friendList = [];}
+    if (!currentUser.incomingRequests) {currentUser.incomingRequests = [];}
+    if (!otherUser.friendList) {otherUser.friendList = [];}
+    if (!otherUser.incomingRequests) {otherUser.incomingRequests = [];}
 
     if (currentUser && allUsers) {
       // Asegurarse de que currentUser tenga una blockList

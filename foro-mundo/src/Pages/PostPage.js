@@ -353,7 +353,13 @@ function PostPage() {
       )}
 
       <div className="container-xxl my-3">
-        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>
+        <label
+          style={{
+            fontSize: "2rem", 
+            fontWeight: "bold",
+            marginTop: "30px", 
+          }}
+        >
           Comentarios
         </label>
         <div className="d-flex justify-content-end mb-3">
