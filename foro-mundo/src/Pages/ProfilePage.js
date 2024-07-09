@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Col, Row, Container } from "react-bootstrap";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../Components/ConfirmationModal";
@@ -23,7 +23,9 @@ function ProfilePage() {
     city: usuario ? usuario.city : "",
     socialMedia: usuario ? usuario.socialMedia : "",
     description: usuario ? usuario.description : "",
-    profilePicture: usuario ? usuario.profilePicture : "https://via.placeholder.com/150",
+    profilePicture: usuario
+      ? usuario.profilePicture
+      : "https://via.placeholder.com/150",
     friendList: usuario ? usuario.friendList : [],
     incomingRequests: usuario ? usuario.incomingRequests : [],
     blockList: usuario ? usuario.blockList : [],
@@ -35,9 +37,12 @@ function ProfilePage() {
     lastDisconnection: usuario ? usuario.lastDisconnection : "",
   });
 
-  const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
+  const [initialProfileData, setInitialProfileData] = useState({
+    ...profileData,
+  });
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false);
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] =
+    useState(false);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -57,14 +62,17 @@ function ProfilePage() {
   const handleSaveChanges = () => {
     localStorage.setItem("usuario", JSON.stringify(profileData));
 
-    localStorage.setItem("usuarios", JSON.stringify(
-      JSON.parse(localStorage.getItem("usuarios")).map((user) => {
-        if (user.username === profileData.username) {
-          return profileData;
-        }
-        return user;
-      })
-    ));
+    localStorage.setItem(
+      "usuarios",
+      JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((user) => {
+          if (user.username === profileData.username) {
+            return profileData;
+          }
+          return user;
+        })
+      )
+    );
     setIsEditing(false);
     console.log("Submitting Data:", profileData);
     setInitialProfileData({ ...profileData });
@@ -93,6 +101,11 @@ function ProfilePage() {
         }));
       };
       reader.readAsDataURL(file);
+    } else {
+      setProfileData((prev) => ({
+        ...prev,
+        profilePicture: "https://via.placeholder.com/150",
+      }));
     }
   };
 
@@ -100,196 +113,219 @@ function ProfilePage() {
     <MainLayout>
       <div className="container-xxl my-3">
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
         <label
-          style={{ 
+          style={{
             fontSize: "3rem",
             fontWeight: "bold",
             display: "block",
             textAlign: "center",
-            paddingBottom: "50px"
-        }}>
-            {profileData.username}
+            paddingBottom: "50px",
+          }}
+        >
+          {profileData.username}
         </label>
       </div>
-      <div style={{ display: "flex" }}>
-        <div className="m-auto">
-          <img
-            src={profileData.profilePicture}
-            alt="profile"
-            width="250"
-            height="350"
-            style={{ justifyContent: "center" }}
-          />
-          <div className="m-auto">
-            <input
-              type="file"
-              id="imageInput"
-              style={{ display: "none" }}
-              onChange={handleImageSelection}
-            />
-            {isEditing && (
-              <button
-                type="button"
-                className="btn btn-primary"
-                style={{ marginTop: "10px" }}
-                onClick={() => document.getElementById("imageInput").click()}
-              >
-                Cambiar foto
-              </button>
-            )}
-            <label htmlFor="imageInput" className="form-label" hidden> Imagen del perfil </label>
-          </div>
-        </div>
-        <div
-          className="m-auto"
-          style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
-        >
-          <form className="row col-12 g-3" onSubmit={handleSubmit}>
-            <div className="row">
-              <InputComponent
-                id="name"
-                label="Nombre"
-                value={profileData.name}
-                onChange={handleInputChange}
-                readOnly={!isEditing}
-                required={true}
-                colClass="col-md-6"
-                noBorder={!isEditing}
+      <Container>
+        <Row>
+          <Col md={3} className="m-auto">
+            <Row>
+              <img
+                src={profileData.profilePicture}
+                alt="profile"
+                className="m-auto shadow"
               />
-              <InputComponent
-                id="lastName"
-                label="Apellidos"
-                value={profileData.lastName}
-                onChange={handleInputChange}
-                readOnly={!isEditing}
-                required={true}
-                colClass="col-md-6"
-                noBorder={!isEditing}
+            </Row>
+            <Row className="m-auto">
+              <input
+                type="file"
+                id="imageInput"
+                style={{ display: "none" }}
+                onChange={handleImageSelection}
               />
-            </div>
-            <InputComponent
-              id="birthDate"
-              type="date"
-              label="Fecha de Nacimiento"
-              value={profileData.birthDate}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-              noBorder={!isEditing}
-            />
-            <div className="row">
+              {isEditing && (
+                <Row className="my-2">
+                  <Col className="d-flex align-items-center justify-content-center">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() =>
+                        document.getElementById("imageInput").click()
+                      }
+                    >
+                      Cambiar foto
+                    </button>
+                  </Col>
+                  <Col className="d-flex align-items-center justify-content-center">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() =>
+                        handleImageSelection({ target: { files: [] } })
+                      }
+                    >
+                      Quitar foto
+                    </button>
+                  </Col>
+                </Row>
+              )}
+              <label htmlFor="imageInput" className="form-label" hidden>
+                {" "}
+                Imagen del perfil{" "}
+              </label>
+            </Row>
+          </Col>
+          <Col md={6} className="m-auto shadow">
+            <form className="p-3" onSubmit={handleSubmit}>
+              <Row>
+                <InputComponent
+                  id="name"
+                  label="Nombre"
+                  value={profileData.name}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+                <InputComponent
+                  id="lastName"
+                  label="Apellidos"
+                  value={profileData.lastName}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+              </Row>
+              <Row>
+                <InputComponent
+                  id="birthDate"
+                  type="date"
+                  label="Fecha de Nacimiento"
+                  value={profileData.birthDate}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  noBorder={!isEditing}
+                />
+              </Row>
+              <Row>
+                <InputComponent
+                  id="country"
+                  label="País"
+                  value={profileData.country}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+                <InputComponent
+                  id="city"
+                  label="Ciudad"
+                  value={profileData.city}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={false}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+              </Row>
               <InputComponent
-                id="country"
-                label="País"
-                value={profileData.country}
-                onChange={handleInputChange}
-                readOnly={!isEditing}
-                required={true}
-                colClass="col-md-6"
-                noBorder={!isEditing}
-              />
-              <InputComponent
-                id="city"
-                label="Ciudad"
-                value={profileData.city}
+                id="socialMedia"
+                label="Redes"
+                type="textarea"
+                value={profileData.socialMedia}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 required={false}
-                colClass="col-md-6"
                 noBorder={!isEditing}
               />
-            </div>
-            <InputComponent
-              id="socialMedia"
-              label="Redes"
-              type="textarea"
-              value={profileData.socialMedia}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-              noBorder={!isEditing}
-            />
-            <InputComponent
-              id="description"
-              label="Descripción"
-              type="textarea"
-              value={profileData.description}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-              noBorder={!isEditing}
-            />
+              <InputComponent
+                id="description"
+                label="Descripción"
+                type="textarea"
+                value={profileData.description}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={false}
+                noBorder={!isEditing}
+              />
 
-            <div className="col-12">
-              {!isEditing ? (
-                <div className="col-12">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsEditing(true);
-                    }}
-                    style={{ margin: "5px" }}
-                  >
-                    Editar
-                  </button>
-                  
-                  <Link to={`/historial/${profileData.username}`}>
+              <div className="col-12 my-2">
+                {!isEditing ? (
+                  <div className="col-12">
                     <button
                       type="button"
                       className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsEditing(true);
+                      }}
                       style={{ margin: "5px" }}
                     >
-                      Ver Historial
+                      Editar
                     </button>
-                  </Link>
 
-                  <Link to={`/bloqueados`}>
+                    <Link to={`/historial/${profileData.username}`}>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                      >
+                        Ver Historial
+                      </button>
+                    </Link>
+
+                    <Link to={`/bloqueados`}>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                      >
+                        Ver Bloqueados
+                      </button>
+                    </Link>
+
+                    <Link to={`/amigos`}>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                      >
+                        Ver Amigos
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="col-12">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Guardar
+                    </button>
                     <button
                       type="button"
-                      className="btn btn-primary"
-                      style={{ margin: "5px" }}
+                      className="btn btn-light"
+                      onClick={handleCancel}
                     >
-                      Ver Bloqueados
+                      Cancelar
                     </button>
-                  </Link>
-
-                  <Link to={`/amigos`}>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      style={{ margin: "5px" }}
-                    >
-                      Ver Amigos
-                    </button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="col-12">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ marginRight: "10px" }}
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-light"
-                    onClick={handleCancel}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              )}
-            </div>
-          </form>
-        </div>
-      </div>
+                  </div>
+                )}
+              </div>
+            </form>
+          </Col>
+        </Row>
+      </Container>
 
       <ConfirmationModal
         show={showConfirmationModal}
@@ -319,17 +355,20 @@ function InputComponent({
   readOnly,
   required,
   colClass = "col-12",
-  noBorder = false
+  noBorder = false,
 }) {
   const inputStyles = {
     border: noBorder ? "none" : "",
     boxShadow: noBorder ? "none" : "",
-    backgroundColor: noBorder ? "transparent" : ""
+    backgroundColor: noBorder ? "transparent" : "",
   };
 
   return (
     <div className={colClass}>
-      <label htmlFor={id} className="form-label">
+      <label
+        htmlFor={id}
+        className="form-label border-bottom border-dark-subtle"
+      >
         {label}
       </label>
       {type === "textarea" ? (
