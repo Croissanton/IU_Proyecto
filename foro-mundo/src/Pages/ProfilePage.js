@@ -23,9 +23,7 @@ function ProfilePage() {
     city: usuario ? usuario.city : "",
     socialMedia: usuario ? usuario.socialMedia : "",
     description: usuario ? usuario.description : "",
-    profilePicture: usuario
-      ? usuario.profilePicture
-      : "https://via.placeholder.com/150",
+    profilePicture: usuario ? usuario.profilePicture : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg",
     friendList: usuario ? usuario.friendList : [],
     incomingRequests: usuario ? usuario.incomingRequests : [],
     blockList: usuario ? usuario.blockList : [],
@@ -104,7 +102,7 @@ function ProfilePage() {
     } else {
       setProfileData((prev) => ({
         ...prev,
-        profilePicture: "https://via.placeholder.com/150",
+        profilePicture: "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg",
       }));
     }
   };
@@ -137,7 +135,7 @@ function ProfilePage() {
             </Row>
             <Row>
               <img
-                src={profileData.profilePicture}
+                src={profileData.profilePicture ? profileData.profilePicture : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"}
                 alt="imagen del perfil"
                 className="m-auto shadow"
               />
