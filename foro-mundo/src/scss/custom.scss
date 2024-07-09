@@ -22,6 +22,11 @@ body, html {
   min-height: 100%;
 }
 
+.custom-button {
+  background-color: $primary;
+  color: $secondary;
+}
+
 .custom-pagination .page-link {
     color: $secondary; 
     background-color: $primary; 

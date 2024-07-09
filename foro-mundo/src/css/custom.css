@@ -10,6 +10,11 @@ body, html {
   min-height: 100%;
 }
 
+.custom-button {
+  background-color: #B4DBFC;
+  color: #002561;
+}
+
 .custom-pagination .page-link {
   color: #002561;
   background-color: #B4DBFC;

@@ -7,14 +7,9 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
 
-  const cardClass = theme === 'dark' ? 'bg-dark text-white' : 'bg-light text-dark';
-  const borderClass = theme === 'dark' ? '--bs-tertiary-color' : 'border-dark-subtle';
+
   const linkContainerClass = theme === 'dark' ? 'custom-link-container-dark' : 'custom-link-container';
 
-  if(theme==='dark') console.log('ForumCard rendered');
-  if(localStorage.getItem('theme')==='dark'){
-    console.log('ForumCard rendered');
-    }
   const handleClick = () => {
     onTopicClick(id);
     navigate(`/topic/${id}`);
