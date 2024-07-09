@@ -184,7 +184,10 @@ const PostCard = ({
                   style={{ marginRight: "10px", borderRadius: "50%" }}
                 />
                 <span> Creador: </span>
-                <NavLink className="custom-text-link" to={`/perfil/${author}`}>
+                <NavLink 
+                  className="custom-text-link" 
+                  to={`/perfil/${author}`}
+                >
                   <span>{author}</span>
                 </NavLink>
               </Col>
@@ -235,7 +238,10 @@ const PostCard = ({
                   <p>Último mensaje por:</p>
                 </Row>
                 <Row>
-                  <NavLink className="custom-text-link" to={`/perfil/${lm_author}`}>
+                  <NavLink
+                    className="custom-text-link"
+                    to={`/perfil/${lm_author}`}
+                  >
                     <span>{lm_author}</span>
                   </NavLink>
                 </Row>

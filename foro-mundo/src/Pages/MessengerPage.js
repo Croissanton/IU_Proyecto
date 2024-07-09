@@ -22,6 +22,7 @@ function MessengerPage() {
             fontWeight: "bold",
             display: "block",
             textAlign: "center",
+            marginBottom: "30px",
           }}
         >
           Mensajes

@@ -9,6 +9,9 @@ import ProfilePage from "./ProfilePage.js";
 function ProfilePublic() {
   const { username } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("usuario"));
+  if (!currentUser.friendList) currentUser.friendList = [];
+  if (!currentUser.incomingRequests) currentUser.incomingRequests = [];
+  if (!currentUser.blockList) currentUser.blockList = [];
   const isCurrentUser = currentUser?.username === username;
 
   const [userData, setUserData] = useState(null);
@@ -94,6 +97,12 @@ function ProfilePublic() {
     let currentUser = JSON.parse(localStorage.getItem("usuario"));
     const allUsers = JSON.parse(localStorage.getItem("usuarios"));
     let otherUser = allUsers.find((user) => user.username === username);
+
+    if (!currentUser.blockList) {currentUser.blockList = [];}
+    if (!currentUser.friendList) {currentUser.friendList = [];}
+    if (!currentUser.incomingRequests) {currentUser.incomingRequests = [];}
+    if (!otherUser.friendList) {otherUser.friendList = [];}
+    if (!otherUser.incomingRequests) {otherUser.incomingRequests = [];}
 
     if (currentUser && allUsers) {
       // Asegurarse de que currentUser tenga una blockList
@@ -268,7 +277,7 @@ function ProfilePublic() {
                   src={
                     userData.profilePicture
                       ? userData.profilePicture
-                      : "https://via.placeholder.com/150"
+                      : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                   }
                   alt="imagen del perfil"
                   className="m-auto shadow"
@@ -447,11 +456,14 @@ function ProfilePublic() {
                             : "Eliminar Amigo"
                         }
                         message={`¿Estás seguro de que quieres ${
-                          friendStatus === "Agregar Amigo" ||
-                          friendStatus === "Aceptar Solicitud"
-                            ? "añadir a"
-                            : "eliminar a"
-                        } este usuario como amigo?`}
+                          friendStatus === "Agregar Amigo"
+                            ? "enviar una solicitud de amistad a " + username
+                            : friendStatus === "Aceptar Solicitud"
+                            ? "aceptar la solicitud de amistad de " + username
+                            : friendStatus === "Solicitud Enviada"
+                            ? "cancelar la solicitud de amistad a " + username
+                            : "eliminar a " + username + " de tu lista de amigos"
+                        }?`}
                       />
                     </>
                   )}

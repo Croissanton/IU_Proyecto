@@ -45,7 +45,7 @@ function SignUpPage() {
     city: "",
     socialMedia: "",
     description: "",
-    profilePicture: "",
+    profilePicture: "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg",
     friendList: [],
     blockedList: [],
     incomingRequests: [],
