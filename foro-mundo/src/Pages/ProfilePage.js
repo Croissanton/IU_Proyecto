@@ -137,7 +137,7 @@ function ProfilePage() {
               <img
                 src={profileData.profilePicture ? profileData.profilePicture : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"}
                 alt="imagen del perfil"
-                className="m-auto shadow"
+                className="m-0 p-0 shadow"
               />
             </Row>
             <Row className="m-auto">

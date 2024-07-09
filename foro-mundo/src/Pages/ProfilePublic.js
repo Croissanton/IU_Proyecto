@@ -98,11 +98,21 @@ function ProfilePublic() {
     const allUsers = JSON.parse(localStorage.getItem("usuarios"));
     let otherUser = allUsers.find((user) => user.username === username);
 
-    if (!currentUser.blockList) {currentUser.blockList = [];}
-    if (!currentUser.friendList) {currentUser.friendList = [];}
-    if (!currentUser.incomingRequests) {currentUser.incomingRequests = [];}
-    if (!otherUser.friendList) {otherUser.friendList = [];}
-    if (!otherUser.incomingRequests) {otherUser.incomingRequests = [];}
+    if (!currentUser.blockList) {
+      currentUser.blockList = [];
+    }
+    if (!currentUser.friendList) {
+      currentUser.friendList = [];
+    }
+    if (!currentUser.incomingRequests) {
+      currentUser.incomingRequests = [];
+    }
+    if (!otherUser.friendList) {
+      otherUser.friendList = [];
+    }
+    if (!otherUser.incomingRequests) {
+      otherUser.incomingRequests = [];
+    }
 
     if (currentUser && allUsers) {
       // Asegurarse de que currentUser tenga una blockList
@@ -280,7 +290,7 @@ function ProfilePublic() {
                       : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                   }
                   alt="imagen del perfil"
-                  className="m-auto shadow"
+                  className="m-0 p-0   shadow"
                 />
               </Row>
             </Col>
@@ -462,7 +472,9 @@ function ProfilePublic() {
                             ? "aceptar la solicitud de amistad de " + username
                             : friendStatus === "Solicitud Enviada"
                             ? "cancelar la solicitud de amistad a " + username
-                            : "eliminar a " + username + " de tu lista de amigos"
+                            : "eliminar a " +
+                              username +
+                              " de tu lista de amigos"
                         }?`}
                       />
                     </>
