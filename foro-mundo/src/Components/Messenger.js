@@ -11,7 +11,7 @@ import {
   Modal,
   Container,
 } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { json, NavLink } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import { v4 as uuidv4 } from "uuid";
 import data from "../data/initialMessages.json";
@@ -19,6 +19,19 @@ import ConfirmationModal from "./ConfirmationModal.js";
 
 const Messenger = () => {
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+
+  const ShowConnectionStatus = (username) => {
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let usuario = usuarios.find ((usuario) => usuario.username === username);
+    //Compara lastConnection con lastDisconnection, si lastConnection es mayor, el usuario esta conectado
+    if(!usuario) return "Usuario no encontrado";
+    console.log(username);
+      if (new Date(usuario.lastConnection) > new Date(usuario.lastDisconnection)) {
+        return <small className="text-success"> En Línea; </small>;
+      }
+      return <small className="text-muted"> {"Última conexión: " + new Date(usuario.lastDisconnection).toLocaleString()} </small>
+
+  };
 
   const getConversationsForUser = (username) => {
     // Get messages from localstorage, if empty get them from data and store to localstorage.
@@ -43,6 +56,7 @@ const Messenger = () => {
       const otherUsername = conversationKey
         .replace(username, "")
         .replace("@", "");
+
 
       // Optionally, sort messages by timestamp if needed
       const sortedMessages = messages.sort(
@@ -354,6 +368,7 @@ const Messenger = () => {
                   {activeChat.otherUser}
                 </span>
               </NavLink>
+                {ShowConnectionStatus(activeChat.otherUser)}
               <Button
                 variant="outline-secondary"
                 size="sm"

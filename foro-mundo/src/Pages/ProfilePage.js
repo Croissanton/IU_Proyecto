@@ -118,7 +118,7 @@ function ProfilePage() {
         <div className="m-auto">
           <img
             src={profileData.profilePicture}
-            alt="profile"
+            alt="Foto de perfil"
             width="250"
             height="350"
             style={{ justifyContent: "center" }}
