@@ -53,6 +53,7 @@ const Messenger = () => {
         conversationKey: conversationKey,
         otherUser: otherUsername,
         messages: sortedMessages,
+        archived: false,
       };
     });
   };
@@ -257,13 +258,41 @@ const Messenger = () => {
     }));
   };
 
+  const toggleArchiveStatus = (conversationKey) => {
+    setConversations((prevConversations) =>
+      prevConversations.map((convo) =>
+        convo.conversationKey === conversationKey
+          ? { ...convo, archived: !convo.archived }
+          : convo
+      )
+    );
+
+    setActiveChat((prevActiveChat) => {
+      if (
+        prevActiveChat &&
+        prevActiveChat.conversationKey === conversationKey
+      ) {
+        return { ...prevActiveChat, archived: !prevActiveChat.archived };
+      }
+      return prevActiveChat;
+    });
+
+    // Update localStorage
+    const allMessages = JSON.parse(localStorage.getItem("messages")) || {};
+    allMessages[conversationKey].archived =
+      !allMessages[conversationKey].archived;
+    localStorage.setItem("messages", JSON.stringify(allMessages));
+  };
+
+  const [showArchivedChatsModal, setShowArchivedChatsModal] = useState(false);
+
   return (
     <Row className="g-0">
       <Col md={3}>
         <ListGroup>
           <ListGroup.Item className="border-0">
             <button
-              className={`d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button`}
+              className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
               onClick={() => setShowAddChatModal(true)}
               style={{ cursor: "pointer" }}
             >
@@ -271,24 +300,38 @@ const Messenger = () => {
               <span>Añadir nuevo chat</span>
             </button>
           </ListGroup.Item>
-          {conversations.map((convo) => (
-            <ListGroup.Item className="border-0" key={convo.conversationKey}>
-              <button
-                className={`d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button ${
-                  activeChat.conversationKey === convo.conversationKey
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() => handleChatChange(convo)}
-                style={{ cursor: "pointer" }}
-                aria-pressed={
-                  activeChat.conversationKey === convo.conversationKey
-                }
-              >
-                <i className="bi bi-person-circle me-2"></i> {convo.otherUser}
-              </button>
-            </ListGroup.Item>
-          ))}
+          <ListGroup.Item className="border-0">
+            <button
+              className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
+              onClick={() => setShowArchivedChatsModal(true)}
+              style={{ cursor: "pointer" }}
+            >
+              <i className="bi bi-archive custom-icon me-2"></i>
+              <span>Chats archivados</span>
+            </button>
+          </ListGroup.Item>
+          {conversations
+            .filter((convo) => !convo.archived)
+            .map((convo) => (
+              <ListGroup.Item className="border-0" key={convo.conversationKey}>
+                <button
+                  className={`d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button ${
+                    activeChat &&
+                    activeChat.conversationKey === convo.conversationKey
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => handleChatChange(convo)}
+                  style={{ cursor: "pointer" }}
+                  aria-pressed={
+                    activeChat &&
+                    activeChat.conversationKey === convo.conversationKey
+                  }
+                >
+                  <i className="bi bi-person-circle me-2"></i> {convo.otherUser}
+                </button>
+              </ListGroup.Item>
+            ))}
         </ListGroup>
       </Col>
       <Col
@@ -297,7 +340,7 @@ const Messenger = () => {
       >
         {activeChat ? (
           <>
-            <div className="p-3 border-bottom border-secondary-subtle">
+            <div className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center">
               <NavLink
                 className="bi bi-person-circle d-inline-flex align-items-center"
                 to={`/perfil/${activeChat.otherUser}`}
@@ -308,6 +351,23 @@ const Messenger = () => {
                   {activeChat.otherUser}
                 </span>
               </NavLink>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => toggleArchiveStatus(activeChat.conversationKey)}
+              >
+                {activeChat.archived ? (
+                  <>
+                    <i className="bi bi-archive-fill me-2"></i>
+                    Desarchivar
+                  </>
+                ) : (
+                  <>
+                    <i className="bi bi-archive me-2"></i>
+                    Archivar
+                  </>
+                )}
+              </Button>
             </div>
             <div
               className="flex-grow-1 overflow-auto p-3"
@@ -405,6 +465,13 @@ const Messenger = () => {
           setMessageToDelete(null);
         }}
         handleConfirm={handleConfirmDeleteMessageModal}
+      />
+      <ArchivedChatsModal
+        show={showArchivedChatsModal}
+        handleClose={() => setShowArchivedChatsModal(false)}
+        conversations={conversations}
+        toggleArchiveStatus={toggleArchiveStatus}
+        setActiveChat={setActiveChat}
       />
     </Row>
   );
@@ -566,6 +633,52 @@ function AddChatModal({
           </Button>
         </Modal.Footer>
       </Form>
+    </Modal>
+  );
+}
+
+function ArchivedChatsModal({
+  show,
+  handleClose,
+  conversations,
+  toggleArchiveStatus,
+  setActiveChat,
+}) {
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Chats archivados</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <ListGroup>
+          {conversations
+            .filter((convo) => convo.archived)
+            .map((convo) => (
+              <ListGroup.Item
+                key={convo.conversationKey}
+                className="d-flex justify-content-between align-items-center"
+              >
+                {convo.otherUser}
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => {
+                    toggleArchiveStatus(convo.conversationKey);
+                    setActiveChat(convo);
+                    handleClose();
+                  }}
+                >
+                  Desarchivar
+                </Button>
+              </ListGroup.Item>
+            ))}
+        </ListGroup>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cerrar
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }
