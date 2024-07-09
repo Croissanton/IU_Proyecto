@@ -96,10 +96,11 @@ function MainPage() {
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
               aria-label="Ordenar por"
+              defaultValue="masPosts"
             >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
-              <option selected value="masPosts">Más posts</option>
+              <option value="masPosts">Más posts</option>
               <option value="menosPosts">Menos posts</option>
               <option value="masVisitas">Más visitas</option>
               <option value="menosVisitas">Menos visitas</option>
