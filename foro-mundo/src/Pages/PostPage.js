@@ -32,6 +32,7 @@ function PostPage() {
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
+  const [showClearCommentModal, setShowClearCommentModal] = useState(false);
 
   const titleStyle = {
     wordWrap: "break-word",
@@ -197,8 +198,13 @@ function PostPage() {
   };
 
   const handleClearComment = () => {
+    setShowClearCommentModal(true);
+  };
+
+  const handleConfirmClearComment = () => {
     setNewComment("");
     setCharacterCount(0);
+    setShowClearCommentModal(false);
   };
 
   const handleSortChange = (criteria) => {
@@ -338,9 +344,7 @@ function PostPage() {
             >
               Publicar
             </button>
-            <Button onClick={handleClearComment} className="ms-2">
-              Limpiar
-            </Button>
+
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
@@ -348,6 +352,23 @@ function PostPage() {
               handleConfirm={handleConfirm}
               title="Confirmar Comentario"
             />
+
+            <Button
+              variant="primary"
+              style={{ marginLeft: "10px" }}
+              onClick={handleClearComment}
+            >
+              Limpiar
+            </Button>
+            
+            <ConfirmationModal
+              message="¿Estás seguro de que quieres limpiar el texto escrito?"
+              show={showClearCommentModal}
+              handleClose={() => setShowClearCommentModal(false)}
+              handleConfirm={handleConfirmClearComment}
+              title="Confirmar Limpieza"
+            />
+
           </form>
         </div>
       )}
