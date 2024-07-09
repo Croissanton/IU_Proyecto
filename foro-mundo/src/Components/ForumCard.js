@@ -12,7 +12,7 @@ const ForumCard = ({ id, topic, post_num, view_num, onTopicClick }) => {
 
   return (
     <Link onClick={handleClick} className="custom-link m-0 p-0">
-      <Container className="border border-dark-subtle bg-light mb-2 mx-0 p-0">
+      <Container className="border border-dark-subtle --bs-tertiary-color mb-2 mx-0 p-0">
         <Row className="custom-link-container m-0 p-0">
           <Col className="p-3 d-flex align-items-center">
             <span className=" h4">{topic}</span>

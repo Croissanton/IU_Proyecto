@@ -10,6 +10,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
+import DarkMode from "./DarkMode/DarkMode.js";
 
 const Header = forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
@@ -335,6 +336,7 @@ const Header = forwardRef((props, ref) => {
                 </>
               )}
 
+              
                 <Dropdown>
                   <OverlayTrigger
                   placement="left"
@@ -419,6 +421,7 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
+              <DarkMode />
             </Nav>
           </Nav>
         </Navbar.Collapse>
