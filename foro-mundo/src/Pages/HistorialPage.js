@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import PostCard from "../Components/PostCard";
 
 function HistorialPage() {
-  const [posts, setPosts] = useState([]);
-  const [comments, setComments] = useState([]);
+  const { username } = useParams();
   const navigate = useNavigate();
+  const [userPosts, setUserPosts] = useState([]);
+  const [userComments, setUserComments] = useState([]);
 
   useEffect(() => {
     document.title = "Historial";
 
-    const storedPosts = JSON.parse(localStorage.getItem("posts"));
-    if (storedPosts) {
-      setPosts(storedPosts);
-    }
+    // Obtener posts del localStorage y filtrar por autor
+    const postsFromStorage = localStorage.getItem("posts")
+      ? JSON.parse(localStorage.getItem("posts"))
+      : [];
 
-    const storedComments = JSON.parse(localStorage.getItem("comments"));
-    if (storedComments) {
-      setComments(storedComments);
-    }
-  }, []);
+    const filteredPosts = postsFromStorage.filter(
+      (post) => post.author === username
+    );
+
+    const commentsByUser = postsFromStorage.flatMap(post => 
+      post.comments ? post.comments.filter(comment => comment.author === username) : []
+    );
+
+    setUserPosts(filteredPosts);
+    setUserComments(commentsByUser);
+  }, [username]);
 
   const handleViewPost = (postId) => {
     navigate(`/post/${postId}`);
@@ -34,40 +41,71 @@ function HistorialPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/profile" }}>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Historial</Breadcrumb.Item>
         </Breadcrumb>
-      <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Historial</label>
+        <label
+          style={{
+            fontSize: "3rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+          }}
+        >
+          Historial
+        </label>
       </div>
-      <label style={{ fontSize: "2rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Posts</label>
+      <label
+        style={{
+          fontSize: "2rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+        }}
+      >
+        Posts
+      </label>
       <div className="container-xxl my-3">
-        {posts.length === 0 ? (
+        {userPosts.length === 0 ? (
           <p>No hay posts.</p>
         ) : (
-          posts.map((post) => (
+          userPosts.map((post) => (
             <PostCard
               key={post.id}
               id={post.id}
-              titulo={post.title}
+              title={post.title}
               text={post.text}
               author={post.author}
               date={post.date}
-              lm_author={post.lastCommentAuthor}
-              lm_date={post.lastCommentDate}
+              lm_author={post.lm_author}
+              lm_date={post.lm_date}
               res_num={post.comments ? post.comments.length : 0}
-              view_num={post.views || 0}
+              view_num={post.view_num || 0}
+              onPostClick={() => handleViewPost(post.id)}
+              comments={post.comments}
+              upvotes={post.upvotes}
+              downvotes={post.downvotes}
             />
           ))
         )}
       </div>
-      <label style={{ fontSize: "2rem", fontWeight: "bold", display: "block", textAlign: "center" }}>Comentarios</label>
+      <label
+        style={{
+          fontSize: "2rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+        }}
+      >
+        Comentarios
+      </label>
       <div className="container-xxl my-3">
-        {comments.length === 0 ? (
+        {userComments.length === 0 ? (
           <p>No hay comentarios.</p>
         ) : (
-          comments.map((comment) => (
+          userComments.map((comment) => (
             <div key={comment.id} className="card my-3">
               <div className="card-body">
                 <h5 className="card-title">{comment.title}</h5>
@@ -80,8 +118,13 @@ function HistorialPage() {
                 <Button
                   variant="primary"
                   onClick={() => handleViewPost(comment.postId)}
-                >
-                  Ver Post
+                  aria-label={`${comment.title} 
+                    Fecha ${comment.date} 
+                    Votos positivos ${comment.upvotes}
+                    Votos negativos ${comment.downvotes}
+                    Ver Post`}
+                  >
+                    Ver Post
                 </Button>
               </div>
             </div>

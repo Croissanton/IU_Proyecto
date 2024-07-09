@@ -1,28 +1,39 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "universal-cookie";
 import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Breadcrumb } from "react-bootstrap";
 
+function getByUsernameAndPassword(username, password) {
+  // Recuperar la lista de usuarios de localStorage
+  const usuarios = JSON.parse(localStorage.getItem("usuarios"));
+
+  // Buscar el usuario por su username
+  const usuario = usuarios.find(
+    (usuario) => usuario.username === username && usuario.password === password
+  );
+
+  // Retornar el usuario encontrado o null si no se encuentra
+  return usuario || null;
+}
+
 function LoginPage() {
   useEffect(() => {
     document.title = "Login";
   }, []);
 
-  const cookies = new Cookies();
-  const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
+  const [usuario, setusuario] = useState(null);
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (user) {
-      navigate("/"); // Redirigir después de que se actualice el estado de user
+    if (usuario) {
+      navigate("/"); // Redirigir después de que se actualice el estado de usuario
     }
-  }, [user, navigate]);
+  }, [usuario, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,24 +41,20 @@ function LoginPage() {
     e.preventDefault();
 
     // Validar credenciales, por ejemplo:
-    if (username === "usuario" && password === "contraseña") {
-      const userData = {
-        username: "usuario",
-        password: "contraseña",
-        name: "Juan",
-        lastName: "Perez",
-        birthDate: "1990-01-01",
-        country: "Mexico",
-        city: "CDMX",
-        socialMedia: "https://www.facebook.com/juanperez",
-        description: "Soy un desarrollador web",
-      };
-      cookies.set("user", userData, {
-        path: "/",
-        secure: true,
-        sameSite: "None",
-      });
-      setUser(userData);
+    const usuario = getByUsernameAndPassword(username, password);
+    if (usuario) {
+      usuario.lastConnection = new Date().toLocaleString();
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      setusuario(usuario);
+      localStorage.setItem(
+        "usuarios",
+        JSON.stringify(
+          JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+            u.username === usuario.username ? usuario : u
+          )
+        )
+      );
+
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
@@ -68,16 +75,20 @@ function LoginPage() {
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}
       >
-      <Breadcrumb className="custom-breadcrumb">
-      <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item active aria-label="enlace_a_login">
-          Login
-        </Breadcrumb.Item>
-      </Breadcrumb>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active aria-label="enlace_a_login">
+            Login
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <form className="row col-12 g-3" onSubmit={login}>
           <div className="login-container text-center">
-          <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
-          <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>Por favor, inica sesión para continuar.</label>
+            <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
+            <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>
+              Por favor, inicia sesión para continuar.
+            </label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario
@@ -90,7 +101,7 @@ function LoginPage() {
                 aria-label="nombre_de_usuario"
                 required
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setusername(e.target.value)}
                 style={{
                   marginBottom: "0.5rem",
                   width: "300px",
@@ -149,7 +160,7 @@ function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/registro")}
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse

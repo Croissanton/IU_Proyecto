@@ -4,20 +4,35 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastProvider } from "./Context/ToastContext";
 import useShortcuts from "./shortcuts";
-import initialPosts from "./data/initialPosts";
+import topics from "./data/initialTopics.json";
+import posts from "./data/initialPosts.json";
+import usuarios from "./data/usuarios.json";
 
 function App() {
   useShortcuts();
 
   useEffect(() => {
     document.title = "Foro mundo";
-
-    // Cargar posts iniciales en localStorage si no están presentes
-    const storedPosts = localStorage.getItem('posts');
-    if (!storedPosts) {
-      localStorage.setItem('posts', JSON.stringify(initialPosts));
-    }
   }, []);
+
+  var storedTopics = JSON.parse(localStorage.getItem("topics")) || [];
+  var storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+  var storedUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+  if (storedTopics.length <= 0) {
+    storedTopics = topics;
+    localStorage.setItem("topics", JSON.stringify(storedTopics));
+  }
+
+  if (storedPosts.length <= 0) {
+    storedPosts = posts;
+    localStorage.setItem("posts", JSON.stringify(storedPosts));
+  }
+
+  if (storedUsuarios.length <= 0) {
+    storedUsuarios = usuarios;
+    localStorage.setItem("usuarios", JSON.stringify(storedUsuarios));
+  }
 
   return (
     <ToastProvider>

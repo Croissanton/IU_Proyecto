@@ -1,79 +1,198 @@
 import React, { useState, useEffect } from "react";
-import MainLayout from "../layout/MainLayout.js";
-import PostCard from "../Components/PostCard.js";
-import IndexSelector from "../Components/IndexSelector.js";
-import { Breadcrumb } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
-import { useParams } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Container, ListGroup, Breadcrumb, Col, Row } from "react-bootstrap";
+import MainLayout from "../layout/MainLayout";
 
-const topics = JSON.parse(localStorage.getItem("topics"));
+const SearchPage = () => {
+  const [suggestions, setSuggestions] = useState({
+    users: [],
+    posts: [],
+    comments: [],
+    topics: [],
+  });
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
-function SearchPage() {
+  const fetchSuggestions = (query) => {
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    const topics = JSON.parse(localStorage.getItem("topics")) || [];
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const comments = posts.reduce(
+      (acc, post) => [
+        ...acc,
+        ...post.comments.map((comment) => ({
+          ...comment,
+          postId: post.id,
+        })),
+      ],
+      []
+    );
+
+    const topicSuggestions = topics
+      .filter((topic) =>
+        topic.topic.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((topic) => ({
+        ...topic,
+        type: "topic",
+      }));
+
+    const postSuggestions = posts
+      .filter((post) => post.title.toLowerCase().includes(query.toLowerCase()))
+      .map((post) => ({
+        ...post,
+        type: "post",
+      }));
+
+    const postAuthorSuggestions = posts
+      .filter((post) => post.author.toLowerCase().includes(query.toLowerCase()))
+      .map((post) => ({
+        ...post,
+        type: "post",
+      }));
+
+    const commentSuggestions = comments
+      .filter((comment) =>
+        comment.title.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((comment) => ({
+        ...comment,
+        type: "comment",
+      }));
+
+    const commentAuthorSuggestions = comments
+      .filter((comment) =>
+        comment.author.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((comment) => ({
+        ...comment,
+        type: "comment",
+      }));
+
+    const userSuggestions = usuarios
+      .filter((user) =>
+        user.username.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((user) => ({
+        ...user,
+        type: "user",
+      }));
+
+    setSuggestions({
+      users: userSuggestions,
+      posts: postSuggestions.concat(postAuthorSuggestions),
+      comments: commentSuggestions.concat(commentAuthorSuggestions),
+      topics: topicSuggestions,
+    });
+  };
+
   useEffect(() => {
-    document.title = "Posts";
-  }, []);
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get("query");
+    if (query) {
+      setQuery(query);
+      fetchSuggestions(query);
+    }
+  }, [location]);
 
-  const { topicId } = useParams();
-  const cookies = new Cookies();
-  const [posts, setPosts] = useState([]);
+  const handleSuggestionClick = (suggestion) => {
+    switch (suggestion.type) {
+      case "topic":
+        navigate(`/topic/${suggestion.id}`);
+        break;
+      case "post":
+        navigate(`/post/${suggestion.id}`);
+        break;
+      case "comment":
+        navigate(`/post/${suggestion.postId}`);
+        break;
+      case "user":
+        navigate(`/perfil/${suggestion.username}`);
+        break;
+      default:
+        console.warn("Unknown suggestion type");
+    }
+  };
 
-  // Cargar posts desde localStorage
-  useEffect(() => {
-    const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const filteredPosts = storedPosts.filter((post) => post.topicId === topicId);
-    setPosts(filteredPosts);
-  }, [topicId]);
-
-  const category = topics.find(topic => topic.id === parseInt(topicId));
+  const renderSuggestionList = (title, items) => (
+    <Col md={6} lg={3}>
+      <h3>{title}</h3>
+      <ListGroup>
+        {items.map((suggestion, index) => (
+          <ListGroup.Item
+            key={index}
+            action
+            onClick={() => handleSuggestionClick(suggestion)}
+          >
+            <Container>
+              {suggestion.type === "user" ? (
+                <>
+                  <img
+                    src={suggestion.profilePicture || "https://via.placeholder.com/150"}
+                    alt="profile"
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px", borderRadius: "50%" }}
+                  />
+                  {suggestion.username}
+                </>
+              ) : (
+                suggestion.title || suggestion.topic || suggestion.username
+              )}
+              {suggestion.author && (
+                <>
+                  <br />
+                  <span>
+                    Creado por:{" "}
+                    <Link
+                      className="custom-text-link"
+                      to={`/perfil/${suggestion.author}`}
+                    >
+                      {suggestion.author}
+                    </Link>
+                  </span>
+                </>
+              )}
+            </Container>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </Col>
+  );
 
   return (
     <MainLayout>
-      <div className="container-xxl my-3">
+      <div className="container-xxl my-2">
         <Breadcrumb className="custom-breadcrumb">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
             Inicio
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            {category ? category.topic : "Foro"}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item active>Buscar</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "30px" }}>{category.topic}</label>      </div>
-      {cookies.get("user") === undefined ? (
-        <div></div>
-      ) : (
-        <div className="row justify-content-center">
-          <div className="col-auto">
-            <Link to="/create" className="btn btn-primary">
-              Crear Nuevo Post
-            </Link>
-          </div>
-        </div>
-      )}
-      <div className="container-xxl my-3">
-        {posts.length > 0 ? (
-          posts.map((post) => (
-            <PostCard
-              key={post.id}
-              id={post.id}
-              topicId={post.topicId}
-              titulo={post.title}
-              text={post.text}
-              author={post.author}
-              date={post.date}
-              lm_author={post.lm_author}
-              lm_date={post.lm_date}
-              res_num={post.res_num}
-              view_num={post.view_num}
-            />
-          ))
-        ) : (
-          <p>No hay posts disponibles.</p>
-        )}
       </div>
-      <IndexSelector />
+      <label
+        style={{
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+        }}
+      >
+        Busqueda
+      </label>
+      <Container>
+        <h2>Resultados de busqueda: "{query}"</h2>
+        <hr />
+        <Row>
+          {renderSuggestionList("Usuarios", suggestions.users)}
+          {renderSuggestionList("Posts", suggestions.posts)}
+          {renderSuggestionList("Comentarios", suggestions.comments)}
+          {renderSuggestionList("Foros", suggestions.topics)}
+        </Row>
+      </Container>
     </MainLayout>
   );
-}
+};
 
 export default SearchPage;

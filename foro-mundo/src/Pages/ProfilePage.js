@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import { Breadcrumb } from "react-bootstrap";
-import Cookies from "universal-cookie";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../Components/ConfirmationModal";
@@ -11,21 +10,29 @@ function ProfilePage() {
     document.title = "Perfil";
   }, []);
 
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
 
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    username: cookieUser ? cookieUser.username : "",
-    password: cookieUser ? cookieUser.password : "",
-    name: cookieUser ? cookieUser.name : "",
-    lastName: cookieUser ? cookieUser.lastName : "",
-    birthDate: cookieUser ? cookieUser.birthDate : "",
-    country: cookieUser ? cookieUser.country : "",
-    city: cookieUser ? cookieUser.city : "",
-    socialMedia: cookieUser ? cookieUser.socialMedia : "",
-    description: cookieUser ? cookieUser.description : "",
-    imageInput: cookieUser ? cookieUser.image : "",
+    username: usuario ? usuario.username : "",
+    password: usuario ? usuario.password : "",
+    name: usuario ? usuario.name : "",
+    lastName: usuario ? usuario.lastName : "",
+    birthDate: usuario ? usuario.birthDate : "",
+    country: usuario ? usuario.country : "",
+    city: usuario ? usuario.city : "",
+    socialMedia: usuario ? usuario.socialMedia : "",
+    description: usuario ? usuario.description : "",
+    profilePicture: usuario ? usuario.profilePicture : "https://via.placeholder.com/150",
+    friendList: usuario ? usuario.friendList : [],
+    incomingRequests: usuario ? usuario.incomingRequests : [],
+    blockList: usuario ? usuario.blockList : [],
+    upPosts: usuario ? usuario.upPosts : [],
+    downPosts: usuario ? usuario.downPosts : [],
+    upComments: usuario ? usuario.upComments : [],
+    downComments: usuario ? usuario.downComments : [],
+    lastConnection: usuario ? usuario.lastConnection : "",
+    lastDisconnection: usuario ? usuario.lastDisconnection : "",
   });
 
   const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
@@ -48,7 +55,16 @@ function ProfilePage() {
   };
 
   const handleSaveChanges = () => {
-    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
+    localStorage.setItem("usuario", JSON.stringify(profileData));
+
+    localStorage.setItem("usuarios", JSON.stringify(
+      JSON.parse(localStorage.getItem("usuarios")).map((user) => {
+        if (user.username === profileData.username) {
+          return profileData;
+        }
+        return user;
+      })
+    ));
     setIsEditing(false);
     console.log("Submitting Data:", profileData);
     setInitialProfileData({ ...profileData });
@@ -71,10 +87,12 @@ function ProfilePage() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        document.querySelector("img").src = e.target.result;
+        setProfileData((prev) => ({
+          ...prev,
+          profilePicture: e.target.result,
+        }));
       };
       reader.readAsDataURL(file);
-      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
     }
   };
 
@@ -85,12 +103,21 @@ function ProfilePage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
-        <label style={{ fontSize: "3rem", fontWeight: "bold", display: "block", textAlign: "center", paddingBottom: "50px" }}>Mi perfil</label>
+        <label
+          style={{ 
+            fontSize: "3rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+            paddingBottom: "50px"
+        }}>
+            {profileData.username}
+        </label>
       </div>
       <div style={{ display: "flex" }}>
         <div className="m-auto">
           <img
-            src="https://via.placeholder.com/150"
+            src={profileData.profilePicture}
             alt="profile"
             width="250"
             height="350"
@@ -100,7 +127,6 @@ function ProfilePage() {
             <input
               type="file"
               id="imageInput"
-              value={profileData.imageInput}
               style={{ display: "none" }}
               onChange={handleImageSelection}
             />
@@ -114,7 +140,7 @@ function ProfilePage() {
                 Cambiar foto
               </button>
             )}
-            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label>
+            <label htmlFor="imageInput" className="form-label" hidden> Imagen del perfil </label>
           </div>
         </div>
         <div
@@ -207,16 +233,38 @@ function ProfilePage() {
                       e.preventDefault();
                       setIsEditing(true);
                     }}
+                    style={{ margin: "5px" }}
                   >
                     Editar
                   </button>
-                  <Link to="/historial">
+                  
+                  <Link to={`/historial/${profileData.username}`}>
                     <button
                       type="button"
                       className="btn btn-primary"
-                      style={{ marginLeft: "10px" }}
+                      style={{ margin: "5px" }}
                     >
                       Ver Historial
+                    </button>
+                  </Link>
+
+                  <Link to={`/bloqueados`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ margin: "5px" }}
+                    >
+                      Ver Bloqueados
+                    </button>
+                  </Link>
+
+                  <Link to={`/amigos`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ margin: "5px" }}
+                    >
+                      Ver Amigos
                     </button>
                   </Link>
                 </div>
