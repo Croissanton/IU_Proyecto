@@ -1,3 +1,6 @@
+
+@import './themes';
+
 $primary: #B4DBFC; 
 $secondary: #002561;
 $success: #00ad5c;
@@ -8,8 +11,17 @@ $light: #e0dede;
 $light-light: #efeded;
 $dark: #262626;
 $white: #f5f5f5;
-$secondary-subtle: var(--bs-secondary-border-subtle);
+$secondary-subtle: lighten($secondary, 10%);
 
+/* Custom CSS for Footer */
+.custom-footer {
+  background-color: var(--bs-primary); /* Bootstrap primary background color */
+  color: var(--bs-secondary); /* Bootstrap secondary text color */
+  text-align: center; /* Center align text */
+  padding-top: 1rem; /* Top padding 1rem */
+  padding-bottom: 1rem; /* Bottom padding 1rem */
+  border-top: 1px solid var(--bs-dark-subtle); /* Subtle dark border on top */
+}
 
 body, html {
   height: 100%;
@@ -22,22 +34,23 @@ body, html {
   min-height: 100%;
 }
 
+
 .custom-pagination .page-link {
-    color: $secondary; 
-    background-color: $primary; 
-    border-color: $secondary-subtle; 
+    color: var(--bs-secondary); 
+    background-color: var(--bs-primary); 
+    border-color: var(--bs-secondary-subtle); 
 }
 
 .custom-pagination .page-link:hover {
-    color: $secondary; 
-    background-color: $light; 
-    border-color: $secondary-subtle; 
+    color: var(--bs-secondary); 
+    background-color: var(--bs-light); 
+    border-color: var(--bs-secondary-subtle); 
 }
 
 .custom-pagination .page-item.active .page-link {
-    color: $primary; 
-    background-color: $secondary; 
-    border-color: $secondary-subtle; 
+    color: var(--bs-primary); 
+    background-color: var(--bs-secondary); 
+    border-color: var(--bs-secondary-subtle); 
 }
 
 .custom-link{
@@ -46,34 +59,24 @@ body, html {
     background-color: transparent; 
 }
 
+
 .custom-link-container:hover{
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .custom-icon {
     font-size: 1.5rem;
-    color: $secondary;
+    color: var(--bs-secondary);
     transition: color 0.3s;
     &:hover {
       color: rgba(0, 0, 0, 0.5);
     }
   }
 
-.custom-button {
-    background-color: $light; 
-    text-decoration: none;
 
-    &.active {
-      background-color: $info;
-    }
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  }
 
 .custom-text-link {
-    color: $secondary;
+    color: var(--bs-secondary);
     display: inline-block;
     padding: 0;
     margin: 0;
@@ -92,7 +95,7 @@ body, html {
 
 .custom-breadcrumb {
   a {
-    color: $secondary;
+    color: var(--bs-secondary);
     transition: color 0.3s;
   }
   a:hover {
@@ -109,12 +112,12 @@ body, html {
 
 
 #searchInput {
-  border-color: $secondary-subtle;
+  border-color: var(--bs-secondary-subtle);
   background-color: darken($white, 3%);
 }
 
 #searchInput:focus {
-  border-color: $secondary;
+  border-color: var(--bs-secondary);
   background-color: $white;
   box-shadow: 0 0 0 0.25rem rgba(0, 37, 97, 0.25);
 }
@@ -131,7 +134,10 @@ body, html {
 }
 
 
+
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
 
 
 // $link-color: $secondary;

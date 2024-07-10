@@ -9,9 +9,6 @@ import ProfilePage from "./ProfilePage.js";
 function ProfilePublic() {
   const { username } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("usuario"));
-  if (!currentUser.friendList) currentUser.friendList = [];
-  if (!currentUser.incomingRequests) currentUser.incomingRequests = [];
-  if (!currentUser.blockList) currentUser.blockList = [];
   const isCurrentUser = currentUser?.username === username;
 
   const [userData, setUserData] = useState(null);
@@ -24,13 +21,19 @@ function ProfilePublic() {
   const [showFriendModal, setShowFriendModal] = useState(false);
   const [isButtonUnavailable, setIsButtonUnavailable] = useState(false);
 
-  const friendButtonColor =
-    friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
+  const friendButtonColor = friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
 
   useEffect(() => {
-    if (username === currentUser?.username) {
-      navigate("/perfil");
+    if (!currentUser) navigate("/inicioSesion");
+    else {
+      if (username === currentUser?.username) navigate("/perfil");
+       else if (currentUser) {
+        if (!currentUser.friendList) currentUser.friendList = [];
+        if (!currentUser.incomingRequests) currentUser.incomingRequests = [];
+        if (!currentUser.blockList) currentUser.blockList = []; 
+      }
     }
+
   }, [username, currentUser, navigate]);
 
   useEffect(() => {

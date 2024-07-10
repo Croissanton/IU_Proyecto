@@ -9,7 +9,9 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-import { FormLabel } from "react-bootstrap";
+import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
+import DarkMode from "./DarkMode/DarkMode.js";
+import AccessibilityMenu from "./AccesibilityMenu.js";
 
 const Header = forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
@@ -218,6 +220,7 @@ const Header = forwardRef((props, ref) => {
                 expanded || isCollapsing ? "" : "w-50"
               }`}
               style={{ position: "relative" }}
+              aria-label="Barra de búsqueda"
             >
               <FormLabel htmlFor="searchInput" className="visually-hidden">
                 Buscar
@@ -242,6 +245,7 @@ const Header = forwardRef((props, ref) => {
                 }}
                 required
                 autoComplete="off"
+                
               />
               <Button
                 className="d-flex"
@@ -250,12 +254,13 @@ const Header = forwardRef((props, ref) => {
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
-                <span className="me-1">Buscar</span>
+                <span id="search" className="me-1">Buscar</span>
                 <i className="bi bi-search"></i>
               </Button>
               {showSuggestions && inputValue && suggestions.length > 0 && (
                 <div
-                  className="bg-white"
+                  id="search_suggestions"
+                  className="bg-secondary-subtle w-100"
                   style={{
                     position: "absolute",
                     left: 0,
@@ -294,7 +299,7 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/crear"
+                      to="/crear/0"
                       aria-label="Crear post"
                     >
                       {isMobile && <span className="me-2">Crear</span>}
@@ -334,6 +339,8 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                 </>
               )}
+              <AccessibilityMenu />                   
+
               <OverlayTrigger
                 placement="bottom"
                 overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
@@ -344,7 +351,7 @@ const Header = forwardRef((props, ref) => {
                   to="/ayuda"
                   aria-label="Ayuda"
                 >
-                  {isMobile && <span className="me-2">Ayuda</span>}
+                  {isMobile && <span className="text-secondary me-2">Ayuda</span>}
                   <i className="bi bi-question-circle custom-icon"></i>
                   <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>
@@ -389,6 +396,9 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
+              <Nav.Link as="div" className="m-auto">
+                <DarkMode />
+              </Nav.Link>
             </Nav>
           </Nav>
         </Navbar.Collapse>

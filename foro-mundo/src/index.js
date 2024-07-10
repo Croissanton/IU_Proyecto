@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./css/custom.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -32,7 +33,7 @@ const router = createBrowserRouter(
         { path: "/perfil/:username", element: <ProfilePublic /> },
         { path: "/topic/:topicId", element: <TopicPage /> },
         { path: "/post/:postId", element: <PostPage /> },
-        { path: "/crear", element: <PostCreationPage /> },
+        { path: "/crear/:topicId", element: <PostCreationPage /> },
         { path: "/inicioSesion", element: <LoginPage /> },
         { path: "/registro", element: <SignUpPage /> },
         { path: "/ayuda", element: <HelpPage /> },

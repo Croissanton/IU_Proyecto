@@ -29,9 +29,8 @@ function PostPage() {
 
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
 
-  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
-  const [commentToDelete, setCommentToDelete] = useState(null);
+  const [showClearCommentModal, setShowClearCommentModal] = useState(false);
 
   const titleStyle = {
     wordWrap: "break-word",
@@ -128,6 +127,7 @@ function PostPage() {
     if (!button) {
       return;
     }
+    
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
@@ -142,32 +142,6 @@ function PostPage() {
     event.preventDefault();
     setShowModal(true);
     setCharacterCount(0);
-  };
-
-  const handleDeleteComment = (id) => {
-    setCommentToDelete(id);
-    setShowDeleteCommentModal(true);
-  };
-
-  const handleConfirmDeleteComment = (id) => {
-    post.comments = post.comments.filter(
-      (comment) => comment.id !== commentToDelete
-    );
-
-    post.res_num = post.comments.length;
-    post.lm_text = post.comments.length > 0 ? post.comments[0].title : "";
-    post.lm_author = post.comments.length > 0 ? post.comments[0].author : "";
-    post.lm_date = post.comments.length > 0 ? post.comments[0].date : "";
-    //get existing posts and add updated post to the list
-    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
-
-    // Save updated post back to localStorage
-    localStorage.setItem("posts", JSON.stringify(updatedPosts));
-    setComments(post.comments);
-    showToast("Comentario eliminado", "bg-danger");
-    navigate(`/post/${post.id}`);
-    setShowDeleteCommentModal(false);
   };
 
   //  This has to be changed so a user can't delete a post that was not his.
@@ -197,8 +171,13 @@ function PostPage() {
   };
 
   const handleClearComment = () => {
+    setShowClearCommentModal(true);
+  };
+
+  const handleConfirmClearComment = () => {
     setNewComment("");
     setCharacterCount(0);
+    setShowClearCommentModal(false);
   };
 
   const handleSortChange = (criteria) => {
@@ -279,6 +258,8 @@ function PostPage() {
             id={post.id}
             titulo={post.title}
             text={post.text}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
             author={post.author}
             date={post.date}
             lm_author={post.lm_author}
@@ -338,9 +319,7 @@ function PostPage() {
             >
               Publicar
             </button>
-            <Button onClick={handleClearComment} className="ms-2">
-              Limpiar
-            </Button>
+
             <ConfirmationModal
               message="¿Estás seguro de que quieres crear este comentario?"
               show={showModal}
@@ -348,6 +327,23 @@ function PostPage() {
               handleConfirm={handleConfirm}
               title="Confirmar Comentario"
             />
+
+            <Button
+              variant="primary"
+              style={{ marginLeft: "10px" }}
+              onClick={handleClearComment}
+            >
+              Limpiar
+            </Button>
+            
+            <ConfirmationModal
+              message="¿Estás seguro de que quieres limpiar el texto escrito?"
+              show={showClearCommentModal}
+              handleClose={() => setShowClearCommentModal(false)}
+              handleConfirm={handleConfirmClearComment}
+              title="Confirmar Limpieza"
+            />
+
           </form>
         </div>
       )}
@@ -398,18 +394,10 @@ function PostPage() {
               initialUpvotes={comment.upvotes}
               initialDownvotes={comment.downvotes}
               date={comment.date}
-              onDelete={() => handleDeleteComment(comment.id)}
             />
           ))
         )}
       </div>
-      <ConfirmationModal
-        show={showDeleteCommentModal}
-        handleClose={() => setShowDeleteCommentModal(false)}
-        handleConfirm={handleConfirmDeleteComment}
-        title="Eliminar Comentario"
-        message="¿Estás seguro de que quieres eliminar este comentario?"
-      />
 
       <IndexSelector
         totalTopics={sortedComments.length}

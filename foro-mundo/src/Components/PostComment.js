@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useToast } from "../Context/ToastContext.js";
+import ConfirmationModal from "./ConfirmationModal";
 
 const PostComment = ({
   id,
@@ -13,10 +15,17 @@ const PostComment = ({
   onDelete,
 }) => {
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+  const [post, setPost] = useState(null);
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
   const [authorProfilePicture, setAuthorProfilePicture] = useState("");
+
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+  const [comments, setComments] = useState([]);
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
   useEffect(() => {
     if (usuario) {
@@ -39,6 +48,19 @@ const PostComment = ({
     }
   }, [author]);
 
+  useEffect(() => {
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    const post = posts.find((post) => post.id.toString() === postId.toString());
+
+    if (post) {
+      const storedComment = post.comments.find((comment) => comment.id === id);
+      if (storedComment) {
+        setUpvotes(storedComment.upvotes);
+        setDownvotes(storedComment.downvotes);
+      }
+    }
+  }, [postId, id]);
+
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
     const post = posts.find((post) => post.id.toString() === postId.toString());
@@ -58,6 +80,7 @@ const PostComment = ({
         upvotes: newUpvotes,
         downvotes: newDownvotes,
         date,
+        onDelete,
       });
     }
 
@@ -72,13 +95,13 @@ const PostComment = ({
     let newDownvotes = downvotes;
 
     if (userVote === "upvote") {
-      newUpvotes -= 1;
+      if (newUpvotes > 0) newUpvotes -= 1;
       setUserVote(null);
       usuario.upComments = usuario.upComments.filter(
         (commentId) => commentId !== id
       );
     } else if (userVote === "downvote") {
-      newDownvotes -= 1;
+      if (newDownvotes > 0) newDownvotes -= 1;
       newUpvotes += 1;
       setUserVote("upvote");
       usuario.downComments = usuario.downComments.filter(
@@ -110,13 +133,13 @@ const PostComment = ({
     let newDownvotes = downvotes;
 
     if (userVote === "downvote") {
-      newDownvotes -= 1;
+      if (newDownvotes > 0) newDownvotes -= 1;
       setUserVote(null);
       usuario.downComments = usuario.downComments.filter(
         (commentId) => commentId !== id
       );
     } else if (userVote === "upvote") {
-      newUpvotes -= 1;
+      if (newUpvotes > 0) newUpvotes -= 1;
       newDownvotes += 1;
       setUserVote("downvote");
       usuario.upComments = usuario.upComments.filter(
@@ -143,34 +166,41 @@ const PostComment = ({
     updateLocalStorage(newUpvotes, newDownvotes);
   };
 
-  const handleDelete = () => {
-    const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const post = posts.find((post) => post.id.toString() === postId).toString();
-    const comments = post.comments || [];
-    const updatedComments = comments.filter((comment) => comment.id !== id);
-    post.comments = updatedComments;
-    posts[posts.findIndex((post) => post.id.toString() === postId)] = post;
-    localStorage.setItem("posts", JSON.stringify(posts));
-    onDelete(id);
+  const handleDeleteComment = (id) => {
+    setCommentToDelete(id);
+    setShowDeleteCommentModal(true);
+  };  
+
+  const handleCancelDelete = () => {
+    setShowDeleteCommentModal(false);
   };
 
-  useEffect(() => {
+  const handleConfirmDeleteComment = () => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const post = posts.find((post) => post.id.toString() === postId.toString());
-
-    if (post) {
-      const storedComment = post.comments.find((comment) => comment.id === id);
-      if (storedComment) {
-        setUpvotes(storedComment.upvotes);
-        setDownvotes(storedComment.downvotes);
+    const postIndex = posts.findIndex((post) => post.id.toString() === postId.toString());
+  
+    if (postIndex !== -1) {
+      const post = posts[postIndex];
+      const updatedComments = post.comments.filter((comment) => comment.id !== commentToDelete);
+      post.comments = updatedComments;
+      post.res_num = updatedComments.length; // Decrementar el número de comentarios
+      posts[postIndex] = post;
+      localStorage.setItem("posts", JSON.stringify(posts));
+      setShowDeleteCommentModal(false);
+      showToast("Comentario eliminado", "bg-danger");
+      navigate(`/post/${postId}`);
+      if (onDelete) {
+        onDelete(commentToDelete); // Notificar la eliminación del comentario si existe la función onDelete
       }
     }
-  }, [postId, id]);
+  };
+    
 
   return (
     <Row className="gy-3">
       <Col className="p-3 m-auto">
         <Container
+          id="comment-container"
           className="border border-dark-subtle bg-light"
           role="region"
           aria-labelledby="comment-title"
@@ -241,7 +271,7 @@ const PostComment = ({
                         style={{ marginRight: "10px", borderRadius: "50%" }}
                       />
                       <NavLink
-                        className="custom-text-link"
+                        className="custom-text-link text-light"
                         to={`/perfil/${author}`}
                         aria-label={`Perfil de ${author}`}
                         tabIndex="0"
@@ -254,18 +284,28 @@ const PostComment = ({
                     <p>{new Date(date).toLocaleString()}</p>
                   </Row>
                 </Col>
-                <Col className="text-center">
+                <Col className="text-center text-light">
                   {usuario === undefined || usuario.username !== author ? (
                     <div></div>
                   ) : (
+                    <div>
                     <Button
                       aria-label="Eliminar"
                       className="btn btn-danger"
-                      onClick={handleDelete}
+                      onClick={() => {handleDeleteComment(id)}}
                     >
                       <i className="bi bi-trash"></i>
                       <span>Eliminar</span>
                     </Button>
+
+                    <ConfirmationModal
+                    show={showDeleteCommentModal}
+                    handleClose={handleCancelDelete}
+                    handleConfirm={handleConfirmDeleteComment}
+                    title="Eliminar comentario"
+                    message="¿Estás seguro de que deseas eliminar este comentario?"
+                    />
+                    </div>
                   )}
                 </Col>
               </Row>

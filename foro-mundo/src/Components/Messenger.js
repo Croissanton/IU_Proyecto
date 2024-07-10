@@ -363,7 +363,8 @@ const Messenger = () => {
         <ListGroup>
           <ListGroup.Item className="border-0">
             <button
-              className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
+              id="addChatButton"
+              className="d-flex align-items-center w-100 text-dark rounded py-2 px-3 custom-button"
               onClick={() => setShowAddChatModal(true)}
               style={{ cursor: "pointer" }}
             >
@@ -373,6 +374,7 @@ const Messenger = () => {
           </ListGroup.Item>
           <ListGroup.Item className="border-0">
             <button
+              id="archivedChatsButton"
               className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
               onClick={() => setShowArchivedChatsModal(true)}
               style={{ cursor: "pointer" }}
@@ -407,15 +409,17 @@ const Messenger = () => {
       </Col>
       {/* chatbox */}
       <Col
+        id="chatbox"
         md={9}
         className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded"
       >
         {activeChat ? (
           <>
             {/* header de chatbox y el boton de archivar */}
-            <div className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center">
+            <div id="chatboxHeader"
+            className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center">
               <NavLink
-                className="bi bi-person-circle d-inline-flex align-items-center"
+                className="bi bi-person-circle d-inline-flex align-items-center custom-icon"
                 to={`/perfil/${activeChat.otherUser}`}
                 style={{ color: "inherit", textDecoration: "none" }}
                 aria-label={`Perfil de ${activeChat.otherUser}`}
@@ -464,7 +468,7 @@ const Messenger = () => {
                     className={`my-2 p-2 rounded border border-secondary-subtle ${
                       message.sender === usuario.username
                         ? "bg-primary text-secondary align-self-end"
-                        : "bg-light text-start"
+                        : "bg-light text-dark align-self-start"
                     }`}
                     style={{
                       width: "fit-content",
@@ -477,9 +481,10 @@ const Messenger = () => {
                   >
                     {/* solo se ejecuta cuando el mensaje es "abierto" */}
                     {expandedMessages[message.id] && (
-                      <div className="d-flex justify-content-between align-items-center mb-1">
+                      <div id="expandedmsg" className="d-flex justify-content-between align-items-center mb-1">
                         {message.sender === usuario.username && (
                           <Button
+                            id="deleteMessageButton"
                             className="me-2"
                             variant="danger"
                             size="sm"
@@ -495,7 +500,7 @@ const Messenger = () => {
                           </Button>
                         )}
                         {/* timestamp */}
-                        <small className="text-muted">
+                        <small className="text-dark">
                           {formatTimestamp(message.timestamp)}
                         </small>
                       </div>
@@ -673,7 +678,7 @@ function AddChatModal({
           )}
           {showSuggestions && inputValue && suggestions.length > 0 && (
             <div
-              className="bg-white"
+              className="bg-secondary-subtle"
               style={{
                 position: "absolute",
                 left: 0,
