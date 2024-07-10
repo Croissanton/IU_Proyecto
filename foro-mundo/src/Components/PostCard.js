@@ -160,7 +160,7 @@ const PostCard = ({
               <Col>
                 <img
                   src={authorProfilePicture || "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"}
-                  alt="author profile"
+                  alt="Foto del autor del post"
                   width="30"
                   height="30"
                   style={{ marginRight: "10px", borderRadius: "50%" }}

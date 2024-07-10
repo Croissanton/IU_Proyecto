@@ -415,6 +415,7 @@ const Messenger = () => {
                     }
                     alt="Perfil"
                     className="me-2 rounded-5 border"
+                    alt="Foto de perfil del usuario"
                     width="30"
                     height="30"
                   />
@@ -452,6 +453,10 @@ const Messenger = () => {
                     className="me-2 rounded-5 border"
                     width="40"
                     height="40"
+                    alt="Foto de perfil del usuario"
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px", borderRadius: "50%" }}
                   />
                   <span className="h2 m-0 ps-2 custom-text-link">
                     {activeChat.otherUser}

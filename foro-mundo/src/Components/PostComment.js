@@ -240,7 +240,7 @@ const PostComment = ({
                     <Col>
                       <img
                         src={authorProfilePicture}
-                        alt="author profile"
+                        alt="Foto de perfil del autor"
                         width="30"
                         height="30"
                         style={{ marginRight: "10px", borderRadius: "50%" }}

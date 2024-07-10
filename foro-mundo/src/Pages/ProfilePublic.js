@@ -292,7 +292,7 @@ function ProfilePublic() {
                       ? userData.profilePicture
                       : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                   }
-                  alt="imagen del perfil"
+                  alt="Foto de perfil"
                   className="m-0 p-0 shadow"
                 />
               </Row>

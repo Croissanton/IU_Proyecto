@@ -117,7 +117,17 @@ const SearchPage = () => {
 
   const renderSuggestionList = (title, items) => (
     <Col md={6} lg={3}>
-      <h3>{title}</h3>
+      <label
+          style={{
+            fontSize: "2rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+          }}
+          aria-label={`${title}`}
+        >
+          {title}
+        </label>
       <ListGroup>
         {items.map((suggestion, index) => (
           <ListGroup.Item
@@ -130,7 +140,7 @@ const SearchPage = () => {
                 <>
                   <img
                     src={suggestion.profilePicture || "https://via.placeholder.com/150"}
-                    alt="profile"
+                    alt="Foto de perfil"
                     width="30"
                     height="30"
                     style={{ marginRight: "10px", borderRadius: "50%" }}
@@ -179,10 +189,20 @@ const SearchPage = () => {
           textAlign: "center",
         }}
       >
-        Busqueda
+        Búsqueda
       </label>
       <Container>
-        <h2>Resultados de busqueda: "{query}"</h2>
+        <label
+          style={{
+            fontSize: "2rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+          }}
+          aria-label={`Resultados de búsqueda: ${query}`}
+        >
+          Resultados de búsqueda: "{query}"
+        </label>
         <hr />
         <Row>
           {renderSuggestionList("Usuarios", suggestions.users)}
