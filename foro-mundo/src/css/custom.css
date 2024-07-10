@@ -28,7 +28,7 @@
 [data-bs-theme=dark] .header {
   background-color: var(--bs-primary) !important;
 }
-[data-bs-theme=dark] .text-secondary {
+[data-bs-theme=dark] .header .text-secondary {
   color: var(--bs-secondary) !important;
 }
 [data-bs-theme=dark] .custom-link-container {
@@ -55,6 +55,25 @@
   color: var(--bs-secondary) !important;
 }
 [data-bs-theme=dark] #addChatButton .text-dark {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] #login-page {
+  background-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=dark] #login-form {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] .btn-outline-secondary {
+  color: var(--bs-secondary) !important;
+  border-color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] .btn {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=dark] .password-strength-meter {
+  background-color: var(--bs-primary) !important;
   color: var(--bs-secondary) !important;
 }
 

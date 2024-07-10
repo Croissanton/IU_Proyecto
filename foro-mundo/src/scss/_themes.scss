@@ -26,10 +26,11 @@
     --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
     .header{
         background-color: var(--bs-primary) !important;
+        .text-secondary{
+            color: var(--bs-secondary) !important;
+        }
     }
-    .text-secondary{
-        color: var(--bs-secondary) !important;
-    }
+    
     .custom-link-container{
         background-color: var(--bs-primary) !important;
         color: var(--bs-light-light) !important;
@@ -60,6 +61,25 @@
         .text-dark{
             color: var(--bs-secondary) !important;
         }
+    }
+    #login-page{
+        background-color: var(--bs-secondary-subtle) !important;
+    }
+    #login-form{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+    }
+    .btn-outline-secondary{
+        color: var(--bs-secondary) !important;
+        border-color: var(--bs-secondary) !important;
+    }
+    .btn{
+        background-color: var(--bs-secondary) !important;
+        color: var(--bs-primary) !important;
+    }
+    .password-strength-meter{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
     }
 
 }
