@@ -81,7 +81,6 @@ function PostCreationPage() {
       view_num: 0,
       lm_author: "",
       lm_date: "",
-      image: selectedFile ? URL.createObjectURL(selectedFile) : null,
       comments: [],
     };
 
@@ -184,18 +183,6 @@ function PostCreationPage() {
                 value={formData.text}
                 onChange={handleInputChange}
               ></textarea>
-            </div>
-            <div className="col-12">
-              <label htmlFor="image" className="form-label">
-                Imagen
-              </label>
-              <input
-                type="file"
-                className="form-control"
-                id="image"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
             </div>
             <Button type="submit" className="btn btn-primary">
               Crear
