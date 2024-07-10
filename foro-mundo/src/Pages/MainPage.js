@@ -73,7 +73,7 @@ function MainPage() {
     <MainLayout>
       <div className="container-xxl my-2">
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item active>Inicio</Breadcrumb.Item>
+          <Breadcrumb.Item active><label>Inicio</label></Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <label
@@ -90,11 +90,12 @@ function MainPage() {
 
       <Container fluid className="my-3 mx-0 px-0">
         <Container className="d-flex justify-content-end mb-3">
-          <label className="me-3" style={{ margin: "10px" }}>
+          <label htmlFor="sortCriteria" className="me-3" style={{ margin: "10px" }}>
             Ordenar por:
           </label>
           <div className="d-flex justify-content-center">
             <select
+              id = "sortCriteria"
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
               aria-label="Ordenar por"
