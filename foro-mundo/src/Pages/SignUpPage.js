@@ -19,6 +19,7 @@ function PasswordStrengthMeter({ password }) {
 
   return (
     <ProgressBar
+      id="password-strength-meter"
       now={score < 25 && password !== "" ? 10 : score}
       variant={getProgressBarVariant(score)}
       label={
@@ -106,14 +107,15 @@ function SignUpPage() {
 
   return (
     <div
+      id="signup-page"
       className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light"
-      style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}
+      style={{ minHeight: "100vh"}}
     >
       <div
+        id="signup-form"
         className="p-4"
         style={{
           maxWidth: "400px",
-          background: "#ececec",
           borderRadius: "8px",
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}

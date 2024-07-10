@@ -38,16 +38,8 @@
             background-color: rgba(0, 0, 0, 0.1);
         }
     }
-    #search{
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-light-light) !important;
-        outline: var(--bs-secondary) !important;
-    
-    }
-    #searchInput{
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-light-light) !important;
-    }
+   
+   
     .dropdown-toggle{
         background-color: var(--bs-primary) !important;
         color: var(--bs-secondary) !important;
@@ -57,18 +49,7 @@
             color: var(--bs-secondary) !important;
         }
     }
-    #addChatButton{
-        .text-dark{
-            color: var(--bs-secondary) !important;
-        }
-    }
-    #login-page{
-        background-color: var(--bs-secondary-subtle) !important;
-    }
-    #login-form{
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-secondary) !important;
-    }
+
     .btn-outline-secondary{
         color: var(--bs-secondary) !important;
         border-color: var(--bs-secondary) !important;
@@ -78,9 +59,30 @@
         color: var(--bs-primary) !important;
     }
     .password-strength-meter{
+        background-color: transparent !important;
+        color: var(--bs-secondary) !important;
+    }
+    #search{
+        background-color: var(--bs-secondary) !important;
+        color: var(--bs-white) !important;
+        outline: var(--bs-secondary) !important;
+    
+    }
+    #searchInput{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-light-light) !important;
+    }
+    #accessibility-button{
+        background-color: transparent !important;
+    }
+    #login-page, #signup-page{
+        background-color: var(--bs-secondary-subtle) !important;
+    }
+    #login-form, #signup-form{	
         background-color: var(--bs-primary) !important;
         color: var(--bs-secondary) !important;
     }
+
 
 }
 

@@ -38,30 +38,11 @@
 [data-bs-theme=dark] .custom-link-container:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
-[data-bs-theme=dark] #search {
-  background-color: var(--bs-primary) !important;
-  color: var(--bs-light-light) !important;
-  outline: var(--bs-secondary) !important;
-}
-[data-bs-theme=dark] #searchInput {
-  background-color: var(--bs-primary) !important;
-  color: var(--bs-light-light) !important;
-}
 [data-bs-theme=dark] .dropdown-toggle {
   background-color: var(--bs-primary) !important;
   color: var(--bs-secondary) !important;
 }
 [data-bs-theme=dark] .custom-breadcrumb:hover {
-  color: var(--bs-secondary) !important;
-}
-[data-bs-theme=dark] #addChatButton .text-dark {
-  color: var(--bs-secondary) !important;
-}
-[data-bs-theme=dark] #login-page {
-  background-color: var(--bs-secondary-subtle) !important;
-}
-[data-bs-theme=dark] #login-form {
-  background-color: var(--bs-primary) !important;
   color: var(--bs-secondary) !important;
 }
 [data-bs-theme=dark] .btn-outline-secondary {
@@ -73,6 +54,25 @@
   color: var(--bs-primary) !important;
 }
 [data-bs-theme=dark] .password-strength-meter {
+  background-color: transparent !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] #search {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-white) !important;
+  outline: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] #searchInput {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-light-light) !important;
+}
+[data-bs-theme=dark] #accessibility-button {
+  background-color: transparent !important;
+}
+[data-bs-theme=dark] #login-page, [data-bs-theme=dark] #signup-page {
+  background-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=dark] #login-form, [data-bs-theme=dark] #signup-form {
   background-color: var(--bs-primary) !important;
   color: var(--bs-secondary) !important;
 }
