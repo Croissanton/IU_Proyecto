@@ -76,7 +76,7 @@ function ProfilePage() {
     setIsEditing(false);
     console.log("Submitting Data:", profileData);
     setInitialProfileData({ ...profileData });
-    showToast("Se han guardado los cambios!");
+    showToast("Se han guardado los cambios!", "bg-success");
     setShowConfirmationModal(false);
   };
 

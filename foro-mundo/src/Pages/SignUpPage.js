@@ -11,27 +11,41 @@ function PasswordStrengthMeter({ password }) {
   const score = testResult.score * 25;
 
   const getProgressBarVariant = (score) => {
-    if (score === 100) return "success";
-    if (score >= 75) return "info";
-    if (score >= 50) return "warning";
-    return "danger";
+    if (score === 100) return "bg-success";
+    if (score >= 75) return "bg-info";
+    if (score >= 50) return "bg-warning";
+    return "bg-danger";
   };
 
+  const getLabel = (score) => {
+    if (score === 100) return "Muy fuerte";
+    if (score >= 75) return "Fuerte";
+    if (score >= 50) return "Regular";
+    return "Débil";
+  };
+
+  const label = getLabel(score);
+
   return (
-    <ProgressBar
-      id="password-strength-meter"
-      now={score < 25 && password !== "" ? 10 : score}
-      variant={getProgressBarVariant(score)}
-      label={
-        score === 100
-          ? "Muy fuerte"
-          : score >= 75
-            ? "Fuerte"
-            : score >= 50
-              ? "Regular"
-              : "Débil"
-      }
-    />
+    <div className="mt-2">
+      <label id="password-strength-label" className="form-label">
+        Fuerza de la contraseña: {label}
+      </label>
+      <div
+        role="progressbar"
+        aria-valuenow={score}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-labelledby="password-strength-label"
+        className="progress"
+        style={{ height: '20px' }}
+      >
+        <div
+          className={`progress-bar ${getProgressBarVariant(score)}`}
+          style={{ width: `${score}%` }}
+        ></div>
+      </div>
+    </div>
   );
 }
 
