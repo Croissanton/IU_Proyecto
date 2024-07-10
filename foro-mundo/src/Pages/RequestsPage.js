@@ -79,6 +79,9 @@ function RequestsPage() {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/perfil" }}>
             Perfil
           </Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/amigos" }}>
+            Amigos
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Peticiones de Amistad</Breadcrumb.Item>
         </Breadcrumb>
         <label
