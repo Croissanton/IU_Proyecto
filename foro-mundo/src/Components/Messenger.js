@@ -439,9 +439,8 @@ const Messenger = () => {
             >
               <Col className="d-flex align-content-center justify-content-start text-center p-1">
                 <NavLink
-                  className="d-inline-flex align-items-center custom-icon"
+                  className="d-inline-flex align-items-center custom-icon text-decoration-none text-reset"
                   to={`/perfil/${activeChat.otherUser}`}
-                  style={{ color: "inherit", textDecoration: "none" }}
                   aria-label={`Perfil de ${activeChat.otherUser}`}
                 >
                   <img
@@ -489,7 +488,7 @@ const Messenger = () => {
             <Row className="px-0 m-0">
               <div
                 className="flex-grow-1 overflow-auto"
-                style={{ height: "60vh" }}
+                style={{ height: "60vh" }} //no quitar
                 ref={chatboxRef}
                 tabIndex="0"
                 aria-atomic="true"
@@ -512,7 +511,7 @@ const Messenger = () => {
                         marginLeft:
                           message.sender === usuario.username ? "auto" : "0",
                         cursor: "pointer",
-                      }}
+                      }} //no quitar
                       onClick={() => toggleMessage(message.id)}
                     >
                       {/* solo se ejecuta cuando el mensaje es "abierto" */}
@@ -733,7 +732,7 @@ function AddChatModal({
       <Form
         onSubmit={handleSubmit}
         className={`my-2`}
-        style={{ position: "relative" }}
+        style={{ position: "relative" }} //no quitar
       >
         <Modal.Body>
           <FormLabel htmlFor="searchInput">Buscar usuario</FormLabel>
@@ -771,7 +770,7 @@ function AddChatModal({
                 zIndex: 2,
                 border: "1px solid #ccc",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-              }}
+              }} //no quitar
               role="listbox"
               aria-label="Sugerencias de búsqueda"
             >
