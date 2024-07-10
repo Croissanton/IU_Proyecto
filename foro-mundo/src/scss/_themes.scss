@@ -13,32 +13,35 @@
     --bs-secondary-subtle: lighten(var(--bs-secondary), 10%);
 }
 
+
 [data-bs-theme="dark"] {
     --bs-primary: #002561;
     --bs-secondary: #B4DBFC; 
-    --bs-success: darken(var(--bs-success), 50%);
-    --bs-info: darken(var(--bs-info), 50%);
-    --bs-warning: darken(var(--bs-warning), 50%);
-    --bs-danger: darken(var(--bs-danger), 50%);
+    --bs-success: darken(var(--bs-success), 10%);
+    --bs-info: darken(var(--bs-info), 10%);
+    --bs-warning: darken(var(--bs-warning), 10%);
+    --bs-danger: darken(var(--bs-danger), 10%);
     --bs-light: var(--bs-dark);
     --bs-dark: var(--bs-light);
     --bs-white: #000000;
     --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
+
     .header{
         background-color: var(--bs-primary) !important;
         .text-secondary{
             color: var(--bs-secondary) !important;
         }
     }
-    
+
+
+
     .custom-link-container{
         background-color: var(--bs-primary) !important;
         color: var(--bs-light-light) !important;
         &:hover{
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.3);
         }
     }
-   
    
     .dropdown-toggle{
         background-color: var(--bs-primary) !important;
@@ -64,7 +67,7 @@
 
         &.btn-success{
             background-color: #00FF00 !important;
-            color: var(--bs-dark) !important;
+            color: var(--bs-light) !important;
         }
 
         &.btn-danger{
@@ -83,6 +86,31 @@
             color: var(--bs-secondary) !important;
         }
     }
+
+    .custom-disabled-input {
+        background-color: var(--bs-secondary) !important;
+        border: bottom 1px solid var(--bs-secondary) !important;
+        color: #6c757d; // Bootstrap's default text-muted color
+        cursor: default;
+        opacity: 1; // Ensures full opacity despite being disabled
+        padding: 0.375rem 0.75rem; // Bootstrap's default input padding
+        
+        &:disabled {
+          background-color: #ffffff;
+        }
+      
+        &::placeholder {
+          color: #6c757d;
+        }
+      
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+
+
+        
     #search{
         background-color: var(--bs-secondary) !important;
         color: var(--bs-white) !important;
@@ -109,7 +137,7 @@
         color: var(--bs-secondary) !important;
         border: 1px solid var(--bs-secondary-subtle) !important;
         &:hover{
-            background-color: rgba(255, 255, 255, 0.1)
+            background-color: rgba(255, 255, 255, 0.4) !important
         }
     }
 
@@ -390,18 +418,9 @@
 
     .i{
         color: var(--bs-light) !important;
-    }
+    }   
 
     
-    .custom-text-link {
-        color: var(--bs-light) !important;
-        text-decoration: underline;
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-        transition: color 0.3s;
-    }
-
 
     #search, #searchInput {
         background-color: var(--bs-dark) !important;
@@ -519,6 +538,7 @@
 
     // Custom styles for navbar and other components can be added here
 }
+
 
 //override bootstrap variables
 $primary: var(--bs-primary);
