@@ -80,6 +80,23 @@
   background-color: var(--bs-primary) !important;
   color: var(--bs-secondary) !important;
 }
+[data-bs-theme=dark] #addChatButton, [data-bs-theme=dark] #archivedChatsButton {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+  border: 1px solid var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=dark] #addChatButton:hover, [data-bs-theme=dark] #archivedChatsButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+[data-bs-theme=dark] #chatbox, [data-bs-theme=dark] #chatboxHeader {
+  background-color: var(--bs-info) !important;
+}
+[data-bs-theme=dark] #chatbox .border-secondary-subtle, [data-bs-theme=dark] #chatboxHeader .border-secondary-subtle {
+  border-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=dark] #chatbox .bg-secondary-subtle, [data-bs-theme=dark] #chatboxHeader .bg-secondary-subtle {
+  background-color: var(--bs-secondary) !important;
+}
 
 /* Custom CSS for Footer */
 .custom-footer {

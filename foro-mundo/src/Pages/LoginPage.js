@@ -141,6 +141,7 @@ function LoginPage() {
                   }
                 >
                   <button
+                    id="toggle_password_visibility"
                     type="button"
                     className={
                       showPassword
