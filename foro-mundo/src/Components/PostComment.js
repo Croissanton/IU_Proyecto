@@ -141,16 +141,24 @@ const PostComment = ({
     if (postIndex !== -1) {
       const post = posts[postIndex];
       const updatedComments = post.comments.filter((comment) => comment.id !== commentToDelete);
+      
       post.comments = updatedComments;
-      post.res_num = updatedComments.length; // Decrementar el número de comentarios
+      if (post.comments && post.comments.length > 0) {
+        post.lm_author = post.comments[post.comments.length - 1].author;
+        post.lm_date = post.comments[post.comments.length - 1].date;
+      } else {
+        post.lm_author = "";
+        post.lm_date = "";
+      }
+
+      post.res_num = updatedComments.length;
       posts[postIndex] = post;
       localStorage.setItem("posts", JSON.stringify(posts));
+
       setShowDeleteCommentModal(false);
       showToast("Comentario eliminado", "bg-danger");
       navigate(`/post/${postId}`);
-      if (onDelete) {
-        onDelete(commentToDelete); // Notificar la eliminación del comentario si existe la función onDelete
-      }
+      if (onDelete) onDelete(commentToDelete);
     }
   };
 
