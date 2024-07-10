@@ -417,6 +417,71 @@
     }
 }
 
+[data-bs-theme="dyslexia-friendly"] {
+    --bs-body-font-family: 'OpenDyslexic', 'Comic Sans MS', 'Verdana', sans-serif;
+    --bs-body-font-size: 1.2rem;
+    --bs-body-line-height: 1.6;
+    --bs-body-color: #000000;
+    --bs-body-bg: #FFFAF0; // Soft cream background
+
+    --bs-primary: #3498db;
+    --bs-secondary: #2c3e50;
+    --bs-success: #27ae60;
+    --bs-info: #2980b9;
+    --bs-warning: #f39c12;
+    --bs-danger: #c0392b;
+    --bs-light: #ecf0f1;
+    --bs-dark: #34495e;
+
+    // Increase spacing
+    --bs-spacer: 1.5rem;
+
+    // Custom styles for better readability
+    p, li, dt, dd, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: var(--bs-spacer);
+    }
+
+    // Increase contrast for links
+    a {
+        color: #0000FF;
+        text-decoration: underline;
+
+        &:hover, &:focus {
+            color: #000080;
+        }
+    }
+
+    // Add more spacing between lines in larger text blocks
+    p, li {
+        margin-bottom: calc(var(--bs-spacer) * 1.5);
+    }
+
+    // Increase contrast for buttons
+    .btn {
+        font-weight: bold;
+        border-width: 2px;
+    }
+
+    // Improve form field readability
+    .form-control {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    // Improve table readability
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 0.5rem;
+
+        th, td {
+            border: 1px solid #000;
+            padding: 0.75rem;
+        }
+    }
+
+    // Custom styles for navbar and other components can be added here
+}
+
 //override bootstrap variables
 $primary: var(--bs-primary);
 $secondary: var(--bs-secondary);

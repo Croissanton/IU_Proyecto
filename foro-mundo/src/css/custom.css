@@ -339,6 +339,52 @@
   background-color: var(--bs-secondary-subtle) !important;
 }
 
+[data-bs-theme=dyslexia-friendly] {
+  --bs-body-font-family: "OpenDyslexic", "Comic Sans MS", "Verdana", sans-serif;
+  --bs-body-font-size: 1.2rem;
+  --bs-body-line-height: 1.6;
+  --bs-body-color: #000000;
+  --bs-body-bg: #FFFAF0;
+  --bs-primary: #3498db;
+  --bs-secondary: #2c3e50;
+  --bs-success: #27ae60;
+  --bs-info: #2980b9;
+  --bs-warning: #f39c12;
+  --bs-danger: #c0392b;
+  --bs-light: #ecf0f1;
+  --bs-dark: #34495e;
+  --bs-spacer: 1.5rem;
+}
+[data-bs-theme=dyslexia-friendly] p, [data-bs-theme=dyslexia-friendly] li, [data-bs-theme=dyslexia-friendly] dt, [data-bs-theme=dyslexia-friendly] dd, [data-bs-theme=dyslexia-friendly] h1, [data-bs-theme=dyslexia-friendly] .h1, [data-bs-theme=dyslexia-friendly] h2, [data-bs-theme=dyslexia-friendly] .h2, [data-bs-theme=dyslexia-friendly] h3, [data-bs-theme=dyslexia-friendly] .h3, [data-bs-theme=dyslexia-friendly] h4, [data-bs-theme=dyslexia-friendly] .h4, [data-bs-theme=dyslexia-friendly] h5, [data-bs-theme=dyslexia-friendly] .h5, [data-bs-theme=dyslexia-friendly] h6, [data-bs-theme=dyslexia-friendly] .h6 {
+  margin-bottom: var(--bs-spacer);
+}
+[data-bs-theme=dyslexia-friendly] a {
+  color: #0000FF;
+  text-decoration: underline;
+}
+[data-bs-theme=dyslexia-friendly] a:hover, [data-bs-theme=dyslexia-friendly] a:focus {
+  color: #000080;
+}
+[data-bs-theme=dyslexia-friendly] p, [data-bs-theme=dyslexia-friendly] li {
+  margin-bottom: calc(var(--bs-spacer) * 1.5);
+}
+[data-bs-theme=dyslexia-friendly] .btn {
+  font-weight: bold;
+  border-width: 2px;
+}
+[data-bs-theme=dyslexia-friendly] .form-control {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+[data-bs-theme=dyslexia-friendly] .table {
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+[data-bs-theme=dyslexia-friendly] .table th, [data-bs-theme=dyslexia-friendly] .table td {
+  border: 1px solid #000;
+  padding: 0.75rem;
+}
+
 /* Custom CSS for Footer */
 .custom-footer {
   background-color: var(--bs-primary); /* Bootstrap primary background color */

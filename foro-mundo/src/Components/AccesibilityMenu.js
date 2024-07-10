@@ -25,6 +25,11 @@ const AccessibilityMenu = () => {
     document.querySelector('body').setAttribute('data-bs-theme', 'low-contrast');
     localStorage.setItem('selectedTheme', 'low-contrast');
   };
+
+  const setAccesibilityFont = () => {
+    document.querySelector('body').setAttribute('data-bs-theme', 'dyslexia-friendly');
+    localStorage.setItem('selectedTheme', 'dyslexia-friendly');
+  };
   
 
   const AccessibilityOptions = () => (
@@ -43,8 +48,8 @@ const AccessibilityMenu = () => {
       <Dropdown.Item href="#/action-5" className="py-2">
         <i className="bi bi-dash-circle me-2"></i> Reducir texto
       </Dropdown.Item>
-      <Dropdown.Item href="#/action-6" className="py-2">
-        <i className="bi bi-alphabet-uppercase me-2"></i> Fuente para accesibilidad
+      <Dropdown.Item onClick={setAccesibilityFont} className="py-2">
+        <i className="bi bi-alphabet-uppercase me-2"></i> Fuente accesible
       </Dropdown.Item>
     </>
   );
