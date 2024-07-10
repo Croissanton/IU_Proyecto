@@ -785,7 +785,18 @@ function AddChatModal({
                   className="p-2 border border-bottom-1 bg-white custom-list-item"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
-                  <Container>
+                  <Container
+                    tabIndex="0"
+                    role="button"
+                    className="p-2 border border-bottom-1 custom-list-item"
+                    aria-label={`Seleccionar a ${suggestion.username}`}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        handleSuggestionClick(suggestion);
+                      }
+                    }}
+                  >
                     <span>{suggestion.username}</span>
                     <br />
                     <Form.Text muted>
