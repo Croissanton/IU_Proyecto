@@ -252,6 +252,15 @@ const Header = forwardRef((props, ref) => {
                     className="bg-secondary-subtle w-100 position-absolute z-2 border-1 shadow"
                     role="listbox"
                     aria-label="Sugerencias de búsqueda"
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: "100%",
+                      zIndex: 2,
+                      border: "1px solid #ccc",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                    }} //no quitar
                   >
                     {suggestions.map((suggestion, index) => (
                       <div

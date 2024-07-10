@@ -762,6 +762,10 @@ function AddChatModal({
           )}
           {showSuggestions && inputValue && suggestions.length > 0 && (
             <div
+              id="search_suggestions"
+              className="bg-secondary-subtle w-100 position-absolute z-2 border-1 shadow"
+              role="listbox"
+              aria-label="Sugerencias de búsqueda"
               style={{
                 position: "absolute",
                 left: 0,
@@ -771,8 +775,6 @@ function AddChatModal({
                 border: "1px solid #ccc",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
               }} //no quitar
-              role="listbox"
-              aria-label="Sugerencias de búsqueda"
             >
               {suggestions.map((suggestion) => (
                 <div
