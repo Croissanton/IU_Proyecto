@@ -32,7 +32,6 @@ const Messenger = () => {
     }
     return (
       <small className="text-muted">
-        {" "}
         {"Última conexión: " +
           new Date(usuario.lastDisconnection).toLocaleString()}{" "}
       </small>
@@ -155,9 +154,8 @@ const Messenger = () => {
   const [showAddChatModal, setShowAddChatModal] = useState(false);
   const { showToast } = useToast();
 
-  const addChat = () => {
+  const addChat = (newChatUser) => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
-    const newChatUser = modalInputValue;
 
     if (!currentUser || !newChatUser) {
       console.error("Current user or new chat user is not defined");
@@ -167,14 +165,6 @@ const Messenger = () => {
     const conversationKey = `${currentUser.username}@${newChatUser}`;
 
     const existingMessages = JSON.parse(localStorage.getItem("messages")) || {};
-
-    if (
-      existingMessages.hasOwnProperty(conversationKey) ||
-      existingMessages.hasOwnProperty(`${newChatUser}@${currentUser.username}`)
-    ) {
-      console.warn("This chat already exists");
-      return;
-    }
 
     const updatedMessages = {
       ...existingMessages,
@@ -207,8 +197,8 @@ const Messenger = () => {
     setModalInputValue("");
   };
 
-  const handleConfirmAddChatModal = () => {
-    addChat();
+  const handleConfirmAddChatModal = (newChatUser) => {
+    addChat(newChatUser);
     setShowAddChatModal(false);
     showToast("El chat se ha añadido correctamente.", "bg-success");
     setModalInputValue("");
@@ -228,6 +218,14 @@ const Messenger = () => {
       year: "numeric",
       month: "short",
       day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const formatTimeStampOnlyHour = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString(undefined, {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -367,10 +365,10 @@ const Messenger = () => {
       {/* lista de chats */}
       <Col md={3}>
         <ListGroup>
-          <ListGroup.Item className="border-0 mx-0 px-0">
+          <ListGroup.Item className="border-0 mx-0 px-0 bg-transparent">
             <button
               id="addChatButton"
-              className="d-flex align-items-center w-100 text-dark rounded py-2 px-3 custom-button"
+              className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
               onClick={() => setShowAddChatModal(true)}
               style={{ cursor: "pointer" }}
             >
@@ -378,7 +376,7 @@ const Messenger = () => {
               <span>Añadir nuevo chat</span>
             </button>
           </ListGroup.Item>
-          <ListGroup.Item className="border-0 mx-0 px-0">
+          <ListGroup.Item className="border-0 mx-0 px-0 bg-transparent">
             <button
               id="archivedChatsButton"
               className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
@@ -393,7 +391,7 @@ const Messenger = () => {
             .filter((convo) => !convo.archived)
             .map((convo) => (
               <ListGroup.Item
-                className="border-0  mx-0 px-0"
+                className="border-0  mx-0 px-0 bg-transparent"
                 key={convo.conversationKey}
               >
                 <button
@@ -415,12 +413,12 @@ const Messenger = () => {
                       getProfilePicture(convo.otherUser) ||
                       "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                     }
-                    alt="Perfil"
+                    className="me-2 rounded-5 border"
+                    alt="Foto de perfil del usuario"
                     width="30"
                     height="30"
-                    style={{ marginRight: "10px", borderRadius: "50%" }}
                   />
-                  {convo.otherUser}
+                  <span className="text-break">{convo.otherUser}</span>
                 </button>
               </ListGroup.Item>
             ))}
@@ -430,142 +428,155 @@ const Messenger = () => {
       <Col
         id="chatbox"
         md={9}
-        className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded p-0"
+        className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded m-0 p-0"
       >
         {activeChat ? (
           <>
             {/* header de chatbox y el boton de archivar */}
-            <div
+            <Row
               id="chatboxHeader"
-              className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center"
+              className="p-3 m-0 border-bottom border-secondary-subtle"
             >
-              <div className="d-flex align-items-center">
-                <img
-                  src={
-                    getProfilePicture(activeChat.otherUser) ||
-                    "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
-                  }
-                  alt="Perfil"
-                  width="30"
-                  height="30"
-                  style={{ marginRight: "10px", borderRadius: "50%" }}
-                />
+              <Col className="d-flex align-content-center justify-content-start text-center p-1">
                 <NavLink
-                  className="d-inline-flex align-items-center custom-icon"
+                  className="d-inline-flex align-items-center custom-icon text-decoration-none text-reset"
                   to={`/perfil/${activeChat.otherUser}`}
-                  style={{ color: "inherit", textDecoration: "none" }}
                   aria-label={`Perfil de ${activeChat.otherUser}`}
                 >
+                  <img
+                    src={
+                      getProfilePicture(activeChat.otherUser) ||
+                      "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
+                    }
+                    className="me-2 rounded-5 border"
+                    width="40"
+                    height="40"
+                    alt="Foto de perfil del usuario"
+                  />
                   <span className="h2 m-0 ps-2 custom-text-link">
                     {activeChat.otherUser}
                   </span>
                 </NavLink>
-              </div>
-              {ShowConnectionStatus(activeChat.otherUser)}
-
-              {activeChat.archived ? (
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  onClick={() => unArchiveChat(activeChat.conversationKey)}
-                >
-                  <i className="bi bi-archive-fill me-2"></i>
-                  Desarchivar
-                </Button>
-              ) : (
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  onClick={() => archiveChat(activeChat.conversationKey)}
-                >
-                  <i className="bi bi-archive me-2"></i>
-                  Archivar
-                </Button>
-              )}
-            </div>
+              </Col>
+              <Col className="d-flex align-content-center justify-content-center text-center p-1">
+                {ShowConnectionStatus(activeChat.otherUser)}
+              </Col>
+              <Col className="d-flex align-content-center justify-content-end p-1">
+                {activeChat.archived ? (
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    onClick={() => unArchiveChat(activeChat.conversationKey)}
+                  >
+                    <i className="bi bi-archive-fill mx-1"></i>
+                    <span className="mx-1">Desarchivar</span>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    onClick={() => archiveChat(activeChat.conversationKey)}
+                  >
+                    <i className="bi bi-archive mx-1"></i>
+                    <span className="mx-1">Archivar</span>
+                  </Button>
+                )}
+              </Col>
+            </Row>
 
             {/* mensajes */}
-            <div
-              className="flex-grow-1 overflow-auto p-3"
-              style={{ height: "60vh" }}
-              ref={chatboxRef}
-              tabIndex="0"
-              aria-atomic="true"
-              aria-live="polite"
-            >
-              {/* solo se ejecuta si hay chat selecionado y se puede leer mensajes */}
-              {activeChat &&
-                messages[activeChat.conversationKey] &&
-                messages[activeChat.conversationKey].map((message) => (
-                  <div
-                    key={message.id}
-                    className={`my-2 p-2 rounded border border-secondary-subtle ${
-                      message.sender === usuario.username
-                        ? "bg-primary text-secondary align-self-end"
-                        : "bg-light text-dark align-self-start"
-                    }`}
-                    style={{
-                      width: "fit-content",
-                      maxWidth: "80%",
-                      marginLeft:
-                        message.sender === usuario.username ? "auto" : "0",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => toggleMessage(message.id)}
+            <Row className="px-0 m-0">
+              <div
+                className="flex-grow-1 overflow-auto"
+                style={{ height: "60vh" }} //no quitar
+                ref={chatboxRef}
+                tabIndex="0"
+                aria-atomic="true"
+                aria-live="polite"
+              >
+                {/* solo se ejecuta si hay chat selecionado y se puede leer mensajes */}
+                {activeChat &&
+                  messages[activeChat.conversationKey] &&
+                  messages[activeChat.conversationKey].map((message) => (
+                    <div
+                      key={message.id}
+                      className={`my-2 p-2 rounded border border-secondary-subtle ${
+                        message.sender === usuario.username
+                          ? "bg-primary text-secondary align-self-end"
+                          : "bg-light text-dark align-self-start"
+                      }`}
+                      style={{
+                        width: "fit-content",
+                        maxWidth: "80%",
+                        marginLeft:
+                          message.sender === usuario.username ? "auto" : "0",
+                        cursor: "pointer",
+                      }} //no quitar
+                      onClick={() => toggleMessage(message.id)}
+                    >
+                      {/* solo se ejecuta cuando el mensaje es "abierto" */}
+                      {expandedMessages[message.id] && (
+                        <div
+                          id="expandedmsg"
+                          className="d-flex justify-content-between align-items-center mb-1"
+                        >
+                          {/* timestamp */}
+                          <small className="text-dark">
+                            {formatTimestamp(message.timestamp)}
+                          </small>
+                          {message.sender === usuario.username && (
+                            <Button
+                              id="deleteMessageButton"
+                              className="me-2"
+                              variant="danger"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setMessageToDelete(message.id);
+                                setShowDeleteMessageModal(true);
+                              }}
+                              aria-label="Eliminar mensaje"
+                            >
+                              <i className="bi bi-trash"></i>
+                              <span>Borrar mensaje</span>
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                      {/* el text de mensaje */}
+                      {!expandedMessages[message.id] && (
+                        <div className="d-flex justify-content-between align-items-center mb-1">
+                          <small className="text-dark">
+                            {formatTimeStampOnlyHour(message.timestamp)}
+                          </small>
+                        </div>
+                      )}
+                      <span>{message.text}</span>
+                    </div>
+                  ))}
+              </div>
+            </Row>
+            <Row className="p-3 m-0 border-top border-secondary-subtle">
+              <Form className="p-0 m-0">
+                <InputGroup>
+                  <FormControl
+                    className="border-secondary-subtle"
+                    type="text"
+                    value={chatInputValue}
+                    onChange={handleChatInputChange}
+                    onKeyDown={handleKeyDown}
+                    aria-label="Esribe tu mensaje aqui."
+                  />
+                  <Button
+                    className="border-secondary-subtle"
+                    onClick={handleSendMessage}
+                    variant="primary"
                   >
-                    {/* solo se ejecuta cuando el mensaje es "abierto" */}
-                    {expandedMessages[message.id] && (
-                      <div
-                        id="expandedmsg"
-                        className="d-flex justify-content-between align-items-center mb-1"
-                      >
-                        {message.sender === usuario.username && (
-                          <Button
-                            id="deleteMessageButton"
-                            className="me-2"
-                            variant="danger"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setMessageToDelete(message.id);
-                              setShowDeleteMessageModal(true);
-                            }}
-                            aria-label="Eliminar mensaje"
-                          >
-                            <i className="bi bi-trash"></i>
-                            <span>Borrar mensaje</span>
-                          </Button>
-                        )}
-                        {/* timestamp */}
-                        <small className="text-dark">
-                          {formatTimestamp(message.timestamp)}
-                        </small>
-                      </div>
-                    )}
-                    {/* el text de mensaje */}
-                    <span>{message.text}</span>
-                  </div>
-                ))}
-            </div>
-            <Form className="p-3 border-top border-secondary-subtle">
-              <InputGroup>
-                <FormControl
-                  className="border-secondary-subtle"
-                  type="text"
-                  value={chatInputValue}
-                  onChange={handleChatInputChange}
-                  onKeyDown={handleKeyDown}
-                  aria-label="Esribe tu mensaje aqui."
-                />
-                <Button
-                  className="border-secondary-subtle"
-                  onClick={handleSendMessage}
-                  variant="primary"
-                >
-                  Enviar
-                </Button>
-              </InputGroup>
-            </Form>
+                    Enviar
+                  </Button>
+                </InputGroup>
+              </Form>
+            </Row>
           </>
         ) : (
           <div className="d-flex justify-content-center align-items-center h-100">
@@ -644,27 +655,63 @@ function AddChatModal({
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const checkChatExists = (newChatUser) => {
+  const isUserBlocked = (username) => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
-    if (!currentUser) return false;
+    const blockedUsers = currentUser.blockList || [];
+    return blockedUsers.includes(username);
+  };
+
+  const checkUserValidity = (newChatUser) => {
+    const currentUser = JSON.parse(localStorage.getItem("usuario"));
+    if (!currentUser)
+      return {
+        valid: false,
+        message: "No se pudo encontrar el usuario actual.",
+      };
+
+    if (newChatUser === currentUser.username) {
+      return {
+        valid: false,
+        message: "No puedes iniciar un chat contigo mismo.",
+      };
+    }
+
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const userExists = usuarios.some((user) => user.username === newChatUser);
+    if (!userExists) {
+      return { valid: false, message: "El usuario no existe." };
+    }
+
+    // Check if the user is blocked (you'll need to implement this logic)
+    if (isUserBlocked(newChatUser)) {
+      return {
+        valid: false,
+        message: "No puedes iniciar un chat con un usuario bloqueado.",
+      };
+    }
 
     const existingMessages = JSON.parse(localStorage.getItem("messages")) || {};
     const conversationKey1 = `${currentUser.username}@${newChatUser}`;
     const conversationKey2 = `${newChatUser}@${currentUser.username}`;
 
-    return (
+    if (
       existingMessages.hasOwnProperty(conversationKey1) ||
       existingMessages.hasOwnProperty(conversationKey2)
-    );
+    ) {
+      return { valid: false, message: "Este chat ya existe." };
+    }
+
+    return { valid: true, message: "" };
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (checkChatExists(inputValue)) {
-      setErrorMessage("Este chat ya existe.");
+    const validityCheck = checkUserValidity(inputValue);
+    if (!validityCheck.valid) {
+      setErrorMessage(validityCheck.message);
     } else {
       setErrorMessage("");
-      handleConfirm();
+      handleConfirm(inputValue);
     }
   };
 
@@ -685,7 +732,7 @@ function AddChatModal({
       <Form
         onSubmit={handleSubmit}
         className={`my-2`}
-        style={{ position: "relative" }}
+        style={{ position: "relative" }} //no quitar
       >
         <Modal.Body>
           <FormLabel htmlFor="searchInput">Buscar usuario</FormLabel>
@@ -715,7 +762,6 @@ function AddChatModal({
           )}
           {showSuggestions && inputValue && suggestions.length > 0 && (
             <div
-              className="bg-secondary-subtle"
               style={{
                 position: "absolute",
                 left: 0,
@@ -724,7 +770,7 @@ function AddChatModal({
                 zIndex: 2,
                 border: "1px solid #ccc",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-              }}
+              }} //no quitar
               role="listbox"
               aria-label="Sugerencias de búsqueda"
             >
@@ -734,7 +780,7 @@ function AddChatModal({
                   role="option"
                   tabIndex="0"
                   aria-selected={inputValue === suggestion.username}
-                  className="p-2 border border-bottom-1 custom-list-item"
+                  className="p-2 border border-bottom-1 bg-white custom-list-item"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   <Container>

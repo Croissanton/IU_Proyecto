@@ -143,7 +143,7 @@ function ProfilePage() {
                     ? profileData.profilePicture
                     : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                 }
-                alt="imagen del perfil"
+                alt="Foto de perfil"
                 className="m-0 p-0 shadow"
               />
             </Row>
@@ -155,7 +155,7 @@ function ProfilePage() {
                 onChange={handleImageSelection}
               />
               {isEditing && (
-                <Row className="my-2">
+                <Row className="my-2 mx-0 px-0">
                   <Col className="d-flex align-items-center justify-content-center">
                     <button
                       type="button"

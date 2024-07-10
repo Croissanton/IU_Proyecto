@@ -38,7 +38,9 @@ const PostComment = ({
     const allUsers = JSON.parse(localStorage.getItem("usuarios")) || [];
     const authorData = allUsers.find((user) => user.username === author);
     if (authorData) {
-      setAuthorProfilePicture(authorData.profilePicture || "https://via.placeholder.com/150");
+      setAuthorProfilePicture(
+        authorData.profilePicture || "https://via.placeholder.com/150"
+      );
     }
   }, [author]);
 
@@ -77,7 +79,8 @@ const PostComment = ({
     }
 
     post.comments = comments;
-    posts[posts.findIndex((post) => post.id.toString() === postId.toString())] = post;
+    posts[posts.findIndex((post) => post.id.toString() === postId.toString())] =
+      post;
     localStorage.setItem("posts", JSON.stringify(posts));
   };
 
@@ -89,11 +92,15 @@ const PostComment = ({
       if (userVote === "upvote") {
         newUpvotes = Math.max(newUpvotes - 1, 0);
         setUserVote(null);
-        usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+        usuario.upComments = usuario.upComments.filter(
+          (commentId) => commentId !== id
+        );
       } else {
         if (userVote === "downvote") {
           newDownvotes = Math.max(newDownvotes - 1, 0);
-          usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+          usuario.downComments = usuario.downComments.filter(
+            (commentId) => commentId !== id
+          );
         }
         newUpvotes += 1;
         setUserVote("upvote");
@@ -103,11 +110,15 @@ const PostComment = ({
       if (userVote === "downvote") {
         newDownvotes = Math.max(newDownvotes - 1, 0);
         setUserVote(null);
-        usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+        usuario.downComments = usuario.downComments.filter(
+          (commentId) => commentId !== id
+        );
       } else {
         if (userVote === "upvote") {
           newUpvotes = Math.max(newUpvotes - 1, 0);
-          usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+          usuario.upComments = usuario.upComments.filter(
+            (commentId) => commentId !== id
+          );
         }
         newDownvotes += 1;
         setUserVote("downvote");
@@ -136,12 +147,16 @@ const PostComment = ({
 
   const handleConfirmDeleteComment = () => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const postIndex = posts.findIndex((post) => post.id.toString() === postId.toString());
+    const postIndex = posts.findIndex(
+      (post) => post.id.toString() === postId.toString()
+    );
 
     if (postIndex !== -1) {
       const post = posts[postIndex];
-      const updatedComments = post.comments.filter((comment) => comment.id !== commentToDelete);
-      
+      const updatedComments = post.comments.filter(
+        (comment) => comment.id !== commentToDelete
+      );
+
       post.comments = updatedComments;
       if (post.comments && post.comments.length > 0) {
         post.lm_author = post.comments[post.comments.length - 1].author;
@@ -163,12 +178,24 @@ const PostComment = ({
   };
 
   return (
-    <Row className="gy-3">
-      <Col className="p-3 m-auto">
-        <Container id="comment-container" className="border border-dark-subtle bg-light" role="region" aria-labelledby="comment-title">
+    <Container fluid className="mx-0 px-0 my-3">
+      <Col>
+        <Container
+          id="comment-container"
+          className="border border-dark-subtle bg-light"
+          role="region"
+          aria-labelledby="comment-title"
+        >
           <Row>
-            <Col className="border-end border-dark-subtle p-3">
-              <p id="comment-title" style={{ whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>
+            <Col className="p-3">
+              <p
+                id="comment-title"
+                style={{
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
+                  overflowWrap: "break-word",
+                }}
+              >
                 {title}
               </p>
             </Col>
@@ -213,7 +240,7 @@ const PostComment = ({
                     <Col>
                       <img
                         src={authorProfilePicture}
-                        alt="author profile"
+                        alt="Foto de perfil del autor"
                         width="30"
                         height="30"
                         style={{ marginRight: "10px", borderRadius: "50%" }}
@@ -232,29 +259,31 @@ const PostComment = ({
                     <p>{new Date(date).toLocaleString()}</p>
                   </Row>
                 </Col>
-                <Col className="text-center text-light">
-                  {usuario && usuario.username === author && (
-                    <div>
-                      <Button aria-label="Eliminar" className="btn btn-danger" onClick={() => handleDeleteComment(id)}>
-                        <i className="bi bi-trash"></i>
-                        <span>Eliminar</span>
-                      </Button>
-                      <ConfirmationModal
-                        show={showDeleteCommentModal}
-                        handleClose={handleCancelDelete}
-                        handleConfirm={handleConfirmDeleteComment}
-                        title="Eliminar comentario"
-                        message="¿Estás seguro de que deseas eliminar este comentario?"
-                      />
-                    </div>
-                  )}
-                </Col>
+                {usuario && usuario.username === author && (
+                  <Col className="text-center text-light">
+                    <Button
+                      aria-label="Eliminar"
+                      className="btn btn-danger"
+                      onClick={() => handleDeleteComment(id)}
+                    >
+                      <i className="bi bi-trash"></i>
+                      <span>Eliminar</span>
+                    </Button>
+                    <ConfirmationModal
+                      show={showDeleteCommentModal}
+                      handleClose={handleCancelDelete}
+                      handleConfirm={handleConfirmDeleteComment}
+                      title="Eliminar comentario"
+                      message="¿Estás seguro de que deseas eliminar este comentario?"
+                    />
+                  </Col>
+                )}
               </Row>
             </Col>
           </Row>
         </Container>
       </Col>
-    </Row>
+    </Container>
   );
 };
 

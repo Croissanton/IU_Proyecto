@@ -216,37 +216,60 @@ const Header = forwardRef((props, ref) => {
             <div></div> {/* Placeholder for left alignment */}
             <Form
               onSubmit={handleSubmit}
-              className={`d-flex my-2 ${
+              className={`d-flex my-2 position-relative ${
                 expanded || isCollapsing ? "" : "w-50"
               }`}
-              style={{ position: "relative" }}
               aria-label="Barra de búsqueda"
             >
-              <FormLabel htmlFor="searchInput" className="visually-hidden">
-                Buscar
-              </FormLabel>
-              <FormControl
-                title="Buscar"
-                id="searchInput"
-                type="search"
-                className="me-2"
-                aria-label="Buscar"
-                value={inputValue}
-                onChange={handleInputChange}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setShowSuggestions(false);
-                  }, 200);
-                }}
-                onFocus={() => {
-                  if (inputValue && suggestions.length > 0) {
-                    setShowSuggestions(true);
-                  }
-                }}
-                required
-                autoComplete="off"
-                
-              />
+              <Container>
+                <FormLabel htmlFor="searchInput" className="visually-hidden">
+                  Buscar
+                </FormLabel>
+                <FormControl
+                  title="Buscar"
+                  id="searchInput"
+                  type="search"
+                  className="me-2"
+                  aria-label="Buscar"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onBlur={() => {
+                    setTimeout(() => {
+                      setShowSuggestions(false);
+                    }, 200);
+                  }}
+                  onFocus={() => {
+                    if (inputValue && suggestions.length > 0) {
+                      setShowSuggestions(true);
+                    }
+                  }}
+                  required
+                  autoComplete="off"
+                />
+                {showSuggestions && inputValue && suggestions.length > 0 && (
+                  <div
+                    id="search_suggestions"
+                    className="bg-secondary-subtle w-100 position-absolute z-2 border-1 shadow"
+                    role="listbox"
+                    aria-label="Sugerencias de búsqueda"
+                  >
+                    {suggestions.map((suggestion, index) => (
+                      <div
+                        key={index}
+                        role="option"
+                        tabIndex="0"
+                        aria-selected={inputValue === suggestion.username}
+                        className="p-1"
+                        onClick={() => handleSuggestionClick(suggestion)}
+                      >
+                        <strong>{suggestion.label}</strong>
+                        <span>{suggestion.display}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Container>
+
               <Button
                 className="d-flex"
                 variant="outline-secondary"
@@ -254,40 +277,11 @@ const Header = forwardRef((props, ref) => {
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
-                <span id="search" className="me-1">Buscar</span>
+                <span id="search" className="me-1">
+                  Buscar
+                </span>
                 <i className="bi bi-search"></i>
               </Button>
-              {showSuggestions && inputValue && suggestions.length > 0 && (
-                <div
-                  id="search_suggestions"
-                  className="bg-secondary-subtle w-100"
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: "100%",
-                    zIndex: 2,
-                    border: "1px solid #ccc",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-                  }}
-                  role="listbox"
-                  aria-label="Sugerencias de búsqueda"
-                >
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={index}
-                      role="option"
-                      tabIndex="0"
-                      aria-selected={inputValue === suggestion.username}
-                      style={{ padding: "10px", cursor: "likePointer" }}
-                      onClick={() => handleSuggestionClick(suggestion)}
-                    >
-                      <strong>{suggestion.label}</strong>
-                      <span>{suggestion.display}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
             </Form>
             <Nav className="d-flex align-items-center justify-content-center h-100">
               {usuario !== undefined && (
@@ -339,7 +333,7 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                 </>
               )}
-              <AccessibilityMenu />                   
+              <AccessibilityMenu />
 
               <OverlayTrigger
                 placement="bottom"
@@ -351,7 +345,9 @@ const Header = forwardRef((props, ref) => {
                   to="/ayuda"
                   aria-label="Ayuda"
                 >
-                  {isMobile && <span className="text-secondary me-2">Ayuda</span>}
+                  {isMobile && (
+                    <span className="text-secondary me-2">Ayuda</span>
+                  )}
                   <i className="bi bi-question-circle custom-icon"></i>
                   <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>

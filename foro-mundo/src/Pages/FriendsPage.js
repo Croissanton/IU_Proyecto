@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb, Row, Container, Col } from "react-bootstrap";
+import { Breadcrumb, Row, Container, Col, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import ConfirmationModal from "../Components/ConfirmationModal";
@@ -11,6 +11,7 @@ function FriendsPage() {
 
   const [showRemoveFriendModal, setShowRemoveFriendModal] = useState(false);
   const [usernameToRemove, setUsernameToRemove] = useState("");
+  const [incomingRequestsCount, setIncomingRequestsCount] = useState(0);
 
   useEffect(() => {
     document.title = "Amigos";
@@ -23,6 +24,7 @@ function FriendsPage() {
         usuario.friendList.includes(user.username)
       );
       setFriends(amigos);
+      setIncomingRequestsCount(usuario.incomingRequests?.length || 0);
     }
   }, []);
 
@@ -117,8 +119,11 @@ function FriendsPage() {
             <Row className="justify-content-center text-center">
               <Col>
                 <Link to="/peticiones">
-                  <button className="btn btn-secondary m-2">
-                    Peticiones de Amistad
+                  <button className="btn btn-secondary m-2 mb-3">
+                    Peticiones de Amistad{" "}
+                    {incomingRequestsCount > 0 && (
+                      <Badge bg="danger">{incomingRequestsCount}</Badge>
+                    )}
                   </button>
                 </Link>
               </Col>
