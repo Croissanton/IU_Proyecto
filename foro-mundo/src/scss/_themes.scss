@@ -14,7 +14,6 @@
 }
 
 
-
 [data-bs-theme="dark"] {
     --bs-primary: #002561;
     --bs-secondary: #B4DBFC; 
@@ -33,6 +32,8 @@
             color: var(--bs-secondary) !important;
         }
     }
+
+
 
     .custom-link-container{
         background-color: var(--bs-primary) !important;
@@ -66,7 +67,7 @@
 
         &.btn-success{
             background-color: #00FF00 !important;
-            color: var(--bs-dark) !important;
+            color: var(--bs-light) !important;
         }
 
         &.btn-danger{

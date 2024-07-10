@@ -105,17 +105,18 @@ function RequestsPage() {
           </label>
         ) : (
           requests.map((user) => (
-            <div key={user.username} className="card mb-3">
+            <div key={user.username} className="card mb-3 bg-light">
               <div className="card-body">
                 <Link to={`/perfil/${user.username}`} 
                 style={{ 
                   fontSize: "1.5rem",
                   textDecoration: 'none',
-                  color: 'black'
+                  color: '#002561',
                   }}>
                   {user.username}
                 </Link>
                 <button
+                  id="rejectRequest"
                   className="btn btn-danger"
                   onClick={() => handleRejectRequest(user.username)}
                   style={{ margin: "5px", float: "right" }}
@@ -123,9 +124,10 @@ function RequestsPage() {
                   Rechazar
                 </button>
                 <button
+                  id="acceptRequest"
                   className="btn btn-success"
                   onClick={() => handleAcceptRequest(user.username)}
-                  style={{ margin: "5px", float: "right" }}
+                  style={{ margin: "5px", float: "right", color: "black"}}
                 >
                   Aceptar
                 </button>
