@@ -27,69 +27,69 @@
     --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
 
     .header{
-        background-color: var(--bs-primary) !important;
+        background-color: var(--bs-primary);
         .text-secondary{
-            color: var(--bs-secondary) !important;
+            color: var(--bs-secondary);
         }
     }
 
 
 
     .custom-link-container{
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-light-light) !important;
+        background-color: var(--bs-primary);
+        color: var(--bs-light-light);
         &:hover{
             background-color: rgba(255, 255, 255, 0.3);
         }
     }
    
     .dropdown-toggle{
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-secondary) !important;
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
     }
     .custom-breadcrumb{
         &:hover{
-            color: var(--bs-secondary) !important;
+            color: var(--bs-secondary);
         }
     }
 
     .btn-outline-secondary{
-        color: var(--bs-secondary) !important;
-        border-color: var(--bs-secondary) !important;
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary);
     }
     .btn{
-        background-color: var(--bs-secondary) !important;
-        color: var(--bs-primary) !important;
+        background-color: var(--bs-secondary);
+        color: var(--bs-primary);
         &.btn-primary{
-            background-color: var(--bs-secondary) !important;
-            color: var(--bs-primary) !important;
+            background-color: var(--bs-secondary);
+            color: var(--bs-primary);
         }
 
         &.btn-success{
-            background-color: #00FF00 !important;
-            color: var(--bs-light) !important;
+            background-color: #00FF00;
+            color: var(--bs-light);
         }
 
         &.btn-danger{
-            background-color: #FF0000 !important;
-            color: var(--bs-light) !important;
+            background-color: #FF0000;
+            color: var(--bs-light);
         }
     }
 
     .password-strength-meter{
-        background-color: transparent !important;
-        color: var(--bs-secondary) !important;
+        background-color: transparent;
+        color: var(--bs-secondary);
     }
     .search-suggestions{
         .bg-white{
-            background-color: var(--bs-primary) !important;
-            color: var(--bs-secondary) !important;
+            background-color: var(--bs-primary);
+            color: var(--bs-secondary);
         }
     }
 
     .custom-disabled-input {
-        background-color: var(--bs-secondary) !important;
-        border: bottom 1px solid var(--bs-secondary) !important;
+        background-color: var(--bs-secondary);
+        border: bottom 1px solid var(--bs-secondary);
         color: #6c757d; // Bootstrap's default text-muted color
         cursor: default;
         opacity: 1; // Ensures full opacity despite being disabled
@@ -110,57 +110,74 @@
       }
 
       .toastBody{
-        color: var(--bs-dark) !important;
+        color: var(--bs-dark);
       }
 
 
         
     #search, #searchInput{
-        background-color: var(--bs-secondary) !important;
-        color: var(--bs-white) !important;
-        outline: var(--bs-secondary) !important;
+        background-color: var(--bs-secondary);
+        color: var(--bs-white);
+        outline: var(--bs-secondary);
     
     }
     #searchInput{
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-light-light) !important;
+        background-color: var(--bs-primary);
+        color: var(--bs-light-light);
     }
     #accessibility-button{
-        background-color: transparent !important;
+        background-color: transparent;
     }
     #login-page, #signup-page{
-        background-color: var(--bs-secondary-subtle) !important;
+        background-color: var(--bs-secondary-subtle);
     }
     #login-form, #signup-form{	
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-secondary) !important;
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
     }
 
     #addChatButton, #archivedChatsButton {
-        background-color: var(--bs-primary) !important;
-        color: var(--bs-secondary) !important;
-        border: 1px solid var(--bs-secondary-subtle) !important;
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+        border: 1px solid var(--bs-secondary-subtle);
         &:hover{
-            background-color: rgba(255, 255, 255, 0.4) !important
+            background-color: rgba(255, 255, 255, 0.4)
         }
     }
 
     #chatbox, #chatboxHeader {
-        background-color: var(--bs-info) !important;
+        background-color: var(--bs-info);
         .border-secondary-subtle{
-            border-color: var(--bs-secondary-subtle) !important;
+            border-color: var(--bs-secondary-subtle);
         }
         .bg-secondary-subtle{
-            background-color: var(--bs-secondary) !important;
+            background-color: var(--bs-secondary);
         }
     }
 
     #comment-container{
-        background-color: var(--bs-primary) !important;
+        background-color: var(--bs-primary);
         .p{
-            color: var(--bs-light-light) !important;
+            color: var(--bs-light-light);
         }
     }
+
+    .search-suggestions {
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary-subtle);
+      
+        .custom-list-item {
+          background-color: var(--bs-primary);
+          color: var(--bs-secondary);
+          transition: background-color 0.3s ease;
+      
+          &:hover, &:focus {
+            background-color: var(--bs-secondary-subtle);
+            color: var(--bs-primary);
+          }
+        }
+      }
 
 }
 
@@ -178,95 +195,95 @@
     --bs-secondary-subtle: #607D8B;
 
     .header {
-        background-color: var(--bs-light) !important;
+        background-color: var(--bs-light);
         .text-secondary {
-            color: var(--bs-secondary) !important;
+            color: var(--bs-secondary);
         }
     }
 
     .custom-link-container {
-        background-color: var(--bs-light) !important;
-        color: var(--bs-dark) !important;
+        background-color: var(--bs-light);
+        color: var(--bs-dark);
         &:hover {
             background-color: rgba(0, 0, 0, 0.05);
         }
     }
 
     .dropdown-toggle {
-        background-color: var(--bs-light) !important;
-        color: var(--bs-secondary) !important;
+        background-color: var(--bs-light);
+        color: var(--bs-secondary);
     }
 
     .custom-breadcrumb {
         &:hover {
-            color: var(--bs-primary) !important;
+            color: var(--bs-primary);
         }
     }
 
     .btn-outline-secondary {
-        color: var(--bs-secondary) !important;
-        border-color: var(--bs-secondary) !important;
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary);
     }
 
     .btn {
-        background-color: var(--bs-light) !important;
-        color: var(--bs-secondary) !important;
+        background-color: var(--bs-light);
+        color: var(--bs-secondary);
     }
 
     .password-strength-meter {
-        background-color: transparent !important;
-        color: var(--bs-secondary) !important;
+        background-color: transparent;
+        color: var(--bs-secondary);
     }
 
     .search-suggestions {
         .bg-white {
-            background-color: var(--bs-light) !important;
-            color: var(--bs-secondary) !important;
+            background-color: var(--bs-light);
+            color: var(--bs-secondary);
         }
     }
 
     #search, #searchInput {
-        background-color: var(--bs-white) !important;
-        color: var(--bs-dark) !important;
-        outline: var(--bs-secondary) !important;
+        background-color: var(--bs-white);
+        color: var(--bs-dark);
+        outline: var(--bs-secondary);
     }
 
     #accessibility-button {
-        background-color: transparent !important;
+        background-color: transparent;
     }
 
     #login-page, #signup-page {
-        background-color: var(--bs-light-light) !important;
+        background-color: var(--bs-light-light);
     }
 
     #login-form, #signup-form {	
-        background-color: var(--bs-white) !important;
-        color: var(--bs-dark) !important;
+        background-color: var(--bs-white);
+        color: var(--bs-dark);
     }
 
     #addChatButton, #archivedChatsButton {
-        background-color: var(--bs-light) !important;
-        color: var(--bs-secondary) !important;
-        border: 1px solid var(--bs-secondary-subtle) !important;
+        background-color: var(--bs-light);
+        color: var(--bs-secondary);
+        border: 1px solid var(--bs-secondary-subtle);
         &:hover {
             background-color: rgba(0, 0, 0, 0.05);
         }
     }
 
     #chatbox, #chatboxHeader {
-        background-color: var(--bs-light-light) !important;
+        background-color: var(--bs-light-light);
         .border-secondary-subtle {
-            border-color: var(--bs-secondary-subtle) !important;
+            border-color: var(--bs-secondary-subtle);
         }
         .bg-secondary-subtle {
-            background-color: var(--bs-light) !important;
+            background-color: var(--bs-light);
         }
     }
 
     #comment-container{
-        background-color: var(--bs-light) !important;
+        background-color: var(--bs-light);
         .p{
-            color: var(--bs-light-light) !important;
+            color: var(--bs-light-light);
         }
     }
 }
@@ -285,108 +302,108 @@
     --bs-secondary-subtle: #333333;
 
     .header {
-        background-color: var(--bs-dark) !important;
+        background-color: var(--bs-dark);
         .text-secondary {
-            color: var(--bs-light) !important;
+            color: var(--bs-light);
         }
 
         .input:focus{
-            outline: 2px solid var(--bs-warning) !important;
+            outline: 2px solid var(--bs-warning);
         }
         
         // Add this new rule for navbar icons
         .nav-link {
-            color: var(--bs-light) !important;
+            color: var(--bs-light);
             
             &:hover, &:focus {
-                color: var(--bs-warning) !important; // Use a bright color for hover/focus state
+                color: var(--bs-warning); // Use a bright color for hover/focus state
             }
             
             .custom-icon {
-                color: var(--bs-light) !important;
+                color: var(--bs-light);
             }
         }
         
         // Ensure dropdown toggles are visible
         .dropdown-toggle {
-            background-color: var(--bs-dark) !important;
-            color: var(--bs-light) !important;
-            border: 1px solid var(--bs-light) !important;
+            background-color: var(--bs-dark);
+            color: var(--bs-light);
+            border: 1px solid var(--bs-light);
             
             &:hover, &:focus {
-                background-color: var(--bs-secondary-subtle) !important;
+                background-color: var(--bs-secondary-subtle);
             }
         }
     }
 
     .bi {
-        color: var(--bs-light) !important;
+        color: var(--bs-light);
     }
 
     // Ensure tooltips are visible
     .tooltip {
         .tooltip-inner {
-            background-color: var(--bs-light) !important;
-            color: var(--bs-dark) !important;
-            border: 1px solid var(--bs-dark) !important;
+            background-color: var(--bs-light);
+            color: var(--bs-dark);
+            border: 1px solid var(--bs-dark);
         }
         .tooltip-arrow::before {
-            border-bottom-color: var(--bs-light) !important;
+            border-bottom-color: var(--bs-light);
         }
     }
 
     .custom-link-container {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
         &:hover {
             background-color: var(--bs-secondary-subtle);
         }
     }
 
     .dropdown-toggle {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
     }
 
     .custom-breadcrumb {
         &:hover {
-            color: var(--bs-info) !important;
+            color: var(--bs-info);
         }
     }
 
     .btn-outline-secondary {
-        color: var(--bs-light) !important;
-        border-color: var(--bs-light) !important;
+        color: var(--bs-light);
+        border-color: var(--bs-light);
     }
 
     .btn {
         &.btn-primary {
-            background-color: var(--bs-dark) !important;
-            color: var(--bs-light) !important;
-            border: 2px solid var(--bs-light) !important;
+            background-color: var(--bs-dark);
+            color: var(--bs-light);
+            border: 2px solid var(--bs-light);
 
             &:hover, &:focus {
-                background-color: var(--bs-secondary-subtle) !important;
+                background-color: var(--bs-secondary-subtle);
             }
         }
 
         &.btn-success {
-            background-color: var(--bs-success) !important;
-            color: var(--bs-dark) !important;
-            border: 2px solid var(--bs-dark) !important;
+            background-color: var(--bs-success);
+            color: var(--bs-dark);
+            border: 2px solid var(--bs-dark);
 
             &:hover, &:focus {
-                background-color: darken(#00FF00, 10%) !important;
+                background-color: darken(#00FF00, 10%);
             }
         }
 
         &.btn-danger {
-            background-color: var(--bs-danger) !important;
-            color: var(--bs-light) !important;
-            border: 2px solid var(--bs-light) !important;
+            background-color: var(--bs-danger);
+            color: var(--bs-light);
+            border: 2px solid var(--bs-light);
 
             &:hover, &:focus {
-                background-color: darken(#FF0000, 10%) !important;
+                background-color: darken(#FF0000, 10%);
             }
         }
 
@@ -399,80 +416,80 @@
     // Ensure text contrast for button content
     .btn-success {
         > * {
-            color: var(--bs-dark) !important;
+            color: var(--bs-dark);
         }
     }
 
     .btn-danger, .btn-primary {
         > * {
-            color: var(--bs-light) !important;
+            color: var(--bs-light);
         }
     }
     .password-strength-meter {
-        background-color: transparent !important;
-        color: var(--bs-light) !important;
+        background-color: transparent;
+        color: var(--bs-light);
     }
 
     .search-suggestions {
         .bg-white {
-            background-color: var(--bs-dark) !important;
-            color: var(--bs-light) !important;
+            background-color: var(--bs-dark);
+            color: var(--bs-light);
         }
     }
 
     .i{
-        color: var(--bs-light) !important;
+        color: var(--bs-light);
     }   
 
     
 
     #search, #searchInput {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light-light) !important;
-        outline: var(--bs-light-light) !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light-light);
+        outline: var(--bs-light-light);
     }
 
     #accessibility-button {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
-        border: none !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border: none;
     }
 
     #login-page, #signup-page {
-        background-color: var(--bs-dark) !important;
+        background-color: var(--bs-dark);
     }
 
     #login-form, #signup-form {	
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
-        border: 2px solid var(--bs-light) !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border: 2px solid var(--bs-light);
     }
 
     #addChatButton, #archivedChatsButton {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
-        border: 2px solid var(--bs-light) !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border: 2px solid var(--bs-light);
         &:hover {
             background-color: var(--bs-secondary-subtle);
         }
     }
 
     #chatbox, #chatboxHeader {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
         .border-secondary-subtle {
-            border-color: var(--bs-light) !important;
+            border-color: var(--bs-light);
         }
         .bg-secondary-subtle {
-            background-color: var(--bs-secondary-subtle) !important;
+            background-color: var(--bs-secondary-subtle);
         }
     }
 
     #comment-container{
-        background-color: var(--bs-secondary-subtle) !important;
-        color: var(--bs-light) !important;
+        background-color: var(--bs-secondary-subtle);
+        color: var(--bs-light);
         .span, .a{
-            color: var(--bs-light) !important;
+            color: var(--bs-light);
         }
     }
 

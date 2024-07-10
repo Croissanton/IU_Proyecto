@@ -763,7 +763,7 @@ function AddChatModal({
           {showSuggestions && inputValue && suggestions.length > 0 && (
             <div
               id="search_suggestions"
-              className="bg-secondary-subtle w-100 position-absolute z-2 border-1 shadow"
+              className="search-suggestions bg-secondary-subtle w-100 position-absolute z-2 border-1 shadow"
               role="listbox"
               aria-label="Sugerencias de búsqueda"
               style={{
