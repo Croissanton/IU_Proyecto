@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, Button } from "react-bootstrap";
+import { Breadcrumb, Button, Container } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
@@ -127,7 +127,7 @@ function PostPage() {
     if (!button) {
       return;
     }
-    
+
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
@@ -223,37 +223,40 @@ function PostPage() {
 
   return (
     <MainLayout>
-      <div className="container-xxl my-3">
-        <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
-            Inicio
-          </Breadcrumb.Item>
-          <Breadcrumb.Item
-            linkAs={Link}
-            linkProps={{ to: `/topic/${post.topicId}` }}
+      <Container fluid className="my-3 mx-0 px-0">
+        <Container>
+          <Breadcrumb className="custom-breadcrumb">
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+              Inicio
+            </Breadcrumb.Item>
+            <Breadcrumb.Item
+              linkAs={Link}
+              linkProps={{ to: `/topic/${post.topicId}` }}
+            >
+              {topic ? topic.topic : "Foro"}
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active style={titleStyle}>
+              {post.title}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <label
+            style={{
+              fontSize: "3rem",
+              fontWeight: "bold",
+              display: "block",
+              textAlign: "center",
+              ...titleStyle,
+            }}
           >
-            {topic ? topic.topic : "Foro"}
-          </Breadcrumb.Item>
-          <Breadcrumb.Item active style={titleStyle}>
             {post.title}
-          </Breadcrumb.Item>
-        </Breadcrumb>
-        <label
-          style={{
-            fontSize: "3rem",
-            fontWeight: "bold",
-            display: "block",
-            textAlign: "center",
-            ...titleStyle,
-          }}
-        >
-          {post.title}
-        </label>
-      </div>
+          </label>
+        </Container>
+      </Container>
       {post === null || post === undefined ? (
         <div></div>
       ) : (
-        <div className="container-xxl my-3">
+        <Container fluid className="my-3 mx-0 px-0">
+          {" "}
           <PostCard
             id={post.id}
             titulo={post.title}
@@ -267,7 +270,7 @@ function PostPage() {
             res_num={comments.length}
             view_num={post.view_num}
           />
-        </div>
+        </Container>
       )}
 
       {usuario === undefined ||
@@ -275,7 +278,8 @@ function PostPage() {
       post.author !== usuario.username ? (
         <div></div>
       ) : (
-        <div className="container-xxl my-3">
+        <Container fluid className="my-3 mx-0 px-0">
+          {" "}
           <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
             <i className="bi bi-trash"></i>
             <span>Eliminar Post</span>
@@ -287,117 +291,121 @@ function PostPage() {
             title="Eliminar Post"
             message="¿Estás seguro de que quieres eliminar este post?"
           />
-        </div>
+        </Container>
       )}
       {usuario === undefined ? (
         <div></div>
       ) : (
-        <div className="container-xxl my-3">
-          <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-            Añadir un nuevo comentario
-          </label>
-          <form onSubmit={handleSubmitComment}>
-            <div className="mb-3">
-              <label htmlFor="commentInput" className="form-label"></label>
-              <textarea
-                aria-label="texto_para_nuevo_comentario"
-                required
-                rows={4}
-                type="text"
-                className="form-control"
-                id="commentInput"
-                value={newComment}
-                onChange={handleInputChange}
+        <Container fluid className="my-3 mx-0 px-0">
+          <Container>
+            <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              Añadir un nuevo comentario
+            </label>
+            <form onSubmit={handleSubmitComment}>
+              <div className="mb-3">
+                <label htmlFor="commentInput" className="form-label"></label>
+                <textarea
+                  aria-label="texto_para_nuevo_comentario"
+                  required
+                  rows={4}
+                  type="text"
+                  className="form-control"
+                  id="commentInput"
+                  value={newComment}
+                  onChange={handleInputChange}
+                />
+                <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                id="publicar_button"
+                disabled
+              >
+                Publicar
+              </button>
+
+              <ConfirmationModal
+                message="¿Estás seguro de que quieres crear este comentario?"
+                show={showModal}
+                handleClose={handleClose}
+                handleConfirm={handleConfirm}
+                title="Confirmar Comentario"
               />
-              <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              id="publicar_button"
-              disabled
-            >
-              Publicar
-            </button>
 
-            <ConfirmationModal
-              message="¿Estás seguro de que quieres crear este comentario?"
-              show={showModal}
-              handleClose={handleClose}
-              handleConfirm={handleConfirm}
-              title="Confirmar Comentario"
-            />
+              <Button
+                variant="primary"
+                className="ms-2"
+                onClick={handleClearComment}
+              >
+                Limpiar
+              </Button>
 
-            <Button
-              variant="primary"
-              style={{ marginLeft: "10px" }}
-              onClick={handleClearComment}
-            >
-              Limpiar
-            </Button>
-            
-            <ConfirmationModal
-              message="¿Estás seguro de que quieres limpiar el texto escrito?"
-              show={showClearCommentModal}
-              handleClose={() => setShowClearCommentModal(false)}
-              handleConfirm={handleConfirmClearComment}
-              title="Confirmar Limpieza"
-            />
-
-          </form>
-        </div>
+              <ConfirmationModal
+                message="¿Estás seguro de que quieres limpiar el texto escrito?"
+                show={showClearCommentModal}
+                handleClose={() => setShowClearCommentModal(false)}
+                handleConfirm={handleConfirmClearComment}
+                title="Confirmar Limpieza"
+              />
+            </form>
+          </Container>
+        </Container>
       )}
 
-      <div className="container-xxl my-3">
-        <label
-          style={{
-            fontSize: "2rem", 
-            fontWeight: "bold",
-            marginTop: "30px", 
-          }}
-        >
-          Comentarios
-        </label>
-        <div className="d-flex justify-content-end mb-3">
-          <label htmlFor="sortSelect" className="form-label p-2 mb-0">
-            Ordenar por:
+      <Container fluid className="my-3 mx-0 px-0">
+        <Container>
+          <label
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginTop: "30px",
+            }}
+          >
+            Comentarios
           </label>
-          <div className="d-flex justify-content-center">
-            <select
-              id="sortSelect"
-              className="form-select"
-              onChange={(e) => handleSortChange(e.target.value)}
-              defaultValue="masPositivos"
-            >
-              <option value="masPositivos">Más votos positivos</option>
-              <option value="menosPositivos">Menos votos positivos</option>
-              <option value="masNegativos">Más votos negativos</option>
-              <option value="menosNegativos">Menos votos negativos</option>
-              <option value="textoAZ">Texto A-Z</option>
-              <option value="textoZA">Texto Z-A</option>
-              <option value="reciente">Más recientes</option>
-              <option value="antiguo">Más antiguos</option>
-            </select>
+          <div className="d-flex justify-content-end mb-3">
+            <label htmlFor="sortSelect" className="form-label p-2 mb-0">
+              Ordenar por:
+            </label>
+            <div className="d-flex justify-content-center">
+              <select
+                id="sortSelect"
+                className="form-select"
+                onChange={(e) => handleSortChange(e.target.value)}
+                defaultValue="masPositivos"
+              >
+                <option value="masPositivos">Más votos positivos</option>
+                <option value="menosPositivos">Menos votos positivos</option>
+                <option value="masNegativos">Más votos negativos</option>
+                <option value="menosNegativos">Menos votos negativos</option>
+                <option value="textoAZ">Texto A-Z</option>
+                <option value="textoZA">Texto Z-A</option>
+                <option value="reciente">Más recientes</option>
+                <option value="antiguo">Más antiguos</option>
+              </select>
+            </div>
           </div>
-        </div>
-
-        {post === null || sortedComments.length === 0 ? (
-          <p>No hay comentarios.</p>
-        ) : (
-          paginatedComments.map((comment) => (
-            <PostComment
-              key={comment.id}
-              id={comment.id}
-              postId={comment.postId}
-              title={comment.title}
-              author={comment.author}
-              initialUpvotes={comment.upvotes}
-              initialDownvotes={comment.downvotes}
-              date={comment.date}
-            />
-          ))
-        )}
-      </div>
+        </Container>
+        <Container fluid className="my-3 mx-0 px-0">
+          {post === null || sortedComments.length === 0 ? (
+            <p>No hay comentarios.</p>
+          ) : (
+            paginatedComments.map((comment) => (
+              <PostComment
+                key={comment.id}
+                id={comment.id}
+                postId={comment.postId}
+                title={comment.title}
+                author={comment.author}
+                initialUpvotes={comment.upvotes}
+                initialDownvotes={comment.downvotes}
+                date={comment.date}
+              />
+            ))
+          )}
+        </Container>
+      </Container>
 
       <IndexSelector
         totalTopics={sortedComments.length}

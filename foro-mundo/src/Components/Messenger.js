@@ -32,7 +32,6 @@ const Messenger = () => {
     }
     return (
       <small className="text-muted">
-        {" "}
         {"Última conexión: " +
           new Date(usuario.lastDisconnection).toLocaleString()}{" "}
       </small>
@@ -227,6 +226,14 @@ const Messenger = () => {
     });
   };
 
+  const formatTimeStampOnlyHour = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   const toggleMessage = (messageId) => {
     setExpandedMessages((prev) => ({
       ...prev,
@@ -361,10 +368,10 @@ const Messenger = () => {
       {/* lista de chats */}
       <Col md={3}>
         <ListGroup>
-          <ListGroup.Item className="border-0 mx-0 px-0">
+          <ListGroup.Item className="border-0 mx-0 px-0 bg-transparent">
             <button
               id="addChatButton"
-              className="d-flex align-items-center w-100 text-dark rounded py-2 px-3 custom-button"
+              className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
               onClick={() => setShowAddChatModal(true)}
               style={{ cursor: "pointer" }}
             >
@@ -372,7 +379,7 @@ const Messenger = () => {
               <span>Añadir nuevo chat</span>
             </button>
           </ListGroup.Item>
-          <ListGroup.Item className="border-0 mx-0 px-0">
+          <ListGroup.Item className="border-0 mx-0 px-0 bg-transparent">
             <button
               id="archivedChatsButton"
               className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
@@ -387,7 +394,7 @@ const Messenger = () => {
             .filter((convo) => !convo.archived)
             .map((convo) => (
               <ListGroup.Item
-                className="border-0  mx-0 px-0"
+                className="border-0  mx-0 px-0 bg-transparent"
                 key={convo.conversationKey}
               >
                 <button
@@ -423,37 +430,42 @@ const Messenger = () => {
               id="chatboxHeader"
               className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center"
             >
-              <NavLink
-                className="bi bi-person-circle d-inline-flex align-items-center custom-icon"
-                to={`/perfil/${activeChat.otherUser}`}
-                style={{ color: "inherit", textDecoration: "none" }}
-                aria-label={`Perfil de ${activeChat.otherUser}`}
-              >
-                <span className="h2 m-0 ps-2 custom-text-link">
-                  {activeChat.otherUser}
-                </span>
-              </NavLink>
-              {ShowConnectionStatus(activeChat.otherUser)}
-
-              {activeChat.archived ? (
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  onClick={() => unArchiveChat(activeChat.conversationKey)}
+              <Col className="d-flex align-content-center justify-content-start p-1">
+                <NavLink
+                  className="bi bi-person-circle d-inline-flex align-items-center custom-icon"
+                  to={`/perfil/${activeChat.otherUser}`}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  aria-label={`Perfil de ${activeChat.otherUser}`}
                 >
-                  <i className="bi bi-archive-fill me-2"></i>
-                  Desarchivar
-                </Button>
-              ) : (
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  onClick={() => archiveChat(activeChat.conversationKey)}
-                >
-                  <i className="bi bi-archive me-2"></i>
-                  Archivar
-                </Button>
-              )}
+                  <span className="h2 m-0 ps-2 custom-text-link">
+                    {activeChat.otherUser}
+                  </span>
+                </NavLink>
+              </Col>
+              <Col className="d-flex align-content-center justify-content-center text-center p-1">
+                {ShowConnectionStatus(activeChat.otherUser)}
+              </Col>
+              <Col className="d-flex align-content-center justify-content-end p-1">
+                {activeChat.archived ? (
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    onClick={() => unArchiveChat(activeChat.conversationKey)}
+                  >
+                    <i className="bi bi-archive-fill mx-1"></i>
+                    <span className="mx-1">Desarchivar</span>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    onClick={() => archiveChat(activeChat.conversationKey)}
+                  >
+                    <i className="bi bi-archive mx-1"></i>
+                    <span className="mx-1">Archivar</span>
+                  </Button>
+                )}
+              </Col>
             </div>
             {/* mensajes */}
             <div
@@ -490,6 +502,10 @@ const Messenger = () => {
                         id="expandedmsg"
                         className="d-flex justify-content-between align-items-center mb-1"
                       >
+                        {/* timestamp */}
+                        <small className="text-dark">
+                          {formatTimestamp(message.timestamp)}
+                        </small>
                         {message.sender === usuario.username && (
                           <Button
                             id="deleteMessageButton"
@@ -507,13 +523,16 @@ const Messenger = () => {
                             <span>Borrar mensaje</span>
                           </Button>
                         )}
-                        {/* timestamp */}
-                        <small className="text-dark">
-                          {formatTimestamp(message.timestamp)}
-                        </small>
                       </div>
                     )}
                     {/* el text de mensaje */}
+                    {!expandedMessages[message.id] && (
+                      <div className="d-flex justify-content-between align-items-center mb-1">
+                        <small className="text-dark">
+                          {formatTimeStampOnlyHour(message.timestamp)}
+                        </small>
+                      </div>
+                    )}
                     <span>{message.text}</span>
                   </div>
                 ))}
