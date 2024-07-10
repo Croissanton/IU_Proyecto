@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Breadcrumb } from "react-bootstrap";
+import ConfirmationModal from "../Components/ConfirmationModal.js";
 
 function getByUsernameAndPassword(username, password) {
-  // Recuperar la lista de usuarios de localStorage
   const usuarios = JSON.parse(localStorage.getItem("usuarios"));
-
-  // Buscar el usuario por su username
   const usuario = usuarios.find(
     (usuario) => usuario.username === username && usuario.password === password
   );
-
-  // Retornar el usuario encontrado o null si no se encuentra
   return usuario || null;
 }
 
@@ -31,16 +26,16 @@ function LoginPage() {
 
   useEffect(() => {
     if (usuario) {
-      navigate("/"); // Redirigir después de que se actualice el estado de usuario
+      navigate("/");
     }
   }, [usuario, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showHomeModal, setShowHomeModal] = useState(false);
 
-  const login = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    // Validar credenciales, por ejemplo:
     const usuario = getByUsernameAndPassword(username, password);
     if (usuario) {
       usuario.lastConnection = new Date().toLocaleString();
@@ -54,18 +49,35 @@ function LoginPage() {
           )
         )
       );
-
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
     }
   };
 
+  const handleRegister = () => {
+    setShowRegisterModal(true);
+  };
+
+  const confirmRegister = () => {
+    setShowRegisterModal(false);
+    navigate("/registro");
+  };
+
+  const handleHome = () => {
+    setShowHomeModal(true);
+  };
+
+  const confirmHome = () => {
+    setShowHomeModal(false);
+    navigate("/");
+  };
+
   return (
     <div
       id="login-page"
       className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light"
-      style={{ minHeight: "100vh",}}
+      style={{ minHeight: "100vh" }}
     >
       <div
         id="login-form"
@@ -84,7 +96,7 @@ function LoginPage() {
             Login
           </Breadcrumb.Item>
         </Breadcrumb>
-        <form className="row col-12 g-3" onSubmit={login}>
+        <form className="row col-12 g-3" onSubmit={handleLogin}>
           <div className="login-container text-center">
             <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
             <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>
@@ -162,12 +174,32 @@ function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/registro")}
+              onClick={handleRegister}
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse
             </button>
-            <BackButton />
+            <ConfirmationModal
+              show={showRegisterModal}
+              handleClose={() => setShowRegisterModal(false)}
+              handleConfirm={confirmRegister}
+              title="Confirmar registro"
+              message="¿Estás seguro de que quieres ir a la página de registro?"
+            />
+            <button
+              type="button"
+              onClick={handleHome}
+              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+            >
+              Volver al Inicio
+            </button>
+            <ConfirmationModal
+              show={showHomeModal}
+              handleClose={() => setShowHomeModal(false)}
+              handleConfirm={confirmHome}
+              title="Volver al inicio"
+              message="¿Estás seguro de que quieres volver a la página de inicio?"
+            />
           </div>
         </form>
       </div>

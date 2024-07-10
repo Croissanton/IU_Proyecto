@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Breadcrumb, ProgressBar, OverlayTrigger, Tooltip } from "react-bootstrap";
-import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import zxcvbn from "zxcvbn";
@@ -75,6 +74,8 @@ function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showInvalidCharNotification, setShowInvalidCharNotification] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showConfirmVolverModal, setShowConfirmVolverModal] = useState(false);
+
 
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -119,6 +120,11 @@ function SignUpPage() {
     
     showToast("Registro correcto.", "bg-success");
     setShowConfirmModal(false);
+    navigate("/");
+  };
+
+  const handleConfirmVolver = () => {
+    setShowConfirmVolverModal(false);
     navigate("/");
   };
 
@@ -311,7 +317,20 @@ function SignUpPage() {
                 aria-label="descripcion_opcional"
               />
             </div>
-            <BackButton />
+            <button
+              type="button"
+              onClick={() => setShowConfirmVolverModal(true)}
+              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+            >
+              Volver al Inicio
+            </button>
+            <ConfirmationModal
+              show={showConfirmVolverModal}
+              handleClose={() => setShowConfirmVolverModal(false)}
+              handleConfirm={handleConfirmVolver}
+              title="Volver al inicio"
+              message="¿Estás seguro de que quieres volver al inicio? Se perderán los datos ingresados."
+            />
             <button
               type="submit"
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
