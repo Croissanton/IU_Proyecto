@@ -418,7 +418,7 @@ const Messenger = () => {
                     height="30"
                     style={{ marginRight: "10px", borderRadius: "50%" }}
                   />
-                  {convo.otherUser}
+                  <span className="text-break">{convo.otherUser}</span>
                 </button>
               </ListGroup.Item>
             ))}

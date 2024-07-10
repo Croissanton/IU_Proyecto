@@ -153,8 +153,10 @@ const PostComment = ({
 
     if (postIndex !== -1) {
       const post = posts[postIndex];
-      const updatedComments = post.comments.filter((comment) => comment.id !== commentToDelete);
-      
+      const updatedComments = post.comments.filter(
+        (comment) => comment.id !== commentToDelete
+      );
+
       post.comments = updatedComments;
       if (post.comments && post.comments.length > 0) {
         post.lm_author = post.comments[post.comments.length - 1].author;
@@ -177,7 +179,7 @@ const PostComment = ({
 
   return (
     <Container fluid className="mx-0 px-0 my-3">
-      <Col className="">
+      <Col>
         <Container
           id="comment-container"
           className="border border-dark-subtle bg-light"
@@ -185,7 +187,7 @@ const PostComment = ({
           aria-labelledby="comment-title"
         >
           <Row>
-            <Col className="border-end border-dark-subtle p-3">
+            <Col className="p-3">
               <p
                 id="comment-title"
                 style={{
@@ -244,7 +246,7 @@ const PostComment = ({
                         style={{ marginRight: "10px", borderRadius: "50%" }}
                       />
                       <NavLink
-                        className="custom-text-link text-light"
+                        className="custom-text-link"
                         to={`/perfil/${author}`}
                         aria-label={`Perfil de ${author}`}
                         tabIndex="0"
@@ -257,27 +259,25 @@ const PostComment = ({
                     <p>{new Date(date).toLocaleString()}</p>
                   </Row>
                 </Col>
-                <Col className="text-center text-light">
-                  {usuario && usuario.username === author && (
-                    <div>
-                      <Button
-                        aria-label="Eliminar"
-                        className="btn btn-danger"
-                        onClick={() => handleDeleteComment(id)}
-                      >
-                        <i className="bi bi-trash"></i>
-                        <span>Eliminar</span>
-                      </Button>
-                      <ConfirmationModal
-                        show={showDeleteCommentModal}
-                        handleClose={handleCancelDelete}
-                        handleConfirm={handleConfirmDeleteComment}
-                        title="Eliminar comentario"
-                        message="¿Estás seguro de que deseas eliminar este comentario?"
-                      />
-                    </div>
-                  )}
-                </Col>
+                {usuario && usuario.username === author && (
+                  <Col className="text-center text-light">
+                    <Button
+                      aria-label="Eliminar"
+                      className="btn btn-danger"
+                      onClick={() => handleDeleteComment(id)}
+                    >
+                      <i className="bi bi-trash"></i>
+                      <span>Eliminar</span>
+                    </Button>
+                    <ConfirmationModal
+                      show={showDeleteCommentModal}
+                      handleClose={handleCancelDelete}
+                      handleConfirm={handleConfirmDeleteComment}
+                      title="Eliminar comentario"
+                      message="¿Estás seguro de que deseas eliminar este comentario?"
+                    />
+                  </Col>
+                )}
               </Row>
             </Col>
           </Row>

@@ -87,12 +87,12 @@ function MainPage() {
       >
         Foros
       </label>
-      
-      <div className="container-xxl my-3">
-        <div className="d-flex justify-content-end mb-3">
-            <label className="me-3" style={{ margin: "10px" }}>
-              Ordenar por:
-            </label>
+
+      <Container fluid className="my-3 mx-0 px-0">
+        <Container className="d-flex justify-content-end mb-3">
+          <label className="me-3" style={{ margin: "10px" }}>
+            Ordenar por:
+          </label>
           <div className="d-flex justify-content-center">
             <select
               className="form-select me-2"
@@ -108,9 +108,9 @@ function MainPage() {
               <option value="menosVisitas">Menos visitas</option>
             </select>
           </div>
-        </div>
+        </Container>
 
-        <Container>
+        <Container className="p-0">
           {currentTopics.map((topic) => (
             <ForumCard
               key={topic.id}
@@ -122,7 +122,7 @@ function MainPage() {
             />
           ))}
         </Container>
-      </div>
+      </Container>
 
       <IndexSelector
         totalTopics={sortedTopics.length}
