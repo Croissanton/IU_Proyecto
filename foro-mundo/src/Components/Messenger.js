@@ -154,9 +154,8 @@ const Messenger = () => {
   const [showAddChatModal, setShowAddChatModal] = useState(false);
   const { showToast } = useToast();
 
-  const addChat = () => {
+  const addChat = (newChatUser) => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
-    const newChatUser = modalInputValue;
 
     if (!currentUser || !newChatUser) {
       console.error("Current user or new chat user is not defined");
@@ -166,14 +165,6 @@ const Messenger = () => {
     const conversationKey = `${currentUser.username}@${newChatUser}`;
 
     const existingMessages = JSON.parse(localStorage.getItem("messages")) || {};
-
-    if (
-      existingMessages.hasOwnProperty(conversationKey) ||
-      existingMessages.hasOwnProperty(`${newChatUser}@${currentUser.username}`)
-    ) {
-      console.warn("This chat already exists");
-      return;
-    }
 
     const updatedMessages = {
       ...existingMessages,
@@ -206,8 +197,8 @@ const Messenger = () => {
     setModalInputValue("");
   };
 
-  const handleConfirmAddChatModal = () => {
-    addChat();
+  const handleConfirmAddChatModal = (newChatUser) => {
+    addChat(newChatUser);
     setShowAddChatModal(false);
     showToast("El chat se ha añadido correctamente.", "bg-success");
     setModalInputValue("");
@@ -665,27 +656,63 @@ function AddChatModal({
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const checkChatExists = (newChatUser) => {
+  const isUserBlocked = (username) => {
     const currentUser = JSON.parse(localStorage.getItem("usuario"));
-    if (!currentUser) return false;
+    const blockedUsers = currentUser.blockList || [];
+    return blockedUsers.includes(username);
+  };
+
+  const checkUserValidity = (newChatUser) => {
+    const currentUser = JSON.parse(localStorage.getItem("usuario"));
+    if (!currentUser)
+      return {
+        valid: false,
+        message: "No se pudo encontrar el usuario actual.",
+      };
+
+    if (newChatUser === currentUser.username) {
+      return {
+        valid: false,
+        message: "No puedes iniciar un chat contigo mismo.",
+      };
+    }
+
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const userExists = usuarios.some((user) => user.username === newChatUser);
+    if (!userExists) {
+      return { valid: false, message: "El usuario no existe." };
+    }
+
+    // Check if the user is blocked (you'll need to implement this logic)
+    if (isUserBlocked(newChatUser)) {
+      return {
+        valid: false,
+        message: "No puedes iniciar un chat con un usuario bloqueado.",
+      };
+    }
 
     const existingMessages = JSON.parse(localStorage.getItem("messages")) || {};
     const conversationKey1 = `${currentUser.username}@${newChatUser}`;
     const conversationKey2 = `${newChatUser}@${currentUser.username}`;
 
-    return (
+    if (
       existingMessages.hasOwnProperty(conversationKey1) ||
       existingMessages.hasOwnProperty(conversationKey2)
-    );
+    ) {
+      return { valid: false, message: "Este chat ya existe." };
+    }
+
+    return { valid: true, message: "" };
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (checkChatExists(inputValue)) {
-      setErrorMessage("Este chat ya existe.");
+    const validityCheck = checkUserValidity(inputValue);
+    if (!validityCheck.valid) {
+      setErrorMessage(validityCheck.message);
     } else {
       setErrorMessage("");
-      handleConfirm();
+      handleConfirm(inputValue);
     }
   };
 
@@ -736,7 +763,6 @@ function AddChatModal({
           )}
           {showSuggestions && inputValue && suggestions.length > 0 && (
             <div
-              className="bg-secondary-subtle"
               style={{
                 position: "absolute",
                 left: 0,
@@ -755,7 +781,7 @@ function AddChatModal({
                   role="option"
                   tabIndex="0"
                   aria-selected={inputValue === suggestion.username}
-                  className="p-2 border border-bottom-1 custom-list-item"
+                  className="p-2 border border-bottom-1 bg-white custom-list-item"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   <Container>
