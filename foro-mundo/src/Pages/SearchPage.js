@@ -130,7 +130,7 @@ const SearchPage = () => {
                 <>
                   <img
                     src={suggestion.profilePicture || "https://via.placeholder.com/150"}
-                    alt="profile"
+                    alt="Foto de perfil"
                     width="30"
                     height="30"
                     style={{ marginRight: "10px", borderRadius: "50%" }}

@@ -413,7 +413,7 @@ const Messenger = () => {
                       getProfilePicture(convo.otherUser) ||
                       "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                     }
-                    alt="Perfil"
+                    alt="Foto de perfil del usuario"
                     width="30"
                     height="30"
                     style={{ marginRight: "10px", borderRadius: "50%" }}
@@ -449,7 +449,7 @@ const Messenger = () => {
                       getProfilePicture(activeChat.otherUser) ||
                       "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                     }
-                    alt="Perfil"
+                    alt="Foto de perfil del usuario"
                     width="30"
                     height="30"
                     style={{ marginRight: "10px", borderRadius: "50%" }}
