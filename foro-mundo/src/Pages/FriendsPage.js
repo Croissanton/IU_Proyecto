@@ -119,7 +119,7 @@ function FriendsPage() {
             <Row className="justify-content-center text-center">
               <Col>
                 <Link to="/peticiones">
-                  <button className="btn btn-secondary m-2">
+                  <button className="btn btn-secondary m-2 mb-3">
                     Peticiones de Amistad{" "}
                     {incomingRequestsCount > 0 && (
                       <Badge bg="danger">{incomingRequestsCount}</Badge>
