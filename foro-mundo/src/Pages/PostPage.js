@@ -1,82 +1,133 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Button, Container } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import PostComment from "../Components/PostComment.js";
 import IndexSelector from "../Components/IndexSelector.js";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
-import Cookies from "universal-cookie";
+import ErrorPage from "./ErrorPage.js";
 import { useToast } from "../Context/ToastContext.js";
-import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid'; // Importa uuid para generar ids únicos
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 function PostPage() {
-  useEffect(() => {
-    document.title = "Post";
-  }, []);
-
+  const [topics, setTopics] = useState([]);
+  const { postId } = useParams();
+  const [post, setPost] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
   const MAX_CHARACTERS = 500;
 
   const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
-  const [comments, setComments] = useState([
-    {
-      id: uuidv4(),
-      title: "Que buen foro",
-      author: "Juanito Golondrina",
-      upvotes: 10,
-      downvotes: 5,
-      date: new Date(),
-    },
-    {
-      id: uuidv4(),
-      title: "Que mal foro",
-      author: "Pepito Grillo",
-      upvotes: 15,
-      downvotes: 3,
-      date: new Date(),
-    },
-    {
-      id: uuidv4(),
-      title: "a mi no me gusta tanto la verdad",
-      author: "Paquito Palotes",
-      upvotes: 2,
-      downvotes: 5,
-      date: new Date(),
-    },
-  ]);
+  const [comments, setComments] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("masPositivos");
+  const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const commentsPerPage = 5;
+
+  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const [showClearCommentModal, setShowClearCommentModal] = useState(false);
+
+  const titleStyle = {
+    wordWrap: "break-word",
+    whiteSpace: "normal",
+    overflowWrap: "break-word",
+  };
+
+  useEffect(() => {
+    document.title = "Post";
+
+    // Load topics
+    const loadTopics = () => {
+      try {
+        const storedTopics = JSON.parse(localStorage.getItem("topics"));
+        if (Array.isArray(storedTopics) && storedTopics.length > 0) {
+          setTopics(storedTopics);
+        } else {
+          console.warn("Topics data is empty or invalid");
+          setTopics([]);
+        }
+      } catch (error) {
+        console.warn("Error parsing topics from localStorage:", error);
+        setTopics([]);
+      }
+    };
+
+    loadTopics();
+
+    // Load post
+    const loadPost = () => {
+      const storedPosts = localStorage.getItem("posts");
+      if (storedPosts) {
+        const posts = JSON.parse(storedPosts);
+        const currentPost = posts.find((post) => post.id.toString() === postId);
+
+        if (currentPost) {
+          setPost(currentPost);
+          setComments(currentPost.comments || []);
+        } else {
+          console.warn("Post not found");
+        }
+      } else {
+        console.warn("No posts found in localStorage");
+      }
+    };
+
+    loadPost();
+    setSortCriteria("masPositivos");
+  }, [postId, navigate, showToast]);
 
   const handleClose = () => {
     setShowModal(false);
     showToast("El comentario no se ha creado.");
   };
 
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
-
   const handleConfirm = () => {
     setShowModal(false);
     const newCommentObject = {
       id: uuidv4(),
+      postId: postId,
       title: newComment,
-      author: cookieUser.username,
+      author: usuario.username,
       upvotes: 0,
       downvotes: 0,
-      date: new Date(),
+      date: new Date().toLocaleString(),
     };
 
-    setComments((prevComments) => [newCommentObject, ...prevComments]);
-    showToast("El comentario se ha creado correctamente!", "bg-success");
+    post.comments = [...post.comments, newCommentObject];
+    post.res_num = post.comments.length;
+    post.lm_text = newCommentObject.title;
+    post.lm_author = newCommentObject.author;
+    post.lm_date = new Date().toLocaleString();
+
+    //get existing posts and add updated post to the list
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const updatedPosts = existingPosts.map((p) =>
+      p.id.toString() === postId.toString() ? post : p
+    );
+
+    // Save updated post back to localStorage
+    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+    setComments(post.comments);
+    // Limpiar el área de texto
     setNewComment("");
+    setCharacterCount(0);
   };
 
   useEffect(() => {
-    if (cookies.get("user") === undefined) {
+    if (!localStorage.getItem("usuario")) {
       return;
     }
+
     const button = document.getElementById("publicar_button");
+    if (!button) {
+      return;
+    }
+
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
@@ -87,93 +138,283 @@ function PostPage() {
     setCharacterCount(commentText.length);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmitComment = (event) => {
     event.preventDefault();
     setShowModal(true);
     setCharacterCount(0);
   };
 
+  //  This has to be changed so a user can't delete a post that was not his.
+  const handleConfirmDeletePost = () => {
+    // Eliminar el post del localStorage
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const filteredPosts = existingPosts.filter((p) => p.id !== postId);
+
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const existingTopics = JSON.parse(localStorage.getItem("topics")) || [];
+    const updatedTopics = existingTopics.map((topic) => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) - 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+    localStorage.setItem("posts", JSON.stringify(filteredPosts));
+
+    showToast("Post eliminado", "bg-danger");
+    navigate(`/topic/${post.topicId}`);
+    setShowDeletePostModal(false);
+  };
+
+  const handleClearComment = () => {
+    setShowClearCommentModal(true);
+  };
+
+  const handleConfirmClearComment = () => {
+    setNewComment("");
+    setCharacterCount(0);
+    setShowClearCommentModal(false);
+  };
+
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const sortedComments = [...comments].sort((a, b) => {
+    if (sortCriteria === "textoAZ") {
+      return a.title.localeCompare(b.title);
+    } else if (sortCriteria === "textoZA") {
+      return b.title.localeCompare(a.title);
+    } else if (sortCriteria === "nuevo") {
+      return new Date(b.date) - new Date(a.date);
+    } else if (sortCriteria === "antiguo") {
+      return new Date(a.date) - new Date(b.date);
+    } else if (sortCriteria === "masPositivos") {
+      return b.upvotes - a.upvotes;
+    } else if (sortCriteria === "menosPositivos") {
+      return a.upvotes - b.upvotes;
+    } else if (sortCriteria === "masNegativos") {
+      return b.downvotes - a.downvotes;
+    } else if (sortCriteria === "menosNegativos") {
+      return a.downvotes - b.downvotes;
+    }
+
+    return 0;
+  });
+
+  const paginatedComments = sortedComments.slice(
+    (currentPage - 1) * commentsPerPage,
+    currentPage * commentsPerPage
+  );
+
+  const topic = post ? topics.find((t) => t.id === post.topicId) : null;
+
+  if (!post) {
+    return <ErrorPage />;
+  }
+
   return (
     <MainLayout>
-      <div className="container-xxl my-3">
-        <h1>Post</h1>
-        <Breadcrumb className="custom-breadcrumb" >
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/search" }}>Foro</Breadcrumb.Item>{" "}
-          {/* Aquí debería ir el nombre del topico */}
-          <Breadcrumb.Item active>Post</Breadcrumb.Item>{" "}
-          {/* Aquí debería ir el nombre del post */}
-        </Breadcrumb>
-      </div>
-      {/* PostCard principal */}
-      <div className="container-xxl my-3">
-        <PostCard
-          titulo={"buen foro :D"}
-          text={"Este es un foro muy bueno"}
-          author={"Juan Jaun"}
-          date={"18.10.1992"}
-          lm_author={"Jose Jose"}
-          lm_date={"19.04.2024"}
-          res_num={100}
-          view_num={1000}
-        />
-      </div>
-
-      {/* Formulario para añadir un nuevo comentario */}
-      {cookies.get("user") === undefined ? (
+      <Container fluid className="my-3 mx-0 px-0">
+        <Container>
+          <Breadcrumb className="custom-breadcrumb">
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+              Inicio
+            </Breadcrumb.Item>
+            <Breadcrumb.Item
+              linkAs={Link}
+              linkProps={{ to: `/topic/${post.topicId}` }}
+            >
+              {topic ? topic.topic : "Foro"}
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active style={titleStyle}>
+              {post.title}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <label
+            style={{
+              fontSize: "3rem",
+              fontWeight: "bold",
+              display: "block",
+              textAlign: "center",
+              ...titleStyle,
+            }}
+          >
+            {post.title}
+          </label>
+        </Container>
+      </Container>
+      {post === null || post === undefined ? (
         <div></div>
       ) : (
-        <div className="container-xxl my-3">
-          <h3>Añadir un nuevo comentario</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="commentInput" className="form-label"></label>
-              <textarea
-                aria-label="texto_para_nuevo_comentario"
-                required
-                rows={4}
-                type="text"
-                className="form-control"
-                id="commentInput"
-                value={newComment}
-                onChange={handleInputChange}
-              />
-              <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              id="publicar_button"
-              disabled
-            >
-              Publicar
-            </button>
-            <ConfirmationModal
-              message="¿Estás seguro de que quieres crear este post?"
-              show={showModal}
-              handleClose={handleClose}
-              handleConfirm={handleConfirm}
-            ></ConfirmationModal>
-          </form>
-        </div>
+        <Container fluid className="my-3 mx-0 px-0">
+          {" "}
+          <PostCard
+            id={post.id}
+            titulo={post.title}
+            text={post.text}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
+            author={post.author}
+            date={post.date}
+            lm_author={post.lm_author}
+            lm_date={post.lm_date}
+            res_num={comments.length}
+            view_num={post.view_num}
+          />
+        </Container>
       )}
 
-      {/* Comentarios existentes */}
-      <div className="container-xxl my-3">
-        <h2>Comentarios</h2>
-        {comments.map((comment) => (
-          <PostComment
-            key={comment.id} // Usamos el id único
-            title={comment.title}
-            author={comment.author}
-            initialUpvotes={comment.upvotes}
-            initialDownvotes={comment.downvotes}
-            date={comment.date}
+      {usuario === undefined ||
+      post === null ||
+      post.author !== usuario.username ? (
+        <div></div>
+      ) : (
+        <Container fluid className="my-3 mx-0 px-0">
+          {" "}
+          <Container>
+          <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
+            <i className="bi bi-trash"></i>
+            <span>Eliminar Post</span>
+          </Button>
+          </Container>
+          <ConfirmationModal
+            show={showDeletePostModal}
+            handleClose={() => setShowDeletePostModal(false)}
+            handleConfirm={handleConfirmDeletePost}
+            title="Eliminar Post"
+            message="¿Estás seguro de que quieres eliminar este post?"
           />
-        ))}
-      </div>
+        </Container>
+      )}
+      {usuario === undefined ? (
+        <div></div>
+      ) : (
+        <Container fluid className="my-3 mx-0 px-0">
+          <Container>
+            <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              Añadir un nuevo comentario
+            </label>
+            <form onSubmit={handleSubmitComment}>
+              <div className="mb-3">
+                <label htmlFor="commentInput"><span className="visually-hidden">a</span></label>
+                <textarea
+                  aria-label="texto_para_nuevo_comentario"
+                  required
+                  rows={4}
+                  type="text"
+                  className="form-control"
+                  id="commentInput"
+                  value={newComment}
+                  onChange={handleInputChange}
+                />
+                <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                id="publicar_button"
+                disabled
+              >
+                Publicar
+              </button>
 
-      <IndexSelector />
+              <ConfirmationModal
+                message="¿Estás seguro de que quieres crear este comentario?"
+                show={showModal}
+                handleClose={handleClose}
+                handleConfirm={handleConfirm}
+                title="Confirmar Comentario"
+              />
+
+              <Button
+                variant="primary"
+                className="ms-2"
+                onClick={handleClearComment}
+              >
+                Limpiar
+              </Button>
+
+              <ConfirmationModal
+                message="¿Estás seguro de que quieres limpiar el texto escrito?"
+                show={showClearCommentModal}
+                handleClose={() => setShowClearCommentModal(false)}
+                handleConfirm={handleConfirmClearComment}
+                title="Confirmar Limpieza"
+              />
+            </form>
+          </Container>
+        </Container>
+      )}
+
+      <Container fluid className="my-3 mx-0 px-0">
+        <Container>
+          <label
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginTop: "30px",
+            }}
+          >
+            Comentarios
+          </label>
+          <div className="d-flex justify-content-end mb-3">
+            <label htmlFor="sortSelect" className="form-label p-2 mb-0">
+              Ordenar por:
+            </label>
+            <div className="d-flex justify-content-center">
+              <select
+                id="sortSelect"
+                className="form-select"
+                onChange={(e) => handleSortChange(e.target.value)}
+                defaultValue="masPositivos"
+              >
+                <option value="masPositivos">Más votos positivos</option>
+                <option value="menosPositivos">Menos votos positivos</option>
+                <option value="masNegativos">Más votos negativos</option>
+                <option value="menosNegativos">Menos votos negativos</option>
+                <option value="textoAZ">Texto A-Z</option>
+                <option value="textoZA">Texto Z-A</option>
+                <option value="reciente">Más recientes</option>
+                <option value="antiguo">Más antiguos</option>
+              </select>
+            </div>
+          </div>
+        </Container>
+        <Container fluid className="my-3 mx-0 px-0">
+          {post === null || sortedComments.length === 0 ? (
+            <p>No hay comentarios.</p>
+          ) : (
+            paginatedComments.map((comment) => (
+              <PostComment
+                key={comment.id}
+                id={comment.id}
+                postId={comment.postId}
+                title={comment.title}
+                author={comment.author}
+                initialUpvotes={comment.upvotes}
+                initialDownvotes={comment.downvotes}
+                date={comment.date}
+              />
+            ))
+          )}
+        </Container>
+      </Container>
+
+      <IndexSelector
+        totalTopics={sortedComments.length}
+        topicsPerPage={commentsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </MainLayout>
   );
 }

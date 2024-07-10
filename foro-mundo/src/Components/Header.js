@@ -5,20 +5,49 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { useState, forwardRef, useRef, useEffect } from "react";
-import Cookies from "universal-cookie";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-import { FormLabel } from "react-bootstrap";
+import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
+import AccessibilityMenu from "./AccesibilityMenu.js";
+import DarkMode from "./DarkMode/DarkMode.js";
 
 const Header = forwardRef((props, ref) => {
-  const cookies = new Cookies();
   const [expanded, setExpanded] = useState(false);
+  const [isMobile, setMobile] = useState(window.innerWidth < 992);
   const [isCollapsing, setIsCollapsing] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMobile(window.innerWidth < 992);
+    };
+    // Set the initial state based on current window width
+    handleResize();
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function to remove the listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const containerRef = useRef(null);
   const combinedRef = ref || containerRef;
+
+  const usuario = localStorage.getItem("usuario") || undefined;
+
+  const posts = JSON.parse(localStorage.getItem("posts")) || [];
+  const topics = JSON.parse(localStorage.getItem("topics")) || [];
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  const comments = posts.reduce(
+    (acc, post) => [
+      ...acc,
+      ...post.comments.map((comment) => ({
+        ...comment, // Spread all existing properties of the comment
+      })),
+    ],
+    []
+  );
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -45,7 +74,6 @@ const Header = forwardRef((props, ref) => {
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const allSuggestions = ["Coche", "Mundo", "Pepe", "Off-topic", "Cine"];
 
   const [inputValue, setInputValue] = useState("");
 
@@ -57,11 +85,82 @@ const Header = forwardRef((props, ref) => {
       setSuggestions([]);
       setShowSuggestions(false);
     } else {
-      const filteredSuggestions = allSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(userInput.toLowerCase()),
-      );
-      setSuggestions(filteredSuggestions);
+      const topicSuggestions = topics
+        .filter((topic) =>
+          topic.topic.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((topic) => ({
+          label: `Topic: `,
+          display: topic.topic,
+          type: "topic",
+          id: topic.id,
+        }));
+
+      const postSuggestions = posts
+        .filter((post) =>
+          post.title.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((post) => ({
+          label: `Post: `,
+          display: post.title,
+          type: "post",
+          id: post.id,
+        }));
+
+      const commentSuggestions = comments
+        .filter((comment) =>
+          comment.title.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((comment) => ({
+          label: `Comment: `,
+          display: comment.title,
+          type: "comment",
+          id: comment.id,
+          postId: comment.postId,
+        }));
+
+      const userSuggestions = usuarios
+        .filter((user) =>
+          user.username.toLowerCase().includes(userInput.toLowerCase())
+        )
+        .map((user) => ({
+          label: `Usuario: `,
+          display: user.username,
+          type: "user",
+          id: user.username,
+        }));
+
+      const combinedSuggestions = [
+        ...topicSuggestions,
+        ...postSuggestions,
+        ...commentSuggestions,
+        ...userSuggestions,
+      ];
+      setSuggestions(combinedSuggestions.slice(0, 5));
       setShowSuggestions(true);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setShowSuggestions(false);
+    setInputValue(suggestion.label);
+    setSuggestions([]);
+
+    switch (suggestion.type) {
+      case "topic":
+        navigate(`/topic/${suggestion.id}`);
+        break;
+      case "post":
+        navigate(`/post/${suggestion.id}`);
+        break;
+      case "comment":
+        navigate(`/post/${suggestion.postId}`);
+        break;
+      case "user":
+        navigate(`/perfil/${suggestion.id}`);
+        break;
+      default:
+        console.log("Unknown suggestion type");
     }
   };
 
@@ -73,13 +172,23 @@ const Header = forwardRef((props, ref) => {
       return;
     }
     console.log("Searching for:", inputValue);
-    navigate(`/search?query=${encodeURIComponent(inputValue)}`);
+    navigate(`/buscar?query=${encodeURIComponent(inputValue)}`);
   };
 
   const { showToast } = useToast();
 
   const handleLogout = () => {
-    cookies.remove("user", { path: "/", secure: true, sameSite: "None" });
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    usuario.lastDisconnection = new Date().toLocaleString();
+    localStorage.setItem(
+      "usuarios",
+      JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((user) =>
+          user.username === usuario.username ? usuario : user
+        )
+      )
+    );
+    localStorage.removeItem("usuario");
     showToast("Se ha cerrado la sesión!", "bg-success");
     navigate("/");
   };
@@ -96,11 +205,8 @@ const Header = forwardRef((props, ref) => {
         <Navbar.Brand
           as={Link}
           to="/"
+          id="brand"
           className="text-secondary m-auto"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-          }}
         >
           Mundo Foro
         </Navbar.Brand>
@@ -110,83 +216,85 @@ const Header = forwardRef((props, ref) => {
             <div></div> {/* Placeholder for left alignment */}
             <Form
               onSubmit={handleSubmit}
-              className={`d-flex my-2 ${
+              className={`d-flex my-2 position-relative ${
                 expanded || isCollapsing ? "" : "w-50"
               }`}
-              style={{ position: "relative" }}
+              aria-label="Barra de búsqueda"
             >
-              <FormLabel htmlFor="searchInput" className="visually-hidden">
-                Buscar
-              </FormLabel>
-              <FormControl
-                title="Buscar"
-                id="searchInput"
-                type="search"
-                className="me-2"
-                aria-label="Buscar"
-                value={inputValue}
-                onChange={handleInputChange}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setShowSuggestions(false);
-                  }, 200);
-                }}
-                onFocus={() => {
-                  if (inputValue && suggestions.length > 0) {
-                    setShowSuggestions(true);
-                  }
-                }}
-                required
-                autoComplete="off"
-              />
+              <Container className="d-flex align-items-center">
+                <FormLabel htmlFor="searchInput" className="visually-hidden">
+                  Buscar
+                </FormLabel>
+                <FormControl
+                  title="Buscar"
+                  id="searchInput"
+                  type="search"
+                  className="me-2"
+                  aria-label="Buscar"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onBlur={() => {
+                    setTimeout(() => {
+                      setShowSuggestions(false);
+                    }, 200);
+                  }}
+                  onFocus={() => {
+                    if (inputValue && suggestions.length > 0) {
+                      setShowSuggestions(true);
+                    }
+                  }}
+                  required
+                  autoComplete="off"
+                />
+                {showSuggestions && inputValue && suggestions.length > 0 && (
+                  <div
+                    id="search_suggestions"
+                    className="bg-secondary-subtle w-100 position-absolute z-2 border-1 shadow"
+                    role="listbox"
+                    aria-label="Sugerencias de búsqueda"
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: "100%",
+                      zIndex: 2,
+                      border: "1px solid #ccc",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                    }} //no quitar
+                  >
+                    {suggestions.map((suggestion, index) => (
+                      <div
+                        key={index}
+                        role="option"
+                        tabIndex="0"
+                        aria-selected={inputValue === suggestion.username}
+                        className="p-1 custom-list-item"
+                        style={{cursor: "pointer"}}
+                        onClick={() => handleSuggestionClick(suggestion)}
+                      >
+                        <strong>{suggestion.label}</strong>
+                        <span>{suggestion.display}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Container>
+
               <Button
-                className="d-flex"
+                className="d-flex align-items-center justify-content-center m-1"
                 variant="outline-secondary"
                 type="submit"
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
-                <span className="me-1">Buscar</span>
+                <span id="search" className="me-1 bg-transparent">
+                  Buscar
+                </span>
                 <i className="bi bi-search"></i>
               </Button>
-              {showSuggestions && inputValue && suggestions.length > 0 && (
-                <div
-                  className="bg-white"
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: "100%",
-                    zIndex: 2,
-                    border: "1px solid #ccc",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-                  }}
-                  role="listbox"
-                  aria-label="Sugerencias de búsqueda"
-                >
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={index}
-                      role="option"
-                      tabIndex="0"
-                      aria-selected={inputValue === suggestion}
-                      style={{ padding: "10px", cursor: "pointer" }}
-                      onClick={() => {
-                        console.log("Selected suggestion:", suggestion);
-                        setInputValue(suggestion);
-                        setShowSuggestions(false);
-                        setSuggestions([]);
-                        document.getElementById("searchInput").focus();
-                      }}
-                    >
-                      {suggestion}
-                    </div>
-                  ))}
-                </div>
-              )}
             </Form>
             <Nav className="d-flex align-items-center justify-content-center h-100">
-              {cookies.get("user") !== undefined && (
+              {usuario !== undefined && (
                 <>
                   <OverlayTrigger
                     placement="bottom"
@@ -195,9 +303,10 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/create"
+                      to="/crear/0"
                       aria-label="Crear post"
                     >
+                      {isMobile && <span className="me-2">Crear</span>}
                       <i className="bi bi-plus-circle custom-icon"></i>
                       <span className="visually-hidden">Crear post</span>
                     </Nav.Link>
@@ -209,9 +318,10 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/profile"
+                      to="/perfil"
                       aria-label="Perfil"
                     >
+                      {isMobile && <span className="me-2">Perfil</span>}
                       <i className="bi bi-person-circle custom-icon"></i>
                       <span className="visually-hidden">Perfil</span>
                     </Nav.Link>
@@ -223,15 +333,18 @@ const Header = forwardRef((props, ref) => {
                     <Nav.Link
                       className="d-flex align-items-center justify-content-center"
                       as={Link}
-                      to="/messenger"
+                      to="/mensajes"
                       aria-label="Mensajes"
                     >
+                      {isMobile && <span className="me-2">Mensajes</span>}
                       <i className="bi bi-chat custom-icon"></i>
                       <span className="visually-hidden">Mensajes</span>
                     </Nav.Link>
                   </OverlayTrigger>
                 </>
               )}
+              <AccessibilityMenu />
+
               <OverlayTrigger
                 placement="bottom"
                 overlay={<Tooltip id="tooltip-help">Ayuda</Tooltip>}
@@ -239,18 +352,21 @@ const Header = forwardRef((props, ref) => {
                 <Nav.Link
                   className="d-flex align-items-center justify-content-center"
                   as={Link}
-                  to="/help"
+                  to="/ayuda"
                   aria-label="Ayuda"
                 >
+                  {isMobile && (
+                    <span className="text-secondary me-2">Ayuda</span>
+                  )}
                   <i className="bi bi-question-circle custom-icon"></i>
                   <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>
               </OverlayTrigger>
 
-              {cookies.get("user") === undefined ? (
+              {usuario === undefined ? (
                 <Nav.Link
                   as={Link}
-                  to="/login"
+                  to="/inicioSesion"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -271,10 +387,10 @@ const Header = forwardRef((props, ref) => {
                   Cerrar Sesión
                 </Nav.Link>
               )}
-              {cookies.get("user") === undefined ? (
+              {usuario === undefined ? (
                 <Nav.Link
                   as={Link}
-                  to="/register"
+                  to="/registro"
                   className="text-secondary m-auto custom-link"
                   style={{
                     fontSize: "1rem",
@@ -286,6 +402,7 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
+              <DarkMode />
             </Nav>
           </Nav>
         </Navbar.Collapse>

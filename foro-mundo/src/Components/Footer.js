@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 const Footer = () => {
+
   return (
-    <footer className="bg-primary text-secondary text-center py-4 border-top border-dark-subtle">
+    <footer className="custom-footer">
       <p className="m-0">
         &copy; 2024 Mundo Foro. Todos los derechos reservados.{" "}
-        <NavLink to="/help" style={{ color: "inherit" }}>
+        <NavLink to="/ayuda" style={{ color: "inherit" }}>
           Contacto
         </NavLink>
       </p>

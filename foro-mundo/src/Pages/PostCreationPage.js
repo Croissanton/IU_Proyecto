@@ -1,33 +1,40 @@
 import MainLayout from "../layout/MainLayout.js";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Breadcrumb } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Breadcrumb, Button } from "react-bootstrap";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
 import { useToast } from "../Context/ToastContext.js";
-import { Link, useNavigate } from "react-router-dom";
-
-
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 function PostCreationPage() {
   useEffect(() => {
     document.title = "Crear Post";
   }, []);
 
+  const { topicId } = useParams();
+  const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
+  const topics = JSON.parse(localStorage.getItem("topics")) || [];
+
   const [showModal, setShowModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    category: topicId !== "0" ? topicId : "default",
+    text: "",
+  });
+
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   const handleClose = () => {
     setShowModal(false);
-    showToast("El post no se ha creado.", "bg-danger");
   };
 
   const handleConfirm = () => {
+    const postId = savePostData();
     setShowModal(false);
     showToast("El post se ha creado correctamente!", "bg-success");
-    navigate("/search");
+    navigate(`/post/${postId}`);
   };
 
   const handleKeyDown = (e) => {
@@ -37,32 +44,88 @@ function PostCreationPage() {
     }
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [id]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-  
-    // Verificación adicional para asegurarse de que una categoría válida ha sido seleccionada
-    const categoriaSelect = form.querySelector('#categoria');
-    if (categoriaSelect.value === "default") {
+
+    if (formData.category === "default") {
       alert("Por favor, selecciona una categoría antes de continuar.");
       return;
     }
-  
+
     if (form.reportValidity()) {
       setShowModal(true);
     }
   };
 
+  const savePostData = () => {
+    const post = {
+      id: uuidv4(),
+      topicId: formData.category,
+      title: formData.title,
+      upvotes: 0,
+      downvotes: 0,
+      text: formData.text,
+      author: usuario.username,
+      date: new Date().toLocaleString(),
+      res_num: 0,
+      view_num: 0,
+      lm_author: "",
+      lm_date: "",
+      comments: [],
+    };
+
+    // Guardar en localStorage
+    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    existingPosts.push(post);
+    localStorage.setItem("posts", JSON.stringify(existingPosts));
+
+    // Actualizar el número de posts en el localStorage para el topic correspondiente
+    const updatedTopics = topics.map((topic) => {
+      if (topic.id === parseInt(post.topicId)) {
+        return {
+          ...topic,
+          post_num: (topic.post_num || 0) + 1,
+        };
+      }
+      return topic;
+    });
+
+    localStorage.setItem("topics", JSON.stringify(updatedTopics));
+
+    return post.id;
+  };
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Crear Post</h1>
-        <Breadcrumb className="custom-breadcrumb" >
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Crear Post</Breadcrumb.Item>
         </Breadcrumb>
       </div>
+      <label
+        style={{
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+          paddingBottom: "50px",
+        }}
+      >
+        Crear post
+      </label>
       <div style={{ display: "flex" }}>
         <div
           className="m-auto"
@@ -74,38 +137,41 @@ function PostCreationPage() {
             className="row col-12 g-3"
           >
             <div className="col-md-6">
-              <label htmlFor="inputTitulo" className="form-label">
-                Título
+              <label htmlFor="title" className="form-label">
+                Título (máximo 90 caracteres)
               </label>
               <input
                 type="text"
                 required
                 className="form-control"
-                id="inputTitulo"
-              ></input>
+                id="title"
+                value={formData.title}
+                maxLength={90}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="col-md-6">
-              <label htmlFor="categoria" className="form-label">
+              <label htmlFor="category" className="form-label">
                 Categoría
               </label>
               <select
-                name="categoria"
-                id="categoria"
+                name="category"
+                id="category"
                 required
                 className="form-control"
-                defaultValue={"default"}
+                value={formData.category}
+                onChange={handleInputChange}
               >
-                <option value="default" disabled>
+                <option value="default" disabled={formData.category !== "default"}>
                   Selecciona una categoría...
                 </option>
-                <option value="general">General</option>
-                <option value="coches">Coches</option>
-                <option value="musica">Música</option>
-                <option value="plantas">Plantas</option>
+                {topics.map(topic => (
+                  <option key={topic.id} value={topic.id}>{topic.topic}</option>
+                ))}
               </select>
             </div>
             <div className="col-12">
-              <label htmlFor="inputTexto" className="form-label">
+              <label htmlFor="text" className="form-label">
                 Texto
               </label>
               <textarea
@@ -113,7 +179,9 @@ function PostCreationPage() {
                 className="form-control input-group-lg"
                 required
                 rows={7}
-                id="inputTexto"
+                id="text"
+                value={formData.text}
+                onChange={handleInputChange}
               ></textarea>
             </div>
             <Button type="submit" className="btn btn-primary">

@@ -34,8 +34,7 @@ function ToastMessage({
       <Toast.Header>
         <strong className="m-auto">Notificacion</strong>
       </Toast.Header>
-      <Toast.Body>{message}</Toast.Body>
-    </Toast>
+      <Toast.Body style={{ color: "black" }}>{message}</Toast.Body></Toast>
   );
 }
 

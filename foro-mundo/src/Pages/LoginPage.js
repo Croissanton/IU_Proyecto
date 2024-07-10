@@ -1,83 +1,107 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "universal-cookie";
-import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Breadcrumb } from "react-bootstrap";
+import ConfirmationModal from "../Components/ConfirmationModal.js";
+
+function getByUsernameAndPassword(username, password) {
+  const usuarios = JSON.parse(localStorage.getItem("usuarios"));
+  const usuario = usuarios.find(
+    (usuario) => usuario.username === username && usuario.password === password
+  );
+  return usuario || null;
+}
 
 function LoginPage() {
   useEffect(() => {
-    document.title = "Login";
+    document.title = "Inicio de Sesión";
   }, []);
 
-  const cookies = new Cookies();
-  const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
+  const [usuario, setusuario] = useState(null);
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (user) {
-      navigate("/"); // Redirigir después de que se actualice el estado de user
+    if (usuario) {
+      navigate("/");
     }
-  }, [user, navigate]);
+  }, [usuario, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showHomeModal, setShowHomeModal] = useState(false);
 
-  const login = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    // Validar credenciales, por ejemplo:
-    if (username === "usuario" && password === "contraseña") {
-      const userData = {
-        username: "usuario",
-        password: "contraseña",
-        name: "Juan",
-        lastName: "Perez",
-        birthDate: "1990-01-01",
-        country: "Mexico",
-        city: "CDMX",
-        socialMedia: "https://www.facebook.com/juanperez",
-        description: "Soy un desarrollador web",
-      };
-      cookies.set("user", userData, {
-        path: "/",
-        secure: true,
-        sameSite: "None",
-      });
-      setUser(userData);
+    const usuario = getByUsernameAndPassword(username, password);
+    if (usuario) {
+      usuario.lastConnection = new Date().toLocaleString();
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      setusuario(usuario);
+      localStorage.setItem(
+        "usuarios",
+        JSON.stringify(
+          JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+            u.username === usuario.username ? usuario : u
+          )
+        )
+      );
       showToast("Inicio de sesión correcto.", "bg-success");
     } else {
       alert("Nombre de usuario o contraseña incorrectos.");
     }
   };
 
+  const handleRegister = () => {
+    setShowRegisterModal(true);
+  };
+
+  const confirmRegister = () => {
+    setShowRegisterModal(false);
+    navigate("/registro");
+  };
+
+  const handleHome = () => {
+    setShowHomeModal(true);
+  };
+
+  const confirmHome = () => {
+    setShowHomeModal(false);
+    navigate("/");
+  };
+
   return (
     <div
+      id="login-page"
       className="container-fluid d-flex justify-content-center align-items-center border border-dark-subtle bg-light"
-      style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}
+      style={{ minHeight: "100vh" }}
     >
       <div
+        id="login-form"
         className="p-4"
         style={{
           maxWidth: "400px",
-          background: "#ececec",
           borderRadius: "8px",
           boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
         }}
       >
-      <Breadcrumb className="custom-breadcrumb">
-      <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-        <Breadcrumb.Item active aria-label="enlace_a_login">
-          Login
-        </Breadcrumb.Item>
-      </Breadcrumb>
-        <form className="row col-12 g-3" onSubmit={login}>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active aria-label="enlace_a_login">
+            Login
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <form className="row col-12 g-3" onSubmit={handleLogin}>
           <div className="login-container text-center">
-            <h1>Bienvenido</h1>
-            <p>Por favor, inicia sesión para continuar.</p>
+            <label style={{ fontSize: "2.5rem" }}>Bienvenido</label>
+            <label style={{ fontSize: "1rem", paddingBottom: "25px" }}>
+              Por favor, inicia sesión para continuar.
+            </label>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Nombre de usuario
@@ -90,7 +114,7 @@ function LoginPage() {
                 aria-label="nombre_de_usuario"
                 required
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setusername(e.target.value)}
                 style={{
                   marginBottom: "0.5rem",
                   width: "300px",
@@ -129,6 +153,7 @@ function LoginPage() {
                   }
                 >
                   <button
+                    id="toggle_password_visibility"
                     type="button"
                     className={
                       showPassword
@@ -149,12 +174,32 @@ function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/register")}
+              onClick={handleRegister}
               className="btn btn-primary text-secondary border border-secondary-subtle m-3"
             >
               Registrarse
             </button>
-            <BackButton />
+            <ConfirmationModal
+              show={showRegisterModal}
+              handleClose={() => setShowRegisterModal(false)}
+              handleConfirm={confirmRegister}
+              title="Confirmar registro"
+              message="¿Estás seguro de que quieres ir a la página de registro?"
+            />
+            <button
+              type="button"
+              onClick={handleHome}
+              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+            >
+              Volver al Inicio
+            </button>
+            <ConfirmationModal
+              show={showHomeModal}
+              handleClose={() => setShowHomeModal(false)}
+              handleConfirm={confirmHome}
+              title="Volver al inicio"
+              message="¿Estás seguro de que quieres volver a la página de inicio?"
+            />
           </div>
         </form>
       </div>

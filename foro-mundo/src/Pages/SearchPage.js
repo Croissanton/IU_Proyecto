@@ -1,106 +1,221 @@
-import React from "react";
-import MainLayout from "../layout/MainLayout.js";
-import PostCard from "../Components/PostCard.js";
-import IndexSelector from "../Components/IndexSelector.js";
-import { Breadcrumb } from "react-bootstrap";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Container, ListGroup, Breadcrumb, Col, Row } from "react-bootstrap";
+import MainLayout from "../layout/MainLayout";
 
-function SearchPage() {
+const SearchPage = () => {
+
+
+  const [suggestions, setSuggestions] = useState({
+    users: [],
+    posts: [],
+    comments: [],
+    topics: [],
+  });
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fetchSuggestions = (query) => {
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+    const topics = JSON.parse(localStorage.getItem("topics")) || [];
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const comments = posts.reduce(
+      (acc, post) => [
+        ...acc,
+        ...post.comments.map((comment) => ({
+          ...comment,
+          postId: post.id,
+        })),
+      ],
+      []
+    );
+
+    const topicSuggestions = topics
+      .filter((topic) =>
+        topic.topic.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((topic) => ({
+        ...topic,
+        type: "topic",
+      }));
+
+    const postSuggestions = posts
+      .filter((post) => post.title.toLowerCase().includes(query.toLowerCase()))
+      .map((post) => ({
+        ...post,
+        type: "post",
+      }));
+
+    const postAuthorSuggestions = posts
+      .filter((post) => post.author.toLowerCase().includes(query.toLowerCase()))
+      .map((post) => ({
+        ...post,
+        type: "post",
+      }));
+
+    const commentSuggestions = comments
+      .filter((comment) =>
+        comment.title.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((comment) => ({
+        ...comment,
+        type: "comment",
+      }));
+
+    const commentAuthorSuggestions = comments
+      .filter((comment) =>
+        comment.author.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((comment) => ({
+        ...comment,
+        type: "comment",
+      }));
+
+    const userSuggestions = usuarios
+      .filter((user) =>
+        user.username.toLowerCase().includes(query.toLowerCase())
+      )
+      .map((user) => ({
+        ...user,
+        type: "user",
+      }));
+
+    setSuggestions({
+      users: userSuggestions,
+      posts: postSuggestions.concat(postAuthorSuggestions),
+      comments: commentSuggestions.concat(commentAuthorSuggestions),
+      topics: topicSuggestions,
+    });
+  };
+
   useEffect(() => {
-    document.title = "Posts";
-  }, []);
+    document.title = "Búsqueda";
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get("query");
+    if (query) {
+      setQuery(query);
+      fetchSuggestions(query);
+    }
+  }, [location]);
 
-  const cookies = new Cookies();
+  const handleSuggestionClick = (suggestion) => {
+    switch (suggestion.type) {
+      case "topic":
+        navigate(`/topic/${suggestion.id}`);
+        break;
+      case "post":
+        navigate(`/post/${suggestion.id}`);
+        break;
+      case "comment":
+        navigate(`/post/${suggestion.postId}`);
+        break;
+      case "user":
+        navigate(`/perfil/${suggestion.username}`);
+        break;
+      default:
+        console.warn("Unknown suggestion type");
+    }
+  };
+
+  const renderSuggestionList = (title, items) => (
+    <Col md={6} lg={3}>
+      <label
+          style={{
+            fontSize: "2rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+          }}
+          aria-label={`${title}`}
+        >
+          {title}
+        </label>
+      <ListGroup>
+        {items.map((suggestion, index) => (
+          <ListGroup.Item
+            key={index}
+            action
+            onClick={() => handleSuggestionClick(suggestion)}
+          >
+            <Container>
+              {suggestion.type === "user" ? (
+                <>
+                  <img
+                    src={suggestion.profilePicture || "https://via.placeholder.com/150"}
+                    alt="Foto de perfil"
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px", borderRadius: "50%" }}
+                  />
+                  {suggestion.username}
+                </>
+              ) : (
+                suggestion.title || suggestion.topic || suggestion.username
+              )}
+              {suggestion.author && (
+                <>
+                  <br />
+                  <span>
+                    Creado por:{" "}
+                    <Link
+                      className="custom-text-link"
+                      to={`/perfil/${suggestion.author}`}
+                    >
+                      {suggestion.author}
+                    </Link>
+                  </span>
+                </>
+              )}
+            </Container>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </Col>
+  );
 
   return (
     <MainLayout>
-      <div className="container-xxl my-3">
-      <h1> Foro </h1>
-      <Breadcrumb className="custom-breadcrumb" >
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
-          <Breadcrumb.Item active>Foro</Breadcrumb.Item>{" "}
-          {/* Aquí debería ir el nombre del topico */}
+      <div className="container-xxl my-2">
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>Buscar</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      {cookies.get("user") === undefined ? (
-        <div></div>
-      ) : (
-        <div className="row justify-content-center">
-          <div className="col-auto">
-            <Link to="/create" className="btn btn-primary">
-              Crear Nuevo Post
-            </Link>
-          </div>
-        </div>
-      )}
-
-      <div className="container-xxl my-3">
-        <PostCard
-          titulo={"buen foro :D"}
-          text={"Este es un foro muy bueno"}
-          author={"Juan Jaun"}
-          date={"18.10.1992"}
-          lm_author={"Jose Jose"}
-          lm_date={"19.04.2024"}
-          res_num={100}
-          view_num={1000}
-        />
-        <PostCard
-          titulo={"Por que me ha explotado el radiador??"}
-          text={"El radiador de mi casa ha explotado y no se que hacer"}
-          author={"Ignacio19291"}
-          date={"05.02.2023"}
-          res_num={69}
-          view_num={552}
-          lm_author={"Mikixd"}
-          lm_date={"15.04.2024"}
-        />
-        <PostCard
-          titulo={"Mi gato se ha comido a mi abuela :( que hago"}
-          text={"Mi gato se ha comido a mi abuela y no se que hacer :("}
-          author={"Ignacio19291"}
-          date={"10.04.2024"}
-          res_num={32}
-          view_num={543}
-          lm_author={"usuarionumeritos1234235345i"}
-          lm_date={"11.04.2024"}
-        />
-        <PostCard
-          titulo={"Mi abuela se ha comido a mi gato.........!!"}
-          text={"Mi abuela se ha comido a mi gato y no se que hacer :'("}
-          author={"percebe43"}
-          date={"01.04.2024"}
-          res_num={63}
-          view_num={764}
-          lm_author={"wawawaaaa"}
-          lm_date={"03.04.2024"}
-        />
-        <PostCard
-          titulo={"La gasolina casi a 2€"}
-          text={"La gasolina esta a punto de llegar a los 2€, que opinan?"}
-          author={"Ignacio19291"}
-          date={"12.03.2024"}
-          res_num={52}
-          view_num={430}
-          lm_author={"Mikixd"}
-          lm_date={"02.04.2024"}
-        />
-        <PostCard
-          titulo={"no se que poner aqui"}
-          text={"no se que poner aqui"}
-          author={"percebe43"}
-          date={"01.04.2024"}
-          res_num={63}
-          view_num={764}
-          lm_author={"lentejas55"}
-          lm_date={"01.04.2024"}
-        />
-      </div>
-      <IndexSelector />
+      <label
+        style={{
+          fontSize: "3rem",
+          fontWeight: "bold",
+          display: "block",
+          textAlign: "center",
+        }}
+      >
+        Búsqueda
+      </label>
+      <Container>
+        <label
+          style={{
+            fontSize: "2rem",
+            fontWeight: "bold",
+            display: "block",
+            textAlign: "center",
+          }}
+          aria-label={`Resultados de búsqueda: ${query}`}
+        >
+          Resultados de búsqueda: "{query}"
+        </label>
+        <hr />
+        <Row>
+          {renderSuggestionList("Usuarios", suggestions.users)}
+          {renderSuggestionList("Posts", suggestions.posts)}
+          {renderSuggestionList("Comentarios", suggestions.comments)}
+          {renderSuggestionList("Foros", suggestions.topics)}
+        </Row>
+      </Container>
     </MainLayout>
   );
-}
+};
 
 export default SearchPage;

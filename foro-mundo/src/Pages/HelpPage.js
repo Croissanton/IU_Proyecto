@@ -11,35 +11,47 @@ function HelpPage() {
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Ayuda</h1>
         <nav aria-label="breadcrumb">
           <Breadcrumb className="custom-breadcrumb">
             <Breadcrumb.Item linkAs={NavLink} linkProps={{ to: "/" }}>
               Inicio
             </Breadcrumb.Item>
-            <Breadcrumb.Item active aria-current="page">Ayuda</Breadcrumb.Item>
+            <Breadcrumb.Item active aria-current="page">
+              Ayuda
+            </Breadcrumb.Item>
           </Breadcrumb>
         </nav>
+        <label style={{ fontSize: "3rem", fontWeight: "bold" }}>Ayuda</label>
       </div>
       <div className="container-xxl my-3 pb-2 pt-2">
-        <h2>Atajos:</h2>
+        <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Atajos</label>
         <ul>
-          <li>CTRL+ALT+C : Chats</li>
-          <li>CTRL+ALT+P : Crear post</li>
-          <li>CTRL+ALT+R : Registro</li>
-          <li>CTRL+ALT+L : Inicio de sesión</li>
-          <li>CTRL+ALT+H : Ayuda</li>
+          <li>CTRL+ALT/CMD +C : Chats</li>
+          <li>CTRL+ALT/CMD+P : Crear post</li>
+          <li>CTRL+ALT/CMD+R : Registro</li>
+          <li>CTRL+ALT/CMD+L : Inicio de sesión</li>
+          <li>CTRL+ALT/CMD+H : Ayuda</li>
         </ul>
       </div>
       <hr />
       <div className="container-xxl my-3">
-        <h2>Contacto</h2>
+        <label style={{ fontSize: "2rem", fontWeight: "bold" }}>Contacto</label>
         <p>
           Si tienes alguna duda o sugerencia, no dudes en ponerte en contacto
           con nosotros.
         </p>
-        <p>Puedes escribirnos a nuestro correo electrónico: <a href="mailto:pepelu49@uma.es">pepelu49@uma.es</a></p>
-        <p>O llamarnos por teléfono al número: <a href="tel:+123456789">123456789</a></p>
+        <p>
+          Puedes escribirnos a nuestro correo electrónico:{" "}
+          <a className="custom-text-link" href="mailto:pepelu49@uma.es">
+            pepelu49@uma.es
+          </a>
+        </p>
+        <p>
+          O llamarnos por teléfono al número:{" "}
+          <a className="custom-text-link" href="tel:+123456789">
+            123456789
+          </a>
+        </p>
       </div>
     </MainLayout>
   );

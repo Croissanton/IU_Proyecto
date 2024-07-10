@@ -1,33 +1,48 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb } from "react-bootstrap";
-import Cookies from "universal-cookie";
+import { Breadcrumb, Col, Row, Container } from "react-bootstrap";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "../Components/ConfirmationModal";
 
 function ProfilePage() {
   useEffect(() => {
-    document.title = "Perfil";
+    document.title = "Mi Perfil";
   }, []);
 
-  const cookies = new Cookies();
-  const cookieUser = cookies.get("user");
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
 
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    username: cookieUser ? cookieUser.username : "",
-    password: cookieUser ? cookieUser.password : "",
-    name: cookieUser ? cookieUser.name : "",
-    lastName: cookieUser ? cookieUser.lastName : "",
-    birthDate: cookieUser ? cookieUser.birthDate : "",
-    country: cookieUser ? cookieUser.country : "",
-    city: cookieUser ? cookieUser.city : "",
-    socialMedia: cookieUser ? cookieUser.socialMedia : "",
-    description: cookieUser ? cookieUser.description : "",
-    imageInput: cookieUser ? cookieUser.image : "",
+    username: usuario ? usuario.username : "",
+    password: usuario ? usuario.password : "",
+    name: usuario ? usuario.name : "",
+    lastName: usuario ? usuario.lastName : "",
+    birthDate: usuario ? usuario.birthDate : "",
+    country: usuario ? usuario.country : "",
+    city: usuario ? usuario.city : "",
+    socialMedia: usuario ? usuario.socialMedia : "",
+    description: usuario ? usuario.description : "",
+    profilePicture: usuario
+      ? usuario.profilePicture
+      : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg",
+    friendList: usuario ? usuario.friendList : [],
+    incomingRequests: usuario ? usuario.incomingRequests : [],
+    blockList: usuario ? usuario.blockList : [],
+    upPosts: usuario ? usuario.upPosts : [],
+    downPosts: usuario ? usuario.downPosts : [],
+    upComments: usuario ? usuario.upComments : [],
+    downComments: usuario ? usuario.downComments : [],
+    lastConnection: usuario ? usuario.lastConnection : "",
+    lastDisconnection: usuario ? usuario.lastDisconnection : "",
   });
 
-  const [initialProfileData, setInitialProfileData] = useState({ ...profileData });
+  const [initialProfileData, setInitialProfileData] = useState({
+    ...profileData,
+  });
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] =
+    useState(false);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -41,16 +56,38 @@ function ProfilePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowConfirmationModal(true);
+  };
+
+  const handleSaveChanges = () => {
+    localStorage.setItem("usuario", JSON.stringify(profileData));
+
+    localStorage.setItem(
+      "usuarios",
+      JSON.stringify(
+        JSON.parse(localStorage.getItem("usuarios")).map((user) => {
+          if (user.username === profileData.username) {
+            return profileData;
+          }
+          return user;
+        })
+      )
+    );
+    setIsEditing(false);
     console.log("Submitting Data:", profileData);
-    cookies.set("user", profileData, { path: "/", secure: true, sameSite: 'None'});
-    setIsEditing(false); // Disable editing mode on successful validation and submission
-    setInitialProfileData({ ...profileData }); // Update the initial data to the new saved data
-    showToast("Se han guardado los cambios!"); 
+    setInitialProfileData({ ...profileData });
+    showToast("Se han guardado los cambios!", "bg-success");
+    setShowConfirmationModal(false);
   };
 
   const handleCancel = () => {
+    setShowCancelConfirmationModal(true);
+  };
+
+  const handleCancelConfirmation = () => {
     setProfileData({ ...initialProfileData });
     setIsEditing(false);
+    setShowCancelConfirmationModal(false);
   };
 
   const handleImageSelection = (event) => {
@@ -58,148 +95,260 @@ function ProfilePage() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        document.querySelector("img").src = e.target.result;
+        setProfileData((prev) => ({
+          ...prev,
+          profilePicture: e.target.result,
+        }));
       };
       reader.readAsDataURL(file);
-      profileData.imageInput = ""; //Puede que se implemente en el futuro, por ahora no.
+    } else {
+      setProfileData((prev) => ({
+        ...prev,
+        profilePicture:
+          "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg",
+      }));
     }
   };
 
   return (
     <MainLayout>
       <div className="container-xxl my-3">
-        <h1>Mi Perfil</h1>
-        <Breadcrumb className="custom-breadcrumb" >
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Inicio</Breadcrumb.Item>
+        <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+            Inicio
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Mi perfil</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <div style={{ display: "flex" }}>
-        <div className="m-auto">
-          <img
-            src="https://via.placeholder.com/150"
-            alt="profile"
-            width="250"
-            height="350"
-            style={{ justifyContent: "center" }}
-          />
-          <div className="m-auto">
-            <input
-              type="file"
-              id="imageInput"
-              value={profileData.imageInput}
-              style={{ display: "none" }}
-              onChange={handleImageSelection}
-            />
-            {isEditing && (
-              <button
-                type="button"
-                className="btn btn-primary"
-                style={{ marginTop: "10px" }}
-                onClick={() => document.getElementById("imageInput").click()}
+      <Container>
+        <Row>
+          <Col md={3} className="m-auto">
+            <Row>
+              <label
+                style={{
+                  fontSize: "3rem",
+                  fontWeight: "bold",
+                  display: "block",
+                  textAlign: "center",
+                  paddingBottom: "50px",
+                }}
               >
-                Cambiar foto
-              </button>
-            )}
-            <label htmlFor="imageInput" className="form-label"> Imagen del perfil </label> 
-          </div>
-        </div>
-        <div
-          className="m-auto"
-          style={{ width: "60%", display: "flex", justifyContent: "flex-end" }}
-        >
-          <form className="row col-12 g-3" onSubmit={handleSubmit}>
-            <InputComponent
-              id="name"
-              label="Nombre"
-              value={profileData.name}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="lastName"
-              label="Apellidos"
-              value={profileData.lastName}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="birthDate"
-              type="date"
-              label="Fecha de Nacimiento"
-              value={profileData.birthDate}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="country"
-              label="País"
-              value={profileData.country}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={true}
-            />
-            <InputComponent
-              id="city"
-              label="Ciudad"
-              value={profileData.city}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-            />
-            <InputComponent
-              id="socialMedia"
-              label="Redes"
-              type="textarea"
-              value={profileData.socialMedia}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-            />
-            <InputComponent
-              id="description"
-              label="Descripción"
-              type="textarea"
-              value={profileData.description}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-              required={false}
-            />
-
-            <div className="col-12">
-              {!isEditing ? (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => setIsEditing(true)}
-                >
-                  Editar
-                </button>
-              ) : (
-                <div className="col-12">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ marginRight: "10px" }}
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-light"
-                    onClick={handleCancel}
-                  >
-                    Cancelar
-                  </button>
-                </div>
+                {profileData.username}
+              </label>
+            </Row>
+            <Row>
+              <img
+                src={
+                  profileData.profilePicture
+                    ? profileData.profilePicture
+                    : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
+                }
+                alt="Foto de perfil"
+                className="m-0 p-0 shadow"
+              />
+            </Row>
+            <Row className="m-auto">
+              <input
+                type="file"
+                id="imageInput"
+                style={{ display: "none" }}
+                onChange={handleImageSelection}
+              />
+              {isEditing && (
+                <Row className="my-2 mx-0 px-0">
+                  <Col className="d-flex align-items-center justify-content-center">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() =>
+                        document.getElementById("imageInput").click()
+                      }
+                    >
+                      Cambiar foto
+                    </button>
+                  </Col>
+                  <Col className="d-flex align-items-center justify-content-center">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() =>
+                        handleImageSelection({ target: { files: [] } })
+                      }
+                    >
+                      Quitar foto
+                    </button>
+                  </Col>
+                </Row>
               )}
-            </div>
-          </form>
-        </div>
-      </div>
+              <label htmlFor="imageInput" className="form-label" hidden>
+                {" "}
+                Imagen del perfil{" "}
+              </label>
+            </Row>
+          </Col>
+          <Col md={6} className="m-auto shadow">
+            <form className="p-3" onSubmit={handleSubmit}>
+              <Row>
+                <InputComponent
+                  id="name"
+                  label="Nombre"
+                  value={profileData.name}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+                <InputComponent
+                  id="lastName"
+                  label="Apellidos"
+                  value={profileData.lastName}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+              </Row>
+              <Row>
+                <InputComponent
+                  id="birthDate"
+                  type="date"
+                  label="Fecha de Nacimiento"
+                  value={profileData.birthDate}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  noBorder={!isEditing}
+                />
+              </Row>
+              <Row>
+                <InputComponent
+                  id="country"
+                  label="País"
+                  value={profileData.country}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={true}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+                <InputComponent
+                  id="city"
+                  label="Ciudad"
+                  value={profileData.city}
+                  onChange={handleInputChange}
+                  readOnly={!isEditing}
+                  required={false}
+                  colClass="col-md-6"
+                  noBorder={!isEditing}
+                />
+              </Row>
+              <InputComponent
+                id="socialMedia"
+                label="Redes"
+                type="textarea"
+                value={profileData.socialMedia}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={false}
+                noBorder={!isEditing}
+              />
+              <InputComponent
+                id="description"
+                label="Descripción"
+                type="textarea"
+                value={profileData.description}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                required={false}
+                noBorder={!isEditing}
+              />
+
+              <div className="col-12 my-2">
+                {!isEditing ? (
+                  <div className="col-12">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsEditing(true);
+                      }}
+                      style={{ margin: "5px" }}
+                    >
+                      Editar
+                    </button>
+
+                    <Link to={`/historial/${profileData.username}`}>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                      >
+                        Ver Historial
+                      </button>
+                    </Link>
+
+                    <Link to={`/bloqueados`}>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                      >
+                        Ver Bloqueados
+                      </button>
+                    </Link>
+
+                    <Link to={`/amigos`}>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ margin: "5px" }}
+                      >
+                        Ver Amigos
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="col-12">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Guardar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-light"
+                      onClick={handleCancel}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                )}
+              </div>
+            </form>
+          </Col>
+        </Row>
+      </Container>
+
+      <ConfirmationModal
+        show={showConfirmationModal}
+        handleClose={() => setShowConfirmationModal(false)}
+        handleConfirm={handleSaveChanges}
+        title="Confirmar Cambios"
+        message="¿Estás seguro de que quieres guardar los cambios en tu perfil?"
+      />
+
+      <ConfirmationModal
+        show={showCancelConfirmationModal}
+        handleClose={() => setShowCancelConfirmationModal(false)}
+        handleConfirm={handleCancelConfirmation}
+        title="Confirmar Cancelación"
+        message="¿Estás seguro de que quieres cancelar la edición sin guardar los cambios?"
+      />
     </MainLayout>
   );
 }
@@ -212,17 +361,27 @@ function InputComponent({
   onChange,
   readOnly,
   required,
+  colClass = "col-12",
+  noBorder = false,
 }) {
-  const inputClassNames = `form-control ${readOnly ? "no-background no-border" : ""}`;
+  const inputStyles = {
+    border: noBorder ? "none" : "",
+    boxShadow: noBorder ? "none" : "",
+    backgroundColor: noBorder ? "transparent" : "",
+  };
 
   return (
-    <div className="col-md-6">
-      <label htmlFor={id} className="form-label">
+    <div className={colClass}>
+      <label
+        htmlFor={id}
+        className="form-label border-bottom border-dark-subtle"
+      >
         {label}
       </label>
       {type === "textarea" ? (
         <textarea
-          className={inputClassNames}
+          className="form-control"
+          style={inputStyles}
           id={id}
           value={value}
           onChange={onChange}
@@ -232,7 +391,8 @@ function InputComponent({
       ) : (
         <input
           type={type}
-          className={inputClassNames}
+          className="form-control"
+          style={inputStyles}
           id={id}
           value={value}
           onChange={onChange}

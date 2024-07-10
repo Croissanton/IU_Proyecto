@@ -1,0 +1,635 @@
+
+:root {
+    --bs-primary: #B4DBFC; 
+    --bs-secondary: #002561;
+    --bs-success: #00ad5c;
+    --bs-info: #7eb5be;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #e0dede;
+    --bs-light-light: #efeded;
+    --bs-dark: #262626;
+    --bs-white: #f5f5f5;
+    --bs-secondary-subtle: lighten(var(--bs-secondary), 10%);
+}
+
+
+[data-bs-theme="dark"] {
+    --bs-primary: #002561;
+    --bs-secondary: #B4DBFC; 
+    --bs-success: darken(var(--bs-success), 10%);
+    --bs-info: darken(var(--bs-info), 10%);
+    --bs-warning: darken(var(--bs-warning), 10%);
+    --bs-danger: darken(var(--bs-danger), 50%);
+    --bs-light: var(--bs-dark);
+    --bs-dark: #f5f5f5;
+    --bs-white: #262626;
+    --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
+
+
+
+    .custom-link-container{
+        background-color: var(--bs-primary);
+        color: var(--bs-light-light);
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.616) !important;
+        }
+    }
+   
+    .dropdown-toggle{
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+    }
+    .custom-breadcrumb{
+        &:hover{
+            color: var(--bs-secondary);
+        }
+    }
+
+    .btn-outline-secondary{
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary);
+    }
+    .btn{
+        background-color: var(--bs-secondary);
+        color: var(--bs-primary);
+        &.btn-primary{
+            background-color: var(--bs-secondary);
+            color: var(--bs-primary);
+        }
+
+        &.btn-success{
+            background-color: #00FF00;
+            color: var(--bs-light);
+        }
+
+        &.btn-danger{
+            background-color: #FF0000;
+            color: var(--bs-light);
+        }
+    }
+
+    .password-strength-meter{
+        background-color: transparent;
+        color: var(--bs-secondary);
+    }
+    .search-suggestions{
+        .bg-white{
+            background-color: var(--bs-primary);
+            color: var(--bs-secondary);
+        }
+    }
+
+    .custom-disabled-input {
+        background-color: var(--bs-secondary);
+        border: bottom 1px solid var(--bs-secondary);
+        color: #6c757d; // Bootstrap's default text-muted color
+        cursor: default;
+        opacity: 1; // Ensures full opacity despite being disabled
+        padding: 0.375rem 0.75rem; // Bootstrap's default input padding
+        
+        &:disabled {
+          background-color: #ffffff;
+        }
+      
+        &::placeholder {
+          color: #6c757d;
+        }
+      
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+
+      .toastBody{
+        color: var(--bs-dark);
+      }
+
+
+        
+    #search, #searchInput{
+        background-color: var(--bs-secondary);
+        color: var(--bs-white);
+        outline: var(--bs-secondary);
+    
+    }
+    #searchInput{
+        background-color: var(--bs-primary);
+        color: var(--bs-light-light);
+    }
+    #accessibility-button{
+        background-color: transparent;
+    }
+    #login-page, #signup-page{
+        background-color: var(--bs-secondary-subtle);
+    }
+    #login-form, #signup-form{	
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+    }
+
+    #toggle_password_visibility{
+        &:hover{
+            background-color: var(--bs-dark) !important;
+        }
+    }
+
+    .i {
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    .btn-outline-secondary{
+        &:hover{
+            span{
+                color: var(--bs-dark) !important;
+            }
+            color: var(--bs-dark) !important;
+            background-color: var(--bs-primary) !important;
+        }
+    }
+
+    .card-body{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .custom-disabled-input{
+        background-color: var(--bs-secondary-subtle) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .btn-primary{
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+        border: 1px solid var(--bs-secondary-subtle);
+        &:hover{
+            background-color: var(--bs-dark) !important;
+        }
+    }
+
+    .custom-button, #btnArchivar, #btnDesarchivar{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        border: 1px solid var(--bs-secondary-subtle);
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.4) !important;
+        }
+    }
+    
+    .custom-text-link{
+        color: var(--bs-secondary) !important;
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    .custom-icon{
+        color: var(--bs-secondary) !important;
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    #searchInput{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+
+        &:focus{
+            background-color: var(--bs-white) !important;
+        }
+    }
+
+    .custom-list-item{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.055) !important;
+        }
+    }
+
+    #signup-page, #login-page{
+        background-color: var(--bs-white) !important;
+    }
+
+    #chatbox, #chatboxHeader {
+        background-color: rgba(255, 255, 255, 0.055) !important;
+        .border-secondary-subtle{
+            border-color: var(--bs-secondary-subtle);
+        }
+        .bg-secondary-subtle{
+            background-color: var(--bs-secondary);
+        }
+    }
+
+    #comment-container{
+        background-color: var(--bs-primary);
+        .p{
+            color: var(--bs-light-light);
+        }
+    }
+
+    .header{
+        background-color: var(--bs-primary) !important;
+        .text-secondary{
+            color: var(--bs-secondary) !important;
+        }
+    }
+
+    
+
+}
+
+[data-bs-theme="low-contrast"] {
+    --bs-primary: #7CAAE0;
+    --bs-secondary: #4A6B8A;
+    --bs-success: #5AC18E;
+    --bs-info: #9ECAD3;
+    --bs-warning: #FFD54F;
+    --bs-danger: #E57373;
+    --bs-light: #E8E8E8;
+    --bs-light-light: #F0F0F0;
+    --bs-dark: #4A4A4A;
+    --bs-white: #FAFAFA;
+    --bs-secondary-subtle: #607D8B;
+
+    .header {
+        background-color: var(--bs-light);
+        .text-secondary {
+            color: var(--bs-secondary);
+        }
+    }
+
+    .custom-link-container {
+        background-color: var(--bs-light);
+        color: var(--bs-dark);
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    .dropdown-toggle {
+        background-color: var(--bs-light);
+        color: var(--bs-secondary);
+    }
+
+    .custom-breadcrumb {
+        &:hover {
+            color: var(--bs-primary);
+        }
+    }
+
+    .btn-outline-secondary {
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary);
+    }
+
+    .btn {
+        background-color: var(--bs-light);
+        color: var(--bs-secondary);
+    }
+
+    .password-strength-meter {
+        background-color: transparent;
+        color: var(--bs-secondary);
+    }
+
+    .search-suggestions {
+        .bg-white {
+            background-color: var(--bs-light);
+            color: var(--bs-secondary);
+        }
+    }
+
+    #search, #searchInput {
+        background-color: var(--bs-white);
+        color: var(--bs-dark);
+        outline: var(--bs-secondary);
+    }
+
+    #accessibility-button {
+        background-color: transparent;
+    }
+
+    #login-page, #signup-page {
+        background-color: var(--bs-light-light);
+    }
+
+    #login-form, #signup-form {	
+        background-color: var(--bs-white);
+        color: var(--bs-dark);
+    }
+
+    #addChatButton, #archivedChatsButton {
+        background-color: var(--bs-light);
+        color: var(--bs-secondary);
+        border: 1px solid var(--bs-secondary-subtle);
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    #chatbox, #chatboxHeader {
+        background-color: var(--bs-light-light);
+        .border-secondary-subtle {
+            border-color: var(--bs-secondary-subtle);
+        }
+        .bg-secondary-subtle {
+            background-color: var(--bs-light);
+        }
+    }
+
+    #comment-container{
+        background-color: var(--bs-light);
+        .p{
+            color: var(--bs-light-light);
+        }
+    }
+}
+
+[data-bs-theme="high-contrast"] {
+    --bs-primary: #FFFFFF;
+    --bs-secondary: #000000;
+    --bs-success: #00FF00;
+    --bs-info: #00FFFF;
+    --bs-warning: #FFFF00;
+    --bs-danger: #FF0000;
+    --bs-light: #FFFFFF;
+    --bs-light-light: #F0F0F0;
+    --bs-dark: #000000;
+    --bs-white: #FFFFFF;
+    --bs-secondary-subtle: #333333;
+
+    .header {
+        background-color: var(--bs-dark);
+        .text-secondary {
+            color: var(--bs-light);
+        }
+
+        .input:focus{
+            outline: 2px solid var(--bs-warning);
+        }
+        
+        // Add this new rule for navbar icons
+        .nav-link {
+            color: var(--bs-light);
+            
+            &:hover, &:focus {
+                color: var(--bs-warning); // Use a bright color for hover/focus state
+            }
+            
+            .custom-icon {
+                color: var(--bs-light);
+            }
+        }
+        
+        // Ensure dropdown toggles are visible
+        .dropdown-toggle {
+            background-color: var(--bs-dark);
+            color: var(--bs-light);
+            border: 1px solid var(--bs-light);
+            
+            &:hover, &:focus {
+                background-color: var(--bs-secondary-subtle);
+            }
+        }
+    }
+
+    .bi {
+        color: var(--bs-light);
+    }
+
+    // Ensure tooltips are visible
+    .tooltip {
+        .tooltip-inner {
+            background-color: var(--bs-light);
+            color: var(--bs-dark);
+            border: 1px solid var(--bs-dark);
+        }
+        .tooltip-arrow::before {
+            border-bottom-color: var(--bs-light);
+        }
+    }
+
+    .custom-link-container {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        &:hover {
+            background-color: var(--bs-secondary-subtle);
+        }
+    }
+
+    .dropdown-toggle {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+    }
+
+    .custom-breadcrumb {
+        &:hover {
+            color: var(--bs-info);
+        }
+    }
+
+    .btn-outline-secondary {
+        color: var(--bs-light);
+        border-color: var(--bs-light);
+    }
+
+    .btn {
+        &.btn-primary {
+            background-color: var(--bs-dark);
+            color: var(--bs-light);
+            border: 2px solid var(--bs-light);
+
+            &:hover, &:focus {
+                background-color: var(--bs-secondary-subtle);
+            }
+        }
+
+        &.btn-success {
+            background-color: var(--bs-success);
+            color: var(--bs-dark);
+            border: 2px solid var(--bs-dark);
+
+            &:hover, &:focus {
+                background-color: darken(#00FF00, 10%);
+            }
+        }
+
+        &.btn-danger {
+            background-color: var(--bs-danger);
+            color: var(--bs-light);
+            border: 2px solid var(--bs-light);
+
+            &:hover, &:focus {
+                background-color: darken(#FF0000, 10%);
+            }
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    // Ensure text contrast for button content
+    .btn-success {
+        > * {
+            color: var(--bs-dark);
+        }
+    }
+
+    .btn-danger, .btn-primary {
+        > * {
+            color: var(--bs-light);
+        }
+    }
+    .password-strength-meter {
+        background-color: transparent;
+        color: var(--bs-light);
+    }
+
+    .search-suggestions {
+        .bg-white {
+            background-color: var(--bs-dark);
+            color: var(--bs-light);
+        }
+    }
+
+    .i{
+        color: var(--bs-light);
+    }   
+
+    
+
+    #search, #searchInput {
+        background-color: var(--bs-dark);
+        color: var(--bs-light-light);
+        outline: var(--bs-light-light);
+    }
+
+    #accessibility-button {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border: none;
+    }
+
+    #login-page, #signup-page {
+        background-color: var(--bs-dark);
+    }
+
+    #login-form, #signup-form {	
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border: 2px solid var(--bs-light);
+    }
+
+    #addChatButton, #archivedChatsButton {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border: 2px solid var(--bs-light);
+        &:hover {
+            background-color: var(--bs-secondary-subtle);
+        }
+    }
+
+    #chatbox, #chatboxHeader {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        .border-secondary-subtle {
+            border-color: var(--bs-light);
+        }
+        .bg-secondary-subtle {
+            background-color: var(--bs-secondary-subtle);
+        }
+    }
+
+    #comment-container{
+        background-color: var(--bs-secondary-subtle);
+        color: var(--bs-light);
+        .span, .a{
+            color: var(--bs-light);
+        }
+    }
+
+}
+
+[data-bs-theme="dyslexia-friendly"] {
+    --bs-body-font-family: 'OpenDyslexic', 'Comic Sans MS', 'Verdana', sans-serif;
+    --bs-body-font-size: 1.2rem;
+    --bs-body-line-height: 1.6;
+    --bs-body-color: #000000;
+    --bs-body-bg: #FFFAF0; // Soft cream background
+
+    --bs-primary: #3498db;
+    --bs-secondary: #2c3e50;
+    --bs-success: #27ae60;
+    --bs-info: #3498db;
+    --bs-warning: #f39c12;
+    --bs-danger: #c0392b;
+    --bs-light: #ecf0f1;
+    --bs-dark: #34495e;
+
+    // Increase spacing
+    --bs-spacer: 1.5rem;
+
+    // Custom styles for better readability
+    p, li, dt, dd, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: var(--bs-spacer);
+    }
+
+    // Increase contrast for links
+    a {
+        color: #0000FF;
+        text-decoration: underline;
+
+        &:hover, &:focus {
+            color: #000080;
+        }
+    }
+
+    // Add more spacing between lines in larger text blocks
+    p, li {
+        margin-bottom: calc(var(--bs-spacer) * 1.5);
+    }
+
+    // Increase contrast for buttons
+    .btn {
+        font-weight: bold;
+        border-width: 2px;
+    }
+
+    // Improve form field readability
+    .form-control {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    // Improve table readability
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 0.5rem;
+
+        th, td {
+            border: 1px solid #000;
+            padding: 0.75rem;
+        }
+    }
+
+}
+
+
+//override bootstrap variables
+$primary: var(--bs-primary);
+$secondary: var(--bs-secondary);
+$success: var(--bs-success);
+$info: var(--bs-info);
+$warning: var(--bs-warning);
+$danger: var(--bs-danger);
+$light: var(--bs-light);
+$light-light: var(--bs-light-light);
+$dark: var(--bs-dark);
+$white: var(--bs-white);
+$secondary-subtle: var(--bs-secondary-subtle);
