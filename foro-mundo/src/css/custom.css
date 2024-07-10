@@ -16,10 +16,10 @@
 [data-bs-theme=dark] {
   --bs-primary: #002561;
   --bs-secondary: #B4DBFC;
-  --bs-success: darken(var(--bs-success), 50%);
-  --bs-info: darken(var(--bs-info), 50%);
-  --bs-warning: darken(var(--bs-warning), 50%);
-  --bs-danger: darken(var(--bs-danger), 50%);
+  --bs-success: darken(var(--bs-success), 10%);
+  --bs-info: darken(var(--bs-info), 10%);
+  --bs-warning: darken(var(--bs-warning), 10%);
+  --bs-danger: darken(var(--bs-danger), 10%);
   --bs-light: var(--bs-dark);
   --bs-dark: var(--bs-light);
   --bs-white: #000000;
@@ -36,7 +36,7 @@
   color: var(--bs-light-light) !important;
 }
 [data-bs-theme=dark] .custom-link-container:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 [data-bs-theme=dark] .dropdown-toggle {
   background-color: var(--bs-primary) !important;
@@ -59,7 +59,7 @@
 }
 [data-bs-theme=dark] .btn.btn-success {
   background-color: #00FF00 !important;
-  color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
 }
 [data-bs-theme=dark] .btn.btn-danger {
   background-color: #FF0000 !important;
@@ -72,6 +72,24 @@
 [data-bs-theme=dark] .search-suggestions .bg-white {
   background-color: var(--bs-primary) !important;
   color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] .custom-disabled-input {
+  background-color: var(--bs-secondary) !important;
+  border: bottom 1px solid var(--bs-secondary) !important;
+  color: #6c757d;
+  cursor: default;
+  opacity: 1;
+  padding: 0.375rem 0.75rem;
+}
+[data-bs-theme=dark] .custom-disabled-input:disabled {
+  background-color: #ffffff;
+}
+[data-bs-theme=dark] .custom-disabled-input::placeholder {
+  color: #6c757d;
+}
+[data-bs-theme=dark] .custom-disabled-input:focus {
+  outline: none;
+  box-shadow: none;
 }
 [data-bs-theme=dark] #search {
   background-color: var(--bs-secondary) !important;
@@ -98,7 +116,7 @@
   border: 1px solid var(--bs-secondary-subtle) !important;
 }
 [data-bs-theme=dark] #addChatButton:hover, [data-bs-theme=dark] #archivedChatsButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.4) !important;
 }
 [data-bs-theme=dark] #chatbox, [data-bs-theme=dark] #chatboxHeader {
   background-color: var(--bs-info) !important;
@@ -316,14 +334,6 @@
 }
 [data-bs-theme=high-contrast] .i {
   color: var(--bs-light) !important;
-}
-[data-bs-theme=high-contrast] .custom-text-link {
-  color: var(--bs-light) !important;
-  text-decoration: underline;
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-  transition: color 0.3s;
 }
 [data-bs-theme=high-contrast] #search, [data-bs-theme=high-contrast] #searchInput {
   background-color: var(--bs-dark) !important;
