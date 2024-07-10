@@ -4,6 +4,8 @@ import { Container, ListGroup, Breadcrumb, Col, Row } from "react-bootstrap";
 import MainLayout from "../layout/MainLayout";
 
 const SearchPage = () => {
+
+
   const [suggestions, setSuggestions] = useState({
     users: [],
     posts: [],
@@ -88,6 +90,7 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Búsqueda";
     const searchParams = new URLSearchParams(location.search);
     const query = searchParams.get("query");
     if (query) {

@@ -6,7 +6,7 @@ import IndexSelector from "../Components/IndexSelector.js";
 
 function MainPage() {
   useEffect(() => {
-    document.title = "Foro Mundo";
+    document.title = "Página Principal";
   }, []);
 
   const [topics, setTopics] = useState([]);

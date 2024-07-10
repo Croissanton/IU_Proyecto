@@ -15,7 +15,7 @@ function getByUsernameAndPassword(username, password) {
 
 function LoginPage() {
   useEffect(() => {
-    document.title = "Login";
+    document.title = "Inicio de Sesión";
   }, []);
 
   const [usuario, setusuario] = useState(null);

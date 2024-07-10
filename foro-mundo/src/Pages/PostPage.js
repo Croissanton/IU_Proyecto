@@ -280,10 +280,12 @@ function PostPage() {
       ) : (
         <Container fluid className="my-3 mx-0 px-0">
           {" "}
+          <Container>
           <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
             <i className="bi bi-trash"></i>
             <span>Eliminar Post</span>
           </Button>
+          </Container>
           <ConfirmationModal
             show={showDeletePostModal}
             handleClose={() => setShowDeletePostModal(false)}

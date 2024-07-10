@@ -287,7 +287,7 @@ const Header = forwardRef((props, ref) => {
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
-                <span id="search" className="me-1">
+                <span id="search" className="me-1 bg-transparent">
                   Buscar
                 </span>
                 <i className="bi bi-search"></i>

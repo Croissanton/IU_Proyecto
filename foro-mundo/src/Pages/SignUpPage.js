@@ -4,8 +4,14 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import zxcvbn from "zxcvbn";
 import ConfirmationModal from "../Components/ConfirmationModal.js";
+import { useEffect } from "react";
 
 function PasswordStrengthMeter({ password }) {
+
+  useEffect(() => {
+    document.title = "Registro";
+  }, []);
+  
   const testResult = zxcvbn(password);
   const score = testResult.score * 25;
 

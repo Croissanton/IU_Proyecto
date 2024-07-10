@@ -3,8 +3,13 @@ import Messenger from "../Components/Messenger";
 import MainLayout from "../layout/MainLayout";
 import { Breadcrumb, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 function MessengerPage() {
+  useEffect(() => {
+    document.title = "Página Principal";
+  }, []);
+
   return (
     <MainLayout>
       <div className="container-xxl my-3">

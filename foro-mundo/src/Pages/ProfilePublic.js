@@ -334,7 +334,7 @@ function ProfilePublic() {
                 <Col md={6}>
                   <label
                     htmlFor="inputFechaNacimiento"
-                    className="form-label custom-disabled-input"
+                    className="form-label border-bottom border-dark-subtle"
                   >
                     Fecha de nacimiento
                   </label>

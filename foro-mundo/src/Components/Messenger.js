@@ -464,6 +464,7 @@ const Messenger = () => {
               <Col className="d-flex align-content-center justify-content-end p-1">
                 {activeChat.archived ? (
                   <Button
+                    id="btnDesarchivar"
                     variant="outline-secondary"
                     size="sm"
                     onClick={() => unArchiveChat(activeChat.conversationKey)}
@@ -473,6 +474,7 @@ const Messenger = () => {
                   </Button>
                 ) : (
                   <Button
+                    id ="btnArchivar"
                     variant="outline-secondary"
                     size="sm"
                     onClick={() => archiveChat(activeChat.conversationKey)}

@@ -7,7 +7,7 @@ import ConfirmationModal from "../Components/ConfirmationModal";
 
 function ProfilePage() {
   useEffect(() => {
-    document.title = "Perfil";
+    document.title = "Mi Perfil";
   }, []);
 
   const usuario = JSON.parse(localStorage.getItem("usuario"));

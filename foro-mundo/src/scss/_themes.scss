@@ -22,16 +22,9 @@
     --bs-warning: darken(var(--bs-warning), 10%);
     --bs-danger: darken(var(--bs-danger), 50%);
     --bs-light: var(--bs-dark);
-    --bs-dark: var(--bs-light);
-    --bs-white: #000000;
+    --bs-dark: #f5f5f5;
+    --bs-white: #262626;
     --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
-
-    .header{
-        background-color: var(--bs-primary);
-        .text-secondary{
-            color: var(--bs-secondary);
-        }
-    }
 
 
 
@@ -39,7 +32,7 @@
         background-color: var(--bs-primary);
         color: var(--bs-light-light);
         &:hover{
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(0, 0, 0, 0.616) !important;
         }
     }
    
@@ -136,17 +129,93 @@
         color: var(--bs-secondary);
     }
 
-    #addChatButton, #archivedChatsButton {
+    #toggle_password_visibility{
+        &:hover{
+            background-color: var(--bs-dark) !important;
+        }
+    }
+
+    .i {
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    .btn-outline-secondary{
+        &:hover{
+            span{
+                color: var(--bs-dark) !important;
+            }
+            color: var(--bs-dark) !important;
+            background-color: var(--bs-primary) !important;
+        }
+    }
+
+    .card-body{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .custom-disabled-input{
+        background-color: var(--bs-secondary-subtle) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .btn-primary{
         background-color: var(--bs-primary);
         color: var(--bs-secondary);
         border: 1px solid var(--bs-secondary-subtle);
         &:hover{
-            background-color: rgba(255, 255, 255, 0.4)
+            background-color: var(--bs-dark) !important;
         }
     }
 
+    .custom-button, #btnArchivar, #btnDesarchivar{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        border: 1px solid var(--bs-secondary-subtle);
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.4) !important;
+        }
+    }
+    
+    .custom-text-link{
+        color: var(--bs-secondary) !important;
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    .custom-icon{
+        color: var(--bs-secondary) !important;
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    #searchInput{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+
+        &:focus{
+            background-color: var(--bs-white) !important;
+        }
+    }
+
+    .custom-list-item{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.055) !important;
+        }
+    }
+
+    #signup-page, #login-page{
+        background-color: var(--bs-white) !important;
+    }
+
     #chatbox, #chatboxHeader {
-        background-color: var(--bs-info);
+        background-color: rgba(255, 255, 255, 0.055) !important;
         .border-secondary-subtle{
             border-color: var(--bs-secondary-subtle);
         }
@@ -162,22 +231,14 @@
         }
     }
 
-    .search-suggestions {
-        background-color: var(--bs-primary);
-        color: var(--bs-secondary);
-        border-color: var(--bs-secondary-subtle);
-      
-        .custom-list-item {
-          background-color: var(--bs-primary);
-          color: var(--bs-secondary);
-          transition: background-color 0.3s ease;
-      
-          &:hover, &:focus {
-            background-color: var(--bs-secondary-subtle);
-            color: var(--bs-primary);
-          }
+    .header{
+        background-color: var(--bs-primary) !important;
+        .text-secondary{
+            color: var(--bs-secondary) !important;
         }
-      }
+    }
+
+    
 
 }
 
@@ -556,9 +617,9 @@
             padding: 0.75rem;
         }
     }
-    
 
 }
+
 
 //override bootstrap variables
 $primary: var(--bs-primary);
