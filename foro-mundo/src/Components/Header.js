@@ -268,7 +268,8 @@ const Header = forwardRef((props, ref) => {
                         role="option"
                         tabIndex="0"
                         aria-selected={inputValue === suggestion.username}
-                        className="p-1"
+                        className="p-1 custom-list-item"
+                        style={{cursor: "pointer"}}
                         onClick={() => handleSuggestionClick(suggestion)}
                       >
                         <strong>{suggestion.label}</strong>
