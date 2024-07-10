@@ -29,9 +29,7 @@ function PostPage() {
 
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
 
-  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
-  const [commentToDelete, setCommentToDelete] = useState(null);
   const [showClearCommentModal, setShowClearCommentModal] = useState(false);
 
   const titleStyle = {
@@ -129,6 +127,7 @@ function PostPage() {
     if (!button) {
       return;
     }
+    
     button.disabled =
       newComment.trim().length === 0 || characterCount > MAX_CHARACTERS;
   }, [newComment, characterCount]);
@@ -143,32 +142,6 @@ function PostPage() {
     event.preventDefault();
     setShowModal(true);
     setCharacterCount(0);
-  };
-
-  const handleDeleteComment = (id) => {
-    setCommentToDelete(id);
-    setShowDeleteCommentModal(true);
-  };
-
-  const handleConfirmDeleteComment = (id) => {
-    post.comments = post.comments.filter(
-      (comment) => comment.id !== commentToDelete
-    );
-
-    post.res_num = post.comments.length;
-    post.lm_text = post.comments.length > 0 ? post.comments[0].title : "";
-    post.lm_author = post.comments.length > 0 ? post.comments[0].author : "";
-    post.lm_date = post.comments.length > 0 ? post.comments[0].date : "";
-    //get existing posts and add updated post to the list
-    const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const updatedPosts = existingPosts.map((p) => (p.id === postId ? post : p));
-
-    // Save updated post back to localStorage
-    localStorage.setItem("posts", JSON.stringify(updatedPosts));
-    setComments(post.comments);
-    showToast("Comentario eliminado", "bg-danger");
-    navigate(`/post/${post.id}`);
-    setShowDeleteCommentModal(false);
   };
 
   //  This has to be changed so a user can't delete a post that was not his.
@@ -421,18 +394,10 @@ function PostPage() {
               initialUpvotes={comment.upvotes}
               initialDownvotes={comment.downvotes}
               date={comment.date}
-              onDelete={() => handleDeleteComment(comment.id)}
             />
           ))
         )}
       </div>
-      <ConfirmationModal
-        show={showDeleteCommentModal}
-        handleClose={() => setShowDeleteCommentModal(false)}
-        handleConfirm={handleConfirmDeleteComment}
-        title="Eliminar Comentario"
-        message="¿Estás seguro de que quieres eliminar este comentario?"
-      />
 
       <IndexSelector
         totalTopics={sortedComments.length}
