@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Row,
   Col,
@@ -11,7 +11,7 @@ import {
   Modal,
   Container,
 } from "react-bootstrap";
-import { json, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import { v4 as uuidv4 } from "uuid";
 import data from "../data/initialMessages.json";
@@ -22,43 +22,45 @@ const Messenger = () => {
 
   const ShowConnectionStatus = (username) => {
     let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-    let usuario = usuarios.find ((usuario) => usuario.username === username);
+    let usuario = usuarios.find((usuario) => usuario.username === username);
     //Compara lastConnection con lastDisconnection, si lastConnection es mayor, el usuario esta conectado
-    if(!usuario) return "Usuario no encontrado";
-    console.log(username);
-      if (new Date(usuario.lastConnection) > new Date(usuario.lastDisconnection)) {
-        return <small className="text-success"> En Línea; </small>;
-      }
-      return <small className="text-muted"> {"Última conexión: " + new Date(usuario.lastDisconnection).toLocaleString()} </small>
-
+    if (!usuario) return "Usuario no encontrado";
+    if (
+      new Date(usuario.lastConnection) > new Date(usuario.lastDisconnection)
+    ) {
+      return <small className="text-success"> En Línea; </small>;
+    }
+    return (
+      <small className="text-muted">
+        {" "}
+        {"Última conexión: " +
+          new Date(usuario.lastDisconnection).toLocaleString()}{" "}
+      </small>
+    );
   };
 
   const getConversationsForUser = (username) => {
-    // Get messages from localstorage, if empty get them from data and store to localstorage.
     var allMessages;
-    const storedMessages = JSON.parse(localStorage.getItem("messages"));
-    if (!storedMessages) {
+    const storedMessages = JSON.parse(localStorage.getItem("messages")) || null;
+    if (storedMessages === null) {
       localStorage.setItem("messages", JSON.stringify(data));
       allMessages = data;
     } else {
       allMessages = storedMessages;
     }
-    // Filter the keys where the current username is part of the conversation
+
     const userConversations = Object.keys(allMessages).filter((key) =>
       key.includes(username)
     );
 
-    // Map filtered keys to their respective messages and identify the other user in the chat
     return userConversations.map((conversationKey) => {
-      const messages = allMessages[conversationKey];
-
-      // Extract the other user's name by replacing the current username and @ from the key
+      const conversationData = allMessages[conversationKey];
+      const messages = conversationData.messages || [];
+      const archived = conversationData.archived || false;
       const otherUsername = conversationKey
         .replace(username, "")
         .replace("@", "");
 
-
-      // Optionally, sort messages by timestamp if needed
       const sortedMessages = messages.sort(
         (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
       );
@@ -67,7 +69,7 @@ const Messenger = () => {
         conversationKey: conversationKey,
         otherUser: otherUsername,
         messages: sortedMessages,
-        archived: false,
+        archived: archived,
       };
     });
   };
@@ -75,21 +77,6 @@ const Messenger = () => {
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState({});
   const [activeChat, setActiveChat] = useState(null);
-
-  useEffect(() => {
-    if (usuario && conversations.length === 0) {
-      const userConversations = getConversationsForUser(usuario.username);
-      setConversations(userConversations);
-      let messagesMap = {};
-      userConversations.forEach((c) => {
-        messagesMap[c.conversationKey] = c.messages;
-      });
-      setMessages(messagesMap);
-      if (userConversations.length > 0 && !activeChat) {
-        setActiveChat(userConversations[0]);
-      }
-    }
-  }, [usuario, conversations, activeChat]);
 
   const [chatInputValue, setChatInputValue] = useState("");
   const [modalInputValue, setModalInputValue] = useState("");
@@ -104,19 +91,25 @@ const Messenger = () => {
       sender: usuario.username,
       timestamp: new Date().toISOString(),
     };
+
     const updatedMessages = [
-      ...(messages[activeChat.conversationKey] || []),
+      ...(allMessages[activeChat.conversationKey].messages || []),
       newMessage,
     ];
-    setMessages({ ...messages, [activeChat.conversationKey]: updatedMessages });
+
+    setMessages({
+      ...messages,
+      [activeChat.conversationKey]: updatedMessages,
+    });
+
     setChatInputValue("");
-    localStorage.setItem(
-      "messages",
-      JSON.stringify({
-        ...allMessages,
-        [activeChat.conversationKey]: updatedMessages,
-      })
-    );
+
+    allMessages[activeChat.conversationKey] = {
+      ...allMessages[activeChat.conversationKey],
+      messages: updatedMessages,
+    };
+
+    localStorage.setItem("messages", JSON.stringify(allMessages));
   };
 
   const handleChatInputChange = (event) => {
@@ -179,17 +172,24 @@ const Messenger = () => {
 
     const updatedMessages = {
       ...existingMessages,
-      [conversationKey]: [],
+      [conversationKey]: {
+        archived: false,
+        messages: [],
+      },
     };
 
     localStorage.setItem("messages", JSON.stringify(updatedMessages));
 
-    setMessages(updatedMessages);
+    setMessages({
+      ...messages,
+      [conversationKey]: [],
+    });
 
     const newConversation = {
       conversationKey: conversationKey,
       otherUser: newChatUser,
       messages: [],
+      archived: false,
     };
 
     setConversations((prevConversations) => [
@@ -272,31 +272,87 @@ const Messenger = () => {
     }));
   };
 
-  const toggleArchiveStatus = (conversationKey) => {
-    setConversations((prevConversations) =>
-      prevConversations.map((convo) =>
+  const unArchiveChat = (conversationKey) => {
+    setConversations((prevConversations) => {
+      const updatedConversations = prevConversations.map((convo) =>
         convo.conversationKey === conversationKey
-          ? { ...convo, archived: !convo.archived }
+          ? { ...convo, archived: false }
           : convo
-      )
-    );
+      );
+
+      // Update localStorage
+      const allMessages = JSON.parse(localStorage.getItem("messages")) || {};
+      if (allMessages[conversationKey]) {
+        allMessages[conversationKey] = {
+          ...allMessages[conversationKey],
+          archived: false,
+        };
+        localStorage.setItem("messages", JSON.stringify(allMessages));
+      }
+
+      return updatedConversations;
+    });
 
     setActiveChat((prevActiveChat) => {
       if (
         prevActiveChat &&
         prevActiveChat.conversationKey === conversationKey
       ) {
-        return { ...prevActiveChat, archived: !prevActiveChat.archived };
+        return { ...prevActiveChat, archived: false };
       }
       return prevActiveChat;
     });
-
-    // Update localStorage
-    const allMessages = JSON.parse(localStorage.getItem("messages")) || {};
-    allMessages[conversationKey].archived =
-      !allMessages[conversationKey].archived;
-    localStorage.setItem("messages", JSON.stringify(allMessages));
   };
+
+  const archiveChat = (conversationKey) => {
+    setConversations((prevConversations) => {
+      const updatedConversations = prevConversations.map((convo) =>
+        convo.conversationKey === conversationKey
+          ? { ...convo, archived: true }
+          : convo
+      );
+
+      // Update localStorage
+      const allMessages = JSON.parse(localStorage.getItem("messages")) || {};
+      if (allMessages[conversationKey]) {
+        allMessages[conversationKey] = {
+          ...allMessages[conversationKey],
+          archived: true,
+        };
+        localStorage.setItem("messages", JSON.stringify(allMessages));
+      }
+
+      return updatedConversations;
+    });
+
+    setActiveChat((prevActiveChat) => {
+      if (
+        prevActiveChat &&
+        prevActiveChat.conversationKey === conversationKey
+      ) {
+        return { ...prevActiveChat, archived: true };
+      }
+      return prevActiveChat;
+    });
+  };
+
+  useEffect(() => {
+    if (usuario && conversations.length === 0) {
+      const userConversations = getConversationsForUser(usuario.username);
+      setConversations(userConversations);
+      let messagesMap = {};
+      userConversations.forEach((c) => {
+        messagesMap[c.conversationKey] = c.messages;
+      });
+      setMessages(messagesMap);
+      if (userConversations.length > 0 && !activeChat) {
+        const firstNonArchivedConvo = userConversations.find(
+          (c) => !c.archived
+        );
+        setActiveChat(firstNonArchivedConvo || userConversations[0]);
+      }
+    }
+  }, [usuario]);
 
   const [showArchivedChatsModal, setShowArchivedChatsModal] = useState(false);
 
@@ -368,24 +424,27 @@ const Messenger = () => {
                   {activeChat.otherUser}
                 </span>
               </NavLink>
-                {ShowConnectionStatus(activeChat.otherUser)}
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => toggleArchiveStatus(activeChat.conversationKey)}
-              >
-                {activeChat.archived ? (
-                  <>
-                    <i className="bi bi-archive-fill me-2"></i>
-                    Desarchivar
-                  </>
-                ) : (
-                  <>
-                    <i className="bi bi-archive me-2"></i>
-                    Archivar
-                  </>
-                )}
-              </Button>
+              {ShowConnectionStatus(activeChat.otherUser)}
+
+              {activeChat.archived ? (
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => unArchiveChat(activeChat.conversationKey)}
+                >
+                  <i className="bi bi-archive-fill me-2"></i>
+                  Desarchivar
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => archiveChat(activeChat.conversationKey)}
+                >
+                  <i className="bi bi-archive me-2"></i>
+                  Archivar
+                </Button>
+              )}
             </div>
             {/* mensajes */}
             <div
@@ -468,7 +527,7 @@ const Messenger = () => {
           </>
         ) : (
           <div className="d-flex justify-content-center align-items-center h-100">
-            <p>Selecciona un chat para comenzar</p>
+            <p className="m-3">Selecciona un chat para comenzar</p>
           </div>
         )}
       </Col>
@@ -494,7 +553,7 @@ const Messenger = () => {
         show={showArchivedChatsModal}
         handleClose={() => setShowArchivedChatsModal(false)}
         conversations={conversations}
-        toggleArchiveStatus={toggleArchiveStatus}
+        unArchiveChat={unArchiveChat}
         setActiveChat={setActiveChat}
       />
     </Row>
@@ -665,7 +724,7 @@ function ArchivedChatsModal({
   show,
   handleClose,
   conversations,
-  toggleArchiveStatus,
+  unArchiveChat,
   setActiveChat,
 }) {
   return (
@@ -687,7 +746,7 @@ function ArchivedChatsModal({
                   variant="primary"
                   size="sm"
                   onClick={() => {
-                    toggleArchiveStatus(convo.conversationKey);
+                    unArchiveChat(convo.conversationKey);
                     setActiveChat(convo);
                     handleClose();
                   }}
