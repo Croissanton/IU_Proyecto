@@ -73,10 +73,10 @@ function MainPage() {
     <MainLayout>
       <div className="container-xxl my-2">
         <Breadcrumb className="custom-breadcrumb">
-          <Breadcrumb.Item active><label>Inicio</label></Breadcrumb.Item>
+          <Breadcrumb.Item active><>Inicio</></Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <label
+      <h1
         style={{
           fontSize: "3rem",
           fontWeight: "bold",
@@ -86,7 +86,7 @@ function MainPage() {
         aria-label="Foros"
       >
         Foros
-      </label>
+      </h1>
 
       <Container fluid className="my-3 mx-0 px-0">
         <Container className="d-flex justify-content-end mb-3">

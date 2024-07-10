@@ -113,7 +113,7 @@ function BlockedUsersPage() {
               <Link to={`/perfil/${user.username}`} 
               style={{ 
                 fontSize: "1.5rem",
-                color: '#00256',
+                color: '#000',
                 marginLeft: '10px',
                 }}>
                 {user.username}

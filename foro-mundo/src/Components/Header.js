@@ -392,9 +392,7 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
-              <Nav.Link as="div" className="m-auto">
                 <DarkMode />
-              </Nav.Link>
             </Nav>
           </Nav>
         </Navbar.Collapse>
