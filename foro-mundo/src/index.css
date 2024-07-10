@@ -89,6 +89,10 @@ body, html {
   background-color: #e0dede;
 }
 
+body {
+  transition: all 0.3s ease-in-out;
+}
+
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -2530,6 +2534,7 @@ textarea.form-control-lg {
   filter: none;
   opacity: 0.65;
 }
+
 
 [data-bs-theme=dark] .form-switch .form-check-input:not(:checked):not(:focus) {
   --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28245, 245, 245, 0.25%29'/%3e%3c/svg%3e");

@@ -7,9 +7,13 @@ import useShortcuts from "./shortcuts";
 import topics from "./data/initialTopics.json";
 import posts from "./data/initialPosts.json";
 import usuarios from "./data/usuarios.json";
+import { ThemeProvider } from "./Context/ThemeContext";
+import { useTheme } from "@emotion/react";
+
 
 function App() {
   useShortcuts();
+  useTheme();
 
   useEffect(() => {
     document.title = "Foro mundo";
@@ -35,9 +39,11 @@ function App() {
   }
 
   return (
-    <ToastProvider>
-      <Outlet />
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <Outlet />
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 

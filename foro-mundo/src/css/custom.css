@@ -1,4 +1,73 @@
 @charset "UTF-8";
+:root {
+  --bs-primary: #B4DBFC;
+  --bs-secondary: #002561;
+  --bs-success: #00ad5c;
+  --bs-info: #7eb5be;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #e0dede;
+  --bs-light-light: #efeded;
+  --bs-dark: #262626;
+  --bs-white: #f5f5f5;
+  --bs-secondary-subtle: lighten(var(--bs-secondary), 10%);
+}
+
+[data-bs-theme=dark] {
+  --bs-primary: #002561;
+  --bs-secondary: #B4DBFC;
+  --bs-success: darken(var(--bs-success), 50%);
+  --bs-info: darken(var(--bs-info), 50%);
+  --bs-warning: darken(var(--bs-warning), 50%);
+  --bs-danger: darken(var(--bs-danger), 50%);
+  --bs-light: var(--bs-dark);
+  --bs-dark: var(--bs-light);
+  --bs-white: #000000;
+  --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
+}
+[data-bs-theme=dark] .header {
+  background-color: var(--bs-primary) !important;
+}
+[data-bs-theme=dark] .text-secondary {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] .custom-link-container {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-light-light) !important;
+}
+[data-bs-theme=dark] .custom-link-container:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+[data-bs-theme=dark] #search {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-light-light) !important;
+  outline: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] #searchInput {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-light-light) !important;
+}
+[data-bs-theme=dark] .dropdown-toggle {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] .custom-breadcrumb:hover {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] #addChatButton .text-dark {
+  color: var(--bs-secondary) !important;
+}
+
+/* Custom CSS for Footer */
+.custom-footer {
+  background-color: var(--bs-primary); /* Bootstrap primary background color */
+  color: var(--bs-secondary); /* Bootstrap secondary text color */
+  text-align: center; /* Center align text */
+  padding-top: 1rem; /* Top padding 1rem */
+  padding-bottom: 1rem; /* Bottom padding 1rem */
+  border-top: 1px solid var(--bs-dark-subtle); /* Subtle dark border on top */
+}
+
 body, html {
   height: 100%;
   margin: 0;
@@ -11,21 +80,21 @@ body, html {
 }
 
 .custom-pagination .page-link {
-  color: #002561;
-  background-color: #B4DBFC;
-  border-color: var(--bs-secondary-border-subtle);
+  color: var(--bs-secondary);
+  background-color: var(--bs-primary);
+  border-color: var(--bs-secondary-subtle);
 }
 
 .custom-pagination .page-link:hover {
-  color: #002561;
-  background-color: #e0dede;
-  border-color: var(--bs-secondary-border-subtle);
+  color: var(--bs-secondary);
+  background-color: var(--bs-light);
+  border-color: var(--bs-secondary-subtle);
 }
 
 .custom-pagination .page-item.active .page-link {
-  color: #B4DBFC;
-  background-color: #002561;
-  border-color: var(--bs-secondary-border-subtle);
+  color: var(--bs-primary);
+  background-color: var(--bs-secondary);
+  border-color: var(--bs-secondary-subtle);
 }
 
 .custom-link {
@@ -35,31 +104,20 @@ body, html {
 }
 
 .custom-link-container:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .custom-icon {
   font-size: 1.5rem;
-  color: #002561;
+  color: var(--bs-secondary);
   transition: color 0.3s;
 }
 .custom-icon:hover {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.custom-button {
-  background-color: #e0dede;
-  text-decoration: none;
-}
-.custom-button.active {
-  background-color: #7eb5be;
-}
-.custom-button:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
 .custom-text-link {
-  color: #002561;
+  color: var(--bs-secondary);
   display: inline-block;
   padding: 0;
   margin: 0;
@@ -77,7 +135,7 @@ body, html {
 }
 
 .custom-breadcrumb a {
-  color: #002561;
+  color: var(--bs-secondary);
   transition: color 0.3s;
 }
 .custom-breadcrumb a:hover {
@@ -89,12 +147,12 @@ body, html {
 }
 
 #searchInput {
-  border-color: var(--bs-secondary-border-subtle);
+  border-color: var(--bs-secondary-subtle);
   background-color: #ededed;
 }
 
 #searchInput:focus {
-  border-color: #002561;
+  border-color: var(--bs-secondary);
   background-color: #f5f5f5;
   box-shadow: 0 0 0 0.25rem rgba(0, 37, 97, 0.25);
 }
