@@ -35,6 +35,9 @@
   background-color: var(--bs-primary) !important;
   color: var(--bs-light-light) !important;
 }
+[data-bs-theme=dark] .custom-link-container:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 [data-bs-theme=dark] #search {
   background-color: var(--bs-primary) !important;
   color: var(--bs-light-light) !important;
@@ -49,6 +52,9 @@
   color: var(--bs-secondary) !important;
 }
 [data-bs-theme=dark] .custom-breadcrumb:hover {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=dark] #addChatButton .text-dark {
   color: var(--bs-secondary) !important;
 }
 

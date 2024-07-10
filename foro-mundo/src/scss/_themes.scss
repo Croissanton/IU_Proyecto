@@ -1,0 +1,78 @@
+
+:root {
+    --bs-primary: #B4DBFC; 
+    --bs-secondary: #002561;
+    --bs-success: #00ad5c;
+    --bs-info: #7eb5be;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #e0dede;
+    --bs-light-light: #efeded;
+    --bs-dark: #262626;
+    --bs-white: #f5f5f5;
+    --bs-secondary-subtle: lighten(var(--bs-secondary), 10%);
+}
+
+[data-bs-theme="dark"] {
+    --bs-primary: #002561;
+    --bs-secondary: #B4DBFC; 
+    --bs-success: darken(var(--bs-success), 50%);
+    --bs-info: darken(var(--bs-info), 50%);
+    --bs-warning: darken(var(--bs-warning), 50%);
+    --bs-danger: darken(var(--bs-danger), 50%);
+    --bs-light: var(--bs-dark);
+    --bs-dark: var(--bs-light);
+    --bs-white: #000000;
+    --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
+    .header{
+        background-color: var(--bs-primary) !important;
+    }
+    .text-secondary{
+        color: var(--bs-secondary) !important;
+    }
+    .custom-link-container{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-light-light) !important;
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+    #search{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-light-light) !important;
+        outline: var(--bs-secondary) !important;
+    
+    }
+    #searchInput{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-light-light) !important;
+    }
+    .dropdown-toggle{
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+    }
+    .custom-breadcrumb{
+        &:hover{
+            color: var(--bs-secondary) !important;
+        }
+    }
+    #addChatButton{
+        .text-dark{
+            color: var(--bs-secondary) !important;
+        }
+    }
+
+}
+
+//override bootstrap variables
+$primary: var(--bs-primary);
+$secondary: var(--bs-secondary);
+$success: var(--bs-success);
+$info: var(--bs-info);
+$warning: var(--bs-warning);
+$danger: var(--bs-danger);
+$light: var(--bs-light);
+$light-light: var(--bs-light-light);
+$dark: var(--bs-dark);
+$white: var(--bs-white);
+$secondary-subtle: var(--bs-secondary-subtle);
