@@ -21,19 +21,19 @@ function ProfilePublic() {
   const [showFriendModal, setShowFriendModal] = useState(false);
   const [isButtonUnavailable, setIsButtonUnavailable] = useState(false);
 
-  const friendButtonColor = friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
+  const friendButtonColor =
+    friendStatus === "Eliminar Amigo" ? "btn-danger" : "btn-primary";
 
   useEffect(() => {
     if (!currentUser) navigate("/inicioSesion");
     else {
       if (username === currentUser?.username) navigate("/perfil");
-       else if (currentUser) {
+      else if (currentUser) {
         if (!currentUser.friendList) currentUser.friendList = [];
         if (!currentUser.incomingRequests) currentUser.incomingRequests = [];
-        if (!currentUser.blockList) currentUser.blockList = []; 
+        if (!currentUser.blockList) currentUser.blockList = [];
       }
     }
-
   }, [username, currentUser, navigate]);
 
   useEffect(() => {
@@ -293,7 +293,7 @@ function ProfilePublic() {
                       : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
                   }
                   alt="imagen del perfil"
-                  className="m-0 p-0   shadow"
+                  className="m-0 p-0 shadow"
                 />
               </Row>
             </Col>

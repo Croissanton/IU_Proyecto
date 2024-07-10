@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
-import { Breadcrumb, Container, Row } from "react-bootstrap";
+import { Breadcrumb, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import data from "../data/initialPosts.json";
@@ -162,20 +162,18 @@ function TopicPage() {
       {localStorage.getItem("usuario") === null ? (
         <div></div>
       ) : (
-        <div>
-          <div className="row justify-content-center">
-            <div className="col-auto">
-              <Link to={`/crear/${topicId}`} className="btn btn-primary">
-                <i className="bi bi-plus-circle"></i>{" "}
-                <span>Crear Nuevo Post</span>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <Row className="justify-content-center text-center m-0 p-0">
+          <Col>
+            <Link to={`/crear/${topicId}`} className="btn btn-primary">
+              <i className="bi bi-plus-circle"></i>{" "}
+              <span>Crear Nuevo Post</span>
+            </Link>
+          </Col>
+        </Row>
       )}
 
-      <div className="container-xxl my-3">
-        <div className="d-flex justify-content-end mb-3">
+      <Container fluid className="my-3 mx-0 px-0">
+        <Container className="d-flex justify-content-end mb-3">
           <label className="p-2">Ordenar por:</label>
           <div className="d-flex justify-content-center">
             <select
@@ -200,7 +198,7 @@ function TopicPage() {
               <option value="menosRespuestas">Menos respuestas</option>
             </select>
           </div>
-        </div>
+        </Container>
 
         <Container>
           {currentPosts.length > 0 ? (
@@ -228,7 +226,7 @@ function TopicPage() {
             <p>No hay posts disponibles.</p>
           )}
         </Container>
-      </div>
+      </Container>
 
       <IndexSelector
         totalTopics={sortedPosts.length}
