@@ -220,6 +220,7 @@ const Header = forwardRef((props, ref) => {
                 expanded || isCollapsing ? "" : "w-50"
               }`}
               style={{ position: "relative" }}
+              aria-label="Barra de búsqueda"
             >
               <FormLabel htmlFor="searchInput" className="visually-hidden">
                 Buscar
