@@ -108,7 +108,7 @@ function HistorialPage() {
           userComments.map((comment) => (
             <div key={comment.id} className="card my-3">
               <div className="card-body">
-                <h5 className="card-title">{comment.title}</h5>
+                <span className="card-title h5">{comment.title}</span>
                 <p className="card-text">{comment.text}</p>
                 <p className="card-text">
                   <small className="text-muted">
