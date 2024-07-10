@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, act } from "react";
 import {
   Row,
   Col,
@@ -37,6 +37,12 @@ const Messenger = () => {
           new Date(usuario.lastDisconnection).toLocaleString()}{" "}
       </small>
     );
+  };
+
+  const getProfilePicture = (username) => {
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let usuario = usuarios.find((usuario) => usuario.username === username);
+    return usuario.profilePicture;
   };
 
   const getConversationsForUser = (username) => {
@@ -404,7 +410,17 @@ const Messenger = () => {
                     activeChat.conversationKey === convo.conversationKey
                   }
                 >
-                  <i className="bi bi-person-circle me-2"></i> {convo.otherUser}
+                  <img
+                    src={
+                      getProfilePicture(convo.otherUser) ||
+                      "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
+                    }
+                    alt="Perfil"
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px", borderRadius: "50%" }}
+                  />
+                  {convo.otherUser}
                 </button>
               </ListGroup.Item>
             ))}
@@ -423,16 +439,28 @@ const Messenger = () => {
               id="chatboxHeader"
               className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center"
             >
-              <NavLink
-                className="bi bi-person-circle d-inline-flex align-items-center custom-icon"
-                to={`/perfil/${activeChat.otherUser}`}
-                style={{ color: "inherit", textDecoration: "none" }}
-                aria-label={`Perfil de ${activeChat.otherUser}`}
-              >
-                <span className="h2 m-0 ps-2 custom-text-link">
-                  {activeChat.otherUser}
-                </span>
-              </NavLink>
+              <div className="d-flex align-items-center">
+                <img
+                  src={
+                    getProfilePicture(activeChat.otherUser) ||
+                    "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
+                  }
+                  alt="Perfil"
+                  width="30"
+                  height="30"
+                  style={{ marginRight: "10px", borderRadius: "50%" }}
+                />
+                <NavLink
+                  className="d-inline-flex align-items-center custom-icon"
+                  to={`/perfil/${activeChat.otherUser}`}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  aria-label={`Perfil de ${activeChat.otherUser}`}
+                >
+                  <span className="h2 m-0 ps-2 custom-text-link">
+                    {activeChat.otherUser}
+                  </span>
+                </NavLink>
+              </div>
               {ShowConnectionStatus(activeChat.otherUser)}
 
               {activeChat.archived ? (
@@ -455,6 +483,7 @@ const Messenger = () => {
                 </Button>
               )}
             </div>
+
             {/* mensajes */}
             <div
               className="flex-grow-1 overflow-auto p-3"
