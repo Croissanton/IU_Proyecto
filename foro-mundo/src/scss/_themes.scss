@@ -20,7 +20,7 @@
     --bs-success: darken(var(--bs-success), 10%);
     --bs-info: darken(var(--bs-info), 10%);
     --bs-warning: darken(var(--bs-warning), 10%);
-    --bs-danger: darken(var(--bs-danger), 10%);
+    --bs-danger: darken(var(--bs-danger), 50%);
     --bs-light: var(--bs-dark);
     --bs-dark: var(--bs-light);
     --bs-white: #000000;
@@ -424,8 +424,8 @@
 
     #search, #searchInput {
         background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
-        outline: var(--bs-light) !important;
+        color: var(--bs-light-light) !important;
+        outline: var(--bs-light-light) !important;
     }
 
     #accessibility-button {
@@ -484,7 +484,7 @@
     --bs-primary: #3498db;
     --bs-secondary: #2c3e50;
     --bs-success: #27ae60;
-    --bs-info: #2980b9;
+    --bs-info: #3498db;
     --bs-warning: #f39c12;
     --bs-danger: #c0392b;
     --bs-light: #ecf0f1;
@@ -536,7 +536,6 @@
         }
     }
 
-    // Custom styles for navbar and other components can be added here
 }
 
 

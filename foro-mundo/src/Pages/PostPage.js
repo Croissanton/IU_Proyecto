@@ -303,7 +303,7 @@ function PostPage() {
             </label>
             <form onSubmit={handleSubmitComment}>
               <div className="mb-3">
-                <label htmlFor="commentInput" className="form-label"></label>
+                <label htmlFor="commentInput"><span className="visually-hidden">a</span></label>
                 <textarea
                   aria-label="texto_para_nuevo_comentario"
                   required
