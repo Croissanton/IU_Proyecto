@@ -112,7 +112,9 @@ function HistorialPage() {
                 <p className="card-text">{comment.text}</p>
                 <p className="card-text">
                   <small className="text-muted">
-                    Fecha: {new Date(comment.date).toLocaleDateString()} | Upvotes: {comment.upvotes} | Downvotes: {comment.downvotes}
+                    Fecha: {new Date(comment.date).toLocaleDateString()} |
+                    Votos positivos: {comment.upvotes} |
+                    Votos negativos: {comment.downvotes}
                   </small>
                 </p>
                 <Button
