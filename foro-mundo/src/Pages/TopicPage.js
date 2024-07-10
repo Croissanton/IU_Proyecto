@@ -147,7 +147,7 @@ function TopicPage() {
             {category ? category.topic : "Foro"}
           </Breadcrumb.Item>
         </Breadcrumb>
-        <label
+        <h1
           style={{
             fontSize: "3rem",
             fontWeight: "bold",
@@ -157,7 +157,7 @@ function TopicPage() {
           }}
         >
           {category.topic}
-        </label>
+        </h1>
       </div>
       {localStorage.getItem("usuario") === null ? (
         <div></div>
@@ -174,7 +174,7 @@ function TopicPage() {
 
       <Container fluid className="my-3 mx-0 px-0">
         <Container className="d-flex justify-content-end mb-3">
-          <label className="p-2">Ordenar por:</label>
+          <h2 className="p-2">Ordenar por:</h2>
           <div className="d-flex justify-content-center">
             <select
               className="form-select me-2"
