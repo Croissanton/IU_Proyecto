@@ -446,36 +446,23 @@ const Messenger = () => {
               id="chatboxHeader"
               className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center"
             >
-              <div className="d-flex align-items-center">
-                <img
-                  src={
-                    getProfilePicture(activeChat.otherUser) ||
-                    "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
-                  }
-                  alt="Perfil"
-                  width="30"
-                  height="30"
-                  style={{ marginRight: "10px", borderRadius: "50%" }}
-                />
+              <Col className="d-flex align-content-center justify-content-start text-center p-1">
                 <NavLink
                   className="d-inline-flex align-items-center custom-icon"
                   to={`/perfil/${activeChat.otherUser}`}
                   style={{ color: "inherit", textDecoration: "none" }}
                   aria-label={`Perfil de ${activeChat.otherUser}`}
                 >
-                  <span className="h2 m-0 ps-2 custom-text-link">
-                    {activeChat.otherUser}
-                  </span>
-                </NavLink>
-              </div>
-              {ShowConnectionStatus(activeChat.otherUser)}
-
-              {activeChat.archived ? (
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  onClick={() => unArchiveChat(activeChat.conversationKey)}
-                >
+                  <img
+                    src={
+                      getProfilePicture(activeChat.otherUser) ||
+                      "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
+                    }
+                    alt="Perfil"
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px", borderRadius: "50%" }}
+                  />
                   <span className="h2 m-0 ps-2 custom-text-link">
                     {activeChat.otherUser}
                   </span>
