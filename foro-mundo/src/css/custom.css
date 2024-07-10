@@ -97,6 +97,247 @@
 [data-bs-theme=dark] #chatbox .bg-secondary-subtle, [data-bs-theme=dark] #chatboxHeader .bg-secondary-subtle {
   background-color: var(--bs-secondary) !important;
 }
+[data-bs-theme=dark] #comment-container {
+  background-color: var(--bs-primary) !important;
+}
+[data-bs-theme=dark] #comment-container .p {
+  color: var(--bs-light-light) !important;
+}
+
+[data-bs-theme=low-contrast] {
+  --bs-primary: #7CAAE0;
+  --bs-secondary: #4A6B8A;
+  --bs-success: #5AC18E;
+  --bs-info: #9ECAD3;
+  --bs-warning: #FFD54F;
+  --bs-danger: #E57373;
+  --bs-light: #E8E8E8;
+  --bs-light-light: #F0F0F0;
+  --bs-dark: #4A4A4A;
+  --bs-white: #FAFAFA;
+  --bs-secondary-subtle: #607D8B;
+}
+[data-bs-theme=low-contrast] .header {
+  background-color: var(--bs-light) !important;
+}
+[data-bs-theme=low-contrast] .header .text-secondary {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] .custom-link-container {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-dark) !important;
+}
+[data-bs-theme=low-contrast] .custom-link-container:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-bs-theme=low-contrast] .dropdown-toggle {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] .custom-breadcrumb:hover {
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=low-contrast] .btn-outline-secondary {
+  color: var(--bs-secondary) !important;
+  border-color: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] .btn {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] .password-strength-meter {
+  background-color: transparent !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] .search-suggestions .bg-white {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] #search, [data-bs-theme=low-contrast] #searchInput {
+  background-color: var(--bs-white) !important;
+  color: var(--bs-dark) !important;
+  outline: var(--bs-secondary) !important;
+}
+[data-bs-theme=low-contrast] #accessibility-button {
+  background-color: transparent !important;
+}
+[data-bs-theme=low-contrast] #login-page, [data-bs-theme=low-contrast] #signup-page {
+  background-color: var(--bs-light-light) !important;
+}
+[data-bs-theme=low-contrast] #login-form, [data-bs-theme=low-contrast] #signup-form {
+  background-color: var(--bs-white) !important;
+  color: var(--bs-dark) !important;
+}
+[data-bs-theme=low-contrast] #addChatButton, [data-bs-theme=low-contrast] #archivedChatsButton {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-secondary) !important;
+  border: 1px solid var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=low-contrast] #addChatButton:hover, [data-bs-theme=low-contrast] #archivedChatsButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-bs-theme=low-contrast] #chatbox, [data-bs-theme=low-contrast] #chatboxHeader {
+  background-color: var(--bs-light-light) !important;
+}
+[data-bs-theme=low-contrast] #chatbox .border-secondary-subtle, [data-bs-theme=low-contrast] #chatboxHeader .border-secondary-subtle {
+  border-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=low-contrast] #chatbox .bg-secondary-subtle, [data-bs-theme=low-contrast] #chatboxHeader .bg-secondary-subtle {
+  background-color: var(--bs-light) !important;
+}
+[data-bs-theme=low-contrast] #comment-container {
+  background-color: var(--bs-light) !important;
+}
+[data-bs-theme=low-contrast] #comment-container .p {
+  color: var(--bs-light-light) !important;
+}
+
+[data-bs-theme=high-contrast] {
+  --bs-primary: #FFFFFF;
+  --bs-secondary: #000000;
+  --bs-success: #00FF00;
+  --bs-info: #00FFFF;
+  --bs-warning: #FFFF00;
+  --bs-danger: #FF0000;
+  --bs-light: #FFFFFF;
+  --bs-light-light: #F0F0F0;
+  --bs-dark: #000000;
+  --bs-white: #FFFFFF;
+  --bs-secondary-subtle: #333333;
+}
+[data-bs-theme=high-contrast] .header {
+  background-color: var(--bs-dark) !important;
+}
+[data-bs-theme=high-contrast] .header .text-secondary {
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .header .nav-link {
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .header .nav-link:hover, [data-bs-theme=high-contrast] .header .nav-link:focus {
+  color: var(--bs-warning) !important;
+}
+[data-bs-theme=high-contrast] .header .nav-link .custom-icon {
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .header .dropdown-toggle {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border: 1px solid var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .header .dropdown-toggle:hover, [data-bs-theme=high-contrast] .header .dropdown-toggle:focus {
+  background-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=high-contrast] .bi {
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .tooltip .tooltip-inner {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-dark) !important;
+  border: 1px solid var(--bs-dark) !important;
+}
+[data-bs-theme=high-contrast] .tooltip .tooltip-arrow::before {
+  border-bottom-color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .custom-link-container {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .custom-link-container:hover {
+  background-color: var(--bs-secondary-subtle);
+}
+[data-bs-theme=high-contrast] .dropdown-toggle {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .custom-breadcrumb:hover {
+  color: var(--bs-info) !important;
+}
+[data-bs-theme=high-contrast] .btn-outline-secondary {
+  color: var(--bs-light) !important;
+  border-color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .btn.btn-primary {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border: 2px solid var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .btn.btn-primary:hover, [data-bs-theme=high-contrast] .btn.btn-primary:focus {
+  background-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=high-contrast] .btn.btn-success {
+  background-color: var(--bs-success) !important;
+  color: var(--bs-dark) !important;
+  border: 2px solid var(--bs-dark) !important;
+}
+[data-bs-theme=high-contrast] .btn.btn-success:hover, [data-bs-theme=high-contrast] .btn.btn-success:focus {
+  background-color: #00cc00 !important;
+}
+[data-bs-theme=high-contrast] .btn.btn-danger {
+  background-color: var(--bs-danger) !important;
+  color: var(--bs-light) !important;
+  border: 2px solid var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .btn.btn-danger:hover, [data-bs-theme=high-contrast] .btn.btn-danger:focus {
+  background-color: #cc0000 !important;
+}
+[data-bs-theme=high-contrast] .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+[data-bs-theme=high-contrast] .btn-success > * {
+  color: var(--bs-dark) !important;
+}
+[data-bs-theme=high-contrast] .btn-danger > *, [data-bs-theme=high-contrast] .btn-primary > * {
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .password-strength-meter {
+  background-color: transparent !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .search-suggestions .bg-white {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] .i {
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #search, [data-bs-theme=high-contrast] #searchInput {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  outline: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #accessibility-button {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border: none !important;
+}
+[data-bs-theme=high-contrast] #login-page, [data-bs-theme=high-contrast] #signup-page {
+  background-color: var(--bs-dark) !important;
+}
+[data-bs-theme=high-contrast] #login-form, [data-bs-theme=high-contrast] #signup-form {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border: 2px solid var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #addChatButton, [data-bs-theme=high-contrast] #archivedChatsButton {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border: 2px solid var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #addChatButton:hover, [data-bs-theme=high-contrast] #archivedChatsButton:hover {
+  background-color: var(--bs-secondary-subtle);
+}
+[data-bs-theme=high-contrast] #chatbox, [data-bs-theme=high-contrast] #chatboxHeader {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #chatbox .border-secondary-subtle, [data-bs-theme=high-contrast] #chatboxHeader .border-secondary-subtle {
+  border-color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #chatbox .bg-secondary-subtle, [data-bs-theme=high-contrast] #chatboxHeader .bg-secondary-subtle {
+  background-color: var(--bs-secondary-subtle) !important;
+}
 
 /* Custom CSS for Footer */
 .custom-footer {

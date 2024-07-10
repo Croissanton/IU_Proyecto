@@ -3,23 +3,33 @@ import { ReactComponent as Sun } from "./Sun.svg";
 import { ReactComponent as Moon } from "./Moon.svg";
 import "./DarkMode.css";
 
+
+
+
+export const setLightMode = () => {
+    document.querySelector("body").setAttribute('data-bs-theme', 'light')
+    localStorage.setItem("selectedTheme", "light")
+}
 const DarkMode = () => {
+
 
     const setDarkMode = () => {
         document.querySelector("body").setAttribute('data-bs-theme', 'dark')
         localStorage.setItem("selectedTheme", "dark")
     }
 
-    const setLightMode = () => {
-        document.querySelector("body").setAttribute('data-bs-theme', 'light')
-        localStorage.setItem("selectedTheme", "light")
-    }
-
     const selectedTheme = localStorage.getItem("selectedTheme")
 
     if (selectedTheme === "dark") {
         setDarkMode()
+    }else if(selectedTheme === "light"){
+        setLightMode()
+    }else if(selectedTheme === "high-contrast"){
+        document.querySelector("body").setAttribute('data-bs-theme', 'high-contrast')
+    }else if(selectedTheme === "low-contrast"){
+        document.querySelector("body").setAttribute('data-bs-theme', 'low-contrast')
     }
+
 
     const toggleTheme = e => {
         if (e.target.checked) {

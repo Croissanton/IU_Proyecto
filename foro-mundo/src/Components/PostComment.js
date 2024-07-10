@@ -171,6 +171,7 @@ const PostComment = ({
     <Row className="gy-3">
       <Col className="p-3 m-auto">
         <Container
+          id="comment-container"
           className="border border-dark-subtle bg-light"
           role="region"
           aria-labelledby="comment-title"

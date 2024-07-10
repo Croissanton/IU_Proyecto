@@ -108,7 +108,313 @@
         }
     }
 
+    #comment-container{
+        background-color: var(--bs-primary) !important;
+        .p{
+            color: var(--bs-light-light) !important;
+        }
+    }
 
+}
+
+[data-bs-theme="low-contrast"] {
+    --bs-primary: #7CAAE0;
+    --bs-secondary: #4A6B8A;
+    --bs-success: #5AC18E;
+    --bs-info: #9ECAD3;
+    --bs-warning: #FFD54F;
+    --bs-danger: #E57373;
+    --bs-light: #E8E8E8;
+    --bs-light-light: #F0F0F0;
+    --bs-dark: #4A4A4A;
+    --bs-white: #FAFAFA;
+    --bs-secondary-subtle: #607D8B;
+
+    .header {
+        background-color: var(--bs-light) !important;
+        .text-secondary {
+            color: var(--bs-secondary) !important;
+        }
+    }
+
+    .custom-link-container {
+        background-color: var(--bs-light) !important;
+        color: var(--bs-dark) !important;
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    .dropdown-toggle {
+        background-color: var(--bs-light) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .custom-breadcrumb {
+        &:hover {
+            color: var(--bs-primary) !important;
+        }
+    }
+
+    .btn-outline-secondary {
+        color: var(--bs-secondary) !important;
+        border-color: var(--bs-secondary) !important;
+    }
+
+    .btn {
+        background-color: var(--bs-light) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .password-strength-meter {
+        background-color: transparent !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .search-suggestions {
+        .bg-white {
+            background-color: var(--bs-light) !important;
+            color: var(--bs-secondary) !important;
+        }
+    }
+
+    #search, #searchInput {
+        background-color: var(--bs-white) !important;
+        color: var(--bs-dark) !important;
+        outline: var(--bs-secondary) !important;
+    }
+
+    #accessibility-button {
+        background-color: transparent !important;
+    }
+
+    #login-page, #signup-page {
+        background-color: var(--bs-light-light) !important;
+    }
+
+    #login-form, #signup-form {	
+        background-color: var(--bs-white) !important;
+        color: var(--bs-dark) !important;
+    }
+
+    #addChatButton, #archivedChatsButton {
+        background-color: var(--bs-light) !important;
+        color: var(--bs-secondary) !important;
+        border: 1px solid var(--bs-secondary-subtle) !important;
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    #chatbox, #chatboxHeader {
+        background-color: var(--bs-light-light) !important;
+        .border-secondary-subtle {
+            border-color: var(--bs-secondary-subtle) !important;
+        }
+        .bg-secondary-subtle {
+            background-color: var(--bs-light) !important;
+        }
+    }
+
+    #comment-container{
+        background-color: var(--bs-light) !important;
+        .p{
+            color: var(--bs-light-light) !important;
+        }
+    }
+}
+
+[data-bs-theme="high-contrast"] {
+    --bs-primary: #FFFFFF;
+    --bs-secondary: #000000;
+    --bs-success: #00FF00;
+    --bs-info: #00FFFF;
+    --bs-warning: #FFFF00;
+    --bs-danger: #FF0000;
+    --bs-light: #FFFFFF;
+    --bs-light-light: #F0F0F0;
+    --bs-dark: #000000;
+    --bs-white: #FFFFFF;
+    --bs-secondary-subtle: #333333;
+
+    .header {
+        background-color: var(--bs-dark) !important;
+        .text-secondary {
+            color: var(--bs-light) !important;
+        }
+        
+        // Add this new rule for navbar icons
+        .nav-link {
+            color: var(--bs-light) !important;
+            
+            &:hover, &:focus {
+                color: var(--bs-warning) !important; // Use a bright color for hover/focus state
+            }
+            
+            .custom-icon {
+                color: var(--bs-light) !important;
+            }
+        }
+        
+        // Ensure dropdown toggles are visible
+        .dropdown-toggle {
+            background-color: var(--bs-dark) !important;
+            color: var(--bs-light) !important;
+            border: 1px solid var(--bs-light) !important;
+            
+            &:hover, &:focus {
+                background-color: var(--bs-secondary-subtle) !important;
+            }
+        }
+    }
+
+    .bi {
+        color: var(--bs-light) !important;
+    }
+
+    // Ensure tooltips are visible
+    .tooltip {
+        .tooltip-inner {
+            background-color: var(--bs-light) !important;
+            color: var(--bs-dark) !important;
+            border: 1px solid var(--bs-dark) !important;
+        }
+        .tooltip-arrow::before {
+            border-bottom-color: var(--bs-light) !important;
+        }
+    }
+
+    .custom-link-container {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        &:hover {
+            background-color: var(--bs-secondary-subtle);
+        }
+    }
+
+    .dropdown-toggle {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+    }
+
+    .custom-breadcrumb {
+        &:hover {
+            color: var(--bs-info) !important;
+        }
+    }
+
+    .btn-outline-secondary {
+        color: var(--bs-light) !important;
+        border-color: var(--bs-light) !important;
+    }
+
+    .btn {
+        &.btn-primary {
+            background-color: var(--bs-dark) !important;
+            color: var(--bs-light) !important;
+            border: 2px solid var(--bs-light) !important;
+
+            &:hover, &:focus {
+                background-color: var(--bs-secondary-subtle) !important;
+            }
+        }
+
+        &.btn-success {
+            background-color: var(--bs-success) !important;
+            color: var(--bs-dark) !important;
+            border: 2px solid var(--bs-dark) !important;
+
+            &:hover, &:focus {
+                background-color: darken(#00FF00, 10%) !important;
+            }
+        }
+
+        &.btn-danger {
+            background-color: var(--bs-danger) !important;
+            color: var(--bs-light) !important;
+            border: 2px solid var(--bs-light) !important;
+
+            &:hover, &:focus {
+                background-color: darken(#FF0000, 10%) !important;
+            }
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    // Ensure text contrast for button content
+    .btn-success {
+        > * {
+            color: var(--bs-dark) !important;
+        }
+    }
+
+    .btn-danger, .btn-primary {
+        > * {
+            color: var(--bs-light) !important;
+        }
+    }
+    .password-strength-meter {
+        background-color: transparent !important;
+        color: var(--bs-light) !important;
+    }
+
+    .search-suggestions {
+        .bg-white {
+            background-color: var(--bs-dark) !important;
+            color: var(--bs-light) !important;
+        }
+    }
+
+    .i{
+        color: var(--bs-light) !important;
+    }
+
+
+    #search, #searchInput {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        outline: var(--bs-light) !important;
+    }
+
+    #accessibility-button {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        border: none !important;
+    }
+
+    #login-page, #signup-page {
+        background-color: var(--bs-dark) !important;
+    }
+
+    #login-form, #signup-form {	
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        border: 2px solid var(--bs-light) !important;
+    }
+
+    #addChatButton, #archivedChatsButton {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        border: 2px solid var(--bs-light) !important;
+        &:hover {
+            background-color: var(--bs-secondary-subtle);
+        }
+    }
+
+    #chatbox, #chatboxHeader {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        .border-secondary-subtle {
+            border-color: var(--bs-light) !important;
+        }
+        .bg-secondary-subtle {
+            background-color: var(--bs-secondary-subtle) !important;
+        }
+    }
 }
 
 //override bootstrap variables

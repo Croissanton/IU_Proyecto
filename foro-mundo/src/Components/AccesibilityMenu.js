@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dropdown, OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
+import { setLightMode} from './DarkMode/DarkMode';
 
 const AccessibilityMenu = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -14,14 +15,26 @@ const AccessibilityMenu = () => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
+  // habilita data-bs-theme="high-contrast" en el body
+  const setHighContrast = () => {
+    document.querySelector('body').setAttribute('data-bs-theme', 'high-contrast');
+    localStorage.setItem('selectedTheme', 'high-contrast');
+  };
+
+  const setLowContrast = () => {
+    document.querySelector('body').setAttribute('data-bs-theme', 'low-contrast');
+    localStorage.setItem('selectedTheme', 'low-contrast');
+  };
+  
+
   const AccessibilityOptions = () => (
     <>
-      <Dropdown.Item href="#/action-1" className="py-2">Formato original</Dropdown.Item>
+      <Dropdown.Item onClick={setLightMode} className="py-2">Formato original</Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item href="#/action-2" className="py-2">
+      <Dropdown.Item onClick={setHighContrast} className="py-2">
         <i className="bi bi-brightness-high-fill me-2"></i> Alto contraste
       </Dropdown.Item>
-      <Dropdown.Item href="#/action-3" className="py-2">
+      <Dropdown.Item onClick={setLowContrast} className="py-2">
         <i className="bi bi-brightness-high me-2"></i> Bajo contraste
       </Dropdown.Item>
       <Dropdown.Item href="#/action-4" className="py-2">
