@@ -47,6 +47,9 @@ const DarkMode = () => {
                 id='darkmode-toggle'
                 defaultChecked={selectedTheme === "dark"}
                 onChange={toggleTheme}
+                aria-label="Cambiar modo oscuro"
+                tabIndex={0}
+                role="tab"
             />
             <label className='dark_mode_label' htmlFor='darkmode-toggle'>
                 <Sun />

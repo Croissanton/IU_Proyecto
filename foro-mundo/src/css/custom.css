@@ -53,6 +53,18 @@
   background-color: var(--bs-secondary) !important;
   color: var(--bs-primary) !important;
 }
+[data-bs-theme=dark] .btn.btn-primary {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=dark] .btn.btn-success {
+  background-color: #00FF00 !important;
+  color: var(--bs-dark) !important;
+}
+[data-bs-theme=dark] .btn.btn-danger {
+  background-color: #FF0000 !important;
+  color: var(--bs-light) !important;
+}
 [data-bs-theme=dark] .password-strength-meter {
   background-color: transparent !important;
   color: var(--bs-secondary) !important;
@@ -211,6 +223,9 @@
 [data-bs-theme=high-contrast] .header .text-secondary {
   color: var(--bs-light) !important;
 }
+[data-bs-theme=high-contrast] .header .input:focus {
+  outline: 2px solid var(--bs-warning) !important;
+}
 [data-bs-theme=high-contrast] .header .nav-link {
   color: var(--bs-light) !important;
 }
@@ -302,6 +317,14 @@
 [data-bs-theme=high-contrast] .i {
   color: var(--bs-light) !important;
 }
+[data-bs-theme=high-contrast] .custom-text-link {
+  color: var(--bs-light) !important;
+  text-decoration: underline;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  transition: color 0.3s;
+}
 [data-bs-theme=high-contrast] #search, [data-bs-theme=high-contrast] #searchInput {
   background-color: var(--bs-dark) !important;
   color: var(--bs-light) !important;
@@ -337,6 +360,13 @@
 }
 [data-bs-theme=high-contrast] #chatbox .bg-secondary-subtle, [data-bs-theme=high-contrast] #chatboxHeader .bg-secondary-subtle {
   background-color: var(--bs-secondary-subtle) !important;
+}
+[data-bs-theme=high-contrast] #comment-container {
+  background-color: var(--bs-secondary-subtle) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=high-contrast] #comment-container .span, [data-bs-theme=high-contrast] #comment-container .a {
+  color: var(--bs-light) !important;
 }
 
 [data-bs-theme=dyslexia-friendly] {

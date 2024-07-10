@@ -57,7 +57,22 @@
     .btn{
         background-color: var(--bs-secondary) !important;
         color: var(--bs-primary) !important;
+        &.btn-primary{
+            background-color: var(--bs-secondary) !important;
+            color: var(--bs-primary) !important;
+        }
+
+        &.btn-success{
+            background-color: #00FF00 !important;
+            color: var(--bs-dark) !important;
+        }
+
+        &.btn-danger{
+            background-color: #FF0000 !important;
+            color: var(--bs-light) !important;
+        }
     }
+
     .password-strength-meter{
         background-color: transparent !important;
         color: var(--bs-secondary) !important;
@@ -242,6 +257,10 @@
         .text-secondary {
             color: var(--bs-light) !important;
         }
+
+        .input:focus{
+            outline: 2px solid var(--bs-warning) !important;
+        }
         
         // Add this new rule for navbar icons
         .nav-link {
@@ -373,6 +392,16 @@
         color: var(--bs-light) !important;
     }
 
+    
+    .custom-text-link {
+        color: var(--bs-light) !important;
+        text-decoration: underline;
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        transition: color 0.3s;
+    }
+
 
     #search, #searchInput {
         background-color: var(--bs-dark) !important;
@@ -415,6 +444,15 @@
             background-color: var(--bs-secondary-subtle) !important;
         }
     }
+
+    #comment-container{
+        background-color: var(--bs-secondary-subtle) !important;
+        color: var(--bs-light) !important;
+        .span, .a{
+            color: var(--bs-light) !important;
+        }
+    }
+
 }
 
 [data-bs-theme="dyslexia-friendly"] {
