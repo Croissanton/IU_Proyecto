@@ -221,7 +221,7 @@ const Header = forwardRef((props, ref) => {
               }`}
               aria-label="Barra de búsqueda"
             >
-              <Container>
+              <Container className="d-flex align-items-center">
                 <FormLabel htmlFor="searchInput" className="visually-hidden">
                   Buscar
                 </FormLabel>
@@ -271,7 +271,7 @@ const Header = forwardRef((props, ref) => {
               </Container>
 
               <Button
-                className="d-flex"
+                className="d-flex align-items-center justify-content-center m-1"
                 variant="outline-secondary"
                 type="submit"
                 aria-label="Buscar"
