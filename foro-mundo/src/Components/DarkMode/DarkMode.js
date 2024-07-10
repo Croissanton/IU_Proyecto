@@ -6,12 +6,12 @@ import "./DarkMode.css";
 const DarkMode = () => {
 
     const setDarkMode = () => {
-        document.querySelector("body").setAttribute("data-bs-theme", "dark")
+        document.querySelector("body").setAttribute('data-bs-theme', 'dark')
         localStorage.setItem("selectedTheme", "dark")
     }
 
     const setLightMode = () => {
-        document.querySelector("body").setAttribute("data-bs-theme", "light")
+        document.querySelector("body").setAttribute('data-bs-theme', 'light')
         localStorage.setItem("selectedTheme", "light")
     }
 
@@ -21,7 +21,7 @@ const DarkMode = () => {
         setDarkMode()
     }
 
-    const toggleTheme = (e) => {
+    const toggleTheme = e => {
         if (e.target.checked) {
             setDarkMode()
         } else {

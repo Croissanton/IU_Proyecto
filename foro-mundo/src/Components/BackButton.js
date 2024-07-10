@@ -14,7 +14,7 @@ const BackButton = () => {
     
     <button
       type="button"
-      className={buttonClass}
+      className="btn btn-primary text-secondary  border border-secondary-subtle m-3"
       onClick={() => navigate(-1)}
     >
       <i className="bi bi-arrow-left-circle pe-2"></i>

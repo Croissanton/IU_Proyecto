@@ -251,7 +251,7 @@ const Header = forwardRef((props, ref) => {
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}
               >
-                <span className="me-1">Buscar</span>
+                <span id="search" className="me-1">Buscar</span>
                 <i className="bi bi-search"></i>
               </Button>
               {showSuggestions && inputValue && suggestions.length > 0 && (
@@ -343,11 +343,12 @@ const Header = forwardRef((props, ref) => {
                   overlay={<Tooltip id="tooltip-help">Accesibilidad</Tooltip>}
                   >
                   <Dropdown.Toggle
-                    variant="success"
+                    variant="transparent"
                     id="dropdown-basic"
-                    className="d-flex align-items-center justify-content-center"
+                    className="d-flex align-items-center justify-content-center bg-none"
                     aria-label="Mostrar menu de accesibilidad"
                   >
+                    {isMobile && <span className="me-2">Accesibilidad</span>}
                     <i className="bi bi-universal-access-circle custom-icon"></i>
                     <span className="visually-hidden">Menu de accesibilidad</span>
                   </Dropdown.Toggle>
@@ -376,7 +377,7 @@ const Header = forwardRef((props, ref) => {
                   to="/ayuda"
                   aria-label="Ayuda"
                 >
-                  {isMobile && <span className="me-2">Ayuda</span>}
+                  {isMobile && <span className="text-secondary me-2">Ayuda</span>}
                   <i className="bi bi-question-circle custom-icon"></i>
                   <span className="visually-hidden">Ayuda</span>
                 </Nav.Link>

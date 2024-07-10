@@ -1,3 +1,6 @@
+
+@import './themes';
+
 $primary: #B4DBFC; 
 $secondary: #002561;
 $success: #00ad5c;
@@ -9,56 +12,6 @@ $light-light: #efeded;
 $dark: #262626;
 $white: #f5f5f5;
 $secondary-subtle: lighten($secondary, 10%);
-
-:root
-{
-  --bs-primary: $primary;
-  --bs-secondary: $secondary;
-  --bs-success: $success;
-  --bs-info: $info;
-  --bs-warning: $warning;
-  --bs-danger: $danger;
-  --bs-light: $light;
-  --bs-dark: $dark;
-  --bs-white: $white;
-  --bs-secondary-border-subtle: $secondary-subtle;
-}
-
-[data-bs-theme="light"]{
-  --bs-primary: $primary;
-  --bs-secondary: $secondary;
-  --bs-success: $success;
-  --bs-info: $info;
-  --bs-warning: $warning;
-  --bs-danger: $danger;
-  --bs-light: $light;
-  --bs-dark: $dark;
-  --bs-white: $white;
-  --bs-secondary-border-subtle: $secondary-subtle;
-
-}
-
-
-[data-bs-theme="dark"] {
-  --bs-primary: var(--bs-secondary);
-  --bs-secondary: var(--bs-primary)
-  --bs-success: rgb(0, 100, 53);
-  --bs-info: darken($info, 50%);
-  --bs-warning: darken($warning, 50%);
-  --bs-danger: darken($danger, 50%);
-  --bs-light: $dark
-  --bs-dark: $light
-  --bs-white: black;
-  --bs-secondary-border-subtle: darken($secondary, 10%);
-  .custom-footer {
-    background-color: $secondary;
-  }
-  .custom-button{
-    background-color: $secondary;
-    color: $primary;
-  }
-
-}
 
 /* Custom CSS for Footer */
 .custom-footer {
@@ -83,21 +36,21 @@ body, html {
 
 
 .custom-pagination .page-link {
-    color: $secondary; 
-    background-color: $primary; 
-    border-color: $secondary-subtle; 
+    color: var(--bs-secondary); 
+    background-color: var(--bs-primary); 
+    border-color: var(--bs-secondary-subtle); 
 }
 
 .custom-pagination .page-link:hover {
-    color: $secondary; 
-    background-color: $light; 
-    border-color: $secondary-subtle; 
+    color: var(--bs-secondary); 
+    background-color: var(--bs-light); 
+    border-color: var(--bs-secondary-subtle); 
 }
 
 .custom-pagination .page-item.active .page-link {
-    color: $primary; 
-    background-color: $secondary; 
-    border-color: $secondary-subtle; 
+    color: var(--bs-primary); 
+    background-color: var(--bs-secondary); 
+    border-color: var(--bs-secondary-subtle); 
 }
 
 .custom-link{
@@ -106,39 +59,24 @@ body, html {
     background-color: transparent; 
 }
 
-.custom-link-container-dark{
-    background-color: $dark;
-    transition: background-color 0.3s;
-}
 
 .custom-link-container:hover{
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .custom-icon {
     font-size: 1.5rem;
-    color: $secondary;
+    color: var(--bs-secondary);
     transition: color 0.3s;
     &:hover {
       color: rgba(0, 0, 0, 0.5);
     }
   }
-/*
-.custom-button {
-    background-color: $light; 
-    text-decoration: none;
 
-    &.active {
-      background-color: $info;
-    }
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  }
-*/
+
 .custom-text-link {
-    color: $secondary;
+    color: var(--bs-secondary);
     display: inline-block;
     padding: 0;
     margin: 0;
@@ -157,7 +95,7 @@ body, html {
 
 .custom-breadcrumb {
   a {
-    color: $secondary;
+    color: var(--bs-secondary);
     transition: color 0.3s;
   }
   a:hover {
@@ -172,12 +110,12 @@ body, html {
 }
 
 #searchInput {
-  border-color: $secondary-subtle;
+  border-color: var(--bs-secondary-subtle);
   background-color: darken($white, 3%);
 }
 
 #searchInput:focus {
-  border-color: $secondary;
+  border-color: var(--bs-secondary);
   background-color: $white;
   box-shadow: 0 0 0 0.25rem rgba(0, 37, 97, 0.25);
 }
@@ -194,7 +132,10 @@ body, html {
 }
 
 
+
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
 
 
 // $link-color: $secondary;
