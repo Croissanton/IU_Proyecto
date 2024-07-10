@@ -11,6 +11,7 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
 import DarkMode from "./DarkMode/DarkMode.js";
+import AccessibilityMenu from "./AccesibilityMenu.js";
 
 const Header = forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
@@ -335,8 +336,9 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                 </>
               )}
+              <AccessibilityMenu />
 
-              
+              {/*
                 <Dropdown>
                   <OverlayTrigger
                   placement="left"
@@ -365,6 +367,7 @@ const Header = forwardRef((props, ref) => {
                     <Dropdown.Item href="#/action-6"> <i className="bi bi-alphabet-uppercase "></i>  Fuente para accesibilidad</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
+                */}
                       
 
               <OverlayTrigger
