@@ -83,20 +83,22 @@ function MainPage() {
           display: "block",
           textAlign: "center",
         }}
+        aria-label="Foros"
       >
         Foros
       </label>
+      
       <div className="container-xxl my-3">
         <div className="d-flex justify-content-end mb-3">
-          <label className="me-2" style={{ padding: "10px" }}>
-            Ordenar por:
-          </label>
+            <label className="me-3" style={{ margin: "10px" }}>
+              Ordenar por:
+            </label>
           <div className="d-flex justify-content-center">
             <select
               className="form-select me-2"
               onChange={(e) => handleSortChange(e.target.value)}
               aria-label="Ordenar por"
-              defaultValue="masPosts"
+              value={sortCriteria}
             >
               <option value="nombreAZ">Título A-Z</option>
               <option value="nombreZA">Título Z-A</option>
