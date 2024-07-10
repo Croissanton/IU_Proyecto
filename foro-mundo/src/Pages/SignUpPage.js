@@ -4,7 +4,7 @@ import BackButton from "../Components/BackButton";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import zxcvbn from "zxcvbn";
-
+import ConfirmationModal from "../Components/ConfirmationModal.js";
 
 function PasswordStrengthMeter({ password }) {
   const testResult = zxcvbn(password);
@@ -50,7 +50,6 @@ function PasswordStrengthMeter({ password }) {
 }
 
 function SignUpPage() {
-
   const [usuario, setUsuario] = useState({
     username: "",
     password: "",
@@ -75,6 +74,7 @@ function SignUpPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showInvalidCharNotification, setShowInvalidCharNotification] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -83,16 +83,14 @@ function SignUpPage() {
     const { name, value } = e.target;
   
     if (name === "username") {
-      // Validar el nombre de usuario para permitir letras, números, y caracteres - _ .
       const validUsername = value.replace(/[^a-zA-Z0-9\-\_\.]/g, "");
       setUsuario({ ...usuario, [name]: validUsername });
   
-      // Mostrar notificación si se ingresó un carácter inválido
       if (value !== validUsername) {
         setShowInvalidCharNotification(true);
         setTimeout(() => {
           setShowInvalidCharNotification(false);
-        }, 3000); // Ocultar la notificación después de 3 segundos
+        }, 3000);
       }
     } else {
       setUsuario({ ...usuario, [name]: value });
@@ -101,10 +99,14 @@ function SignUpPage() {
 
   const register = (e) => {
     e.preventDefault();
-    //Si ya hay un usuario con ese username o correo, mostrar un mensaje de error
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmRegister = () => {
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     if (usuarios.find((u) => u.username === usuario.username)) {
       alert("El nombre de usuario ya está en uso.");
+      setShowConfirmModal(false);
       return;
     }
 
@@ -116,7 +118,8 @@ function SignUpPage() {
     localStorage.setItem("usuario", JSON.stringify(usuario));
     
     showToast("Registro correcto.", "bg-success");
-    navigate("/"); // Redirigir después de que se actualice el estado de usuario
+    setShowConfirmModal(false);
+    navigate("/");
   };
 
   return (
@@ -315,6 +318,13 @@ function SignUpPage() {
             >
               Registrarse
             </button>
+            <ConfirmationModal
+              show={showConfirmModal}
+              handleClose={() => setShowConfirmModal(false)}
+              handleConfirm={handleConfirmRegister}
+              title="Confirmar Registro"
+              message="¿Estás seguro de que quieres registrarte con estos datos?"
+            />
           </div>
         </form>
       </div>
