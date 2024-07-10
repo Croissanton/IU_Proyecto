@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dropdown, OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
 import { setLightMode} from './DarkMode/DarkMode';
+import DarkMode from './DarkMode/DarkMode';
 
 const AccessibilityMenu = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -30,11 +31,16 @@ const AccessibilityMenu = () => {
     document.querySelector('body').setAttribute('data-bs-theme', 'dyslexia-friendly');
     localStorage.setItem('selectedTheme', 'dyslexia-friendly');
   };
+
   
 
   const AccessibilityOptions = () => (
     <>
       <Dropdown.Item onClick={setLightMode} className="py-2">Formato original</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item className="py-2" style={{ pointerEvents: 'none' }}> Modo oscuro</Dropdown.Item>      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <DarkMode />
+      </div>
       <Dropdown.Divider />
       <Dropdown.Item onClick={setHighContrast} className="py-2">
         <i className="bi bi-brightness-high-fill me-2"></i> Alto contraste
@@ -42,19 +48,13 @@ const AccessibilityMenu = () => {
       <Dropdown.Item onClick={setLowContrast} className="py-2">
         <i className="bi bi-brightness-high me-2"></i> Bajo contraste
       </Dropdown.Item>
-      <Dropdown.Item href="#/action-4" className="py-2">
-        <i className="bi bi-plus-circle me-2"></i> Agrandar texto
-      </Dropdown.Item>
-      <Dropdown.Item href="#/action-5" className="py-2">
-        <i className="bi bi-dash-circle me-2"></i> Reducir texto
-      </Dropdown.Item>
       <Dropdown.Item onClick={setAccesibilityFont} className="py-2">
         <i className="bi bi-alphabet-uppercase me-2"></i> Fuente accesible
       </Dropdown.Item>
     </>
   );
 
-  if (isMobile) {
+  if (visualViewport.width < 992) {
     return (
       <>
         <Button 

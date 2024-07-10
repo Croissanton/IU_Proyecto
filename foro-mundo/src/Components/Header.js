@@ -10,7 +10,6 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
-import DarkMode from "./DarkMode/DarkMode.js";
 import AccessibilityMenu from "./AccesibilityMenu.js";
 
 const Header = forwardRef((props, ref) => {
@@ -401,7 +400,6 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
-                <DarkMode />
             </Nav>
           </Nav>
         </Navbar.Collapse>

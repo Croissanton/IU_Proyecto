@@ -51,7 +51,12 @@ const DarkMode = () => {
         document.querySelector("body").setAttribute('data-bs-theme', 'low-contrast')
     }else if(selectedTheme === "dyslexia-friendly"){
         document.querySelector("body").setAttribute('data-bs-theme', 'dyslexia-friendly')
-   }
+    }else if(selectedTheme === "big-text"){
+        document.querySelector("body").setAttribute('data-bs-theme', 'big-text')
+    }else if(selectedTheme === "small-text"){
+        document.querySelector("body").setAttribute('data-bs-theme', 'small-text')
+    }
+    
     const toggleTheme = e => {
         if (e.target.checked) {
             setDarkMode()
