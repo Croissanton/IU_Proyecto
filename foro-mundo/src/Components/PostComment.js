@@ -200,6 +200,7 @@ const PostComment = ({
     <Row className="gy-3">
       <Col className="p-3 m-auto">
         <Container
+          id="comment-container"
           className="border border-dark-subtle bg-light"
           role="region"
           aria-labelledby="comment-title"
@@ -270,7 +271,7 @@ const PostComment = ({
                         style={{ marginRight: "10px", borderRadius: "50%" }}
                       />
                       <NavLink
-                        className="custom-text-link"
+                        className="custom-text-link text-light"
                         to={`/perfil/${author}`}
                         aria-label={`Perfil de ${author}`}
                         tabIndex="0"
@@ -283,7 +284,7 @@ const PostComment = ({
                     <p>{new Date(date).toLocaleString()}</p>
                   </Row>
                 </Col>
-                <Col className="text-center">
+                <Col className="text-center text-light">
                   {usuario === undefined || usuario.username !== author ? (
                     <div></div>
                   ) : (

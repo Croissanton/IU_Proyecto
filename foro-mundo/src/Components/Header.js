@@ -339,39 +339,7 @@ const Header = forwardRef((props, ref) => {
                   </OverlayTrigger>
                 </>
               )}
-              <AccessibilityMenu />
-
-              {/*
-                <Dropdown>
-                  <OverlayTrigger
-                  placement="left"
-                  overlay={<Tooltip id="tooltip-help">Accesibilidad</Tooltip>}
-                  >
-                  <Dropdown.Toggle
-                    variant="transparent"
-                    id="dropdown-basic"
-                    className="d-flex align-items-center justify-content-center bg-none"
-                    aria-label="Mostrar menu de accesibilidad"
-                  >
-                    {isMobile && <span className="me-2">Accesibilidad</span>}
-                    <i className="bi bi-universal-access-circle custom-icon"></i>
-                    <span className="visually-hidden">Menu de accesibilidad</span>
-                  </Dropdown.Toggle>
-                  </OverlayTrigger>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Formato original</Dropdown.Item>
-                    <hr class="dropdown-divider"></hr>
-                    
-                    <Dropdown.Item href="#/action-2"> <i className="bi bi-brightness-high-fill"></i> Alto contraste</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3"><i className="bi bi-brightness-high"></i>  Bajo contraste</Dropdown.Item>
-                    <Dropdown.Item href="#/action-4"><i className="bi bi-plus-circle "></i>  Agrandar texto</Dropdown.Item>
-                    <Dropdown.Item href="#/action-5"><i className="bi bi-dash-circle "></i>  Reducir texto</Dropdown.Item>
-                    <Dropdown.Item href="#/action-6"> <i className="bi bi-alphabet-uppercase "></i>  Fuente para accesibilidad</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                */}
-                      
+              <AccessibilityMenu />                   
 
               <OverlayTrigger
                 placement="bottom"
@@ -428,7 +396,9 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
-              <DarkMode />
+              <Nav.Link as="div" className="m-auto">
+                <DarkMode />
+              </Nav.Link>
             </Nav>
           </Nav>
         </Navbar.Collapse>
