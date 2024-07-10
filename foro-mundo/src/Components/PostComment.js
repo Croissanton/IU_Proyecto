@@ -15,15 +15,12 @@ const PostComment = ({
   onDelete,
 }) => {
   const usuario = JSON.parse(localStorage.getItem("usuario")) || undefined;
-  const [post, setPost] = useState(null);
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [userVote, setUserVote] = useState(null);
   const [authorProfilePicture, setAuthorProfilePicture] = useState("");
-
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const [comments, setComments] = useState([]);
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
 
@@ -40,18 +37,14 @@ const PostComment = ({
   useEffect(() => {
     const allUsers = JSON.parse(localStorage.getItem("usuarios")) || [];
     const authorData = allUsers.find((user) => user.username === author);
-
     if (authorData) {
-      setAuthorProfilePicture(
-        authorData.profilePicture || "https://via.placeholder.com/150"
-      );
+      setAuthorProfilePicture(authorData.profilePicture || "https://via.placeholder.com/150");
     }
   }, [author]);
 
   useEffect(() => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
     const post = posts.find((post) => post.id.toString() === postId.toString());
-
     if (post) {
       const storedComment = post.comments.find((comment) => comment.id === id);
       if (storedComment) {
@@ -64,11 +57,10 @@ const PostComment = ({
   const updateLocalStorage = (newUpvotes, newDownvotes) => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
     const post = posts.find((post) => post.id.toString() === postId.toString());
-
     const comments = post.comments || [];
+    const commentIndex = comments.findIndex((comment) => comment.id === id);
 
-    if (comments.length > 0) {
-      const commentIndex = comments.findIndex((comment) => comment.id === id);
+    if (commentIndex !== -1) {
       comments[commentIndex].upvotes = newUpvotes;
       comments[commentIndex].downvotes = newDownvotes;
     } else {
@@ -85,91 +77,58 @@ const PostComment = ({
     }
 
     post.comments = comments;
-    posts[posts.findIndex((post) => post.id.toString() === postId.toString())] =
-      post;
+    posts[posts.findIndex((post) => post.id.toString() === postId.toString())] = post;
     localStorage.setItem("posts", JSON.stringify(posts));
   };
 
-  const handleUpvote = () => {
+  const handleVote = (type) => {
     let newUpvotes = upvotes;
     let newDownvotes = downvotes;
 
-    if (userVote === "upvote") {
-      if (newUpvotes > 0) newUpvotes -= 1;
-      setUserVote(null);
-      usuario.upComments = usuario.upComments.filter(
-        (commentId) => commentId !== id
-      );
-    } else if (userVote === "downvote") {
-      if (newDownvotes > 0) newDownvotes -= 1;
-      newUpvotes += 1;
-      setUserVote("upvote");
-      usuario.downComments = usuario.downComments.filter(
-        (commentId) => commentId !== id
-      );
-      usuario.upComments.push(id);
-    } else {
-      newUpvotes += 1;
-      setUserVote("upvote");
-      usuario.upComments.push(id);
+    if (type === "upvote") {
+      if (userVote === "upvote") {
+        newUpvotes = Math.max(newUpvotes - 1, 0);
+        setUserVote(null);
+        usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+      } else {
+        if (userVote === "downvote") {
+          newDownvotes = Math.max(newDownvotes - 1, 0);
+          usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+        }
+        newUpvotes += 1;
+        setUserVote("upvote");
+        usuario.upComments.push(id);
+      }
+    } else if (type === "downvote") {
+      if (userVote === "downvote") {
+        newDownvotes = Math.max(newDownvotes - 1, 0);
+        setUserVote(null);
+        usuario.downComments = usuario.downComments.filter((commentId) => commentId !== id);
+      } else {
+        if (userVote === "upvote") {
+          newUpvotes = Math.max(newUpvotes - 1, 0);
+          usuario.upComments = usuario.upComments.filter((commentId) => commentId !== id);
+        }
+        newDownvotes += 1;
+        setUserVote("downvote");
+        usuario.downComments.push(id);
+      }
     }
 
     setUpvotes(newUpvotes);
     setDownvotes(newDownvotes);
     localStorage.setItem("usuario", JSON.stringify(usuario));
-    localStorage.setItem(
-      "usuarios",
-      JSON.stringify(
-        JSON.parse(localStorage.getItem("usuarios")).map((u) =>
-          u.username === usuario.username ? usuario : u
-        )
-      )
+    const updatedUsers = JSON.parse(localStorage.getItem("usuarios")).map((u) =>
+      u.username === usuario.username ? usuario : u
     );
-    updateLocalStorage(newUpvotes, newDownvotes);
-  };
-
-  const handleDownvote = () => {
-    let newUpvotes = upvotes;
-    let newDownvotes = downvotes;
-
-    if (userVote === "downvote") {
-      if (newDownvotes > 0) newDownvotes -= 1;
-      setUserVote(null);
-      usuario.downComments = usuario.downComments.filter(
-        (commentId) => commentId !== id
-      );
-    } else if (userVote === "upvote") {
-      if (newUpvotes > 0) newUpvotes -= 1;
-      newDownvotes += 1;
-      setUserVote("downvote");
-      usuario.upComments = usuario.upComments.filter(
-        (commentId) => commentId !== id
-      );
-      usuario.downComments.push(id);
-    } else {
-      newDownvotes += 1;
-      setUserVote("downvote");
-      usuario.downComments.push(id);
-    }
-
-    setUpvotes(newUpvotes);
-    setDownvotes(newDownvotes);
-    localStorage.setItem("usuario", JSON.stringify(usuario));
-    localStorage.setItem(
-      "usuarios",
-      JSON.stringify(
-        JSON.parse(localStorage.getItem("usuarios")).map((u) =>
-          u.username === usuario.username ? usuario : u
-        )
-      )
-    );
+    localStorage.setItem("usuarios", JSON.stringify(updatedUsers));
     updateLocalStorage(newUpvotes, newDownvotes);
   };
 
   const handleDeleteComment = (id) => {
     setCommentToDelete(id);
     setShowDeleteCommentModal(true);
-  };  
+  };
 
   const handleCancelDelete = () => {
     setShowDeleteCommentModal(false);
@@ -178,7 +137,7 @@ const PostComment = ({
   const handleConfirmDeleteComment = () => {
     const posts = JSON.parse(localStorage.getItem("posts")) || [];
     const postIndex = posts.findIndex((post) => post.id.toString() === postId.toString());
-  
+
     if (postIndex !== -1) {
       const post = posts[postIndex];
       const updatedComments = post.comments.filter((comment) => comment.id !== commentToDelete);
@@ -194,35 +153,16 @@ const PostComment = ({
       }
     }
   };
-    
 
   return (
     <Row className="gy-3">
       <Col className="p-3 m-auto">
-        <Container
-          id="comment-container"
-          className="border border-dark-subtle bg-light"
-          role="region"
-          aria-labelledby="comment-title"
-        >
+        <Container id="comment-container" className="border border-dark-subtle bg-light" role="region" aria-labelledby="comment-title">
           <Row>
             <Col className="border-end border-dark-subtle p-3">
-              <Row>
-                <Col>
-                  <Row>
-                    <p
-                      id="comment-title"
-                      style={{
-                        whiteSpace: "normal",
-                        wordBreak: "break-word",
-                        overflowWrap: "break-word",
-                      }}
-                    >
-                      {title}
-                    </p>
-                  </Row>
-                </Col>
-              </Row>
+              <p id="comment-title" style={{ whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>
+                {title}
+              </p>
             </Col>
             <Col>
               <Row className="p-3">
@@ -230,7 +170,7 @@ const PostComment = ({
                   <Button
                     disabled={!usuario}
                     className="btn"
-                    onClick={handleUpvote}
+                    onClick={() => handleVote("upvote")}
                     variant={userVote === "upvote" ? "success" : "primary"}
                     aria-label="Votar positivamente"
                   >
@@ -247,7 +187,7 @@ const PostComment = ({
                   <Button
                     className="btn"
                     disabled={!usuario}
-                    onClick={handleDownvote}
+                    onClick={() => handleVote("downvote")}
                     variant={userVote === "downvote" ? "danger" : "primary"}
                     aria-label="Votar negativamente"
                   >
@@ -285,26 +225,19 @@ const PostComment = ({
                   </Row>
                 </Col>
                 <Col className="text-center text-light">
-                  {usuario === undefined || usuario.username !== author ? (
-                    <div></div>
-                  ) : (
+                  {usuario && usuario.username === author && (
                     <div>
-                    <Button
-                      aria-label="Eliminar"
-                      className="btn btn-danger"
-                      onClick={() => {handleDeleteComment(id)}}
-                    >
-                      <i className="bi bi-trash"></i>
-                      <span>Eliminar</span>
-                    </Button>
-
-                    <ConfirmationModal
-                    show={showDeleteCommentModal}
-                    handleClose={handleCancelDelete}
-                    handleConfirm={handleConfirmDeleteComment}
-                    title="Eliminar comentario"
-                    message="¿Estás seguro de que deseas eliminar este comentario?"
-                    />
+                      <Button aria-label="Eliminar" className="btn btn-danger" onClick={() => handleDeleteComment(id)}>
+                        <i className="bi bi-trash"></i>
+                        <span>Eliminar</span>
+                      </Button>
+                      <ConfirmationModal
+                        show={showDeleteCommentModal}
+                        handleClose={handleCancelDelete}
+                        handleConfirm={handleConfirmDeleteComment}
+                        title="Eliminar comentario"
+                        message="¿Estás seguro de que deseas eliminar este comentario?"
+                      />
                     </div>
                   )}
                 </Col>
