@@ -108,13 +108,12 @@ function BlockedUsersPage() {
             </label>
         ) : (
           blockedUsers.map((user) => (
-            <div key={user.username} className="card mb-3">
+            <div key={user.username} className="card mb-3 bg-light">
               <div className="card-body">
               <Link to={`/perfil/${user.username}`} 
-              className='custom-text-link'
               style={{ 
                 fontSize: "1.5rem",
-                color: 'black',
+                color: '#00256',
                 marginLeft: '10px',
                 }}>
                 {user.username}
