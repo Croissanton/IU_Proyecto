@@ -437,14 +437,14 @@ const Messenger = () => {
       <Col
         id="chatbox"
         md={9}
-        className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded p-0"
+        className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded m-0 p-0"
       >
         {activeChat ? (
           <>
             {/* header de chatbox y el boton de archivar */}
-            <div
+            <Row
               id="chatboxHeader"
-              className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center"
+              className="p-3 m-0 border-bottom border-secondary-subtle"
             >
               <Col className="d-flex align-content-center justify-content-start text-center p-1">
                 <NavLink
@@ -492,97 +492,101 @@ const Messenger = () => {
                   </Button>
                 )}
               </Col>
-            </div>
+            </Row>
 
             {/* mensajes */}
-            <div
-              className="flex-grow-1 overflow-auto p-3"
-              style={{ height: "60vh" }}
-              ref={chatboxRef}
-              tabIndex="0"
-              aria-atomic="true"
-              aria-live="polite"
-            >
-              {/* solo se ejecuta si hay chat selecionado y se puede leer mensajes */}
-              {activeChat &&
-                messages[activeChat.conversationKey] &&
-                messages[activeChat.conversationKey].map((message) => (
-                  <div
-                    key={message.id}
-                    className={`my-2 p-2 rounded border border-secondary-subtle ${
-                      message.sender === usuario.username
-                        ? "bg-primary text-secondary align-self-end"
-                        : "bg-light text-dark align-self-start"
-                    }`}
-                    style={{
-                      width: "fit-content",
-                      maxWidth: "80%",
-                      marginLeft:
-                        message.sender === usuario.username ? "auto" : "0",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => toggleMessage(message.id)}
+            <Row className="px-0 m-0">
+              <div
+                className="flex-grow-1 overflow-auto"
+                style={{ height: "60vh" }}
+                ref={chatboxRef}
+                tabIndex="0"
+                aria-atomic="true"
+                aria-live="polite"
+              >
+                {/* solo se ejecuta si hay chat selecionado y se puede leer mensajes */}
+                {activeChat &&
+                  messages[activeChat.conversationKey] &&
+                  messages[activeChat.conversationKey].map((message) => (
+                    <div
+                      key={message.id}
+                      className={`my-2 p-2 rounded border border-secondary-subtle ${
+                        message.sender === usuario.username
+                          ? "bg-primary text-secondary align-self-end"
+                          : "bg-light text-dark align-self-start"
+                      }`}
+                      style={{
+                        width: "fit-content",
+                        maxWidth: "80%",
+                        marginLeft:
+                          message.sender === usuario.username ? "auto" : "0",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => toggleMessage(message.id)}
+                    >
+                      {/* solo se ejecuta cuando el mensaje es "abierto" */}
+                      {expandedMessages[message.id] && (
+                        <div
+                          id="expandedmsg"
+                          className="d-flex justify-content-between align-items-center mb-1"
+                        >
+                          {/* timestamp */}
+                          <small className="text-dark">
+                            {formatTimestamp(message.timestamp)}
+                          </small>
+                          {message.sender === usuario.username && (
+                            <Button
+                              id="deleteMessageButton"
+                              className="me-2"
+                              variant="danger"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setMessageToDelete(message.id);
+                                setShowDeleteMessageModal(true);
+                              }}
+                              aria-label="Eliminar mensaje"
+                            >
+                              <i className="bi bi-trash"></i>
+                              <span>Borrar mensaje</span>
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                      {/* el text de mensaje */}
+                      {!expandedMessages[message.id] && (
+                        <div className="d-flex justify-content-between align-items-center mb-1">
+                          <small className="text-dark">
+                            {formatTimeStampOnlyHour(message.timestamp)}
+                          </small>
+                        </div>
+                      )}
+                      <span>{message.text}</span>
+                    </div>
+                  ))}
+              </div>
+            </Row>
+            <Row className="p-3 m-0 border-top border-secondary-subtle">
+              <Form className="p-0 m-0">
+                <InputGroup>
+                  <FormControl
+                    className="border-secondary-subtle"
+                    type="text"
+                    value={chatInputValue}
+                    onChange={handleChatInputChange}
+                    onKeyDown={handleKeyDown}
+                    aria-label="Esribe tu mensaje aqui."
+                  />
+                  <Button
+                    className="border-secondary-subtle"
+                    onClick={handleSendMessage}
+                    variant="primary"
                   >
-                    {/* solo se ejecuta cuando el mensaje es "abierto" */}
-                    {expandedMessages[message.id] && (
-                      <div
-                        id="expandedmsg"
-                        className="d-flex justify-content-between align-items-center mb-1"
-                      >
-                        {/* timestamp */}
-                        <small className="text-dark">
-                          {formatTimestamp(message.timestamp)}
-                        </small>
-                        {message.sender === usuario.username && (
-                          <Button
-                            id="deleteMessageButton"
-                            className="me-2"
-                            variant="danger"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setMessageToDelete(message.id);
-                              setShowDeleteMessageModal(true);
-                            }}
-                            aria-label="Eliminar mensaje"
-                          >
-                            <i className="bi bi-trash"></i>
-                            <span>Borrar mensaje</span>
-                          </Button>
-                        )}
-                      </div>
-                    )}
-                    {/* el text de mensaje */}
-                    {!expandedMessages[message.id] && (
-                      <div className="d-flex justify-content-between align-items-center mb-1">
-                        <small className="text-dark">
-                          {formatTimeStampOnlyHour(message.timestamp)}
-                        </small>
-                      </div>
-                    )}
-                    <span>{message.text}</span>
-                  </div>
-                ))}
-            </div>
-            <Form className="p-3 border-top border-secondary-subtle">
-              <InputGroup>
-                <FormControl
-                  className="border-secondary-subtle"
-                  type="text"
-                  value={chatInputValue}
-                  onChange={handleChatInputChange}
-                  onKeyDown={handleKeyDown}
-                  aria-label="Esribe tu mensaje aqui."
-                />
-                <Button
-                  className="border-secondary-subtle"
-                  onClick={handleSendMessage}
-                  variant="primary"
-                >
-                  Enviar
-                </Button>
-              </InputGroup>
-            </Form>
+                    Enviar
+                  </Button>
+                </InputGroup>
+              </Form>
+            </Row>
           </>
         ) : (
           <div className="d-flex justify-content-center align-items-center h-100">

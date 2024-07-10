@@ -155,7 +155,7 @@ function ProfilePage() {
                 onChange={handleImageSelection}
               />
               {isEditing && (
-                <Row className="my-2">
+                <Row className="my-2 mx-0 px-0">
                   <Col className="d-flex align-items-center justify-content-center">
                     <button
                       type="button"
