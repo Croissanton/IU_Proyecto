@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/IU_Proyecto/static/css/main.cbd4aa6c.css",
-    "main.js": "/IU_Proyecto/static/js/main.7fa8dec9.js",
+    "main.css": "/IU_Proyecto/static/css/main.f076d8df.css",
+    "main.js": "/IU_Proyecto/static/js/main.02341dbc.js",
     "static/js/453.bf825dcc.chunk.js": "/IU_Proyecto/static/js/453.bf825dcc.chunk.js",
     "static/media/bootstrap-icons.woff?": "/IU_Proyecto/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
     "static/media/bootstrap-icons.woff2?": "/IU_Proyecto/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
     "static/media/Sun.svg": "/IU_Proyecto/static/media/Sun.681607dcda2a01539a9a8a157ae74e6e.svg",
     "static/media/Moon.svg": "/IU_Proyecto/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "index.html": "/IU_Proyecto/index.html",
-    "main.cbd4aa6c.css.map": "/IU_Proyecto/static/css/main.cbd4aa6c.css.map",
-    "main.7fa8dec9.js.map": "/IU_Proyecto/static/js/main.7fa8dec9.js.map",
+    "main.f076d8df.css.map": "/IU_Proyecto/static/css/main.f076d8df.css.map",
+    "main.02341dbc.js.map": "/IU_Proyecto/static/js/main.02341dbc.js.map",
     "453.bf825dcc.chunk.js.map": "/IU_Proyecto/static/js/453.bf825dcc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cbd4aa6c.css",
-    "static/js/main.7fa8dec9.js"
+    "static/css/main.f076d8df.css",
+    "static/js/main.02341dbc.js"
   ]
 }
