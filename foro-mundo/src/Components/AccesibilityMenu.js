@@ -37,20 +37,18 @@ const AccessibilityMenu = () => {
   const AccessibilityOptions = () => (
     <>
       <Dropdown.Item onClick={setLightMode} className="py-2">Formato original</Dropdown.Item>
+      <Dropdown.Item className="py-2" style={{ pointerEvents: 'none' }}> Modo oscuro</Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item className="py-2" style={{ pointerEvents: 'none' }}> Modo oscuro</Dropdown.Item>      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        <DarkMode />
-      </div>
-      <Dropdown.Divider />
-      <Dropdown.Item onClick={setHighContrast} className="py-2">
-        <i className="bi bi-brightness-high-fill me-2"></i> Alto contraste
-      </Dropdown.Item>
-      <Dropdown.Item onClick={setLowContrast} className="py-2">
-        <i className="bi bi-brightness-high me-2"></i> Bajo contraste
-      </Dropdown.Item>
-      <Dropdown.Item onClick={setAccesibilityFont} className="py-2">
+      <Dropdown.Item  onClick={setAccesibilityFont} className="py-2">
         <i className="bi bi-alphabet-uppercase me-2"></i> Fuente accesible
       </Dropdown.Item>
+      <Dropdown.Item disabled onClick={setHighContrast} className="py-2">
+        <i className="bi bi-brightness-high-fill me-2"></i> Alto contraste
+      </Dropdown.Item>
+      <Dropdown.Item disabled onClick={setLowContrast} className="py-2">
+        <i className="bi bi-brightness-high me-2"></i> Bajo contraste
+      </Dropdown.Item>
+
     </>
   );
 

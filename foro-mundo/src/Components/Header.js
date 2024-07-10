@@ -11,6 +11,7 @@ import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
 import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
 import AccessibilityMenu from "./AccesibilityMenu.js";
+import DarkMode from "./DarkMode/DarkMode.js";
 
 const Header = forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
@@ -401,6 +402,7 @@ const Header = forwardRef((props, ref) => {
               ) : (
                 <div></div>
               )}
+              <DarkMode />
             </Nav>
           </Nav>
         </Navbar.Collapse>
