@@ -40,13 +40,14 @@ const AccessibilityMenu = () => {
     return (
       <>
         <Button 
+          id="accessibility-button"
           variant="transparent" 
           onClick={handleShow}
           className="d-flex align-items-center justify-content-center text-secondary"
           style={{ padding: '10px', fontSize: '1rem' }}
         >
           <span className="me-2">Accesibilidad</span>
-          <i className="bi bi-universal-access-circle"></i>
+          <i className="bi bi-universal-access-circle custom-icon"></i>
         </Button>
 
         <Modal show={showModal} onHide={handleClose} fullscreen="sm-down">
@@ -71,7 +72,7 @@ const AccessibilityMenu = () => {
       >
         <Dropdown.Toggle
           variant="transparent"
-          id="dropdown-basic"
+          id="accessibility-button"
           className="d-flex align-items-center justify-content-center"
           aria-label="Mostrar menu de accesibilidad"
         >

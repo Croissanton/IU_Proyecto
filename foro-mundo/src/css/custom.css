@@ -57,6 +57,10 @@
   background-color: transparent !important;
   color: var(--bs-secondary) !important;
 }
+[data-bs-theme=dark] .search-suggestions .bg-white {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
 [data-bs-theme=dark] #search {
   background-color: var(--bs-secondary) !important;
   color: var(--bs-white) !important;

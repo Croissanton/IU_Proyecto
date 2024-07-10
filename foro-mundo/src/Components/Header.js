@@ -244,6 +244,7 @@ const Header = forwardRef((props, ref) => {
                 }}
                 required
                 autoComplete="off"
+                
               />
               <Button
                 className="d-flex"
@@ -257,7 +258,8 @@ const Header = forwardRef((props, ref) => {
               </Button>
               {showSuggestions && inputValue && suggestions.length > 0 && (
                 <div
-                  className="bg-white"
+                  id="search_suggestions"
+                  className="bg-secondary-subtle w-100"
                   style={{
                     position: "absolute",
                     left: 0,
