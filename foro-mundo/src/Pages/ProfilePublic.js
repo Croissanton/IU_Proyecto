@@ -309,7 +309,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control border-0 bg-white"
+                      className="form-control custom-disabled-input"
                       id="inputNombre4"
                       value={userData.name}
                       disabled
@@ -324,7 +324,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control border-0 bg-white"
+                      className="form-control custom-disabled-input"
                       id="inputApellidos4"
                       value={userData.lastName}
                       disabled
@@ -334,13 +334,13 @@ function ProfilePublic() {
                 <Col md={6}>
                   <label
                     htmlFor="inputFechaNacimiento"
-                    className="form-label border-bottom border-dark-subtle"
+                    className="form-label custom-disabled-input"
                   >
                     Fecha de nacimiento
                   </label>
                   <input
                     type="date"
-                    className="form-control border-0 bg-white"
+                    className="form-control custom-disabled-input"
                     id="inputFechaNacimiento"
                     value={userData.birthDate}
                     disabled
@@ -356,7 +356,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control border-0 bg-white"
+                      className="form-control custom-disabled-input"
                       id="inputPais"
                       value={userData.country}
                       disabled
@@ -371,7 +371,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control border-0 bg-white"
+                      className="form-control custom-disabled-input"
                       id="inputCiudad"
                       value={userData.city}
                       disabled
@@ -387,7 +387,7 @@ function ProfilePublic() {
                   </label>
                   <input
                     type="text"
-                    className="form-control border-0 bg-white"
+                    className="form-control custom-disabled-input"
                     id="inputRedes"
                     value={userData.socialMedia}
                     disabled
@@ -401,7 +401,7 @@ function ProfilePublic() {
                     Descripcion
                   </label>
                   <textarea
-                    className="form-control border-0 bg-white"
+                    className="form-control custom-disabled-input"
                     id="inputDescripcion"
                     rows="3"
                     value={userData.description}

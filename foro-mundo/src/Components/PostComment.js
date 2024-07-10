@@ -219,7 +219,7 @@ const PostComment = ({
                         style={{ marginRight: "10px", borderRadius: "50%" }}
                       />
                       <NavLink
-                        className="custom-text-link text-light"
+                        className="custom-text-link"
                         to={`/perfil/${author}`}
                         aria-label={`Perfil de ${author}`}
                         tabIndex="0"
