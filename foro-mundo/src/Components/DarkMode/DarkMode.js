@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactComponent as Sun } from "./Sun.svg";
 import { ReactComponent as Moon } from "./Moon.svg";
+import { useEffect } from "react";
 import "./DarkMode.css";
 
 
@@ -12,6 +13,25 @@ export const setLightMode = () => {
 }
 const DarkMode = () => {
 
+    useEffect(() => {
+        const checkbox = document.getElementById('darkmode-toggle');
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === "attributes" && mutation.attributeName === "data-bs-theme") {
+                    const isDarkMode = document.body.getAttribute('data-bs-theme') === "dark";
+                    checkbox.checked = isDarkMode;
+                }
+            });
+        });
+    
+        observer.observe(document.body, {
+            attributes: true // This configures the observer to watch for attribute changes.
+        });
+    
+        // Cleanup function to disconnect the observer when the component unmounts
+        return () => observer.disconnect();
+    }, []);
+
 
     const setDarkMode = () => {
         document.querySelector("body").setAttribute('data-bs-theme', 'dark')
@@ -22,15 +42,16 @@ const DarkMode = () => {
 
     if (selectedTheme === "dark") {
         setDarkMode()
+        
     }else if(selectedTheme === "light"){
         setLightMode()
     }else if(selectedTheme === "high-contrast"){
         document.querySelector("body").setAttribute('data-bs-theme', 'high-contrast')
     }else if(selectedTheme === "low-contrast"){
         document.querySelector("body").setAttribute('data-bs-theme', 'low-contrast')
-    }
-
-
+    }else if(selectedTheme === "dyslexia-friendly"){
+        document.querySelector("body").setAttribute('data-bs-theme', 'dyslexia-friendly')
+   }
     const toggleTheme = e => {
         if (e.target.checked) {
             setDarkMode()
@@ -45,11 +66,9 @@ const DarkMode = () => {
                 className='dark_mode_input'
                 type='checkbox'
                 id='darkmode-toggle'
-                defaultChecked={selectedTheme === "dark"}
+                defaultChecked={document.querySelector("body").getAttribute('data-bs-theme') === "dark"}
                 onChange={toggleTheme}
                 aria-label="Cambiar modo oscuro"
-                tabIndex={0}
-                role="tab"
             />
             <label className='dark_mode_label' htmlFor='darkmode-toggle'>
                 <Sun />

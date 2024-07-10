@@ -357,11 +357,11 @@ const Messenger = () => {
   const [showArchivedChatsModal, setShowArchivedChatsModal] = useState(false);
 
   return (
-    <Row className="g-0">
+    <Row>
       {/* lista de chats */}
       <Col md={3}>
         <ListGroup>
-          <ListGroup.Item className="border-0">
+          <ListGroup.Item className="border-0 mx-0 px-0">
             <button
               id="addChatButton"
               className="d-flex align-items-center w-100 text-dark rounded py-2 px-3 custom-button"
@@ -372,7 +372,7 @@ const Messenger = () => {
               <span>Añadir nuevo chat</span>
             </button>
           </ListGroup.Item>
-          <ListGroup.Item className="border-0">
+          <ListGroup.Item className="border-0 mx-0 px-0">
             <button
               id="archivedChatsButton"
               className="d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button"
@@ -386,7 +386,10 @@ const Messenger = () => {
           {conversations
             .filter((convo) => !convo.archived)
             .map((convo) => (
-              <ListGroup.Item className="border-0" key={convo.conversationKey}>
+              <ListGroup.Item
+                className="border-0  mx-0 px-0"
+                key={convo.conversationKey}
+              >
                 <button
                   className={`d-flex align-items-center w-100 text-dark border border-secondary-subtle rounded py-2 px-3 custom-button ${
                     activeChat &&
@@ -411,13 +414,15 @@ const Messenger = () => {
       <Col
         id="chatbox"
         md={9}
-        className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded"
+        className="d-flex flex-column h-100 border border-secondary-subtle bg-light rounded p-0"
       >
         {activeChat ? (
           <>
             {/* header de chatbox y el boton de archivar */}
-            <div id="chatboxHeader"
-            className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center">
+            <div
+              id="chatboxHeader"
+              className="p-3 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center"
+            >
               <NavLink
                 className="bi bi-person-circle d-inline-flex align-items-center custom-icon"
                 to={`/perfil/${activeChat.otherUser}`}
@@ -481,7 +486,10 @@ const Messenger = () => {
                   >
                     {/* solo se ejecuta cuando el mensaje es "abierto" */}
                     {expandedMessages[message.id] && (
-                      <div id="expandedmsg" className="d-flex justify-content-between align-items-center mb-1">
+                      <div
+                        id="expandedmsg"
+                        className="d-flex justify-content-between align-items-center mb-1"
+                      >
                         {message.sender === usuario.username && (
                           <Button
                             id="deleteMessageButton"
