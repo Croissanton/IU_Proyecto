@@ -12307,6 +12307,12 @@ textarea.form-control-lg {
 [data-bs-theme=high-contrast] .btn.btn-danger:hover {
   background-color: #CC0000;
 }
+[data-bs-theme=high-contrast] .nav-link {
+  color: var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] .nav-link:hover {
+  color: var(--bs-primary);
+}
 [data-bs-theme=high-contrast] .password-strength-meter {
   background-color: transparent;
   color: var(--bs-secondary);

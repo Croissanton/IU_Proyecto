@@ -429,6 +429,13 @@
         }
     }
 
+    .nav-link {
+        color: var(--bs-secondary);
+        &:hover {
+            color: var(--bs-primary);
+        }
+    }
+    
     .password-strength-meter {
         background-color: transparent;
         color: var(--bs-secondary);
