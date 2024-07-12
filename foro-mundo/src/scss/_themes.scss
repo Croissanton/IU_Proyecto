@@ -565,6 +565,11 @@
         }
     }
 
+    #title, #category, #text {
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+    }
+
     .bg-primary {
         background-color: var(--bs-secondary) !important;
     }

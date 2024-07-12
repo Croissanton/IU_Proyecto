@@ -12414,6 +12414,10 @@ textarea.form-control-lg {
 [data-bs-theme=high-contrast] #archivedChatsButton:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
+[data-bs-theme=high-contrast] #title, [data-bs-theme=high-contrast] #category, [data-bs-theme=high-contrast] #text {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
 [data-bs-theme=high-contrast] .bg-primary {
   background-color: var(--bs-secondary) !important;
 }
