@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
 import PostCard from "../Components/PostCard.js";
 import IndexSelector from "../Components/IndexSelector.js";
-import { Breadcrumb, Container, Row, Col } from "react-bootstrap";
+import { Breadcrumb, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import data from "../data/initialPosts.json";
@@ -29,7 +29,7 @@ function TopicPage() {
     }
 
     const filteredPosts = storedPosts.filter(
-      (post) => post.topicId.toString() === topicId
+      (post) => post.topicId.toString() === topicId,
     );
 
     // Filtrar posts de usuarios no bloqueados
@@ -38,7 +38,7 @@ function TopicPage() {
     if (usuario && usuarios && Array.isArray(usuario.blockList)) {
       const bloqueados = usuario.blockList;
       const postsFiltrados = filteredPosts.filter(
-        (post) => !bloqueados.includes(post.author)
+        (post) => !bloqueados.includes(post.author),
       );
       setPosts(postsFiltrados);
     } else {
@@ -164,9 +164,11 @@ function TopicPage() {
       ) : (
         <Row className="justify-content-center text-center m-0 p-0">
           <Col>
-            <Link to={`/crear/${topicId}`} className="btn btn-primary">
-              <i className="bi bi-plus-circle"></i>{" "}
-              <span>Crear Nuevo Post</span>
+            <Link to={`/crear/${topicId}`}>
+              <Button className="btn btn-primary">
+                <i className="bi bi-plus-circle me-1"></i>
+                <span>Crear Nuevo Post</span>
+              </Button>
             </Link>
           </Col>
         </Row>
@@ -174,7 +176,9 @@ function TopicPage() {
 
       <Container fluid className="my-3 mx-0 px-0">
         <Container className="d-flex justify-content-end mb-3">
-          <h2 className="p-2">Ordenar por:</h2>
+          <label htmlFor="sortSelect" className="form-label p-2 mb-0">
+            Ordenar por:
+          </label>
           <div className="d-flex justify-content-center">
             <select
               className="form-select me-2"

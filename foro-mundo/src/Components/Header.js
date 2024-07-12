@@ -9,7 +9,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useToast } from "../Context/ToastContext.js";
 import { Link, useNavigate } from "react-router-dom";
-import { FormLabel, Dropdown, ButtonGroup } from "react-bootstrap";
+import { FormLabel } from "react-bootstrap";
 import AccessibilityMenu from "./AccesibilityMenu.js";
 import DarkMode from "./DarkMode/DarkMode.js";
 
@@ -199,7 +199,7 @@ const Header = forwardRef((props, ref) => {
       expand="lg"
       expanded={expanded}
       onToggle={toggleNavbar}
-      className="header bg-primary border-bottom border-dark-subtle border-1 fixed-top"
+      className="header bg-primary align-items-center border-bottom border-dark-subtle border-1 fixed-top"
     >
       <Container>
         <Navbar.Brand
@@ -212,7 +212,7 @@ const Header = forwardRef((props, ref) => {
         </Navbar.Brand>
         <Navbar.Toggle className="border-0" aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="my-1" id="basic-navbar-nav">
-          <Nav className="w-100 justify-content-between">
+          <Nav className="w-100 justify-content-between align-items-center">
             <div></div> {/* Placeholder for left alignment */}
             <Form
               onSubmit={handleSubmit}
@@ -282,7 +282,7 @@ const Header = forwardRef((props, ref) => {
 
               <Button
                 className="d-flex align-items-center justify-content-center m-1"
-                variant="outline-secondary"
+                variant="primary"
                 type="submit"
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}
@@ -364,6 +364,10 @@ const Header = forwardRef((props, ref) => {
               </OverlayTrigger>
 
               {usuario === undefined ? (
+              <OverlayTrigger
+                placement="bottom"
+                overlay={<Tooltip id="tooltip-login">Iniciar Sesión</Tooltip>}
+              >
                 <Nav.Link
                   as={Link}
                   to="/inicioSesion"
@@ -375,7 +379,12 @@ const Header = forwardRef((props, ref) => {
                 >
                   Iniciar Sesión
                 </Nav.Link>
+              </OverlayTrigger>
               ) : (
+              <OverlayTrigger
+                placement="bottom"
+                overlay={<Tooltip id="tooltip-logout">Cerrar Sesión</Tooltip>}
+              >
                 <Nav.Link
                   onClick={handleLogout}
                   className="text-secondary m-auto custom-link"
@@ -386,8 +395,13 @@ const Header = forwardRef((props, ref) => {
                 >
                   Cerrar Sesión
                 </Nav.Link>
+              </OverlayTrigger>
               )}
               {usuario === undefined ? (
+              <OverlayTrigger
+                placement="bottom"
+                overlay={<Tooltip id="tooltip-signup">Registrarse</Tooltip>}
+              >
                 <Nav.Link
                   as={Link}
                   to="/registro"
@@ -399,6 +413,7 @@ const Header = forwardRef((props, ref) => {
                 >
                   Registrarse
                 </Nav.Link>
+              </OverlayTrigger>
               ) : (
                 <div></div>
               )}

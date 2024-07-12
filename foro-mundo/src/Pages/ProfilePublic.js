@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb, Container, Row, Col } from "react-bootstrap";
+import { Breadcrumb, Container, Row, Col, Button } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 import ConfirmationModal from "../Components/ConfirmationModal"; // Importa el modal de confirmación
@@ -131,28 +131,28 @@ function ProfilePublic() {
         if (currentUser.friendList.includes(username)) {
           // Borrar amigo de la lista de amigos
           currentUser.friendList = currentUser.friendList.filter(
-            (friend) => friend !== username
+            (friend) => friend !== username,
           );
           otherUser.friendList = otherUser.friendList.filter(
-            (friend) => friend !== currentUser.username
+            (friend) => friend !== currentUser.username,
           );
         }
         if (currentUser.incomingRequests.includes(username)) {
           // Borrar solicitud de amistad
           currentUser.incomingRequests = currentUser.incomingRequests.filter(
-            (request) => request !== username
+            (request) => request !== username,
           );
         }
         if (otherUser.incomingRequests.includes(currentUser.username)) {
           // Borrar solicitud de amistad
           otherUser.incomingRequests = otherUser.incomingRequests.filter(
-            (request) => request !== currentUser.username
+            (request) => request !== currentUser.username,
           );
         }
       } else {
         // Eliminar usuario de la lista de bloqueados
         currentUser.blockList = currentUser.blockList.filter(
-          (user) => user !== username
+          (user) => user !== username,
         );
         setBlockStatus("Bloquear Usuario");
       }
@@ -194,10 +194,10 @@ function ProfilePublic() {
       if (currentUser.friendList.includes(username)) {
         // Borrar amigo de la lista de amigos
         currentUser.friendList = currentUser.friendList.filter(
-          (friend) => friend !== username
+          (friend) => friend !== username,
         );
         friendUser.friendList = friendUser.friendList.filter(
-          (friend) => friend !== currentUser.username
+          (friend) => friend !== currentUser.username,
         );
         setFriendStatus("Agregar Amigo");
       } else if (currentUser.incomingRequests.includes(username)) {
@@ -205,13 +205,13 @@ function ProfilePublic() {
         currentUser.friendList.push(username);
         friendUser.friendList.push(currentUser.username);
         currentUser.incomingRequests = currentUser.incomingRequests.filter(
-          (request) => request !== username
+          (request) => request !== username,
         );
         setFriendStatus("Eliminar Amigo");
       } else if (friendUser.incomingRequests.includes(currentUser.username)) {
         // Quitar solicitud de amistad
         friendUser.incomingRequests = friendUser.incomingRequests.filter(
-          (request) => request !== currentUser.username
+          (request) => request !== currentUser.username,
         );
         setFriendStatus("Agregar Amigo");
       } else {
@@ -412,25 +412,22 @@ function ProfilePublic() {
                 <Col>
                   {!isButtonUnavailable && (
                     <Link to={`/historial/${username}`}>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        style={{ margin: "5px" }}
-                      >
-                        Ver Historial
-                      </button>
+                      <Button type="button" className="btn btn-primary mx-1">
+                        <i className="bi bi-clock-history me-2"></i>
+                        <span>Ver Historial</span>
+                      </Button>
                     </Link>
                   )}
                   {!isCurrentUser && currentUser && (
                     <>
-                      <button
+                      <Button
                         type="button"
-                        className="btn btn-primary"
-                        style={{ margin: "5px" }}
+                        className="btn btn-primary mx-1"
                         onClick={handleShowBlockModal}
                       >
-                        {blockStatus}
-                      </button>
+                        <i className="bi bi-ban me-2"></i>
+                        <span>{blockStatus}</span>
+                      </Button>
 
                       <ConfirmationModal
                         show={showBlockModal}
@@ -449,14 +446,22 @@ function ProfilePublic() {
                       />
 
                       {!isButtonUnavailable && (
-                        <button
+                        <Button
                           type="button"
-                          className={`btn ${friendButtonColor}`}
-                          style={{ margin: "5px" }}
+                          className={`btn mx-1 ${friendButtonColor}`}
                           onClick={handleShowFriendModal}
                         >
-                          {friendStatus}
-                        </button>
+                          {friendStatus === "Eliminar Amigo" ? (
+                            <i className="bi bi-person-fill-dash me-2"></i>
+                          ) : friendStatus === "Aceptar Solicitud" ? (
+                            <i className="bi bi-person-fill-check me-2"></i>
+                          ) : friendStatus === "Solicitud Enviada" ? (
+                            <i className="bi bi-person-fill-up me-2"></i>
+                          ) : (
+                            <i className="bi bi-person-fill-add me-2"></i>
+                          )}
+                          <span>{friendStatus}</span>
+                        </Button>
                       )}
                       <ConfirmationModal
                         show={showFriendModal}
@@ -472,12 +477,13 @@ function ProfilePublic() {
                           friendStatus === "Agregar Amigo"
                             ? "enviar una solicitud de amistad a " + username
                             : friendStatus === "Aceptar Solicitud"
-                            ? "aceptar la solicitud de amistad de " + username
-                            : friendStatus === "Solicitud Enviada"
-                            ? "cancelar la solicitud de amistad a " + username
-                            : "eliminar a " +
-                              username +
-                              " de tu lista de amigos"
+                              ? "aceptar la solicitud de amistad de " + username
+                              : friendStatus === "Solicitud Enviada"
+                                ? "cancelar la solicitud de amistad a " +
+                                  username
+                                : "eliminar a " +
+                                  username +
+                                  " de tu lista de amigos"
                         }?`}
                       />
                     </>

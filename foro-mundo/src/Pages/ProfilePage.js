@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb, Col, Row, Container } from "react-bootstrap";
+import { Breadcrumb, Col, Row, Container, Button } from "react-bootstrap";
 import { useToast } from "../Context/ToastContext.js";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../Components/ConfirmationModal";
@@ -70,8 +70,8 @@ function ProfilePage() {
             return profileData;
           }
           return user;
-        })
-      )
+        }),
+      ),
     );
     setIsEditing(false);
     console.log("Submitting Data:", profileData);
@@ -268,64 +268,54 @@ function ProfilePage() {
               <div className="col-12 my-2">
                 {!isEditing ? (
                   <div className="col-12">
-                    <button
+                    <Button
                       type="button"
-                      className="btn btn-primary"
+                      className="btn btn-primary mx-1"
                       onClick={(e) => {
                         e.preventDefault();
                         setIsEditing(true);
                       }}
-                      style={{ margin: "5px" }}
                     >
-                      Editar
-                    </button>
+                      <i className="bi bi-pencil-square me-2"></i>
+                      <span>Editar</span>
+                    </Button>
 
                     <Link to={`/historial/${profileData.username}`}>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        style={{ margin: "5px" }}
-                      >
-                        Ver Historial
-                      </button>
+                      <Button type="button" className="btn btn-primary mx-1">
+                        <i className="bi bi-clock-history me-2"></i>
+                        <span>Ver Historial</span>
+                      </Button>
                     </Link>
 
                     <Link to={`/bloqueados`}>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        style={{ margin: "5px" }}
-                      >
-                        Ver Bloqueados
-                      </button>
+                      <Button type="button" className="btn btn-primary mx-1">
+                        <i className="bi bi-ban me-2"></i>
+                        <span>Ver Bloqueados</span>
+                      </Button>
                     </Link>
 
                     <Link to={`/amigos`}>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        style={{ margin: "5px" }}
-                      >
-                        Ver Amigos
-                      </button>
+                      <Button type="button" className="btn btn-primary mx-1">
+                        <i className="bi bi-people-fill me-2"></i>
+                        <span>Ver Amigos</span>
+                      </Button>
                     </Link>
                   </div>
                 ) : (
                   <div className="col-12">
-                    <button
+                    <Button
                       type="submit"
-                      className="btn btn-primary"
-                      style={{ marginRight: "10px" }}
+                      className="btn btn-success btn-primary mx-1"
                     >
                       Guardar
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
-                      className="btn btn-light"
+                      className="btn btn-light btn-primary mx-1"
                       onClick={handleCancel}
                     >
                       Cancelar
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

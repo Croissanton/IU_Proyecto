@@ -95,21 +95,10 @@
     }
 
     .custom-disabled-input {
-        background-color: var(--bs-secondary);
-        border: bottom 1px solid var(--bs-secondary);
-        color: #6c757d; // Bootstrap's default text-muted color
+        background-color: transparent;
+        border: 0;
+        color: var(--bs-body-color); 
         cursor: default;
-        opacity: 1; // Ensures full opacity despite being disabled
-        padding: 0.375rem 0.75rem; // Bootstrap's default input padding
-        
-        &:disabled {
-          background-color: #ffffff;
-        }
-      
-        &::placeholder {
-          color: #6c757d;
-        }
-      
         &:focus {
           outline: none;
           box-shadow: none;
@@ -170,10 +159,6 @@
         color: var(--bs-secondary) !important;
     }
 
-    .custom-disabled-input{
-        background-color: var(--bs-secondary-subtle) !important;
-        color: var(--bs-secondary) !important;
-    }
 
     .btn-primary{
         background-color: var(--bs-primary);

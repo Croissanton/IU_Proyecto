@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout.js";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Container, Col, Button, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useToast } from "../Context/ToastContext.js";
 
@@ -16,7 +16,7 @@ function RequestsPage() {
 
     if (usuario && usuarios && Array.isArray(usuario.incomingRequests)) {
       const peticiones = usuarios.filter((user) =>
-        usuario.incomingRequests.includes(user.username)
+        usuario.incomingRequests.includes(user.username),
       );
       setRequests(peticiones);
     }
@@ -32,12 +32,12 @@ function RequestsPage() {
       if (!currentUser.friendList.includes(username)) {
         currentUser.friendList.push(username);
         currentUser.incomingRequests = currentUser.incomingRequests.filter(
-          (request) => request !== username
+          (request) => request !== username,
         );
 
         const friendUser = allUsers.find((user) => user.username === username);
         if (!friendUser.friendList) friendUser.friendList = [];
-        console.log(friendUser.friendList, currentUser.username)
+        console.log(friendUser.friendList, currentUser.username);
         friendUser.friendList.push(currentUser.username);
 
         const updatedUsers = allUsers.map((user) => {
@@ -60,7 +60,7 @@ function RequestsPage() {
 
     if (currentUser && allUsers) {
       currentUser.incomingRequests = currentUser.incomingRequests.filter(
-        (request) => request !== username
+        (request) => request !== username,
       );
 
       localStorage.setItem("usuario", JSON.stringify(currentUser));
@@ -109,32 +109,34 @@ function RequestsPage() {
         ) : (
           requests.map((user) => (
             <div key={user.username} className="card mb-3 bg-light">
-              <div className="card-body">
-                <Link to={`/perfil/${user.username}`} 
-                style={{ 
-                  fontSize: "1.5rem",
-                  textDecoration: 'none',
-                  color: '#002561',
-                  }}>
-                  {user.username}
-                </Link>
-                <button
-                  id="rejectRequest"
-                  className="btn btn-danger"
-                  onClick={() => handleRejectRequest(user.username)}
-                  style={{ margin: "5px", float: "right" }}
-                >
-                  Rechazar
-                </button>
-                <button
-                  id="acceptRequest"
-                  className="btn btn-success"
-                  onClick={() => handleAcceptRequest(user.username)}
-                  style={{ margin: "5px", float: "right", color: "black"}}
-                >
-                  Aceptar
-                </button>
-              </div>
+              <Container className="card-body">
+                <Row>
+                  <Col className="d-flex align-items-center">
+                    <Link
+                      to={`/perfil/${user.username}`}
+                      className="custom-text-link fs-4"
+                    >
+                      {user.username}
+                    </Link>
+                  </Col>
+                  <Col className="d-flex align-items-center justify-content-end">
+                    <Button
+                      id="acceptRequest"
+                      className="btn btn-success mx-1"
+                      onClick={() => handleAcceptRequest(user.username)}
+                    >
+                      <span>Aceptar</span>
+                    </Button>
+                    <Button
+                      id="rejectRequest"
+                      className="btn btn-danger mx-1"
+                      onClick={() => handleRejectRequest(user.username)}
+                    >
+                      <span>Rechazar</span>
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
             </div>
           ))
         )}
