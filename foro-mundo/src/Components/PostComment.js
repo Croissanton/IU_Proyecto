@@ -209,7 +209,7 @@ const PostComment = ({
                     variant={userVote === "upvote" ? "success" : "primary"}
                     aria-label="Votar positivamente"
                   >
-                    +
+                  <i className="bi bi-hand-thumbs-up-fill"></i>
                   </Button>
                   <Row>
                     <span className="h5">Votos positivos</span>
@@ -226,7 +226,8 @@ const PostComment = ({
                     variant={userVote === "downvote" ? "danger" : "primary"}
                     aria-label="Votar negativamente"
                   >
-                    -
+                  <i className="bi bi-hand-thumbs-down-fill"></i>
+
                   </Button>
                   <Row>
                     <span className="h5">Votos negativos</span>

@@ -189,7 +189,7 @@ const PostCard = ({
                   style={{ margin: "5px" }}
                   aria-label="Votar positivamente"
                 >
-                  +
+                  <i className="bi bi-hand-thumbs-up-fill"></i>
                 </Button>
               </Col>
               <Col>
@@ -201,7 +201,8 @@ const PostCard = ({
                   style={{ margin: "5px" }}
                   aria-label="Votar negativamente"
                 >
-                  -
+                  <i className="bi bi-hand-thumbs-down-fill"></i>
+
                 </Button>
               </Col>
             </Row>

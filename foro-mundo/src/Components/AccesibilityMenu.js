@@ -47,7 +47,7 @@ const AccessibilityMenu = () => {
       <Dropdown.Item  onClick={setAccesibilityFont} className="py-2">
         <i className="bi bi-alphabet-uppercase me-2"></i> Fuente accesible
       </Dropdown.Item>
-      <Dropdown.Item disabled onClick={setHighContrast} className="py-2">
+      <Dropdown.Item onClick={setHighContrast} className="py-2">
         <i className="bi bi-brightness-high-fill me-2"></i> Alto contraste
       </Dropdown.Item>
       <Dropdown.Item disabled onClick={setLowContrast} className="py-2">
