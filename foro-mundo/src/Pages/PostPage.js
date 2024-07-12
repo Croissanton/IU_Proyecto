@@ -14,6 +14,7 @@ function PostPage() {
   const [topics, setTopics] = useState([]);
   const { postId } = useParams();
   const [post, setPost] = useState(null);
+  const [topic, setTopic] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
   const MAX_CHARACTERS = 500;
@@ -79,7 +80,9 @@ function PostPage() {
 
     loadPost();
     setSortCriteria("masPositivos");
-  }, [postId, navigate, showToast]);
+    const topic = post ? topics.find((t) => t.id === post.topicId) : null;
+    setTopic(topic);
+  }, [postId, navigate, showToast, topics, post]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -107,7 +110,7 @@ function PostPage() {
     //get existing posts and add updated post to the list
     const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const updatedPosts = existingPosts.map((p) =>
-      p.id.toString() === postId.toString() ? post : p
+      p.id.toString() === postId.toString() ? post : p,
     );
 
     // Save updated post back to localStorage
@@ -212,10 +215,8 @@ function PostPage() {
 
   const paginatedComments = sortedComments.slice(
     (currentPage - 1) * commentsPerPage,
-    currentPage * commentsPerPage
+    currentPage * commentsPerPage,
   );
-
-  const topic = post ? topics.find((t) => t.id === post.topicId) : null;
 
   if (!post) {
     return <ErrorPage />;
@@ -281,10 +282,13 @@ function PostPage() {
         <Container fluid className="my-3 mx-0 px-0">
           {" "}
           <Container>
-          <Button variant="danger" onClick={() => setShowDeletePostModal(true)}>
-            <i className="bi bi-trash"></i>
-            <span>Eliminar Post</span>
-          </Button>
+            <Button
+              variant="danger"
+              onClick={() => setShowDeletePostModal(true)}
+            >
+              <i className="bi bi-trash"></i>
+              <span>Eliminar Post</span>
+            </Button>
           </Container>
           <ConfirmationModal
             show={showDeletePostModal}
@@ -305,7 +309,9 @@ function PostPage() {
             </label>
             <form onSubmit={handleSubmitComment}>
               <div className="mb-3">
-                <label htmlFor="commentInput"><span className="visually-hidden">a</span></label>
+                <label htmlFor="commentInput">
+                  <span className="visually-hidden">a</span>
+                </label>
                 <textarea
                   aria-label="texto_para_nuevo_comentario"
                   required
@@ -318,14 +324,14 @@ function PostPage() {
                 />
                 <p>Caracteres restantes: {MAX_CHARACTERS - characterCount}</p>
               </div>
-              <button
+              <Button
                 type="submit"
-                className="btn btn-primary btn-success"
+                className="btn btn-success"
                 id="publicar_button"
                 disabled
               >
                 Publicar
-              </button>
+              </Button>
 
               <ConfirmationModal
                 message="¿Estás seguro de que quieres crear este comentario?"
@@ -366,7 +372,7 @@ function PostPage() {
           >
             Comentarios
           </label>
-          <div className="d-flex justify-content-end mb-3">
+          <Container className="d-flex justify-content-end mb-3">
             <label htmlFor="sortSelect" className="form-label p-2 mb-0">
               Ordenar por:
             </label>
@@ -387,11 +393,13 @@ function PostPage() {
                 <option value="antiguo">Más antiguos</option>
               </select>
             </div>
-          </div>
+          </Container>
         </Container>
         <Container fluid className="my-3 mx-0 px-0">
           {post === null || sortedComments.length === 0 ? (
-            <p>No hay comentarios.</p>
+            <Container>
+              <p>No hay comentarios.</p>
+            </Container>
           ) : (
             paginatedComments.map((comment) => (
               <PostComment

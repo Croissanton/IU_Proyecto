@@ -524,13 +524,13 @@ const Messenger = () => {
                           className="d-flex justify-content-between align-items-center mb-1"
                         >
                           {/* timestamp */}
-                          <small className="text-dark">
+                          <small className="text-dark me-1">
                             {formatTimestamp(message.timestamp)}
                           </small>
                           {message.sender === usuario.username && (
                             <Button
                               id="deleteMessageButton"
-                              className="me-2"
+                              className="ms-1"
                               variant="danger"
                               size="sm"
                               onClick={(e) => {

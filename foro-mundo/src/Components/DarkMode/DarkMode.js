@@ -66,7 +66,7 @@ const DarkMode = () => {
     }
 
     return (
-        <div className='dark_mode'>
+        <div className='dark_mode d-flex align-items-center'>
             <input
                 className='dark_mode_input'
                 type='checkbox'

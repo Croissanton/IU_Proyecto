@@ -14,7 +14,7 @@ function ConfirmationModal({ show, handleClose, handleConfirm, message }) {
         <Button variant="primary" onClick={handleConfirm}>
           Confirmar
         </Button>
-        <Button variant="light" onClick={handleClose}>
+        <Button variant="light" className="btn btn-primary" onClick={handleClose}>
           Cancelar
         </Button>
       </Modal.Footer>
