@@ -309,7 +309,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control custom-disabled-input"
+                      className="form-control custom-disabled-input bg-transparent border-0"
                       id="inputNombre4"
                       value={userData.name}
                       disabled
@@ -324,7 +324,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control custom-disabled-input"
+                      className="form-control custom-disabled-input bg-transparent border-0"
                       id="inputApellidos4"
                       value={userData.lastName}
                       disabled
@@ -340,7 +340,7 @@ function ProfilePublic() {
                   </label>
                   <input
                     type="date"
-                    className="form-control custom-disabled-input"
+                    className="form-control custom-disabled-input bg-transparent border-0"
                     id="inputFechaNacimiento"
                     value={userData.birthDate}
                     disabled
@@ -356,7 +356,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control custom-disabled-input"
+                      className="form-control custom-disabled-input bg-transparent border-0"
                       id="inputPais"
                       value={userData.country}
                       disabled
@@ -371,7 +371,7 @@ function ProfilePublic() {
                     </label>
                     <input
                       type="text"
-                      className="form-control custom-disabled-input"
+                      className="form-control custom-disabled-input bg-transparent border-0"
                       id="inputCiudad"
                       value={userData.city}
                       disabled
@@ -387,7 +387,7 @@ function ProfilePublic() {
                   </label>
                   <input
                     type="text"
-                    className="form-control custom-disabled-input"
+                    className="form-control custom-disabled-input bg-transparent border-0"
                     id="inputRedes"
                     value={userData.socialMedia}
                     disabled
@@ -401,7 +401,7 @@ function ProfilePublic() {
                     Descripcion
                   </label>
                   <textarea
-                    className="form-control custom-disabled-input"
+                    className="form-control custom-disabled-input bg-transparent border-0"
                     id="inputDescripcion"
                     rows="3"
                     value={userData.description}
@@ -409,7 +409,7 @@ function ProfilePublic() {
                   ></textarea>
                 </Col>
 
-                <Col>
+                <Col className="my-2">
                   {!isButtonUnavailable && (
                     <Link to={`/historial/${username}`}>
                       <Button type="button" className="btn btn-primary mx-1">

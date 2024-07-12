@@ -281,8 +281,7 @@ const Header = forwardRef((props, ref) => {
               </Container>
 
               <Button
-                className="d-flex align-items-center justify-content-center m-1"
-                variant="primary"
+                className="d-flex align-items-center justify-content-center m-1 btn-outline-secondary"
                 type="submit"
                 aria-label="Buscar"
                 disabled={!inputValue.trim()}

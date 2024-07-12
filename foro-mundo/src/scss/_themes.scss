@@ -46,10 +46,6 @@
         color: var(--bs-secondary);
     }
 
-    .btn-outline-secondary{
-        color: var(--bs-secondary);
-        border-color: var(--bs-secondary);
-    }
     .btn{
         background-color: var(--bs-secondary);
         color: var(--bs-primary);
@@ -95,8 +91,6 @@
     }
 
     .custom-disabled-input {
-        background-color: transparent;
-        border: 0;
         color: var(--bs-body-color); 
         cursor: default;
         &:focus {
@@ -145,12 +139,11 @@
     }
 
     .btn-outline-secondary{
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+        border: 1px solid var(--bs-secondary-subtle);
         &:hover{
-            span{
-                color: var(--bs-dark) !important;
-            }
-            color: var(--bs-dark) !important;
-            background-color: var(--bs-primary) !important;
+            background-color: var(--bs-dark) !important;
         }
     }
 
