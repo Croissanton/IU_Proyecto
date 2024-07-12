@@ -39,7 +39,7 @@ const PostComment = ({
     const authorData = allUsers.find((user) => user.username === author);
     if (authorData) {
       setAuthorProfilePicture(
-        authorData.profilePicture || "https://via.placeholder.com/150"
+        authorData.profilePicture || "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"
       );
     }
   }, [author]);
@@ -239,7 +239,7 @@ const PostComment = ({
                   <Row>
                     <Col>
                       <img
-                        src={authorProfilePicture}
+                        src={authorProfilePicture || "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg"}
                         alt="Foto de perfil del autor"
                         width="30"
                         height="30"
