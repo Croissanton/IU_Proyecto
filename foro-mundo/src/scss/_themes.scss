@@ -16,17 +16,22 @@
 
 [data-bs-theme="dark"] {
     --bs-primary: #002561;
-    --bs-secondary: #B4DBFC; 
-    --bs-success: darken(var(--bs-success), 10%);
-    --bs-info: darken(var(--bs-info), 10%);
-    --bs-warning: darken(var(--bs-warning), 10%);
-    --bs-danger: darken(var(--bs-danger), 50%);
-    --bs-light: var(--bs-dark);
+    --bs-secondary: #B4DBFC;
+    --bs-success: #00ff87;
+    --bs-info: #a0d8e1;
+    --bs-warning: #ffd54f;
+    --bs-danger: #ff6b6b;
+    --bs-light: #3a3a3a;
     --bs-dark: #f5f5f5;
     --bs-white: #262626;
-    --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
+    --bs-secondary-subtle: darken(var(--bs-secondary), 10%);
 
 
+    a{
+        &:hover{
+            color: var(--bs-dark) !important;
+        }
+    }
 
     .custom-link-container{
         background-color: var(--bs-primary);
@@ -40,11 +45,6 @@
         background-color: var(--bs-primary);
         color: var(--bs-secondary);
     }
-    .custom-breadcrumb{
-        &:hover{
-            color: var(--bs-secondary);
-        }
-    }
 
     .btn-outline-secondary{
         color: var(--bs-secondary);
@@ -57,15 +57,29 @@
             background-color: var(--bs-secondary);
             color: var(--bs-primary);
         }
+        &.btn-secondary{
+            background-color: var(--bs-primary);
+            color: var(--bs-secondary);
+            &:hover{
+                background-color: var(--bs-dark) !important;
+                color: var(--bs-primary) !important;
+            }
+        }
 
         &.btn-success{
-            background-color: #00FF00;
-            color: var(--bs-light);
+            background-color: var(--bs-success) !important;
+            color: var(--bs-light) !important;
+            &:hover{
+                background-color: darken(#00ff87, 10%) !important;
+            }
         }
 
         &.btn-danger{
-            background-color: #FF0000;
-            color: var(--bs-light);
+            background-color: var(--bs-danger) !important;
+            color: var(--bs-light) !important;
+            &:hover{
+                background-color: darken(#ff6b6b, 10%) !important;
+            }
         }
     }
 
@@ -125,7 +139,7 @@
         background-color: var(--bs-secondary-subtle);
     }
     #login-form, #signup-form{	
-        background-color: var(--bs-primary);
+        background-color: var(--bs-light);
         color: var(--bs-secondary);
     }
 
@@ -225,9 +239,9 @@
     }
 
     #comment-container{
-        background-color: var(--bs-primary);
+        background-color: var(--bs-primary) !important;
         .p{
-            color: var(--bs-light-light);
+            color: var(--bs-light-light) !important;
         }
     }
 
@@ -347,6 +361,7 @@
             color: var(--bs-light-light);
         }
     }
+
 }
 
 [data-bs-theme="high-contrast"] {

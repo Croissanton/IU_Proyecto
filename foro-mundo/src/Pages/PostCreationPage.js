@@ -184,7 +184,7 @@ function PostCreationPage() {
                 onChange={handleInputChange}
               ></textarea>
             </div>
-            <Button type="submit" className="btn btn-primary">
+            <Button type="submit" className="btn btn-primary btn-success">
               Crear
             </Button>
           </form>

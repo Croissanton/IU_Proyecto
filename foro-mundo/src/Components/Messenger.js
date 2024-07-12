@@ -41,7 +41,8 @@ const Messenger = () => {
   const getProfilePicture = (username) => {
     let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     let usuario = usuarios.find((usuario) => usuario.username === username);
-    return usuario.profilePicture;
+    if (usuario === undefined) return "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg";
+    return usuario.profilePicture ? usuario.profilePicture : "https://corporate.bestbuy.com/wp-content/uploads/2022/06/Image-Portrait-Placeholder-364x368.jpg";
   };
 
   const getConversationsForUser = (username) => {

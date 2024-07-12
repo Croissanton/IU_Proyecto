@@ -168,14 +168,14 @@ function LoginPage() {
             </div>
             <button
               type="submit"
-              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+              className="btn btn-primary border border-secondary-subtle m-3"
             >
               Iniciar Sesión
             </button>
             <button
               type="button"
               onClick={handleRegister}
-              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+              className="btn btn-primary border border-secondary-subtle m-3"
             >
               Registrarse
             </button>
@@ -189,7 +189,7 @@ function LoginPage() {
             <button
               type="button"
               onClick={handleHome}
-              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+              className="btn btn-secondary border border-secondary-subtle m-3"
             >
               Volver al Inicio
             </button>

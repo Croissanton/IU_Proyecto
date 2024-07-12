@@ -32,12 +32,17 @@ const AccessibilityMenu = () => {
     localStorage.setItem('selectedTheme', 'dyslexia-friendly');
   };
 
+  const setDarkMode = () => {
+    document.querySelector('body').setAttribute('data-bs-theme', 'dark');
+    localStorage.setItem('selectedTheme', 'dark');
+  }
+
   
 
   const AccessibilityOptions = () => (
     <>
       <Dropdown.Item onClick={setLightMode} className="py-2">Formato original</Dropdown.Item>
-      <Dropdown.Item className="py-2" style={{ pointerEvents: 'none' }}> Modo oscuro</Dropdown.Item>
+      <Dropdown.Item className="py-2" onClick={setDarkMode}> Modo oscuro</Dropdown.Item>
       <Dropdown.Divider />
       <Dropdown.Item  onClick={setAccesibilityFont} className="py-2">
         <i className="bi bi-alphabet-uppercase me-2"></i> Fuente accesible

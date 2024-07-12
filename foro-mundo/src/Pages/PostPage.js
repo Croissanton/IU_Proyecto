@@ -320,7 +320,7 @@ function PostPage() {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary btn-success"
                 id="publicar_button"
                 disabled
               >
@@ -337,7 +337,7 @@ function PostPage() {
 
               <Button
                 variant="primary"
-                className="ms-2"
+                className="ms-2 btn-danger"
                 onClick={handleClearComment}
               >
                 Limpiar

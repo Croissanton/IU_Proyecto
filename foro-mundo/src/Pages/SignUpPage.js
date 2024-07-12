@@ -324,22 +324,8 @@ function SignUpPage() {
               />
             </div>
             <button
-              type="button"
-              onClick={() => setShowConfirmVolverModal(true)}
-              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
-            >
-              Volver al Inicio
-            </button>
-            <ConfirmationModal
-              show={showConfirmVolverModal}
-              handleClose={() => setShowConfirmVolverModal(false)}
-              handleConfirm={handleConfirmVolver}
-              title="Volver al inicio"
-              message="¿Estás seguro de que quieres volver al inicio? Se perderán los datos ingresados."
-            />
-            <button
               type="submit"
-              className="btn btn-primary text-secondary border border-secondary-subtle m-3"
+              className="btn btn-primary btn-success border border-secondary-subtle m-3"
             >
               Registrarse
             </button>
@@ -349,6 +335,20 @@ function SignUpPage() {
               handleConfirm={handleConfirmRegister}
               title="Confirmar Registro"
               message="¿Estás seguro de que quieres registrarte con estos datos?"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmVolverModal(true)}
+              className="btn btn-secondary border border-secondary-subtle m-3"
+            >
+              Volver al Inicio
+            </button>
+            <ConfirmationModal
+              show={showConfirmVolverModal}
+              handleClose={() => setShowConfirmVolverModal(false)}
+              handleConfirm={handleConfirmVolver}
+              title="Volver al inicio"
+              message="¿Estás seguro de que quieres volver al inicio? Se perderán los datos ingresados."
             />
           </div>
         </form>

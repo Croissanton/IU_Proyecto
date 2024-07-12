@@ -11969,14 +11969,17 @@ textarea.form-control-lg {
 [data-bs-theme=dark] {
   --bs-primary: #002561;
   --bs-secondary: #B4DBFC;
-  --bs-success: darken(var(--bs-success), 10%);
-  --bs-info: darken(var(--bs-info), 10%);
-  --bs-warning: darken(var(--bs-warning), 10%);
-  --bs-danger: darken(var(--bs-danger), 50%);
-  --bs-light: var(--bs-dark);
+  --bs-success: #00ff87;
+  --bs-info: #a0d8e1;
+  --bs-warning: #ffd54f;
+  --bs-danger: #ff6b6b;
+  --bs-light: #3a3a3a;
   --bs-dark: #f5f5f5;
   --bs-white: #262626;
-  --bs-secondary-subtle: darken((var(--bs-secondary), 10%));
+  --bs-secondary-subtle: darken(var(--bs-secondary), 10%);
+}
+[data-bs-theme=dark] a:hover {
+  color: var(--bs-dark) !important;
 }
 [data-bs-theme=dark] .custom-link-container {
   background-color: var(--bs-primary);
@@ -11987,9 +11990,6 @@ textarea.form-control-lg {
 }
 [data-bs-theme=dark] .dropdown-toggle {
   background-color: var(--bs-primary);
-  color: var(--bs-secondary);
-}
-[data-bs-theme=dark] .custom-breadcrumb:hover {
   color: var(--bs-secondary);
 }
 [data-bs-theme=dark] .btn-outline-secondary {
@@ -12004,13 +12004,27 @@ textarea.form-control-lg {
   background-color: var(--bs-secondary);
   color: var(--bs-primary);
 }
+[data-bs-theme=dark] .btn.btn-secondary {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
+[data-bs-theme=dark] .btn.btn-secondary:hover {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-primary) !important;
+}
 [data-bs-theme=dark] .btn.btn-success {
-  background-color: #00FF00;
-  color: var(--bs-light);
+  background-color: var(--bs-success) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=dark] .btn.btn-success:hover {
+  background-color: #00cc6c !important;
 }
 [data-bs-theme=dark] .btn.btn-danger {
-  background-color: #FF0000;
-  color: var(--bs-light);
+  background-color: var(--bs-danger) !important;
+  color: var(--bs-light) !important;
+}
+[data-bs-theme=dark] .btn.btn-danger:hover {
+  background-color: #ff3838 !important;
 }
 [data-bs-theme=dark] .password-strength-meter {
   background-color: transparent;
@@ -12057,7 +12071,7 @@ textarea.form-control-lg {
   background-color: var(--bs-secondary-subtle);
 }
 [data-bs-theme=dark] #login-form, [data-bs-theme=dark] #signup-form {
-  background-color: var(--bs-primary);
+  background-color: var(--bs-light);
   color: var(--bs-secondary);
 }
 [data-bs-theme=dark] #toggle_password_visibility:hover {
@@ -12136,10 +12150,10 @@ textarea.form-control-lg {
   background-color: var(--bs-secondary);
 }
 [data-bs-theme=dark] #comment-container {
-  background-color: var(--bs-primary);
+  background-color: var(--bs-primary) !important;
 }
 [data-bs-theme=dark] #comment-container .p {
-  color: var(--bs-light-light);
+  color: var(--bs-light-light) !important;
 }
 [data-bs-theme=dark] .header {
   background-color: var(--bs-primary) !important;
