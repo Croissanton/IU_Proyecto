@@ -12251,160 +12251,228 @@ textarea.form-control-lg {
 }
 
 [data-bs-theme=high-contrast] {
-  --bs-primary: #FFFFFF;
-  --bs-secondary: #000000;
+  --bs-primary: #000000;
+  --bs-secondary: #FFFFFF;
   --bs-success: #00FF00;
   --bs-info: #00FFFF;
-  --bs-warning: #FFFF00;
+  --bs-warning: #ff00d4;
   --bs-danger: #FF0000;
   --bs-light: #FFFFFF;
-  --bs-light-light: #F0F0F0;
   --bs-dark: #000000;
-  --bs-white: #FFFFFF;
-  --bs-secondary-subtle: #333333;
+  --bs-white: #000000;
+  --bs-secondary-subtle: #E0E0E0;
 }
-[data-bs-theme=high-contrast] .header {
-  background-color: var(--bs-dark);
-}
-[data-bs-theme=high-contrast] .header .text-secondary {
-  color: var(--bs-light);
-}
-[data-bs-theme=high-contrast] .header .input:focus {
-  outline: 2px solid var(--bs-warning);
-}
-[data-bs-theme=high-contrast] .header .nav-link {
-  color: var(--bs-light);
-}
-[data-bs-theme=high-contrast] .header .nav-link:hover, [data-bs-theme=high-contrast] .header .nav-link:focus {
-  color: var(--bs-warning);
-}
-[data-bs-theme=high-contrast] .header .nav-link .custom-icon {
-  color: var(--bs-light);
-}
-[data-bs-theme=high-contrast] .header .dropdown-toggle {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
-  border: 1px solid var(--bs-light);
-}
-[data-bs-theme=high-contrast] .header .dropdown-toggle:hover, [data-bs-theme=high-contrast] .header .dropdown-toggle:focus {
-  background-color: var(--bs-secondary-subtle);
-}
-[data-bs-theme=high-contrast] .bi {
-  color: var(--bs-light);
-}
-[data-bs-theme=high-contrast] .tooltip .tooltip-inner {
-  background-color: var(--bs-light);
-  color: var(--bs-dark);
-  border: 1px solid var(--bs-dark);
-}
-[data-bs-theme=high-contrast] .tooltip .tooltip-arrow::before {
-  border-bottom-color: var(--bs-light);
+[data-bs-theme=high-contrast] a:hover {
+  color: var(--bs-warning) !important;
 }
 [data-bs-theme=high-contrast] .custom-link-container {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] .custom-link-container:hover {
-  background-color: var(--bs-secondary-subtle);
+  background-color: var(--bs-info);
+  color: var(--bs-primary);
+}
+[data-bs-theme=high-contrast] #commentInput {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] .custom-breadcrumb a {
+  color: var(--bs-primary);
+  transition: color 0.3s;
 }
 [data-bs-theme=high-contrast] .dropdown-toggle {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
-}
-[data-bs-theme=high-contrast] .custom-breadcrumb:hover {
-  color: var(--bs-info);
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] .btn-outline-secondary {
-  color: var(--bs-light);
-  border-color: var(--bs-light);
+  color: var(--bs-secondary);
+  border-color: var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] .btn {
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
 }
 [data-bs-theme=high-contrast] .btn.btn-primary {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
-  border: 2px solid var(--bs-light);
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
 }
-[data-bs-theme=high-contrast] .btn.btn-primary:hover, [data-bs-theme=high-contrast] .btn.btn-primary:focus {
-  background-color: var(--bs-secondary-subtle);
+[data-bs-theme=high-contrast] .btn.btn-secondary {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] .btn.btn-secondary:hover {
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
 }
 [data-bs-theme=high-contrast] .btn.btn-success {
   background-color: var(--bs-success);
-  color: var(--bs-dark);
-  border: 2px solid var(--bs-dark);
+  color: var(--bs-primary);
 }
-[data-bs-theme=high-contrast] .btn.btn-success:hover, [data-bs-theme=high-contrast] .btn.btn-success:focus {
-  background-color: #00cc00;
+[data-bs-theme=high-contrast] .btn.btn-success:hover {
+  background-color: #00CC00;
 }
 [data-bs-theme=high-contrast] .btn.btn-danger {
   background-color: var(--bs-danger);
-  color: var(--bs-light);
-  border: 2px solid var(--bs-light);
+  color: var(--bs-secondary);
 }
-[data-bs-theme=high-contrast] .btn.btn-danger:hover, [data-bs-theme=high-contrast] .btn.btn-danger:focus {
-  background-color: #cc0000;
-}
-[data-bs-theme=high-contrast] .btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-[data-bs-theme=high-contrast] .btn-success > * {
-  color: var(--bs-dark);
-}
-[data-bs-theme=high-contrast] .btn-danger > *, [data-bs-theme=high-contrast] .btn-primary > * {
-  color: var(--bs-light);
+[data-bs-theme=high-contrast] .btn.btn-danger:hover {
+  background-color: #CC0000;
 }
 [data-bs-theme=high-contrast] .password-strength-meter {
   background-color: transparent;
-  color: var(--bs-light);
+  color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] .search-suggestions .bg-white {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
 }
-[data-bs-theme=high-contrast] .i {
-  color: var(--bs-light);
+[data-bs-theme=high-contrast] .custom-disabled-input {
+  background-color: var(--bs-secondary-subtle);
+  border-bottom: 1px solid var(--bs-secondary);
+  color: var(--bs-primary);
+}
+[data-bs-theme=high-contrast] .custom-disabled-input:disabled {
+  background-color: var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] .custom-disabled-input::placeholder {
+  color: var(--bs-primary);
+}
+[data-bs-theme=high-contrast] .toastBody {
+  color: var(--bs-primary);
+  background-color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] #search, [data-bs-theme=high-contrast] #searchInput {
-  background-color: var(--bs-dark);
-  color: var(--bs-light-light);
-  outline: var(--bs-light-light);
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+}
+[data-bs-theme=high-contrast] #searchInput {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] #accessibility-button {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
-  border: none;
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] #login-page, [data-bs-theme=high-contrast] #signup-page {
-  background-color: var(--bs-dark);
-}
-[data-bs-theme=high-contrast] #login-form, [data-bs-theme=high-contrast] #signup-form {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
-  border: 2px solid var(--bs-light);
-}
-[data-bs-theme=high-contrast] #addChatButton, [data-bs-theme=high-contrast] #archivedChatsButton {
-  background-color: var(--bs-dark);
-  color: var(--bs-light);
-  border: 2px solid var(--bs-light);
-}
-[data-bs-theme=high-contrast] #addChatButton:hover, [data-bs-theme=high-contrast] #archivedChatsButton:hover {
   background-color: var(--bs-secondary-subtle);
 }
-[data-bs-theme=high-contrast] #chatbox, [data-bs-theme=high-contrast] #chatboxHeader {
+[data-bs-theme=high-contrast] #login-form, [data-bs-theme=high-contrast] #signup-form {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] #toggle_password_visibility:hover {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=high-contrast] .i:hover {
+  color: var(--bs-warning) !important;
+}
+[data-bs-theme=high-contrast] .btn-outline-secondary:hover {
+  color: var(--bs-primary) !important;
+  background-color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .btn-outline-secondary:hover span {
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=high-contrast] .card-body {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .btn-primary {
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+  border: 1px solid var(--bs-primary);
+}
+[data-bs-theme=high-contrast] .btn-primary:hover {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .custom-button, [data-bs-theme=high-contrast] #btnArchivar, [data-bs-theme=high-contrast] #btnDesarchivar {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+  border: 1px solid var(--bs-primary);
+}
+[data-bs-theme=high-contrast] .custom-button:hover, [data-bs-theme=high-contrast] #btnArchivar:hover, [data-bs-theme=high-contrast] #btnDesarchivar:hover {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] #addChatButton, [data-bs-theme=high-contrast] #archivedChatsButton {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+  border: 1px solid var(--bs-secondary);
+}
+[data-bs-theme=high-contrast] #addChatButton:hover, [data-bs-theme=high-contrast] #archivedChatsButton:hover {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=high-contrast] #archivedChatsButton {
   background-color: var(--bs-dark);
-  color: var(--bs-light);
+  color: var(--bs-secondary);
+  border: 1px solid var(--bs-secondary-subtle);
+}
+[data-bs-theme=high-contrast] #archivedChatsButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-bs-theme=high-contrast] .bg-primary {
+  background-color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .bg-light {
+  background-color: var(--bs-info) !important;
+}
+[data-bs-theme=high-contrast] .custom-text-link {
+  color: var(--bs-warning) !important;
+}
+[data-bs-theme=high-contrast] .custom-text-link:hover {
+  color: var(--bs-primary) !important;
+  text-decoration-line: underline;
+}
+[data-bs-theme=high-contrast] .custom-icon {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .custom-icon:hover {
+  color: var(--bs-warning) !important;
+}
+[data-bs-theme=high-contrast] .text-muted {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] #searchInput {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] #searchInput:focus {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=high-contrast] .custom-list-item {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .custom-list-item:hover {
+  background-color: var(--bs-secondary) !important;
+  color: var(--bs-primary) !important;
+}
+[data-bs-theme=high-contrast] #chatbox, [data-bs-theme=high-contrast] #chatboxHeader {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-secondary) !important;
 }
 [data-bs-theme=high-contrast] #chatbox .border-secondary-subtle, [data-bs-theme=high-contrast] #chatboxHeader .border-secondary-subtle {
-  border-color: var(--bs-light);
+  border-color: var(--bs-secondary);
 }
 [data-bs-theme=high-contrast] #chatbox .bg-secondary-subtle, [data-bs-theme=high-contrast] #chatboxHeader .bg-secondary-subtle {
   background-color: var(--bs-secondary-subtle);
 }
 [data-bs-theme=high-contrast] #comment-container {
-  background-color: var(--bs-secondary-subtle);
-  color: var(--bs-light);
+  background-color: var(--bs-primary) !important;
 }
-[data-bs-theme=high-contrast] #comment-container .span, [data-bs-theme=high-contrast] #comment-container .a {
-  color: var(--bs-light);
+[data-bs-theme=high-contrast] #comment-container .p-3 {
+  color: var(--bs-secondary) !important;
+}
+[data-bs-theme=high-contrast] .header {
+  background-color: var(--bs-primary) !important;
+}
+[data-bs-theme=high-contrast] .header .text-secondary {
+  color: var(--bs-secondary) !important;
 }
 
 [data-bs-theme=dyslexia-friendly] {
@@ -12413,7 +12481,7 @@ textarea.form-control-lg {
   --bs-body-line-height: 1.6;
   --bs-body-color: #000000;
   --bs-body-bg: #FFFAF0;
-  --bs-primary: #3498db;
+  --bs-primary: #B4DBFC;
   --bs-secondary: #2c3e50;
   --bs-success: #27ae60;
   --bs-info: #3498db;

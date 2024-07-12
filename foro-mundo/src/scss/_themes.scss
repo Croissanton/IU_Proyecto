@@ -363,212 +363,277 @@
     }
 
 }
-
 [data-bs-theme="high-contrast"] {
-    --bs-primary: #FFFFFF;
-    --bs-secondary: #000000;
+    --bs-primary: #000000;
+    --bs-secondary: #FFFFFF;
     --bs-success: #00FF00;
     --bs-info: #00FFFF;
-    --bs-warning: #FFFF00;
+    --bs-warning: #ff00d4;
     --bs-danger: #FF0000;
     --bs-light: #FFFFFF;
-    --bs-light-light: #F0F0F0;
     --bs-dark: #000000;
-    --bs-white: #FFFFFF;
-    --bs-secondary-subtle: #333333;
+    --bs-white: #000000;
+    --bs-secondary-subtle: #E0E0E0;
 
-    .header {
-        background-color: var(--bs-dark);
-        .text-secondary {
-            color: var(--bs-light);
-        }
-
-        .input:focus{
-            outline: 2px solid var(--bs-warning);
-        }
-        
-        // Add this new rule for navbar icons
-        .nav-link {
-            color: var(--bs-light);
-            
-            &:hover, &:focus {
-                color: var(--bs-warning); // Use a bright color for hover/focus state
-            }
-            
-            .custom-icon {
-                color: var(--bs-light);
-            }
-        }
-        
-        // Ensure dropdown toggles are visible
-        .dropdown-toggle {
-            background-color: var(--bs-dark);
-            color: var(--bs-light);
-            border: 1px solid var(--bs-light);
-            
-            &:hover, &:focus {
-                background-color: var(--bs-secondary-subtle);
-            }
-        }
-    }
-
-    .bi {
-        color: var(--bs-light);
-    }
-
-    // Ensure tooltips are visible
-    .tooltip {
-        .tooltip-inner {
-            background-color: var(--bs-light);
-            color: var(--bs-dark);
-            border: 1px solid var(--bs-dark);
-        }
-        .tooltip-arrow::before {
-            border-bottom-color: var(--bs-light);
+    a {
+        &:hover {
+            color: var(--bs-warning) !important;
         }
     }
 
     .custom-link-container {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
         &:hover {
-            background-color: var(--bs-secondary-subtle);
+            background-color: var(--bs-info);
+            color: var(--bs-primary);
         }
     }
 
-    .dropdown-toggle {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+    #commentInput 
+    {
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
     }
 
     .custom-breadcrumb {
-        &:hover {
-            color: var(--bs-info);
+        a {
+          color: var(--bs-primary);
+          transition: color 0.3s;
         }
+      }
+
+    .dropdown-toggle {
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
     }
 
     .btn-outline-secondary {
-        color: var(--bs-light);
-        border-color: var(--bs-light);
+        color: var(--bs-secondary);
+        border-color: var(--bs-secondary);
     }
 
     .btn {
+        background-color: var(--bs-secondary);
+        color: var(--bs-primary);
         &.btn-primary {
-            background-color: var(--bs-dark);
-            color: var(--bs-light);
-            border: 2px solid var(--bs-light);
-
-            &:hover, &:focus {
-                background-color: var(--bs-secondary-subtle);
+            background-color: var(--bs-secondary);
+            color: var(--bs-primary);
+        }
+        &.btn-secondary {
+            background-color: var(--bs-primary);
+            color: var(--bs-secondary);
+            &:hover {
+                background-color: var(--bs-secondary);
+                color: var(--bs-primary);
             }
         }
-
         &.btn-success {
             background-color: var(--bs-success);
-            color: var(--bs-dark);
-            border: 2px solid var(--bs-dark);
-
-            &:hover, &:focus {
-                background-color: darken(#00FF00, 10%);
+            color: var(--bs-primary);
+            &:hover {
+                background-color: #00CC00;
             }
         }
-
         &.btn-danger {
             background-color: var(--bs-danger);
-            color: var(--bs-light);
-            border: 2px solid var(--bs-light);
-
-            &:hover, &:focus {
-                background-color: darken(#FF0000, 10%);
+            color: var(--bs-secondary);
+            &:hover {
+                background-color: #CC0000;
             }
         }
-
-        &:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
     }
 
-    // Ensure text contrast for button content
-    .btn-success {
-        > * {
-            color: var(--bs-dark);
-        }
-    }
-
-    .btn-danger, .btn-primary {
-        > * {
-            color: var(--bs-light);
-        }
-    }
     .password-strength-meter {
         background-color: transparent;
-        color: var(--bs-light);
+        color: var(--bs-secondary);
     }
 
     .search-suggestions {
         .bg-white {
-            background-color: var(--bs-dark);
-            color: var(--bs-light);
+            background-color: var(--bs-primary);
+            color: var(--bs-secondary);
         }
     }
 
-    .i{
-        color: var(--bs-light);
-    }   
+    .custom-disabled-input {
+        background-color: var(--bs-secondary-subtle);
+        border-bottom: 1px solid var(--bs-secondary);
+        color: var(--bs-primary);
+        &:disabled {
+            background-color: var(--bs-secondary);
+        }
+        &::placeholder {
+            color: var(--bs-primary);
+        }
+    }
 
-    
+    .toastBody {
+        color: var(--bs-primary);
+        background-color: var(--bs-secondary);
+    }
 
     #search, #searchInput {
-        background-color: var(--bs-dark);
-        color: var(--bs-light-light);
-        outline: var(--bs-light-light);
+        background-color: var(--bs-secondary);
+        color: var(--bs-primary);
+    }
+
+    #searchInput {
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
     }
 
     #accessibility-button {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border: none;
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
     }
 
     #login-page, #signup-page {
-        background-color: var(--bs-dark);
+        background-color: var(--bs-secondary-subtle);
     }
 
-    #login-form, #signup-form {	
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border: 2px solid var(--bs-light);
+    #login-form, #signup-form {    
+        background-color: var(--bs-primary);
+        color: var(--bs-secondary);
+    }
+
+    #toggle_password_visibility {
+        &:hover {
+            background-color: var(--bs-secondary) !important;
+            color: var(--bs-primary) !important;
+        }
+    }
+
+    .i {
+        &:hover {
+            color: var(--bs-warning) !important;
+        }
+    }
+
+    .btn-outline-secondary {
+        &:hover {
+            span {
+                color: var(--bs-primary) !important;
+            }
+            color: var(--bs-primary) !important;
+            background-color: var(--bs-secondary) !important;
+        }
+    }
+
+    .card-body {
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--bs-secondary);
+        color: var(--bs-primary);
+        border: 1px solid var(--bs-primary);
+        &:hover {
+            background-color: var(--bs-primary) !important;
+            color: var(--bs-secondary) !important;
+        }
+    }
+
+    .custom-button, #btnArchivar, #btnDesarchivar {
+        background-color: var(--bs-secondary) !important;
+        color: var(--bs-primary) !important;
+        border: 1px solid var(--bs-primary);
+        &:hover {
+            background-color: var(--bs-primary) !important;
+            color: var(--bs-secondary) !important;
+        }
     }
 
     #addChatButton, #archivedChatsButton {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border: 2px solid var(--bs-light);
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        border: 1px solid var(--bs-secondary);
         &:hover {
-            background-color: var(--bs-secondary-subtle);
+            background-color: var(--bs-secondary) !important;
+            color: var(--bs-primary) !important;
+        }
+    }
+
+
+    #archivedChatsButton {
+        background-color: var(--bs-dark);
+        color: var(--bs-secondary);
+        border: 1px solid var(--bs-secondary-subtle);
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    .bg-primary {
+        background-color: var(--bs-secondary) !important;
+    }
+
+    .bg-light {
+        background-color: var(--bs-info) !important;
+    }
+
+    .custom-text-link {
+        color: var(--bs-warning) !important;
+        &:hover {
+            color: var(--bs-primary) !important;
+            text-decoration-line: underline;
+        }
+    }
+
+    .custom-icon {
+        color: var(--bs-secondary) !important;
+        &:hover {
+            color: var(--bs-warning) !important;
+        }
+    }
+
+    .text-muted {
+        color: var(--bs-secondary) !important;
+    }
+
+    #searchInput {
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        &:focus {
+            background-color: var(--bs-secondary) !important;
+            color: var(--bs-primary) !important;
+        }
+    }
+
+    .custom-list-item {
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
+        &:hover {
+            background-color: var(--bs-secondary) !important;
+            color: var(--bs-primary) !important;
         }
     }
 
     #chatbox, #chatboxHeader {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+        background-color: var(--bs-primary) !important;
+        color: var(--bs-secondary) !important;
         .border-secondary-subtle {
-            border-color: var(--bs-light);
+            border-color: var(--bs-secondary);
         }
         .bg-secondary-subtle {
             background-color: var(--bs-secondary-subtle);
         }
     }
 
-    #comment-container{
-        background-color: var(--bs-secondary-subtle);
-        color: var(--bs-light);
-        .span, .a{
-            color: var(--bs-light);
+    #comment-container {
+        background-color: var(--bs-primary) !important;
+        .p-3 {
+            color: var(--bs-secondary) !important;
         }
     }
 
+    .header {
+        background-color: var(--bs-primary) !important;
+        .text-secondary {
+            color: var(--bs-secondary) !important;
+        }
+    }
 }
 
 [data-bs-theme="dyslexia-friendly"] {
@@ -578,7 +643,7 @@
     --bs-body-color: #000000;
     --bs-body-bg: #FFFAF0; // Soft cream background
 
-    --bs-primary: #3498db;
+    --bs-primary: #B4DBFC;
     --bs-secondary: #2c3e50;
     --bs-success: #27ae60;
     --bs-info: #3498db;
